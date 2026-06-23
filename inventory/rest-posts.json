@@ -1,0 +1,46 @@
+{
+  "type": "posts",
+  "fetched_at": "2026-06-22T08:40:32.633Z",
+  "variants": {
+    "default": [],
+    "th": [],
+    "en": []
+  },
+  "errors": [
+    {
+      "variant": "default",
+      "errors": [
+        {
+          "page": 1,
+          "status": 500,
+          "url": "https://beechooherbal.com/wp-json/wp/v2/posts?per_page=100&_embed&page=1"
+        }
+      ]
+    },
+    {
+      "variant": "th",
+      "errors": [
+        {
+          "page": 1,
+          "status": 500,
+          "url": "https://beechooherbal.com/wp-json/wp/v2/posts?per_page=100&_embed&page=1&lang=th"
+        }
+      ]
+    },
+    {
+      "variant": "en",
+      "errors": [
+        {
+          "page": 1,
+          "status": 500,
+          "url": "https://beechooherbal.com/wp-json/wp/v2/posts?per_page=100&_embed&page=1&lang=en"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "default": 0,
+    "th": 0,
+    "en": 0
+  }
+}

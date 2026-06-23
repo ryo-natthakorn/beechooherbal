@@ -1,0 +1,10 @@
+{
+  "indexUrl": "https://beechooherbal.com/sitemap_index.xml",
+  "perSitemap": {
+    "https://beechooherbal.com/post-sitemap.xml": 54,
+    "https://beechooherbal.com/page-sitemap.xml": 35,
+    "https://beechooherbal.com/category-sitemap.xml": 2,
+    "https://beechooherbal.com/author-sitemap.xml": 1
+  },
+  "total": 92
+}

@@ -1,0 +1,42 @@
+{
+  "total": 92,
+  "en": 49,
+  "th": 43,
+  "liveHreflangPairs": 2,
+  "usableMapPairs": 19,
+  "semanticPairs": 17,
+  "orphanEn": 30,
+  "orphanTh": 26,
+  "thaiAtRoot": 26,
+  "redirectingUrls": 1,
+  "nonOk": 1,
+  "nearDuplicates": 1,
+  "probes": {
+    "/": {
+      "path": "/",
+      "status": 200,
+      "location": ""
+    },
+    "/th/": {
+      "path": "/th/",
+      "status": 301,
+      "location": "https://beechooherbal.com/th/home/"
+    },
+    "/th/home/": {
+      "path": "/th/home/",
+      "status": 200,
+      "location": ""
+    }
+  },
+  "restPages": {
+    "default": 18,
+    "th": 17,
+    "en": 18
+  },
+  "restPosts": {
+    "default": 0,
+    "th": 0,
+    "en": 0
+  },
+  "generated_at": "2026-06-22T08:49:36.846Z"
+}

@@ -1,0 +1,142 @@
+{
+  "_note": "Semantic EN<->TH pairing. The live site encodes NO translation links for these pages (hreflang is self-referential; the WPML switcher points every page to /th/). Each pair was matched by reading the live Thai + English titles. Confidence flagged per row. Regenerate with scripts/make-proposed-pairs.mjs after re-running 02-fetch-pages.mjs.",
+  "generated_at": "2026-06-22T08:45:16.246Z",
+  "pairs": [
+    {
+      "en": "https://beechooherbal.com/",
+      "th": "https://beechooherbal.com/th/home/",
+      "confidence": "high",
+      "note": "EN home / TH home (/th/ 301s to /th/home/)",
+      "en_title": "Home - Bee Choo Herbal",
+      "th_title": "Home - Bee Choo Herbal"
+    },
+    {
+      "en": "https://beechooherbal.com/about/",
+      "th": "https://beechooherbal.com/th/%e0%b9%80%e0%b8%81%e0%b8%b5%e0%b9%88%e0%b8%a2%e0%b8%a7%e0%b8%81%e0%b8%b1%e0%b8%9a%e0%b8%9a%e0%b8%b5%e0%b8%8a%e0%b8%b9/",
+      "confidence": "high",
+      "note": "",
+      "en_title": "ABOUT - Bee Choo Herbal",
+      "th_title": "เกี่ยวกับบีชู ซาลอน/คลินิก รักษาผมที่ดีที่สุดในประเทศไทย"
+    },
+    {
+      "en": "https://beechooherbal.com/team/",
+      "th": "https://beechooherbal.com/th/%e0%b8%97%e0%b8%b5%e0%b8%a1/",
+      "confidence": "high",
+      "note": "",
+      "en_title": "TEAM - Bee Choo Herbal",
+      "th_title": "ทีม - เจ้าของและผู้บริหาร บีชู"
+    },
+    {
+      "en": "https://beechooherbal.com/locations/",
+      "th": "https://beechooherbal.com/th/%e0%b8%aa%e0%b8%96%e0%b8%b2%e0%b8%99%e0%b8%97%e0%b8%b5%e0%b9%88%e0%b8%95%e0%b8%b1%e0%b9%89%e0%b8%87%e0%b8%82%e0%b8%ad%e0%b8%87%e0%b8%a3%e0%b9%89%e0%b8%b2%e0%b8%99%e0%b8%84%e0%b9%89%e0%b8%b2/",
+      "confidence": "high",
+      "note": "",
+      "en_title": "Locations - Bee Choo Herbal",
+      "th_title": "สถานที่ตั้งของร้านค้า - บีชู ไทยแลนด์"
+    },
+    {
+      "en": "https://beechooherbal.com/frequently-asked-questions/",
+      "th": "https://beechooherbal.com/th/%e0%b8%84%e0%b8%b3%e0%b8%96%e0%b8%b2%e0%b8%a1%e0%b8%97%e0%b8%b5%e0%b9%88%e0%b8%9e%e0%b8%9a%e0%b8%9a%e0%b9%88%e0%b8%ad%e0%b8%a2/",
+      "confidence": "high",
+      "note": "FAQ",
+      "en_title": "Frequently Asked Questions - Bee Choo Herbal",
+      "th_title": "คำถามที่พบบ่อยจากลูกค้า -"
+    },
+    {
+      "en": "https://beechooherbal.com/reviews-and-testimonials-of-bee-choo-origin-treatment/",
+      "th": "https://beechooherbal.com/th/%e0%b8%a3%e0%b8%b5%e0%b8%a7%e0%b8%b4%e0%b8%a7%e0%b8%97%e0%b8%a3%e0%b8%b5%e0%b8%97%e0%b9%80%e0%b8%a1%e0%b9%89%e0%b8%99%e0%b8%97%e0%b9%8c%e0%b8%97%e0%b8%b5%e0%b9%88%e0%b8%94%e0%b8%b5/",
+      "confidence": "high",
+      "note": "Testimonials",
+      "en_title": "Reviews and Testimonials of Bee Choo Origin Treatment - Bee Choo Herbal",
+      "th_title": "รีวิว ทรีทเม้นท์ บี ชู ออริจิน และการการันตีจากลูกค้า - Bee Choo Herbal"
+    },
+    {
+      "en": "https://beechooherbal.com/scalp-hair-loss-treatment-salon-clinic-in-bangkok/",
+      "th": "https://beechooherbal.com/th/%e0%b8%8b%e0%b8%b2%e0%b8%a5%e0%b8%ad%e0%b8%99-%e0%b8%84%e0%b8%a5%e0%b8%b4%e0%b8%99%e0%b8%b4%e0%b8%81%e0%b8%a3%e0%b8%b1%e0%b8%81%e0%b8%a9%e0%b8%b2%e0%b8%9c%e0%b8%a1%e0%b8%a3%e0%b9%88%e0%b8%a7%e0%b8%87/",
+      "confidence": "high",
+      "note": "Main hair-loss treatment page",
+      "en_title": "Scalp Hair Loss Treatment Salon Clinic in Bangkok - Bee Choo Herbal",
+      "th_title": "ซาลอน/ คลินิกรักษาผมร่วง คลินิกรักษาผมบาง ในกรุงเทพ - Bee Choo Herbal"
+    },
+    {
+      "en": "https://beechooherbal.com/herbal-treatment-to-get-rid-of-oily-scalp-hair/",
+      "th": "https://beechooherbal.com/th/%e0%b8%a7%e0%b8%b4%e0%b8%98%e0%b8%b5%e0%b9%81%e0%b8%81%e0%b9%89%e0%b8%ab%e0%b8%99%e0%b8%b1%e0%b8%87%e0%b8%a8%e0%b8%b5%e0%b8%a3%e0%b8%a9%e0%b8%b0%e0%b8%a1%e0%b8%b1%e0%b8%99/",
+      "confidence": "high",
+      "note": "Oily scalp",
+      "en_title": "Herbal Treatment to get rid of oily scalp - Bee Choo Herbal",
+      "th_title": "ลดหนังศีรษะมันและคันหรือมีกลิ่นเหม็นด้วยทรีทเม้นท์ธรรมชาติ - Bee Choo Herbal"
+    },
+    {
+      "en": "https://beechooherbal.com/cure-dandruff-hair-with-herbal-treatment/",
+      "th": "https://beechooherbal.com/th/%e0%b8%a3%e0%b8%b1%e0%b8%81%e0%b8%a9%e0%b8%b2%e0%b8%a3%e0%b8%b1%e0%b8%87%e0%b9%81%e0%b8%84-%e0%b8%82%e0%b8%88%e0%b8%b1%e0%b8%94%e0%b8%a3%e0%b8%b1%e0%b8%87%e0%b9%81%e0%b8%84-%e0%b9%83%e0%b8%ab%e0%b9%89/",
+      "confidence": "high",
+      "note": "Dandruff",
+      "en_title": "Cure Dandruff Hair with Herbal Treatment - Bee Choo Herbal",
+      "th_title": "วิธีขจัดรังแคและความคันอย่างเร่งด่วน - บีชู เฮอร์เบิล"
+    },
+    {
+      "en": "https://beechooherbal.com/reverse-premature-grey-white-hair-by-herbal-treatment/",
+      "th": "https://beechooherbal.com/th/%e0%b8%9b%e0%b8%b4%e0%b8%94%e0%b8%9c%e0%b8%a1%e0%b8%ab%e0%b8%87%e0%b8%ad%e0%b8%81%e0%b8%a7%e0%b8%b4%e0%b8%98%e0%b8%b5%e0%b8%98%e0%b8%a3%e0%b8%a3%e0%b8%a1%e0%b8%8a%e0%b8%b2%e0%b8%95%e0%b8%b4/",
+      "confidence": "high",
+      "note": "Grey/white hair",
+      "en_title": "Reverse Premature Grey White Hair by Herbal Treatment - Bee Choo Herbal",
+      "th_title": "ปิดผมหงอกและผมขาวโดยวิธีธรรมชาติ - Bee Choo Herbal"
+    },
+    {
+      "en": "https://beechooherbal.com/repair-chemically-damaged-dry-hair-with-herbal-treatment/",
+      "th": "https://beechooherbal.com/th/%e0%b9%81%e0%b8%81%e0%b9%89%e0%b8%9c%e0%b8%a1%e0%b9%80%e0%b8%aa%e0%b8%b5%e0%b8%a2%e0%b9%80%e0%b8%a3%e0%b9%88%e0%b8%87%e0%b8%94%e0%b9%88%e0%b8%a7%e0%b8%99/",
+      "confidence": "high",
+      "note": "Chemically damaged/dry hair (TH title confirms)",
+      "en_title": "Repair Chemically Damaged Dry Hair with Herbal Treatment - Bee Choo Herbal",
+      "th_title": "แก้ปัญหาผมเสียจากสารเคมีเร่งด่วนด้วยสมุนไพร - Bee Choo (บีชู เฮอร์เบิล)"
+    },
+    {
+      "en": "https://beechooherbal.com/herbal-treatment-cure-for-bacteria-infection-alopecia-areata-and-other-hair-diseases/",
+      "th": "https://beechooherbal.com/th/%e0%b8%ab%e0%b8%99%e0%b8%b1%e0%b8%87%e0%b8%a8%e0%b8%b5%e0%b8%a3%e0%b8%a9%e0%b8%b0%e0%b8%95%e0%b8%b4%e0%b8%94%e0%b9%80%e0%b8%8a%e0%b8%b7%e0%b9%89%e0%b8%ad/",
+      "confidence": "high",
+      "note": "Bacterial infection / alopecia (TH title confirms)",
+      "en_title": "Herbal Treatment Cure for Bacteria Infection, Alopecia Areata and other hair diseases - Bee Choo Herbal",
+      "th_title": "ทรีทเม้นท์สมุนไพรรักษาเชื้อแบคทีเรีย ผมร่วงเป็นหย่อม และปัญหาผมอื่นๆ"
+    },
+    {
+      "en": "https://beechooherbal.com/postpartum-hair-loss-treatment-in-thailand/",
+      "th": "https://beechooherbal.com/th/%e0%b8%a0%e0%b8%b2%e0%b8%a7%e0%b8%b0%e0%b8%9c%e0%b8%a1%e0%b8%a3%e0%b9%88%e0%b8%a7%e0%b8%87%e0%b9%80%e0%b8%89%e0%b8%b5%e0%b8%a2%e0%b8%9a%e0%b8%9e%e0%b8%a5%e0%b8%b1%e0%b8%99%e0%b8%82%e0%b8%ad%e0%b8%87/",
+      "confidence": "high",
+      "note": "Postpartum (TH title: ผมร่วงสำหรับคุณแม่หลังคลอด)",
+      "en_title": "Postpartum Hair Loss Treatment in Thailand - Bee Choo Herbal",
+      "th_title": "ทรีตเมนต์แก้ปัญหาผมร่วงสำหรับคุณแม่หลังคลอด​ในประเทศไทย - Bee Choo Herbal"
+    },
+    {
+      "en": "https://beechooherbal.com/hair-transplant-vs-stem-cell-vs-keratin-treatment-vs-natural-herbal-treatment/",
+      "th": "https://beechooherbal.com/th/%e0%b8%aa%e0%b8%a1%e0%b8%b8%e0%b8%99%e0%b9%84%e0%b8%9e%e0%b8%a3-vs-%e0%b8%81%e0%b8%b2%e0%b8%a3%e0%b8%9b%e0%b8%a5%e0%b8%b9%e0%b8%81%e0%b8%9c%e0%b8%a1/",
+      "confidence": "high",
+      "note": "Herbal vs hair transplant",
+      "en_title": "Hair transplant vs stem cell vs keratin treatment vs natural herbal treatment - Bee Choo Herbal",
+      "th_title": "ทรีทเม้นท์สมุนไพร vs การปลูกผม - Bee Choo Herbal"
+    },
+    {
+      "en": "https://beechooherbal.com/hair-loss-treatment-cost-in-thailand-prices-revealed/",
+      "th": "https://beechooherbal.com/th/%e0%b8%a3%e0%b8%b2%e0%b8%84%e0%b8%b2%e0%b8%81%e0%b8%b2%e0%b8%a3%e0%b8%97%e0%b8%b3%e0%b8%97%e0%b8%a3%e0%b8%b5%e0%b8%97%e0%b9%80%e0%b8%a1%e0%b9%89%e0%b8%99%e0%b8%97%e0%b9%8c/",
+      "confidence": "high",
+      "note": "Treatment cost/prices",
+      "en_title": "What is the Hair Loss Treatment Cost in Thailand? Prices revealed - Bee Choo Herbal",
+      "th_title": "ราคาการทำทรีทเม้นท์รักษาปัญหาผมร่วงในประเทศไทยเป็นอย่างไร? - Bee Choo Herbal"
+    },
+    {
+      "en": "https://beechooherbal.com/bee-choo-hair-care-products/",
+      "th": "https://beechooherbal.com/th/%e0%b9%81%e0%b8%8a%e0%b8%a1%e0%b8%9e%e0%b8%b9%e0%b8%9a%e0%b8%b5%e0%b8%8a%e0%b8%b9%e0%b8%9b%e0%b9%89%e0%b8%ad%e0%b8%87%e0%b8%81%e0%b8%b1%e0%b8%99%e0%b8%9c%e0%b8%a1%e0%b8%a3%e0%b9%88%e0%b8%a7%e0%b8%87/",
+      "confidence": "high",
+      "note": "Products (TH title: แชมพูบีชูและผลิตภัณฑ์)",
+      "en_title": "Bee Choo Hair Care Products - Bee Choo Herbal",
+      "th_title": "แชมพูบีชูและผลิตภัณฑ์ป้องกันผมร่วง - Bee Choo Herbal"
+    },
+    {
+      "en": "https://beechooherbal.com/events-news-release/",
+      "th": "https://beechooherbal.com/th/%e0%b9%80%e0%b8%ab%e0%b8%95%e0%b8%b8%e0%b8%81%e0%b8%b2%e0%b8%a3%e0%b8%93%e0%b9%8c%e0%b9%81%e0%b8%a5%e0%b8%b0%e0%b8%82%e0%b9%88%e0%b8%b2%e0%b8%a7/",
+      "confidence": "medium",
+      "note": "EN Events&News page <-> TH events page",
+      "en_title": "Events and News - Bee Choo Herbal",
+      "th_title": "เหตุการณ์และข่าว - Bee Choo Herbal"
+    }
+  ]
+}
