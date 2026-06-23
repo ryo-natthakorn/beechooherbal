@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+/* Brand design tokens — to be filled in during the design pass (later Phase 2 batch).
+   Tailwind v4 is configured in CSS only (there is NO tailwind.config file). Define brand
+   colours, fonts, spacing, etc. as custom properties inside @theme and Tailwind generates
+   the matching utilities (e.g. --color-brand-600 -> bg-brand-600). */
+@theme {
+  /* TODO: real brand palette + fonts. Example shape (values are placeholders):
+  --color-brand-600: #2f6b3f;
+  --font-sans: "Noto Sans Thai", system-ui, sans-serif;
+  */
+}

@@ -1,0 +1,20 @@
+---
+// TEMPORARY scaffold placeholder — English home at "/".
+// Proves routing (English is unprefixed, NOT /en/) and that Tailwind v4 is wired.
+// The real homepage (BaseLayout + SEOHead + content) is built in a later Phase 2/3 batch.
+import '../styles/global.css';
+const lang = 'en';
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bee Choo Herbal — scaffold placeholder (EN)</title>
+  </head>
+  <body class="font-sans p-8">
+    <h1 class="text-2xl font-bold">Bee Choo Herbal — scaffold OK (English, <code>/</code>)</h1>
+    <p class="mt-2 text-gray-600">Temporary placeholder. English stays unprefixed at <code>/</code> (not <code>/en/</code>).</p>
+  </body>
+</html>

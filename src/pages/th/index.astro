@@ -1,0 +1,21 @@
+---
+// TEMPORARY scaffold placeholder — Thai route at "/th/".
+// Proves the Thai-prefixed route renders (not /en/th/ or similar).
+// NOTE: the real Thai home will live at /th/home/ (the live site 301s /th/ -> /th/home/);
+// that routing + the root language redirect are deliberately deferred to a later batch.
+import '../../styles/global.css';
+const lang = 'th';
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bee Choo Herbal — scaffold placeholder (TH)</title>
+  </head>
+  <body class="font-sans p-8">
+    <h1 class="text-2xl font-bold">บีชู เฮอร์เบิล — scaffold OK (Thai, <code>/th/</code>)</h1>
+    <p class="mt-2 text-gray-600">Temporary placeholder to confirm the <code>/th/</code> route builds.</p>
+  </body>
+</html>
