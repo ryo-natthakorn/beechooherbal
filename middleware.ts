@@ -51,12 +51,33 @@ export default function middleware(request: Request) {
     return next(); // never redirect a crawler — "/" must stay indexable as English
   }
 
+  // Explicit user choice (set by the LanguageSwitcher on click) ALWAYS wins
+  // over Accept-Language. This is what makes the EN/TH toggle work for a
+  // Thai-browser visitor: without it, clicking "EN" lands on "/" and the
+  // Accept-Language check below would immediately bounce them back to
+  // /th/home/, so the page would appear stuck in Thai. Bots never carry this
+  // cookie, so "/" stays indexable as English regardless.
+  const choice = readLangCookie(request.headers.get('cookie') ?? '');
+  if (choice === 'en') {
+    return next(); // explicitly chose English — stay on "/"
+  }
+  if (choice === 'th') {
+    return Response.redirect(new URL('/th/home/', request.url), 302);
+  }
+
   const acceptLanguage = request.headers.get('accept-language') ?? '';
   if (prefersThaiOverEnglish(acceptLanguage)) {
     return Response.redirect(new URL('/th/home/', request.url), 302); // 302: per-visitor personalization, not a permanent URL change
   }
 
   return next();
+}
+
+// Reads the `beechoo_lang` cookie (set by LanguageSwitcher). Returns 'en',
+// 'th', or null when absent/unrecognised.
+export function readLangCookie(cookieHeader: string): 'en' | 'th' | null {
+  const match = cookieHeader.match(/(?:^|;\s*)beechoo_lang=(en|th)\b/);
+  return match ? (match[1] as 'en' | 'th') : null;
 }
 
 // Accept-Language looks like: "th-TH,th;q=0.9,en-US;q=0.8,en;q=0.7"

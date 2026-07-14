@@ -3,10 +3,16 @@
 import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TreatmentCard from "../../components/TreatmentCard.astro";
+import YouTubeEmbed from "../../components/YouTubeEmbed.astro";
 import { TREATMENTS } from "../../data/treatments";
 import howItWorks from "../../assets/images/how-it-works.jpg";
 import priceList from "../../assets/images/price-list.jpg";
 import locationsMap from "../../assets/images/locations-map.jpg";
+import awardsBanner from "../../assets/images/awards-banner.jpg";
+import review1 from "../../assets/images/reviews/review-1.jpg";
+import review2 from "../../assets/images/reviews/review-2.jpg";
+import review3 from "../../assets/images/reviews/review-3.jpg";
+import review4 from "../../assets/images/reviews/review-4.jpg";
 import singaporeExcellenceAward from "../../assets/images/awards/singapore-excellence-award.jpg";
 import singaporeHeartland from "../../assets/images/awards/singapore-heartland.jpg";
 import singaporePrestigeWinner from "../../assets/images/awards/singapore-prestige-winner.jpg";
@@ -46,7 +52,8 @@ const awards = [
 
     <!-- Hero -->
     <section class="py-12 text-center">
-      <h1 class="font-thai text-3xl font-bold text-brand-green md:text-5xl">
+      <YouTubeEmbed id="c8x_e1zPvMY" title="วิดีโอแนะนำทรีตเมนต์สมุนไพรบีชู" />
+      <h1 class="mt-8 font-thai text-3xl font-bold text-brand-green md:text-5xl">
         การรักษาผมร่วง ผมบาง หนังศีรษะมันและคันหนังศีรษะ ผมขาว ผมหงอก ขจัดรังแค ด้วยสมุนไพรธรรมชาติ 100%, ปลอดภัย, มีประสิทธิภาพสูง, ได้รับรางวัลร้านทำผมยอดเยี่ยม
       </h1>
       <p class="mt-4 text-xl font-bold text-brand-root">
@@ -102,6 +109,9 @@ const awards = [
         ทรีตเมนต์สมุนไพร 100เปอร์เซ็น ให้ผลยังไงมาดูกัน!
       </h2>
       <Image src={howItWorks} alt="ขั้นตอนทรีตเมนต์สมุนไพรบีชู 4 สเต็ป: เสปรย์และนวดโทนิค ทาครีมสมุนไพร อบไอน้ำ 45 นาที ล้างและปรับสภาพหนังศีรษะ" width={900} height={506} class="mx-auto rounded-lg" />
+      <div class="mt-6">
+        <YouTubeEmbed id="QOgcSx7_C7w" title="ทรีตเมนต์สมุนไพรบีชูให้ผลอย่างไร" />
+      </div>
       <p class="mx-auto mt-4 max-w-2xl text-sm text-brand-origin">
         มีให้เลือก 3 สี ได้แก่ แบบมีสี / แบบไม่มีสี / แบบมีสี (สีพิเศษ) สำหรับข้อมูลเพิ่มเติม
         ศึกษาได้จากหน้าคำถามที่พบบ่อย (FAQ) ข้อควรระวัง: ผลลัพธ์ที่ได้อาจแตกต่างกันขึ้นอยู่กับปัจจัยต่าง ๆ
@@ -109,13 +119,19 @@ const awards = [
       </p>
     </section>
 
-    <!-- Reviews (see Content decision in the plan doc: ambiguous review images not used) -->
+    <!-- Reviews -->
     <section class="py-8 text-center">
-      <h2 class="mb-4 font-thai text-2xl font-bold text-brand-green">
+      <h2 class="mb-6 font-thai text-2xl font-bold text-brand-green">
         รีวิว บีชู แฮร์ ทรีตเมนต์
       </h2>
-      <a href="/th/รีวิวทรีทเม้นท์ที่ดี/" class="text-brand-green underline">
-        อ่านรีวิวและความคิดเห็นจากลูกค้า &rarr;
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <Image src={review1} alt="รีวิวจากลูกค้าที่ใช้ทรีตเมนต์สมุนไพรบีชู" width={400} height={400} class="h-auto w-full rounded-lg" />
+        <Image src={review2} alt="รีวิวจากลูกค้าที่ใช้ทรีตเมนต์สมุนไพรบีชู" width={400} height={400} class="h-auto w-full rounded-lg" />
+        <Image src={review3} alt="รีวิวจากลูกค้าที่ใช้ทรีตเมนต์สมุนไพรบีชู" width={400} height={400} class="h-auto w-full rounded-lg" />
+        <Image src={review4} alt="รีวิวจากลูกค้าที่ใช้ทรีตเมนต์สมุนไพรบีชู" width={400} height={400} class="h-auto w-full rounded-lg" />
+      </div>
+      <a href="/th/รีวิวทรีทเม้นท์ที่ดี/" class="mt-6 inline-block text-brand-green underline">
+        อ่านรีวิวและความคิดเห็นจากลูกค้าเพิ่มเติม &rarr;
       </a>
     </section>
 
@@ -127,6 +143,7 @@ const awards = [
           <Image src={award.img} alt={award.alt} width={100} height={100} class="mx-auto" />
         ))}
       </div>
+      <Image src={awardsBanner} alt="รางวัลและการรับรองของบีชู ออริจิน" width={800} height={240} class="mx-auto mt-8 h-auto w-full max-w-3xl rounded-lg" />
     </section>
 
     <!-- Pricing -->

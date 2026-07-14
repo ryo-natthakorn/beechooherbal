@@ -1,0 +1,25 @@
+---
+// src/components/YouTubeEmbed.astro
+// Responsive 16:9 YouTube embed. Uses youtube-nocookie + native loading="lazy"
+// so it stays light (no JS library, no autoplay) — matches CLAUDE.md's
+// "near-zero JS" / "no heavy JavaScript libraries" rules. Reused for the hero
+// intro video and the "how it works" treatment video, both present on the
+// live site (EN + TH).
+interface Props {
+  id: string;
+  title: string;
+}
+const { id, title } = Astro.props;
+---
+
+<div class="relative mx-auto aspect-video w-full max-w-3xl overflow-hidden rounded-lg shadow-sm">
+  <iframe
+    class="absolute inset-0 h-full w-full"
+    src={`https://www.youtube-nocookie.com/embed/${id}`}
+    title={title}
+    loading="lazy"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen></iframe>
+</div>
