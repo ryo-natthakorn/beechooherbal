@@ -1,0 +1,40 @@
+---
+// src/components/TreatmentCard.astro
+// Photo-forward treatment card. Both the title and "Read more" link point at the SAME
+// beechooherbal.com URL — fixes the live site's bug where the heading wrongly links to
+// beechooladies.com.sg while only the button links correctly.
+import { Image } from "astro:assets";
+import type { Treatment } from "../data/treatments";
+
+interface Props {
+  treatment: Treatment;
+  lang: "en" | "th";
+}
+
+const { treatment, lang } = Astro.props;
+const href = treatment.href[lang];
+const readMore = lang === "th" ? "คลิกเพื่ออ่านต่อ" : "Read more";
+const fontClass = lang === "th" ? "font-thai" : "font-sans";
+---
+
+<article class="flex flex-col overflow-hidden rounded-lg border border-brand-earth bg-white shadow-sm">
+  <Image
+    src={treatment.image}
+    alt={treatment.alt[lang]}
+    width={480}
+    height={320}
+    class="h-48 w-full object-cover"
+  />
+  <div class="flex flex-1 flex-col gap-2 p-4">
+    <h3 class={`${fontClass} text-lg font-bold text-brand-green`}>
+      <a href={href}>{treatment.title[lang]}</a>
+    </h3>
+    <p class="flex-1 text-sm text-brand-origin">{treatment.teaser[lang]}</p>
+    <a
+      href={href}
+      class="mt-2 inline-block rounded bg-brand-green px-4 py-2 text-center text-sm font-bold text-white hover:bg-brand-green/90"
+    >
+      {readMore} &rarr;
+    </a>
+  </div>
+</article>

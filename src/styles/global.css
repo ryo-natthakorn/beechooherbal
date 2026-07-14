@@ -1,12 +1,21 @@
 @import "tailwindcss";
+@import "@fontsource/roboto/400.css";
+@import "@fontsource/roboto/700.css";
+@import "@fontsource/noto-sans-thai/400.css";
+@import "@fontsource/noto-sans-thai/700.css";
 
-/* Brand design tokens — to be filled in during the design pass (later Phase 2 batch).
-   Tailwind v4 is configured in CSS only (there is NO tailwind.config file). Define brand
-   colours, fonts, spacing, etc. as custom properties inside @theme and Tailwind generates
-   the matching utilities (e.g. --color-brand-600 -> bg-brand-600). */
+/* Brand tokens — from 2026 BC_brandguide_R4_18122025.pdf, primary + secondary colour system. */
 @theme {
-  /* TODO: real brand palette + fonts. Example shape (values are placeholders):
-  --color-brand-600: #2f6b3f;
-  --font-sans: "Noto Sans Thai", system-ui, sans-serif;
-  */
+  --color-brand-green: #2D6946;   /* Harmony Green — primary: headings, logo, nav, CTAs */
+  --color-brand-yellow: #FFC600;  /* Oriental Yellow — CTA accents, alerts */
+  --color-brand-pink: #EFA693;    /* Gentle Pink — soft accents, hover states */
+  --color-brand-earth: #DBCBC1;   /* section backgrounds, dividers */
+  --color-brand-origin: #6F6259;  /* body text on light backgrounds */
+  --color-brand-treasure: #DAC556;
+  --color-brand-root: #D47E00;
+  --color-brand-nude: #F6B9A7;
+  --color-brand-serenity: #B2E1D8;
+
+  --font-sans: "Roboto", system-ui, sans-serif;
+  --font-thai: "Noto Sans Thai", sans-serif;
 }

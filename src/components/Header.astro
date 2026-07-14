@@ -1,0 +1,38 @@
+---
+// src/components/Header.astro
+import { Image } from "astro:assets";
+import logoLeaf from "../assets/images/logo-leaf.jpg";
+import { UI, NAV_HREFS } from "../i18n/ui";
+
+interface Props {
+  lang: "en" | "th";
+}
+
+const { lang } = Astro.props;
+const ui = UI[lang];
+const hrefs = NAV_HREFS[lang];
+const wordmark = lang === "th" ? "บีชู เฮอร์เบิล" : "Bee Choo Herbal";
+const fontClass = lang === "th" ? "font-thai" : "font-sans";
+---
+
+<header class="flex items-center justify-between border-b border-brand-earth bg-white px-4 py-3 md:px-8">
+  <a href={hrefs.home} class="flex items-center gap-2">
+    <Image src={logoLeaf} alt="Bee Choo Herbal" width={36} height={31} />
+    <span class={`${fontClass} text-lg font-bold text-brand-green`}>{wordmark}</span>
+  </a>
+
+  <nav class="hidden items-center gap-6 md:flex">
+    <a href={hrefs.home} class="text-brand-origin hover:text-brand-green">{ui.nav.home}</a>
+    <a href={hrefs.about} class="text-brand-origin hover:text-brand-green">{ui.nav.about}</a>
+    <a href={hrefs.locations} class="text-brand-origin hover:text-brand-green">{ui.nav.locations}</a>
+    <a href={hrefs.faq} class="text-brand-origin hover:text-brand-green">{ui.nav.faq}</a>
+    <a href={hrefs.blog} class="text-brand-origin hover:text-brand-green">{ui.nav.blog}</a>
+  </nav>
+
+  <a
+    href="tel:+66020726698"
+    class="rounded bg-brand-green px-4 py-2 text-sm font-bold text-white hover:bg-brand-green/90"
+  >
+    +66 02 072 6698
+  </a>
+</header>
