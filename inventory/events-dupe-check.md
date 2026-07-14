@@ -69,3 +69,19 @@ blanket `/category/*`.
 ```
 "/category/events-news/": "/events-news-release/"
 ```
+
+---
+
+## ⚠ CORRECTION — 2026-07-14 live re-check (see `docs/session-2026-07-14-audit.md`)
+
+Section 4 above is wrong on two points:
+
+1. `/th/category/blog-th/` does **NOT** 404 — it **301-redirects to `/th/category/บล็อก/`**,
+   which is a **live 200 Thai blog archive** ("บล็อก Archives - Bee Choo Herbal", self-canonical).
+   The Thai blog index DOES exist; it is just absent from the sitemap. The rebuild's blog pair is
+   therefore `/category/blog/` ↔ `/th/category/บล็อก/` (already corrected in `src/i18n/pairs.ts`).
+2. `/th/author/admin/` is also a **live 200** page — and it carries the old site's only complete,
+   correct hreflang cluster (en + th + x-default, canonical → `/author/admin/`).
+
+"Not a real crawled page" (i.e. not in the sitemap/`pages.json`) remains true for both — but
+neither is dead, so treat them as live URLs needing a decision (rebuild or 301), not as 404s.

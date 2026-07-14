@@ -298,8 +298,11 @@ const description = "150 characters max. Specific to this page.";
 ### Phase 1 — Inventory (both languages) — DONE (June 2026, see `inventory/`)
 - [x] Pull full URL list from the sitemap (`/sitemap_index.xml`) → `inventory/old-urls.txt` (**92 URLs**)
 - [x] Map every EN URL to its TH counterpart → `inventory/en-th-map.csv` (**19 pairs**; see caveat below)
-- [x] Pull content via WP REST API → `inventory/rest-pages.json` (en=18, th=17). ⚠ `/wp/v2/posts`
-      **500s for every variant** — blog/event *post* content must be HTML-scraped in Phase 4.
+- [x] Pull content via WP REST API → `inventory/rest-pages.json` (en=18, th=17).
+      ⚠ CORRECTED 2026-07-14: `/wp/v2/posts` 500s only for **large page-1 collection queries**
+      (`per_page=50`/`100&page=1`); **all 54 posts fetch fine individually** (`per_page=1&page=N`),
+      including the alopecia post whose HTML page 500s. Phase 4 blog migration CAN use REST —
+      pull posts one at a time; no HTML scraping needed. (See `docs/session-2026-07-14-audit.md`.)
 - [x] Capture SEO metadata (lang, hreflang, title, description, canonical) → `inventory/pages.json`
 - [x] Note moving parts → `inventory/parity-report.md`. Re-run anytime: `node inventory/scripts/run-all.mjs`
 
@@ -311,8 +314,12 @@ const description = "150 characters max. Specific to this page.";
 - **49 EN / 43 TH pages.** 26 TH pages are blog/event posts sitting at the **root** (English URL
   space) with a misleading `<html lang=en-US>` — language is NOT reliable from path or lang attr.
 - **Broken URLs to fix, not copy:** `/5-causes-of-hair-loss-…/` 301-loops to a `.jpg`;
-  `/suffering-from-alopecia-…/` returns 500; a duplicate `…ประเวศ…-2567-2` post (title is actually
-  Chatuchak). Several root posts have `canonical` pointing to a non-existent `/th/<slug>/`.
+  `/suffering-from-alopecia-…/` returns 500 (its content IS recoverable via single-post REST);
+  a duplicate `…ประเวศ…-2567-2` post (title is actually Chatuchak). 11 root posts have
+  `canonical` pointing at `/th/<slug>/` — CORRECTED 2026-07-14: those `/th/<slug>/` mirrors are
+  **live 200 duplicates** (not 404s), i.e. the live site tells Google the `/th/` mirror is
+  canonical for those posts. The Phase 4 redirect map must cover these mirror URLs even though
+  they are not among the 92 sitemap URLs.
 
 ### Phase 2 — Foundation (trunk before branches)
 - [ ] Scaffold Astro + Tailwind v4, set up Vercel deploy from GitHub
