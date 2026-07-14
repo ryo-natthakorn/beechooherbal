@@ -12,12 +12,13 @@ const { lang } = Astro.props;
 const ui = UI[lang];
 const hrefs = NAV_HREFS[lang];
 const wordmark = lang === "th" ? "บีชู เฮอร์เบิล" : "Bee Choo Herbal";
+const fontClass = lang === "th" ? "font-thai" : "font-sans";
 ---
 
 <header class="flex items-center justify-between border-b border-brand-earth bg-white px-4 py-3 md:px-8">
   <a href={hrefs.home} class="flex items-center gap-2">
     <Image src={logoLeaf} alt="Bee Choo Herbal" width={36} height={31} />
-    <span class="font-sans text-lg font-bold text-brand-green">{wordmark}</span>
+    <span class={`${fontClass} text-lg font-bold text-brand-green`}>{wordmark}</span>
   </a>
 
   <nav class="hidden items-center gap-6 md:flex">
