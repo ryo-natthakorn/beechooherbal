@@ -1,9 +1,151 @@
 ---
+// src/pages/th/home.astro
+import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import TreatmentCard from "../../components/TreatmentCard.astro";
+import { TREATMENTS } from "../../data/treatments";
+import howItWorks from "../../assets/images/how-it-works.jpg";
+import priceList from "../../assets/images/price-list.jpg";
+import locationsMap from "../../assets/images/locations-map.jpg";
+import singaporeExcellenceAward from "../../assets/images/awards/singapore-excellence-award.jpg";
+import singaporeHeartland from "../../assets/images/awards/singapore-heartland.jpg";
+import singaporePrestigeWinner from "../../assets/images/awards/singapore-prestige-winner.jpg";
+import singaporePrestige from "../../assets/images/awards/singapore-prestige.jpg";
+import superHealthBrand from "../../assets/images/awards/super-health-brand.jpg";
+import theEntrepreneur from "../../assets/images/awards/the-entrepreneur.jpg";
+import goldenEagleAward from "../../assets/images/awards/golden-eagle-award.jpg";
+import promisingSme500 from "../../assets/images/awards/promising-sme-500.jpg";
+import readersChoice from "../../assets/images/awards/readers-choice.jpg";
+import serviceClass from "../../assets/images/awards/service-class.jpg";
+import sinChewBusiness from "../../assets/images/awards/sin-chew-business.jpg";
+import tapAwards from "../../assets/images/awards/tap-awards-most-innovative.png";
+
 const lang = "th" as const;
-const title = "Bee Choo Herbal - placeholder TH";
-const description = "Placeholder — verifying SEOHead/BaseLayout output.";
+const title = "Bee Choo Herbal - ทรีตเมนต์สมุนไพรรักษาผมและหนังศีรษะ กรุงเทพฯ";
+const description =
+  "คลินิกทรีตเมนต์สมุนไพรธรรมชาติ 100% รักษาผมร่วง หนังศีรษะมัน รังแค ผมขาว ในกรุงเทพฯ ได้รับรางวัลการันตี";
+
+const awards = [
+  { img: singaporeExcellenceAward, alt: "รางวัล Singapore Excellence Award" },
+  { img: singaporeHeartland, alt: "รางวัล Singapore Heartland" },
+  { img: singaporePrestigeWinner, alt: "รางวัล Singapore Prestige — ผู้ชนะ" },
+  { img: singaporePrestige, alt: "รางวัล Singapore Prestige" },
+  { img: superHealthBrand, alt: "รางวัล Super Health Brand" },
+  { img: theEntrepreneur, alt: "รางวัล The Entrepreneur" },
+  { img: goldenEagleAward, alt: "รางวัล Golden Eagle Award" },
+  { img: promisingSme500, alt: "รางวัล Promising SME 500" },
+  { img: readersChoice, alt: "รางวัล Reader's Choice" },
+  { img: serviceClass, alt: "รางวัล Service Class" },
+  { img: sinChewBusiness, alt: "รางวัล Sin Chew Business Excellence" },
+  { img: tapAwards, alt: "ตรา TAP Awards — Most Innovative" },
+];
 ---
+
 <BaseLayout {title} {description} {lang}>
-  <h1>TH home (placeholder)</h1>
+  <main class="mx-auto max-w-6xl px-4 md:px-8">
+
+    <!-- Hero -->
+    <section class="py-12 text-center">
+      <h1 class="font-thai text-3xl font-bold text-brand-green md:text-5xl">
+        การรักษาผมร่วง ผมบาง หนังศีรษะมันและคันหนังศีรษะ ผมขาว ผมหงอก ขจัดรังแค ด้วยสมุนไพรธรรมชาติ 100%, ปลอดภัย, มีประสิทธิภาพสูง, ได้รับรางวัลร้านทำผมยอดเยี่ยม
+      </h1>
+      <p class="mt-4 text-xl font-bold text-brand-root">
+        ซาลอน/คลินิกรักษาผมร่วง ผมบาง ที่ดีที่สุดในประเทศไทย
+      </p>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <a href="tel:+66020726698" class="rounded bg-brand-green px-6 py-3 font-bold text-white hover:bg-brand-green/90">
+          Call Us Today
+        </a>
+        <a href="https://www.facebook.com/beechooherbal/" class="rounded bg-brand-yellow px-6 py-3 font-bold text-brand-origin hover:bg-brand-yellow/90">
+          พูดคุยกับเราผ่านเฟสบุ๊ค
+        </a>
+      </div>
+    </section>
+
+    <!-- Trust intro -->
+    <section class="py-8 text-brand-origin">
+      <p>
+        บีชู ออริจิน เป็นทรีตเมนต์ซาลอนและคลินิกรักษาผมร่วงที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง
+        รักษาผมบาง รังแค หนังศีรษะมัน และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา
+        ในมาเลเซียจำนวน 68 สาขา และมากกว่า 170 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ
+        ประเทศไทย และจะมีทั้งหมด 16 สาขาภายในสิ้นปี 2568 นี้ พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมากที่สุด
+      </p>
+      <p class="mt-4">
+        บีชู ได้ก่อตั้งเมื่อปี 2000 โดยคุณเชีย บี ชู และด้วยชื่อเสียงของแบรนด์ที่มีเสมอมา
+        การันตีโดยรางวัลมากมายในสิงคโปร์ คุณสามารถอ่านเรื่องราวเพิ่มเติมได้ในนิตยสาร ไทม์ สิงคโปร์ ในหัวข้อ
+        <a class="text-brand-green underline" href="https://web.archive.org/web/20181020133432/http://www.businesstimes.com.sg/hub/bt-salutes-enterprise-2016/power-of-testimonies-drives-business-growth">
+          "ผลลัพธ์จากการการันตีที่ทำให้ธุรกิจเติบโต"
+        </a>
+        และ
+        <a class="text-brand-green underline" href="https://web.archive.org/web/20181020133432/http://www.businesstimes.com.sg/hub-projects/ceo-conversations-2017/sincerity-before-profit">
+          "ความจริงใจมาก่อนผลกำไร"
+        </a>
+      </p>
+    </section>
+
+    <!-- Treatment cards -->
+    <section class="py-8">
+      <h2 class="mb-6 text-center font-thai text-2xl font-bold text-brand-green">
+        7 ทรีตเมนต์สำหรับเส้นผมและหนังศีรษะในกรุงเทพฯ
+      </h2>
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {TREATMENTS.map((treatment) => <TreatmentCard {treatment} {lang} />)}
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="py-8 text-center">
+      <h2 class="mb-4 font-thai text-2xl font-bold text-brand-green">
+        ทรีตเมนต์สมุนไพร 100เปอร์เซ็น ให้ผลยังไงมาดูกัน!
+      </h2>
+      <Image src={howItWorks} alt="ขั้นตอนทรีตเมนต์สมุนไพรบีชู 4 สเต็ป: เสปรย์และนวดโทนิค ทาครีมสมุนไพร อบไอน้ำ 45 นาที ล้างและปรับสภาพหนังศีรษะ" width={900} height={506} class="mx-auto rounded-lg" />
+      <p class="mx-auto mt-4 max-w-2xl text-sm text-brand-origin">
+        มีให้เลือก 3 สี ได้แก่ แบบมีสี / แบบไม่มีสี / แบบมีสี (สีพิเศษ) สำหรับข้อมูลเพิ่มเติม
+        ศึกษาได้จากหน้าคำถามที่พบบ่อย (FAQ) ข้อควรระวัง: ผลลัพธ์ที่ได้อาจแตกต่างกันขึ้นอยู่กับปัจจัยต่าง ๆ
+        เช่น ประเภทของผม อายุ เชื้อชาติ ฯลฯ
+      </p>
+    </section>
+
+    <!-- Reviews (see Content decision in the plan doc: ambiguous review images not used) -->
+    <section class="py-8 text-center">
+      <h2 class="mb-4 font-thai text-2xl font-bold text-brand-green">
+        รีวิว บีชู แฮร์ ทรีตเมนต์
+      </h2>
+      <a href="/th/รีวิวทรีทเม้นท์ที่ดี/" class="text-brand-green underline">
+        อ่านรีวิวและความคิดเห็นจากลูกค้า &rarr;
+      </a>
+    </section>
+
+    <!-- Awards -->
+    <section class="py-8 text-center">
+      <h2 class="mb-2 font-thai text-2xl font-bold text-brand-green">ความคิดเห็นจากลูกค้าของเรา / รางวัลการันตี</h2>
+      <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6">
+        {awards.map((award) => (
+          <Image src={award.img} alt={award.alt} width={100} height={100} class="mx-auto" />
+        ))}
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="py-8 text-center">
+      <h2 class="mb-4 font-thai text-2xl font-bold text-brand-green">
+        ทรีตเมนต์ผมราคาจับต้องได้ในประเทศไทย
+      </h2>
+      <Image src={priceList} alt="ราคาทรีตเมนต์บีชู 800 ถึง 1200 บาท ขึ้นอยู่กับความยาวผม ไม่มีค่าใช้จ่ายแอบแฝง" width={700} height={990} class="mx-auto rounded-lg" />
+      <p class="mx-auto mt-4 max-w-2xl text-sm text-brand-origin">
+        ราคาในการให้บริการของเรานั้นขึ้นอยู่กับความยาวของเส้นผม โดยเริ่มต้นที่ 800 บาท ไปจนถึง 1,200 บาท
+        ในการทำ à la carte ทรีตเมนต์สมุนไพร ซึ่งทางเราไม่มีการคิดเงินเกินจากที่กำหนดไว้แน่นอน
+        ลูกค้าสามารถตกลงราคาก่อนที่จะทำทรีตเมนต์ได้
+      </p>
+    </section>
+
+    <!-- Locations -->
+    <section class="py-8 text-center">
+      <h2 class="mb-4 font-thai text-2xl font-bold text-brand-green">BEE CHOO THAILAND LOCATIONS</h2>
+      <a href="/th/สถานที่ตั้งของร้านค้า/">
+        <Image src={locationsMap} alt="แผนที่สาขาบีชู ประเทศไทย ในกรุงเทพฯ" width={900} height={600} class="mx-auto rounded-lg" />
+      </a>
+    </section>
+
+  </main>
 </BaseLayout>
