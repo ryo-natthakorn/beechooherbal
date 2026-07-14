@@ -14,10 +14,10 @@ interface Props {
 const { treatment, lang } = Astro.props;
 const href = treatment.href[lang];
 const readMore = lang === "th" ? "คลิกเพื่ออ่านต่อ" : "Read more";
-const fontClass = lang === "th" ? "font-thai" : "font-sans";
+const headingFont = lang === "th" ? "font-serif-thai" : "font-serif";
 ---
 
-<article class="flex flex-col overflow-hidden rounded-lg border border-brand-earth bg-white shadow-sm">
+<article class="flex flex-col overflow-hidden rounded-2xl bg-white shadow-soft transition duration-200 motion-safe:hover:-translate-y-1 hover:shadow-soft-lg">
   <Image
     src={treatment.image}
     alt={treatment.alt[lang]}
@@ -25,14 +25,14 @@ const fontClass = lang === "th" ? "font-thai" : "font-sans";
     height={320}
     class="h-48 w-full object-cover"
   />
-  <div class="flex flex-1 flex-col gap-2 p-4">
-    <h3 class={`${fontClass} text-lg font-bold text-brand-green`}>
-      <a href={href}>{treatment.title[lang]}</a>
+  <div class="flex flex-1 flex-col gap-2 p-5">
+    <h3 class={`${headingFont} text-lg font-bold text-brand-green`}>
+      <a href={href} class="hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">{treatment.title[lang]}</a>
     </h3>
-    <p class="flex-1 text-sm text-brand-origin">{treatment.teaser[lang]}</p>
+    <p class="flex-1 text-sm leading-relaxed text-brand-origin">{treatment.teaser[lang]}</p>
     <a
       href={href}
-      class="mt-2 inline-block rounded bg-brand-green px-4 py-2 text-center text-sm font-bold text-white hover:bg-brand-green/90"
+      class="mt-3 inline-block rounded-full bg-brand-green px-5 py-2.5 text-center text-sm font-bold text-white transition-colors duration-200 hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
     >
       {readMore} &rarr;
     </a>

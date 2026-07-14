@@ -1,9 +1,13 @@
 ---
 // src/pages/index.astro
+// Layout system: white page with alternating Earth-tint full-width bands (brand guide:
+// "white/light background for all touchpoints"), Soft UI elevation on cards, Lora serif
+// headings (the guide's digital stand-in for print-only Minion Pro), leaf-motif dividers.
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import TreatmentCard from "../components/TreatmentCard.astro";
 import YouTubeEmbed from "../components/YouTubeEmbed.astro";
+import LeafDivider from "../components/LeafDivider.astro";
 import { TREATMENTS } from "../data/treatments";
 import howItWorks from "../assets/images/how-it-works.jpg";
 import priceList from "../assets/images/price-list.jpg";
@@ -48,132 +52,154 @@ const awards = [
 ---
 
 <BaseLayout {title} {description} {lang}>
-  <main class="mx-auto max-w-6xl px-4 md:px-8">
+  <main>
 
     <!-- Hero -->
-    <section class="py-12 text-center">
-      <YouTubeEmbed id="c8x_e1zPvMY" title="Bee Choo Herbal hair treatment introduction" />
-      <h1 class="mt-8 font-sans text-3xl font-bold text-brand-green md:text-5xl">
-        100% Natural Herbal Hair Treatment, Safe, Highly Effective, Proven, Award Winning Hair Salon Clinic
-      </h1>
-      <p class="mt-4 text-xl font-bold text-brand-root">
-        BEST HAIR LOSS TREATMENT CLINIC IN BANGKOK, Thailand
-      </p>
-      <div class="mt-6 flex flex-wrap justify-center gap-3">
-        <a href="tel:+66020726698" class="rounded bg-brand-green px-6 py-3 font-bold text-white hover:bg-brand-green/90">
-          Call Us Today
-        </a>
-        <a href="https://www.facebook.com/beechooherbal/" class="rounded bg-brand-yellow px-6 py-3 font-bold text-brand-origin hover:bg-brand-yellow/90">
-          Talk to us on Facebook!
-        </a>
-        <a href="https://lin.ee/ll3injb" class="rounded bg-brand-pink px-6 py-3 font-bold text-white hover:bg-brand-pink/90">
-          Add us on LINE
-        </a>
+    <section class="py-12 text-center md:py-16">
+      <div class="mx-auto max-w-6xl px-4 md:px-8">
+        <YouTubeEmbed id="c8x_e1zPvMY" title="Bee Choo Herbal hair treatment introduction" />
+        <h1 class="mt-8 font-serif text-3xl font-bold text-brand-green md:text-5xl md:leading-tight">
+          100% Natural Herbal Hair Treatment, Safe, Highly Effective, Proven, Award Winning Hair Salon Clinic
+        </h1>
+        <p class="mt-4 text-xl font-bold text-brand-root">
+          BEST HAIR LOSS TREATMENT CLINIC IN BANGKOK, Thailand
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          <a href="tel:+66020726698" class="rounded-full bg-brand-green px-7 py-3 font-bold text-white shadow-soft transition-colors duration-200 hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+            Call Us Today
+          </a>
+          <a href="https://www.facebook.com/beechooherbal/" class="rounded-full bg-brand-yellow px-7 py-3 font-bold text-brand-origin shadow-soft transition-colors duration-200 hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+            Talk to us on Facebook!
+          </a>
+          <a href="https://lin.ee/ll3injb" class="rounded-full border border-brand-green/30 bg-white px-7 py-3 font-bold text-brand-green shadow-soft transition-colors duration-200 hover:bg-brand-green/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+            Add us on LINE
+          </a>
+        </div>
       </div>
     </section>
 
     <!-- Trust intro -->
-    <section class="py-8 text-brand-origin">
-      <p>
-        Bee Choo Origin is the largest scalp/hair loss treatment clinic specialising in the
-        treatment of hair loss, dandruff, oily itchy scalp and other hair issues. There are 21
-        outlets in Singapore, 68 outlets in Malaysia with more than 170 outlets across Asia
-        Pacific. The Group has expanded into Bangkok, and by end 2025, Bee Choo Thailand has 16
-        outlets. Annually, we serve millions of happy customers with effective and proven
-        results.
-      </p>
-      <p class="mt-4">
-        A recognised household brand name, established since 2000, our founder Madam Cheah Bee
-        Chew and her brand has won numerous accolades from Singapore Agencies. You may read more
-        from two articles written by Business Times Singapore titled
-        <a class="text-brand-green underline" href="http://www.businesstimes.com.sg/hub/bt-salutes-enterprise-2016/power-of-testimonies-drives-business-growth">
-          "Power of testimonies drives business growth"
-        </a>
-        and
-        <a class="text-brand-green underline" href="http://www.businesstimes.com.sg/hub-projects/ceo-conversations-2017/sincerity-before-profit">
-          "Sincerity before profit"
-        </a>.
-      </p>
+    <section class="bg-brand-earth/25 py-12 md:py-16">
+      <div class="mx-auto max-w-6xl px-4 md:px-8 text-brand-origin leading-relaxed">
+        <p>
+          Bee Choo Origin is the largest scalp/hair loss treatment clinic specialising in the
+          treatment of hair loss, dandruff, oily itchy scalp and other hair issues. There are 21
+          outlets in Singapore, 68 outlets in Malaysia with more than 170 outlets across Asia
+          Pacific. The Group has expanded into Bangkok, and by end 2025, Bee Choo Thailand has 16
+          outlets. Annually, we serve millions of happy customers with effective and proven
+          results.
+        </p>
+        <p class="mt-4">
+          A recognised household brand name, established since 2000, our founder Madam Cheah Bee
+          Chew and her brand has won numerous accolades from Singapore Agencies. You may read more
+          from two articles written by Business Times Singapore titled
+          <a class="text-brand-green underline" href="http://www.businesstimes.com.sg/hub/bt-salutes-enterprise-2016/power-of-testimonies-drives-business-growth">
+            "Power of testimonies drives business growth"
+          </a>
+          and
+          <a class="text-brand-green underline" href="http://www.businesstimes.com.sg/hub-projects/ceo-conversations-2017/sincerity-before-profit">
+            "Sincerity before profit"
+          </a>.
+        </p>
+      </div>
     </section>
 
     <!-- Treatment cards -->
-    <section class="py-8">
-      <h2 class="mb-6 text-center font-sans text-2xl font-bold text-brand-green">
-        Hair Treatment in Bangkok, Thailand (7 Types)
-      </h2>
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {TREATMENTS.map((treatment) => <TreatmentCard {treatment} {lang} />)}
+    <section class="py-12 md:py-16">
+      <div class="mx-auto max-w-6xl px-4 md:px-8">
+        <LeafDivider />
+        <h2 class="mb-8 text-center font-serif text-2xl font-bold text-brand-green md:text-3xl">
+          Hair Treatment in Bangkok, Thailand (7 Types)
+        </h2>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {TREATMENTS.map((treatment) => <TreatmentCard {treatment} {lang} />)}
+        </div>
       </div>
     </section>
 
     <!-- How it works -->
-    <section class="py-8 text-center">
-      <h2 class="mb-4 font-sans text-2xl font-bold text-brand-green">
-        100% NATURAL HERBAL HAIR TREATMENT - HOW IT WORKS
-      </h2>
-      <Image src={howItWorks} alt="Bee Choo herbal hair treatment 4-step process: spray and massage tonic, apply herbal cream, steam for 45 minutes, rinse and condition" width={900} height={506} class="mx-auto rounded-lg" />
-      <div class="mt-6">
-        <YouTubeEmbed id="QOgcSx7_C7w" title="How Bee Choo herbal hair treatment works" />
+    <section class="bg-brand-earth/25 py-12 text-center md:py-16">
+      <div class="mx-auto max-w-6xl px-4 md:px-8">
+        <LeafDivider />
+        <h2 class="mb-6 font-serif text-2xl font-bold text-brand-green md:text-3xl">
+          100% NATURAL HERBAL HAIR TREATMENT - HOW IT WORKS
+        </h2>
+        <Image src={howItWorks} alt="Bee Choo herbal hair treatment 4-step process: spray and massage tonic, apply herbal cream, steam for 45 minutes, rinse and condition" width={900} height={506} class="mx-auto rounded-xl shadow-soft" />
+        <div class="mt-6">
+          <YouTubeEmbed id="QOgcSx7_C7w" title="How Bee Choo herbal hair treatment works" />
+        </div>
+        <p class="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-brand-origin">
+          3 colours to choose from -&gt; Copper / Colourless / Darken, for more information please
+          see our FAQ. Disclaimer: Results may vary depending on various factors such as hair type,
+          age, ethnicity, etc.
+        </p>
       </div>
-      <p class="mx-auto mt-4 max-w-2xl text-sm text-brand-origin">
-        3 colours to choose from -&gt; Copper / Colourless / Darken, for more information please
-        see our FAQ. Disclaimer: Results may vary depending on various factors such as hair type,
-        age, ethnicity, etc.
-      </p>
     </section>
 
     <!-- Reviews -->
-    <section class="py-8 text-center">
-      <h2 class="mb-6 font-sans text-2xl font-bold text-brand-green">
-        REVIEWS ON BEECHOO HAIR TREATMENT
-      </h2>
-      <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <Image src={review1} alt="Customer review of Bee Choo hair treatment" width={400} height={400} class="h-auto w-full rounded-lg" />
-        <Image src={review2} alt="Customer review of Bee Choo hair treatment" width={400} height={400} class="h-auto w-full rounded-lg" />
-        <Image src={review3} alt="Customer review of Bee Choo hair treatment" width={400} height={400} class="h-auto w-full rounded-lg" />
-        <Image src={review4} alt="Customer review of Bee Choo hair treatment" width={400} height={400} class="h-auto w-full rounded-lg" />
+    <section class="py-12 text-center md:py-16">
+      <div class="mx-auto max-w-6xl px-4 md:px-8">
+        <LeafDivider />
+        <h2 class="mb-8 font-serif text-2xl font-bold text-brand-green md:text-3xl">
+          REVIEWS ON BEECHOO HAIR TREATMENT
+        </h2>
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <Image src={review1} alt="Customer review of Bee Choo hair treatment" width={400} height={400} class="h-auto w-full rounded-xl shadow-soft" />
+          <Image src={review2} alt="Customer review of Bee Choo hair treatment" width={400} height={400} class="h-auto w-full rounded-xl shadow-soft" />
+          <Image src={review3} alt="Customer review of Bee Choo hair treatment" width={400} height={400} class="h-auto w-full rounded-xl shadow-soft" />
+          <Image src={review4} alt="Customer review of Bee Choo hair treatment" width={400} height={400} class="h-auto w-full rounded-xl shadow-soft" />
+        </div>
+        <a href="/reviews-and-testimonials-of-bee-choo-origin-treatment/" class="mt-8 inline-block text-brand-green underline transition-colors duration-200 hover:text-brand-green/80">
+          Read more reviews and testimonials &rarr;
+        </a>
       </div>
-      <a href="/reviews-and-testimonials-of-bee-choo-origin-treatment/" class="mt-6 inline-block text-brand-green underline">
-        Read more reviews and testimonials &rarr;
-      </a>
     </section>
 
     <!-- Awards -->
-    <section class="py-8 text-center">
-      <h2 class="mb-2 font-sans text-2xl font-bold text-brand-green">OUR AWARDS &amp; RECOGNITIONS</h2>
-      <p class="mx-auto mb-6 max-w-2xl text-sm text-brand-origin">
-        Certified with TQCSI, Bee Choo Herbal Hair Treatment surpassed the stringent criteria of
-        the ISO standards and demonstrates consistent ability to enhance customer satisfaction and
-        assurance to deliver quality service, which enables Bee Choo to receive a number of
-        awards in the Asia Pacific.
-      </p>
-      <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6">
-        {awards.map((award) => (
-          <Image src={award.img} alt={award.alt} width={100} height={100} class="mx-auto" />
-        ))}
+    <section class="bg-brand-earth/25 py-12 text-center md:py-16">
+      <div class="mx-auto max-w-6xl px-4 md:px-8">
+        <LeafDivider />
+        <h2 class="mb-3 font-serif text-2xl font-bold text-brand-green md:text-3xl">OUR AWARDS &amp; RECOGNITIONS</h2>
+        <p class="mx-auto mb-8 max-w-2xl text-sm leading-relaxed text-brand-origin">
+          Certified with TQCSI, Bee Choo Herbal Hair Treatment surpassed the stringent criteria of
+          the ISO standards and demonstrates consistent ability to enhance customer satisfaction and
+          assurance to deliver quality service, which enables Bee Choo to receive a number of
+          awards in the Asia Pacific.
+        </p>
+        <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6">
+          {awards.map((award) => (
+            <Image src={award.img} alt={award.alt} width={100} height={100} class="mx-auto rounded-full bg-white p-1 shadow-soft" />
+          ))}
+        </div>
+        <Image src={awardsBanner} alt="Bee Choo Origin awards and recognitions" width={800} height={240} class="mx-auto mt-10 h-auto w-full max-w-3xl rounded-xl shadow-soft" />
       </div>
-      <Image src={awardsBanner} alt="Bee Choo Origin awards and recognitions" width={800} height={240} class="mx-auto mt-8 h-auto w-full max-w-3xl rounded-lg" />
     </section>
 
     <!-- Pricing -->
-    <section class="py-8 text-center">
-      <h2 class="mb-4 font-sans text-2xl font-bold text-brand-green">
-        AFFORDABLE HAIR TREATMENT IN Bangkok, Thailand
-      </h2>
-      <Image src={priceList} alt="Bee Choo hair treatment price list: 800 to 1200 Baht depending on hair length, no hidden charges" width={700} height={990} class="mx-auto rounded-lg" />
-      <p class="mx-auto mt-4 max-w-2xl text-sm text-brand-origin">
-        Our prices are based on your hair length between 800 Baht to 1200 Baht for à la carte
-        herbal hair treatment. Strictly no hidden charges. You may choose to make upfront payment
-        before treatment.
-      </p>
+    <section class="py-12 text-center md:py-16">
+      <div class="mx-auto max-w-6xl px-4 md:px-8">
+        <LeafDivider />
+        <h2 class="mb-6 font-serif text-2xl font-bold text-brand-green md:text-3xl">
+          AFFORDABLE HAIR TREATMENT IN Bangkok, Thailand
+        </h2>
+        <Image src={priceList} alt="Bee Choo hair treatment price list: 800 to 1200 Baht depending on hair length, no hidden charges" width={700} height={990} class="mx-auto rounded-xl shadow-soft" />
+        <p class="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-brand-origin">
+          Our prices are based on your hair length between 800 Baht to 1200 Baht for à la carte
+          herbal hair treatment. Strictly no hidden charges. You may choose to make upfront payment
+          before treatment.
+        </p>
+      </div>
     </section>
 
     <!-- Locations -->
-    <section class="py-8 text-center">
-      <h2 class="mb-4 font-sans text-2xl font-bold text-brand-green">BEE CHOO THAILAND LOCATIONS</h2>
-      <a href="/locations/">
-        <Image src={locationsMap} alt="Map of Bee Choo Thailand outlet locations in Bangkok" width={900} height={600} class="mx-auto rounded-lg" />
-      </a>
+    <section class="bg-brand-earth/25 py-12 text-center md:py-16">
+      <div class="mx-auto max-w-6xl px-4 md:px-8">
+        <LeafDivider />
+        <h2 class="mb-6 font-serif text-2xl font-bold text-brand-green md:text-3xl">BEE CHOO THAILAND LOCATIONS</h2>
+        <a href="/locations/" class="inline-block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+          <Image src={locationsMap} alt="Map of Bee Choo Thailand outlet locations in Bangkok" width={900} height={600} class="mx-auto rounded-xl shadow-soft" />
+        </a>
+      </div>
     </section>
 
   </main>

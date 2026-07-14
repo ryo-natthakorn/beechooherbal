@@ -17,7 +17,9 @@ const ui = UI[lang];
 <footer class="bg-brand-green px-4 py-10 text-white md:px-8">
   <div class="mx-auto flex max-w-5xl flex-col items-center gap-6 text-center">
     <Image src={logoFull} alt="Bee Choo Origin" width={160} height={226} />
-    <p class="font-sans italic text-brand-nude">{ui.footer.tagline}</p>
+    <!-- Slogan is serif italic per brand guide (Minion Pro italic in print → Lora italic digital);
+         Earth tone instead of pink — Gentle Pink is skipped on the homepage by design decision. -->
+    <p class="font-serif italic text-brand-earth">{ui.footer.tagline}</p>
 
     <div class="flex flex-wrap justify-center gap-3">
       <a

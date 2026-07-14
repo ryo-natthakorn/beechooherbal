@@ -12,7 +12,8 @@ const { lang } = Astro.props;
 const ui = UI[lang];
 const hrefs = NAV_HREFS[lang];
 const wordmark = lang === "th" ? "บีชู เฮอร์เบิล" : "Bee Choo Herbal";
-const fontClass = lang === "th" ? "font-thai" : "font-sans";
+// Serif wordmark — matches the logotype's serif letterforms (brand guide main logomark).
+const fontClass = lang === "th" ? "font-serif-thai" : "font-serif";
 ---
 
 <header class="flex items-center justify-between border-b border-brand-earth bg-white px-4 py-3 md:px-8">
