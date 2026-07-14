@@ -1,9 +1,160 @@
 ---
+// src/pages/index.astro
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import TreatmentCard from "../components/TreatmentCard.astro";
+import { TREATMENTS } from "../data/treatments";
+import howItWorks from "../assets/images/how-it-works.jpg";
+import priceList from "../assets/images/price-list.jpg";
+import locationsMap from "../assets/images/locations-map.jpg";
+import singaporeExcellenceAward from "../assets/images/awards/singapore-excellence-award.jpg";
+import singaporeHeartland from "../assets/images/awards/singapore-heartland.jpg";
+import singaporePrestigeWinner from "../assets/images/awards/singapore-prestige-winner.jpg";
+import singaporePrestige from "../assets/images/awards/singapore-prestige.jpg";
+import superHealthBrand from "../assets/images/awards/super-health-brand.jpg";
+import theEntrepreneur from "../assets/images/awards/the-entrepreneur.jpg";
+import goldenEagleAward from "../assets/images/awards/golden-eagle-award.jpg";
+import promisingSme500 from "../assets/images/awards/promising-sme-500.jpg";
+import readersChoice from "../assets/images/awards/readers-choice.jpg";
+import serviceClass from "../assets/images/awards/service-class.jpg";
+import sinChewBusiness from "../assets/images/awards/sin-chew-business.jpg";
+import tapAwards from "../assets/images/awards/tap-awards-most-innovative.png";
+
 const lang = "en" as const;
 const title = "Bee Choo Herbal - Herbal Hair & Scalp Treatment, Bangkok";
-const description = "Placeholder home — verifying SEOHead/BaseLayout output.";
+const description =
+  "Award-winning 100% natural herbal hair and scalp treatment clinic in Bangkok, Thailand. Hair loss, oily scalp, dandruff, grey hair and more.";
+
+const awards = [
+  { img: singaporeExcellenceAward, alt: "Singapore Excellence Award" },
+  { img: singaporeHeartland, alt: "Singapore Heartland Award" },
+  { img: singaporePrestigeWinner, alt: "Singapore Prestige Award — Winner" },
+  { img: singaporePrestige, alt: "Singapore Prestige Award" },
+  { img: superHealthBrand, alt: "Super Health Brand Award" },
+  { img: theEntrepreneur, alt: "The Entrepreneur Award" },
+  { img: goldenEagleAward, alt: "Golden Eagle Award" },
+  { img: promisingSme500, alt: "Promising SME 500 Award" },
+  { img: readersChoice, alt: "Reader's Choice Award" },
+  { img: serviceClass, alt: "Service Class Award" },
+  { img: sinChewBusiness, alt: "Sin Chew Business Excellence Award" },
+  { img: tapAwards, alt: "TAP Awards — Most Innovative Badge" },
+];
 ---
+
 <BaseLayout {title} {description} {lang}>
-  <h1>EN home (placeholder)</h1>
+  <main class="mx-auto max-w-6xl px-4 md:px-8">
+
+    <!-- Hero -->
+    <section class="py-12 text-center">
+      <h1 class="font-sans text-3xl font-bold text-brand-green md:text-5xl">
+        100% Natural Herbal Hair Treatment, Safe, Highly Effective, Proven, Award Winning Hair Salon Clinic
+      </h1>
+      <p class="mt-4 text-xl font-bold text-brand-root">
+        BEST HAIR LOSS TREATMENT CLINIC IN BANGKOK, Thailand
+      </p>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <a href="tel:+66020726698" class="rounded bg-brand-green px-6 py-3 font-bold text-white hover:bg-brand-green/90">
+          Call Us Today
+        </a>
+        <a href="https://www.facebook.com/beechooherbal/" class="rounded bg-brand-yellow px-6 py-3 font-bold text-brand-origin hover:bg-brand-yellow/90">
+          Talk to us on Facebook!
+        </a>
+      </div>
+    </section>
+
+    <!-- Trust intro -->
+    <section class="py-8 text-brand-origin">
+      <p>
+        Bee Choo Origin is the largest scalp/hair loss treatment clinic specialising in the
+        treatment of hair loss, dandruff, oily itchy scalp and other hair issues. There are 21
+        outlets in Singapore, 68 outlets in Malaysia with more than 170 outlets across Asia
+        Pacific. The Group has expanded into Bangkok, and by end 2025, Bee Choo Thailand has 16
+        outlets. Annually, we serve millions of happy customers with effective and proven
+        results.
+      </p>
+      <p class="mt-4">
+        A recognised household brand name, established since 2000, our founder Madam Cheah Bee
+        Chew and her brand has won numerous accolades from Singapore Agencies. You may read more
+        from two articles written by Business Times Singapore titled
+        <a class="text-brand-green underline" href="http://www.businesstimes.com.sg/hub/bt-salutes-enterprise-2016/power-of-testimonies-drives-business-growth">
+          "Power of testimonies drives business growth"
+        </a>
+        and
+        <a class="text-brand-green underline" href="http://www.businesstimes.com.sg/hub-projects/ceo-conversations-2017/sincerity-before-profit">
+          "Sincerity before profit"
+        </a>.
+      </p>
+    </section>
+
+    <!-- Treatment cards -->
+    <section class="py-8">
+      <h2 class="mb-6 text-center font-sans text-2xl font-bold text-brand-green">
+        Hair Treatment in Bangkok, Thailand (7 Types)
+      </h2>
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {TREATMENTS.map((treatment) => <TreatmentCard {treatment} {lang} />)}
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="py-8 text-center">
+      <h2 class="mb-4 font-sans text-2xl font-bold text-brand-green">
+        100% NATURAL HERBAL HAIR TREATMENT - HOW IT WORKS
+      </h2>
+      <Image src={howItWorks} alt="Bee Choo herbal hair treatment 4-step process: spray and massage tonic, apply herbal cream, steam for 45 minutes, rinse and condition" width={900} height={506} class="mx-auto rounded-lg" />
+      <p class="mx-auto mt-4 max-w-2xl text-sm text-brand-origin">
+        3 colours to choose from -&gt; Copper / Colourless / Darken, for more information please
+        see our FAQ. Disclaimer: Results may vary depending on various factors such as hair type,
+        age, ethnicity, etc.
+      </p>
+    </section>
+
+    <!-- Reviews (see Content decision in the plan doc: ambiguous review images not used) -->
+    <section class="py-8 text-center">
+      <h2 class="mb-4 font-sans text-2xl font-bold text-brand-green">
+        REVIEWS ON BEECHOO HAIR TREATMENT
+      </h2>
+      <a href="/reviews-and-testimonials-of-bee-choo-origin-treatment/" class="text-brand-green underline">
+        Read reviews and testimonials &rarr;
+      </a>
+    </section>
+
+    <!-- Awards -->
+    <section class="py-8 text-center">
+      <h2 class="mb-2 font-sans text-2xl font-bold text-brand-green">OUR AWARDS &amp; RECOGNITIONS</h2>
+      <p class="mx-auto mb-6 max-w-2xl text-sm text-brand-origin">
+        Certified with TQCSI, Bee Choo Herbal Hair Treatment surpassed the stringent criteria of
+        the ISO standards and demonstrates consistent ability to enhance customer satisfaction and
+        assurance to deliver quality service, which enables Bee Choo to receive a number of
+        awards in the Asia Pacific.
+      </p>
+      <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6">
+        {awards.map((award) => (
+          <Image src={award.img} alt={award.alt} width={100} height={100} class="mx-auto" />
+        ))}
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="py-8 text-center">
+      <h2 class="mb-4 font-sans text-2xl font-bold text-brand-green">
+        AFFORDABLE HAIR TREATMENT IN Bangkok, Thailand
+      </h2>
+      <Image src={priceList} alt="Bee Choo hair treatment price list: 800 to 1200 Baht depending on hair length, no hidden charges" width={700} height={990} class="mx-auto rounded-lg" />
+      <p class="mx-auto mt-4 max-w-2xl text-sm text-brand-origin">
+        Our prices are based on your hair length between 800 Baht to 1200 Baht for à la carte
+        herbal hair treatment. Strictly no hidden charges. You may choose to make upfront payment
+        before treatment.
+      </p>
+    </section>
+
+    <!-- Locations -->
+    <section class="py-8 text-center">
+      <h2 class="mb-4 font-sans text-2xl font-bold text-brand-green">BEE CHOO THAILAND LOCATIONS</h2>
+      <a href="/locations/">
+        <Image src={locationsMap} alt="Map of Bee Choo Thailand outlet locations in Bangkok" width={900} height={600} class="mx-auto rounded-lg" />
+      </a>
+    </section>
+
+  </main>
 </BaseLayout>
