@@ -1,0 +1,49 @@
+---
+// src/components/Footer.astro
+// CTA set confirmed by Crispin (CLAUDE.md §2): Call + Facebook + LINE as the main buttons,
+// plus YouTube and TikTok as on the current site. No online booking system.
+import { Image } from "astro:assets";
+import logoFull from "../assets/images/logo-full.png";
+import { UI } from "../i18n/ui";
+
+interface Props {
+  lang: "en" | "th";
+}
+
+const { lang } = Astro.props;
+const ui = UI[lang];
+---
+
+<footer class="bg-brand-green px-4 py-10 text-white md:px-8">
+  <div class="mx-auto flex max-w-5xl flex-col items-center gap-6 text-center">
+    <Image src={logoFull} alt="Bee Choo Origin" width={160} height={226} />
+    <p class="font-sans italic text-brand-nude">{ui.footer.tagline}</p>
+
+    <div class="flex flex-wrap justify-center gap-3">
+      <a
+        href="tel:+66020726698"
+        class="rounded bg-brand-yellow px-5 py-2 font-bold text-brand-origin hover:bg-brand-yellow/90"
+      >
+        {ui.cta.call}
+      </a>
+      <a
+        href="https://www.facebook.com/beechooherbal/"
+        class="rounded bg-white px-5 py-2 font-bold text-brand-green hover:bg-white/90"
+      >
+        {ui.cta.facebook}
+      </a>
+      <a
+        href="https://lin.ee/ll3injb"
+        class="rounded bg-white px-5 py-2 font-bold text-brand-green hover:bg-white/90"
+      >
+        {ui.cta.line}
+      </a>
+    </div>
+
+    <div class="flex gap-4 text-sm">
+      <a href="https://www.facebook.com/beechooherbal/" class="hover:text-brand-yellow">{ui.footer.socialFacebook}</a>
+      <a href="https://www.youtube.com/channel/UCx7bazL8Sco0j3LnVnbO3Lg/featured" class="hover:text-brand-yellow">{ui.footer.socialYoutube}</a>
+      <a href="https://tiktok.com/@beechooth" class="hover:text-brand-yellow">{ui.footer.socialTiktok}</a>
+    </div>
+  </div>
+</footer>
