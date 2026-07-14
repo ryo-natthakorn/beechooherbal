@@ -1,6 +1,17 @@
 # Handoff — Bee Choo Herbal (beechooherbal.com) WP→Astro migration
 **Date:** 2026-07-14 · **Repo:** `ryo-natthakorn/beechooherbal` (GitHub, branch `main`, synced) · **Local:** `c:\Users\Computer RC Herbal\Desktop\beechooherbal`
 
+## Branch strategy — CHANGED 2026-07-14: direct-to-main, no more feature branches
+As of today, work happens **directly on `main`** — commit and push straight to `main`, no
+feature branch, no PR. This supersedes the `worktree-phase3-homepage` pattern used earlier today
+(commits through `f51217a`, then one follow-up commit `789a978`, merged via PR #1 and PR #2). That
+branch and its worktree (`.claude/worktrees/phase3-homepage/`) are now stale — `main` has
+everything from them (fast-forwarded to `18f4207`) plus nothing more. Don't resume work in that
+worktree or branch out of habit; if you see it referenced in an older doc, treat `main` as current.
+Working rhythm is unchanged: one batch → `npm run build` exit 0 → stop for review (plain English,
+lead with evidence) → commit/push ONLY when told → wait for the next batch. Only the branch/PR step
+is gone — everything else in "Hard-won gotchas" below still applies.
+
 ## Read these first (do not duplicate their content — they are the record)
 1. `CLAUDE.md` — standing spec: goals, SEO rules, i18n Path A decision, phase checklist. Two bullets carry dated 2026-07-14 corrections.
 2. `docs/session-2026-07-14-audit.md` — full independent audit of Phases 1–2: what verified clean, which 4 claims were false/stale, verified next steps. **Supersedes** `docs/session-2026-06-23.md` §2 where they conflict.
@@ -15,7 +26,7 @@ Commits this session (all pushed; messages carry full detail):
 
 Live verification on `beechooherbal.vercel.app` (2026-07-14, all pass): `/th/`+`/th` → 301 → `/th/home/` (200); Thai-browser visitor on `/` → 302 → `/th/home/`; English visitor and Googlebot (even with Thai header) stay 200 on `/`. Real domain still points at WordPress — nothing SEO-facing is exposed yet.
 
-## Phase 3 homepage batch — DONE, awaiting Crispin sign-off (branch `worktree-phase3-homepage`)
+## Phase 3 homepage batch — DONE and on `main`, awaiting Crispin sign-off
 Plan: `docs/superpowers/plans/2026-07-14-homepage.md` (11 tasks). Tasks 1–10 built the real EN
 (`/`) and TH (`/th/home/`) homepages (brand tokens/fonts, shared UI strings, treatments data,
 downloaded + magic-byte-verified images, `TreatmentCard`/`Header`/`Footer` components, both pages
@@ -27,7 +38,16 @@ wired through `BaseLayout`). Task 11 (final verification) ran 2026-07-14:
 - hreflang on `/` — all three tags correct: `en` → `/`, `th` → `/th/home/`, `x-default` → `/`.
 - `npm run astro check` — **fails**, logged below under Known issues; does not block the build.
 
-Branch is ready to show Crispin for homepage design sign-off (CLAUDE.md §10 Phase 3 requires this
+Follow-up fix batch (commit `789a978`, merged via PR #2): restored the hero + treatment YouTube
+videos, the 4 customer review screenshots, and the awards recognitions banner that were missing
+from the first pass (all present on the live site — the hero video was a lazy-loaded JS widget the
+original scrape missed, which is also why its caption briefly became the page's first heading).
+Also fixed the language switcher: the root-language `middleware.ts` was 302-redirecting every
+Thai-browser visitor away from `/`, so clicking "EN" could never land — it now sets an explicit
+`beechoo_lang` cookie that middleware honours over `Accept-Language`. Switcher redesigned as a
+floating pill toggle fixed to the right edge.
+
+`main` is ready to show Crispin for homepage design sign-off (CLAUDE.md §10 Phase 3 requires this
 before building any other page).
 
 ## Known issues
