@@ -1,7 +1,15 @@
 ---
 // src/components/LanguageSwitcher.astro
-// Asks the same registry SEOHead uses ("what's my twin?") and links to it.
-// No hardcoded URLs here — pairs.ts is the single source of truth.
+// Floating pill toggle, fixed to the right edge, vertically centred. Asks the
+// same registry SEOHead uses ("what's my twin?") and links to it — no
+// hardcoded URLs; pairs.ts is the single source of truth.
+//
+// Clicking a language sets the `beechoo_lang` cookie so the root-language
+// middleware (middleware.ts) treats it as an EXPLICIT choice and stops
+// auto-redirecting on "/". Without this, a Thai-browser visitor who clicks
+// "EN" lands on "/" and the middleware bounces them straight back to
+// /th/home/ — i.e. the toggle appears broken (Thai only). Explicit choice
+// always wins over Accept-Language.
 import { getPair } from "../i18n/pairs";
 
 interface Props {
@@ -10,23 +18,44 @@ interface Props {
 const { lang } = Astro.props;
 
 const pair = getPair(Astro.url.pathname);
-const hasTwin = Boolean(pair?.en && pair?.th);
 
-// DECISION: an orphan page (no twin yet) has nowhere real to send a
-// language-switch click. Falling back to the OTHER language's homepage
-// (rather than hiding the switcher, or linking to a 404) keeps the
-// control always usable without inventing a page that doesn't exist.
-// Flag if you'd rather hide the switcher entirely on orphan pages.
+// An orphan page (no twin yet) falls back to the other language's homepage
+// so the control is always usable rather than linking to a 404.
 const enHref = pair?.en ?? "/";
 const thHref = pair?.th ?? "/th/home/";
 
-// hasTwin is currently unused in markup — kept in scope in case you later
-// want to style orphan-page switcher links differently (e.g. a muted state
-// to signal "this goes to the other language's homepage, not a real twin").
+const base = "px-4 py-2 text-sm font-bold text-center transition-colors";
+const active = "bg-brand-green text-white";
+const idle = "text-brand-green hover:bg-brand-green/10";
 ---
 
-<nav aria-label="Language switcher" class="lang-switcher" data-has-twin={hasTwin}>
-  <a href={enHref} aria-current={lang === "en" ? "page" : undefined}>EN</a>
-  <span aria-hidden="true">/</span>
-  <a href={thHref} aria-current={lang === "th" ? "page" : undefined}>ไทย</a>
-</nav>
+<div class="fixed right-3 top-1/2 z-50 -translate-y-1/2">
+  <nav
+    aria-label="Language switcher"
+    class="flex flex-col overflow-hidden rounded-full border border-brand-green bg-white shadow-lg"
+  >
+    <a
+      href={enHref}
+      data-setlang="en"
+      aria-current={lang === "en" ? "page" : undefined}
+      class:list={[base, lang === "en" ? active : idle]}>EN</a
+    >
+    <a
+      href={thHref}
+      data-setlang="th"
+      aria-current={lang === "th" ? "page" : undefined}
+      class:list={[base, lang === "th" ? active : idle]}>ไทย</a
+    >
+  </nav>
+</div>
+
+<script is:inline>
+  document.querySelectorAll("[data-setlang]").forEach(function (el) {
+    el.addEventListener("click", function () {
+      document.cookie =
+        "beechoo_lang=" +
+        el.getAttribute("data-setlang") +
+        ";path=/;max-age=31536000;samesite=lax";
+    });
+  });
+</script>

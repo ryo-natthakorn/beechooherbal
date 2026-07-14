@@ -3,10 +3,16 @@
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import TreatmentCard from "../components/TreatmentCard.astro";
+import YouTubeEmbed from "../components/YouTubeEmbed.astro";
 import { TREATMENTS } from "../data/treatments";
 import howItWorks from "../assets/images/how-it-works.jpg";
 import priceList from "../assets/images/price-list.jpg";
 import locationsMap from "../assets/images/locations-map.jpg";
+import awardsBanner from "../assets/images/awards-banner.jpg";
+import review1 from "../assets/images/reviews/review-1.jpg";
+import review2 from "../assets/images/reviews/review-2.jpg";
+import review3 from "../assets/images/reviews/review-3.jpg";
+import review4 from "../assets/images/reviews/review-4.jpg";
 import singaporeExcellenceAward from "../assets/images/awards/singapore-excellence-award.jpg";
 import singaporeHeartland from "../assets/images/awards/singapore-heartland.jpg";
 import singaporePrestigeWinner from "../assets/images/awards/singapore-prestige-winner.jpg";
@@ -46,7 +52,8 @@ const awards = [
 
     <!-- Hero -->
     <section class="py-12 text-center">
-      <h1 class="font-sans text-3xl font-bold text-brand-green md:text-5xl">
+      <YouTubeEmbed id="c8x_e1zPvMY" title="Bee Choo Herbal hair treatment introduction" />
+      <h1 class="mt-8 font-sans text-3xl font-bold text-brand-green md:text-5xl">
         100% Natural Herbal Hair Treatment, Safe, Highly Effective, Proven, Award Winning Hair Salon Clinic
       </h1>
       <p class="mt-4 text-xl font-bold text-brand-root">
@@ -105,6 +112,9 @@ const awards = [
         100% NATURAL HERBAL HAIR TREATMENT - HOW IT WORKS
       </h2>
       <Image src={howItWorks} alt="Bee Choo herbal hair treatment 4-step process: spray and massage tonic, apply herbal cream, steam for 45 minutes, rinse and condition" width={900} height={506} class="mx-auto rounded-lg" />
+      <div class="mt-6">
+        <YouTubeEmbed id="QOgcSx7_C7w" title="How Bee Choo herbal hair treatment works" />
+      </div>
       <p class="mx-auto mt-4 max-w-2xl text-sm text-brand-origin">
         3 colours to choose from -&gt; Copper / Colourless / Darken, for more information please
         see our FAQ. Disclaimer: Results may vary depending on various factors such as hair type,
@@ -112,13 +122,19 @@ const awards = [
       </p>
     </section>
 
-    <!-- Reviews (see Content decision in the plan doc: ambiguous review images not used) -->
+    <!-- Reviews -->
     <section class="py-8 text-center">
-      <h2 class="mb-4 font-sans text-2xl font-bold text-brand-green">
+      <h2 class="mb-6 font-sans text-2xl font-bold text-brand-green">
         REVIEWS ON BEECHOO HAIR TREATMENT
       </h2>
-      <a href="/reviews-and-testimonials-of-bee-choo-origin-treatment/" class="text-brand-green underline">
-        Read reviews and testimonials &rarr;
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <Image src={review1} alt="Customer review of Bee Choo hair treatment" width={400} height={400} class="h-auto w-full rounded-lg" />
+        <Image src={review2} alt="Customer review of Bee Choo hair treatment" width={400} height={400} class="h-auto w-full rounded-lg" />
+        <Image src={review3} alt="Customer review of Bee Choo hair treatment" width={400} height={400} class="h-auto w-full rounded-lg" />
+        <Image src={review4} alt="Customer review of Bee Choo hair treatment" width={400} height={400} class="h-auto w-full rounded-lg" />
+      </div>
+      <a href="/reviews-and-testimonials-of-bee-choo-origin-treatment/" class="mt-6 inline-block text-brand-green underline">
+        Read more reviews and testimonials &rarr;
       </a>
     </section>
 
@@ -136,6 +152,7 @@ const awards = [
           <Image src={award.img} alt={award.alt} width={100} height={100} class="mx-auto" />
         ))}
       </div>
+      <Image src={awardsBanner} alt="Bee Choo Origin awards and recognitions" width={800} height={240} class="mx-auto mt-8 h-auto w-full max-w-3xl rounded-lg" />
     </section>
 
     <!-- Pricing -->
