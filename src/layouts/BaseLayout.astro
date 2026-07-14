@@ -3,6 +3,8 @@
 // Wraps every page. Owns <html lang>, head boilerplate, and delegates SEO.
 import SEOHead from "../components/SEOHead.astro";
 import LanguageSwitcher from "../components/LanguageSwitcher.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 
 interface Props {
   title: string;
@@ -15,6 +17,7 @@ interface Props {
 const { title, description, lang, image, hreflangOverride } = Astro.props;
 // Fixes the live-site bug where Thai pages reported lang="en-US".
 const htmlLang = lang === "th" ? "th" : "en";
+const fontClass = lang === "th" ? "font-thai" : "font-sans";
 ---
 
 <!doctype html>
@@ -25,8 +28,10 @@ const htmlLang = lang === "th" ? "th" : "en";
     <SEOHead {title} {description} {lang} {image} {hreflangOverride} />
     <slot name="head" />
   </head>
-  <body>
+  <body class={fontClass}>
     <LanguageSwitcher {lang} />
+    <Header {lang} />
     <slot />
+    <Footer {lang} />
   </body>
 </html>
