@@ -1,0 +1,30 @@
+---
+// src/layouts/BaseLayout.astro
+// Wraps every page. Owns <html lang>, head boilerplate, and delegates SEO.
+import SEOHead from "../components/SEOHead.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  lang: "en" | "th";
+  image?: string;
+  hreflangOverride?: { en?: string | null; th?: string | null };
+}
+
+const { title, description, lang, image, hreflangOverride } = Astro.props;
+// Fixes the live-site bug where Thai pages reported lang="en-US".
+const htmlLang = lang === "th" ? "th" : "en";
+---
+
+<!doctype html>
+<html lang={htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <SEOHead {title} {description} {lang} {image} {hreflangOverride} />
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,65 @@
+---
+// src/components/SEOHead.astro
+// Renders <title>, meta description, canonical, hreflang cluster, and OG tags.
+import { getPair } from "../i18n/pairs";
+
+interface Props {
+  title: string;        // exact title string (match the old Yoast title)
+  description: string;  // <= ~150 chars, page-specific
+  lang: "en" | "th";
+  image?: string;       // optional OG image (relative path or absolute URL)
+  // Escape hatch: force a pairing if auto-lookup can't (rarely needed)
+  hreflangOverride?: { en?: string | null; th?: string | null };
+}
+
+const { title, description, lang, image, hreflangOverride } = Astro.props;
+
+const site = Astro.site ?? new URL("https://beechooherbal.com");
+
+// --- canonical (self), normalized to a trailing slash --------------------
+function ensureTrailingSlash(pathname: string): string {
+  if (pathname === "/") return "/";
+  const last = pathname.split("/").pop() ?? "";
+  if (last.includes(".")) return pathname;
+  return pathname.endsWith("/") ? pathname : pathname + "/";
+}
+const canonical = new URL(ensureTrailingSlash(Astro.url.pathname), site).href;
+
+// --- hreflang twin lookup -------------------------------------------------
+const pair = hreflangOverride ?? getPair(Astro.url.pathname);
+const enHref = pair?.en ? new URL(pair.en, site).href : undefined;
+const thHref = pair?.th ? new URL(pair.th, site).href : undefined;
+const hasCluster = Boolean(enHref && thHref); // only emit a real, mutual pair
+
+const ogLocale = lang === "th" ? "th_TH" : "en_US";
+const ogLocaleAlt = lang === "th" ? "en_US" : "th_TH";
+const ogImage = image ? new URL(image, site).href : undefined;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+{hasCluster && (
+  <>
+    <link rel="alternate" hreflang="en" href={enHref} />
+    <link rel="alternate" hreflang="th" href={thHref} />
+    <link rel="alternate" hreflang="x-default" href={enHref} />
+  </>
+)}
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Bee Choo Herbal" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:locale" content={ogLocale} />
+{hasCluster && <meta property="og:locale:alternate" content={ogLocaleAlt} />}
+{ogImage && <meta property="og:image" content={ogImage} />}
+
+<!-- Twitter (cheap, standard) -->
+<meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{ogImage && <meta name="twitter:image" content={ogImage} />}
