@@ -1,0 +1,32 @@
+---
+// src/components/LanguageSwitcher.astro
+// Asks the same registry SEOHead uses ("what's my twin?") and links to it.
+// No hardcoded URLs here — pairs.ts is the single source of truth.
+import { getPair } from "../i18n/pairs";
+
+interface Props {
+  lang: "en" | "th";
+}
+const { lang } = Astro.props;
+
+const pair = getPair(Astro.url.pathname);
+const hasTwin = Boolean(pair?.en && pair?.th);
+
+// DECISION: an orphan page (no twin yet) has nowhere real to send a
+// language-switch click. Falling back to the OTHER language's homepage
+// (rather than hiding the switcher, or linking to a 404) keeps the
+// control always usable without inventing a page that doesn't exist.
+// Flag if you'd rather hide the switcher entirely on orphan pages.
+const enHref = pair?.en ?? "/";
+const thHref = pair?.th ?? "/th/home/";
+
+// hasTwin is currently unused in markup — kept in scope in case you later
+// want to style orphan-page switcher links differently (e.g. a muted state
+// to signal "this goes to the other language's homepage, not a real twin").
+---
+
+<nav aria-label="Language switcher" class="lang-switcher" data-has-twin={hasTwin}>
+  <a href={enHref} aria-current={lang === "en" ? "page" : undefined}>EN</a>
+  <span aria-hidden="true">/</span>
+  <a href={thHref} aria-current={lang === "th" ? "page" : undefined}>ไทย</a>
+</nav>

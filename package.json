@@ -11,8 +11,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5",
     "@tailwindcss/vite": "^4",
+    "@vercel/functions": "^3.7.5",
+    "astro": "^5",
     "tailwindcss": "^4"
   }
 }
