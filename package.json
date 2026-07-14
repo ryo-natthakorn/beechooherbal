@@ -11,6 +11,8 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource/noto-sans-thai": "^5.2.8",
+    "@fontsource/roboto": "^5.2.10",
     "@tailwindcss/vite": "^4",
     "@vercel/functions": "^3.7.5",
     "astro": "^5",
