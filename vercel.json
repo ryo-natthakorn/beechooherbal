@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/th", "destination": "/th/home/", "statusCode": 301 },
+    { "source": "/th/", "destination": "/th/home/", "statusCode": 301 }
+  ]
+}

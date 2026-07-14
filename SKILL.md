@@ -100,6 +100,15 @@ The rule: every old URL must resolve at the same path OR have an immediate 301.
   to know the paths ahead of time. Use a **host-level wildcard** instead — e.g. Vercel's
   `vercel.json` with `"source": "/tag/:path*"`.
 
+> ⚠ **Caveat (verified empirically 2026-07-14, beechooherbal):** on **static output with
+> NO adapter** (plain `astro build` + Vercel zero-config detection), Astro's native
+> `redirects` config does NOT produce a real 301 — it emits an HTML page with
+> `<meta http-equiv="refresh">` that the host serves as **HTTP 200** (confirmed with
+> `curl -I` against a live Vercel deployment). A meta-refresh is a materially weaker SEO
+> signal than a real 301. On such deployments, **one-to-one redirects also belong in
+> `vercel.json`**, not just wildcards — use `"statusCode": 301` (note: `"permanent": true`
+> sends a 308, not a 301). The one-to-one rule above assumes an adapter is installed.
+
 Always check the redirect map before deleting or renaming any page file.
 
 ## Gotchas learned the hard way
