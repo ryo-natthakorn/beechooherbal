@@ -59,12 +59,36 @@ const idle = "text-brand-green hover:bg-brand-green/10";
 </div>
 
 <script is:inline>
-  document.querySelectorAll("[data-setlang]").forEach(function (el) {
-    el.addEventListener("click", function () {
-      document.cookie =
-        "beechoo_lang=" +
-        el.getAttribute("data-setlang") +
-        ";path=/;max-age=31536000;samesite=lax";
+  (function () {
+    // Switching language navigates to a different URL (its own translated slug), so
+    // the browser has no notion that it's "the same page" and starts at the top.
+    // We carry the scroll position across as a fraction of page height (not raw
+    // pixels) since EN/TH copy is never the same length, so the two pages differ
+    // in total height — a fraction lands you in the same section either way.
+    var SCROLL_KEY = "beechoo_lang_scroll";
+
+    var saved = sessionStorage.getItem(SCROLL_KEY);
+    if (saved !== null) {
+      sessionStorage.removeItem(SCROLL_KEY);
+      var fraction = parseFloat(saved);
+      var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (!isNaN(fraction) && maxScroll > 0) {
+        window.scrollTo(0, Math.round(fraction * maxScroll));
+      }
+    }
+
+    document.querySelectorAll("[data-setlang]").forEach(function (el) {
+      el.addEventListener("click", function () {
+        document.cookie =
+          "beechoo_lang=" +
+          el.getAttribute("data-setlang") +
+          ";path=/;max-age=31536000;samesite=lax";
+
+        var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        if (maxScroll > 0) {
+          sessionStorage.setItem(SCROLL_KEY, String(window.scrollY / maxScroll));
+        }
+      });
     });
-  });
+  })();
 </script>

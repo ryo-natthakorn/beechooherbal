@@ -12,17 +12,19 @@ interface Props {
   treatment: Treatment;
   lang: "en" | "th";
   featured?: boolean;
+  index?: number;
 }
 
-const { treatment, lang, featured = false } = Astro.props;
+const { treatment, lang, featured = false, index = 0 } = Astro.props;
 const href = treatment.href[lang];
 const readMore = lang === "th" ? "คลิกเพื่ออ่านต่อ" : "Read more";
 const headingFont = lang === "th" ? "font-serif-thai" : "font-serif";
 ---
 
 <article
+  data-reveal-index={index}
   class:list={[
-    "group flex flex-col overflow-hidden rounded-2xl bg-white shadow-soft transition duration-200 motion-safe:hover:-translate-y-1 hover:shadow-soft-lg",
+    "card-reveal group flex flex-col overflow-hidden rounded-2xl bg-white shadow-soft transition duration-200 motion-safe:hover:-translate-y-1 hover:shadow-soft-lg",
     featured && "sm:col-span-2",
   ]}
 >

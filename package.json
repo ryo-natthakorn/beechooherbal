@@ -19,6 +19,7 @@
     "@tailwindcss/vite": "^4",
     "@vercel/functions": "^3.7.5",
     "astro": "^5",
+    "motion": "^12.42.2",
     "tailwindcss": "^4",
     "typescript": "^5.9.3"
   }
