@@ -12,6 +12,8 @@
 /* Brand tokens — from 2026 BC_brandguide_R4_18122025.pdf, primary + secondary colour system. */
 @theme {
   --color-brand-green: #2D6946;   /* Harmony Green — primary: headings, logo, nav, CTAs */
+  --color-brand-green-deep: #1F4A31; /* darker SHADE of Harmony Green (not a new hue) — cinematic
+                                        hero/scene gradient depth for the heavy-motion redesign */
   --color-brand-yellow: #FFC600;  /* Oriental Yellow — CTA accents, alerts */
   --color-brand-pink: #EFA693;    /* Gentle Pink — soft accents (not used on homepage by design) */
   --color-brand-earth: #DBCBC1;   /* section backgrounds, dividers */
@@ -83,11 +85,39 @@
 }
 
 /* Hero aura — layered radial glow in brand white + brand yellow (no off-brand hues),
-   sitting under the HerbalStrokes line art for depth on the green hero/footer. */
+   deepening toward brand-green-deep at the base for cinematic depth. Doubles as the
+   always-on fallback surface beneath the WebGL hero canvas (mobile, reduced-motion,
+   no-JS, or WebGL-unavailable all land here). */
 .hero-aura {
   background:
     radial-gradient(60% 80% at 15% 0%, rgb(255 255 255 / 0.12), transparent 60%),
-    radial-gradient(55% 65% at 100% 100%, rgb(255 198 0 / 0.14), transparent 65%);
+    radial-gradient(55% 65% at 100% 100%, rgb(255 198 0 / 0.14), transparent 65%),
+    linear-gradient(170deg, transparent 35%, rgb(31 74 49 / 0.65) 100%);
+}
+
+/* Hero scroll cue — purely decorative (aria-hidden), a thin line with a falling
+   gold pulse. Static hairline under reduced motion. */
+.scroll-cue-line {
+  width: 1px;
+  height: 2.25rem;
+  background: rgb(255 255 255 / 0.35);
+  position: relative;
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-cue-line::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--color-brand-yellow);
+    transform: translateY(-100%);
+    animation: cue-drop 2s ease-in-out infinite;
+  }
+}
+@keyframes cue-drop {
+  0% { transform: translateY(-100%); }
+  60% { transform: translateY(100%); }
+  100% { transform: translateY(100%); }
 }
 
 /* Awards marquee — continuous strip instead of a flat 12-icon grid. The track is
@@ -134,10 +164,10 @@
   }
 }
 
-/* Treatment-card reveal now runs on Motion (see src/scripts/treatment-card-reveal.ts)
-   instead of this CSS technique — it needs IntersectionObserver-based cross-browser
-   reach (the animation-timeline: view() trick above skips browsers without scroll-
-   timeline support) and spring easing. The .card-reveal hook class lives on
+/* Treatment-card reveal runs on Motion (see src/scripts/home-motion.ts) instead of
+   this CSS technique — it needs IntersectionObserver-based cross-browser reach (the
+   animation-timeline: view() trick above skips browsers without scroll-timeline
+   support) and spring easing. The .card-reveal hook class lives on
    TreatmentCard.astro; nothing here targets it, so there's no double-animation. */
 
 /* Hero entrance — plays once on load (document timeline, not scroll-linked). Kept short
@@ -166,4 +196,117 @@
     opacity: 1;
     transform: none;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Heavy-motion redesign additions (Phases 1-7). Everything below layers on top
+   of the safe baseline above: reduced-motion always gets a static, fully
+   visible page, and nothing content-bearing ships hidden.
+   --------------------------------------------------------------------------- */
+
+/* Reverse row for the kinetic awards wall — same seamless -50% loop, opposite
+   direction and slightly desynced duration so the two rows never tile visually. */
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track-reverse {
+    animation-direction: reverse;
+    animation-duration: 34s;
+  }
+}
+
+/* Reviews wall — vertical marquee columns (real items + aria-hidden clones, the
+   awards-marquee technique rotated 90°). Items use margin-bottom instead of flex
+   gap so the -50% translate loops exactly. Hover/focus pauses; reduced motion
+   collapses to the classic static grid with clones removed. */
+@media (prefers-reduced-motion: no-preference) {
+  .reviews-wall {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    height: 32rem;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(180deg, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(180deg, transparent, black 10%, black 90%, transparent);
+  }
+  .reviews-col {
+    display: flex;
+    flex-direction: column;
+    animation: reviews-scroll-y 30s linear infinite;
+  }
+  .reviews-col > * {
+    margin-bottom: 1rem;
+  }
+  .reviews-col-reverse {
+    animation-direction: reverse;
+    animation-duration: 36s;
+  }
+  .reviews-wall:hover .reviews-col,
+  .reviews-wall:focus-within .reviews-col {
+    animation-play-state: paused;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reviews-wall {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+  }
+  .reviews-col {
+    display: contents;
+  }
+  .reviews-wall [data-marquee-clone] {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 640px) {
+  .reviews-wall {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@keyframes reviews-scroll-y {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+/* Pinned How-It-Works scene. The markup ships as a normal static section; the
+   homepage motion module adds .scene-active (desktop + motion-allowed + JS only),
+   which stretches the track and pins the stage so scrolling scrubs the steps.
+   No-JS / reduced-motion / mobile never see any of this. */
+.scene-active {
+  height: 280vh;
+}
+.scene-active .scene-pin {
+  position: sticky;
+  top: 0;
+  display: flex;
+  min-height: 100svh;
+  align-items: center;
+}
+.scene-active .scene-step {
+  opacity: 0.35;
+  transition: opacity 0.4s var(--ease-spring), transform 0.4s var(--ease-spring);
+}
+.scene-active .scene-step[data-active="true"] {
+  opacity: 1;
+  transform: translateX(6px);
+}
+.scene-progress {
+  opacity: 0;
+  height: 4px;
+  width: 100%;
+  background: var(--color-brand-yellow);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.scene-active .scene-progress {
+  opacity: 1;
+}
+
+/* Count-up stat numerals — tabular digits so the ticker doesn't wobble; the
+   final integer is server-rendered, JS only animates 0 → N. */
+.stat-num {
+  font-variant-numeric: tabular-nums;
 }

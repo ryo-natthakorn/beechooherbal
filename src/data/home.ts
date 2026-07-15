@@ -81,6 +81,15 @@ export const HOME = {
     },
     // EN closes the sentence with a period after the second link; TH does not.
     p2After: { en: ".", th: "" } as L,
+    // Count-up stat band (redesign Phase 3). Values restate the outlet counts already
+    // in the paragraphs above — no new claims. Final integers are server-rendered;
+    // JS only animates 0 → N.
+    stats: [
+      { value: 21, suffix: "", label: { en: "Outlets in Singapore", th: "สาขาในสิงคโปร์" } as L },
+      { value: 68, suffix: "", label: { en: "Outlets in Malaysia", th: "สาขาในมาเลเซีย" } as L },
+      { value: 170, suffix: "+", label: { en: "Outlets across Asia Pacific", th: "สาขาทั่วเอเชียแปซิฟิก" } as L },
+      { value: 16, suffix: "", label: { en: "Outlets in Thailand by end 2025", th: "สาขาในประเทศไทยภายในสิ้นปี 2568" } as L },
+    ],
   },
 
   treatments: {

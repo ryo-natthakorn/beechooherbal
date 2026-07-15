@@ -8,13 +8,18 @@
 // the logo); it's freehand botanical line work in the guide's illustration style.
 interface Props {
   class?: string;
+  /** Opt-in draw-on animation hook: home-motion.ts animates stroke-dashoffset on
+   *  svg[data-draw] when it enters the viewport (hero + footer instances). Default
+   *  markup stays fully drawn — the hidden state is only ever applied by live JS. */
+  draw?: boolean;
 }
-const { class: className } = Astro.props;
+const { class: className, draw = false } = Astro.props;
 ---
 
 <svg
   aria-hidden="true"
   class={className}
+  data-draw={draw ? "true" : undefined}
   viewBox="0 0 1440 720"
   fill="none"
   preserveAspectRatio="xMidYMid slice"

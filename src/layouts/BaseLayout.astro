@@ -12,6 +12,11 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ContactBar from "../components/ContactBar.astro";
 import { UI } from "../i18n/ui";
+// Preload the heading webfont the LCP <h1> renders in (Lora 700 on EN pages,
+// Noto Serif Thai 700 on TH) so the largest text never waits on font discovery.
+// @fontsource ships font-display: swap, so text paints immediately regardless.
+import loraBoldUrl from "@fontsource/lora/files/lora-latin-700-normal.woff2?url";
+import notoSerifThaiBoldUrl from "@fontsource/noto-serif-thai/files/noto-serif-thai-thai-700-normal.woff2?url";
 
 interface Props {
   title: string;
@@ -19,9 +24,13 @@ interface Props {
   lang: "en" | "th";
   image?: string;
   hreflangOverride?: { en?: string | null; th?: string | null };
+  /** Homepage only: header sits fixed over the full-viewport hero and goes
+   *  transparent at the top of the page (see Header.astro). */
+  headerOverlay?: boolean;
 }
 
-const { title, description, lang, image, hreflangOverride } = Astro.props;
+const { title, description, lang, image, hreflangOverride, headerOverlay = false } = Astro.props;
+const headingFontUrl = lang === "th" ? notoSerifThaiBoldUrl : loraBoldUrl;
 const ui = UI[lang];
 // Fixes the live-site bug where Thai pages reported lang="en-US".
 const htmlLang = lang === "th" ? "th" : "en";
@@ -34,6 +43,7 @@ const fontClass = lang === "th" ? "font-thai" : "font-sans";
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <SEOHead {title} {description} {lang} {image} {hreflangOverride} />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href={headingFontUrl} />
     <slot name="head" />
   </head>
   <!-- pb-14 reserves space for the mobile ContactBar (min-h-14) so it never covers content. -->
@@ -44,7 +54,7 @@ const fontClass = lang === "th" ? "font-thai" : "font-sans";
     >
       {ui.misc.skipToContent}
     </a>
-    <Header {lang} />
+    <Header {lang} overlay={headerOverlay} />
     <slot />
     <Footer {lang} />
     <LanguageSwitcher {lang} />

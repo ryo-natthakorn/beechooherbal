@@ -14,13 +14,16 @@ interface AwardItem {
 
 interface Props {
   awards: AwardItem[];
+  /** Runs the loop in the opposite direction (slightly desynced duration) — used for
+   *  the second, aria-hidden row of the kinetic awards wall. */
+  reverse?: boolean;
 }
 
-const { awards } = Astro.props;
+const { awards, reverse = false } = Astro.props;
 ---
 
 <div class="marquee">
-  <div class="marquee-track">
+  <div class:list={["marquee-track", reverse && "marquee-track-reverse"]}>
     {awards.map((award) => (
       <Image
         src={award.img}

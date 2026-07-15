@@ -1,9 +1,8 @@
 ---
 // src/components/home/ReviewsWall.astro
-// Review screenshots on the Earth-tint band with the Motion reveal hooks
-// (.review-reveal / data-reveal-index — see src/scripts/reviews-reveal.ts). Named Wall
-// because Phase 4 of the redesign turns this into the continuous-motion testimonial wall;
-// this static grid remains the reduced-motion/no-JS fallback.
+// Continuous-motion testimonial wall (redesign Phase 4): two vertical CSS-marquee
+// columns in opposite directions, hover/focus paused. Reduced motion gets the classic
+// static review grid (see .reviews-wall in global.css); alt text per language.
 import { Image } from "astro:assets";
 import LeafDivider from "../LeafDivider.astro";
 import { HOME, type Lang } from "../../data/home";
@@ -21,15 +20,39 @@ const balance = lang === "en" ? " text-balance" : "";
 <section class="bg-brand-earth/25 py-16 text-center md:py-24">
   <div class="mx-auto max-w-6xl px-4 md:px-8">
     <LeafDivider />
-    <h2 class={`reveal mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+    <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
       {t.heading[lang]}
     </h2>
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {t.items.map((review, i) => (
-        <div class="review-reveal overflow-hidden rounded-xl shadow-soft" data-reveal-index={i}>
-          <Image src={review.img} alt={review.alt[lang]} width={400} height={400} class="h-auto w-full transition-transform duration-300 ease-spring motion-safe:hover:scale-105" />
-        </div>
-      ))}
+    <!-- Continuous-motion wall: two vertical marquee columns drifting in opposite
+         directions (zero-JS CSS, the awards-marquee technique rotated 90°). The first
+         copies are the real reviews; the repeats are aria-hidden clones for the
+         seamless -50% loop. Reduced motion collapses this to the classic static grid
+         (clones hidden) via .reviews-wall CSS in global.css. -->
+    <div class="reviews-wall mx-auto max-w-3xl">
+      <div class="reviews-col">
+        {t.items.slice(0, 2).map((review) => (
+          <div class="overflow-hidden rounded-xl shadow-soft">
+            <Image src={review.img} alt={review.alt[lang]} width={400} height={400} class="h-auto w-full" />
+          </div>
+        ))}
+        {t.items.slice(0, 2).map((review) => (
+          <div class="overflow-hidden rounded-xl shadow-soft" aria-hidden="true" data-marquee-clone>
+            <Image src={review.img} alt="" width={400} height={400} class="h-auto w-full" />
+          </div>
+        ))}
+      </div>
+      <div class="reviews-col reviews-col-reverse">
+        {t.items.slice(2, 4).map((review) => (
+          <div class="overflow-hidden rounded-xl shadow-soft">
+            <Image src={review.img} alt={review.alt[lang]} width={400} height={400} class="h-auto w-full" />
+          </div>
+        ))}
+        {t.items.slice(2, 4).map((review) => (
+          <div class="overflow-hidden rounded-xl shadow-soft" aria-hidden="true" data-marquee-clone>
+            <Image src={review.img} alt="" width={400} height={400} class="h-auto w-full" />
+          </div>
+        ))}
+      </div>
     </div>
     <a href={t.readMoreHref[lang]} class="btn-tactile mt-6 inline-flex min-h-11 items-center px-3 text-brand-green underline hover:text-brand-green/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
       {t.readMoreLabel[lang]} &rarr;

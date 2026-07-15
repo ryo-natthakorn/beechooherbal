@@ -28,19 +28,13 @@ const { lang } = Astro.props;
   <HeroScene {lang} />
   <TrustStats {lang} />
   <TreatmentsSection {lang} />
-
-  <script>
-    import "../../scripts/treatment-card-reveal";
-  </script>
-
   <HowItWorksScene {lang} />
   <ReviewsWall {lang} />
-
-  <script>
-    import "../../scripts/reviews-reveal";
-  </script>
-
   <AwardsSection {lang} />
   <PricingSection {lang} />
   <LocationsSection {lang} />
 </main>
+
+<script>
+  import "../../scripts/home-motion";
+</script>

@@ -19,22 +19,35 @@ const balance = lang === "en" ? " text-balance" : "";
 ---
 
 <section class="py-16 md:py-24">
-  <div class="reveal mx-auto max-w-6xl px-4 text-center md:px-8">
-    <h2 class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
-      {t.heading[lang]}
-    </h2>
-    <div class="grid gap-8 text-left md:grid-cols-2 md:items-center md:gap-12">
-      <Image src={howItWorks} alt={t.imageAlt[lang]} width={900} height={506} class="mx-auto h-auto w-full rounded-xl shadow-soft" />
-      <ol class="flex flex-col gap-4">
-        {t.steps[lang].map((step, i) => (
-          <li class="flex items-start gap-4">
-            <span class={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-green ${serif} text-sm font-bold text-white`}>
-              {i + 1}
-            </span>
-            <span class="pt-1.5 leading-relaxed text-brand-origin">{step}</span>
-          </li>
-        ))}
-      </ol>
+  <div class="mx-auto max-w-6xl px-4 text-center md:px-8">
+    <!-- Ships as a normal static block. home-motion.ts adds .scene-active (desktop +
+         motion-allowed + JS only), which stretches this track to 280vh and pins the
+         stage so scrolling scrubs the steps, gold progress bar, and image zoom.
+         Mobile / no-JS / reduced-motion read it exactly as laid out here. -->
+    <div data-scene-track>
+      <div class="scene-pin">
+        <div class="w-full">
+          <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+            {t.heading[lang]}
+          </h2>
+          <div class="grid gap-8 text-left md:grid-cols-2 md:items-center md:gap-12">
+            <div class="relative overflow-hidden rounded-xl shadow-soft">
+              <Image src={howItWorks} alt={t.imageAlt[lang]} width={900} height={506} class="mx-auto h-auto w-full" data-scene-visual />
+              <div class="scene-progress absolute inset-x-0 bottom-0" aria-hidden="true"></div>
+            </div>
+            <ol class="flex flex-col gap-4">
+              {t.steps[lang].map((step, i) => (
+                <li class="scene-step flex items-start gap-4">
+                  <span class={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-green ${serif} text-sm font-bold text-white`}>
+                    {i + 1}
+                  </span>
+                  <span class="pt-1.5 leading-relaxed text-brand-origin">{step}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="mx-auto mt-8 max-w-2xl">
       <YouTubeEmbed id={t.videoId} title={t.videoTitle[lang]} />

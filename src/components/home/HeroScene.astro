@@ -19,10 +19,18 @@ const t = HOME.hero;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 ---
 
-<section class="relative overflow-hidden bg-brand-green py-20 text-center md:py-28">
+<section class="relative flex min-h-[100svh] items-center overflow-hidden bg-brand-green py-20 text-center md:py-28">
   <div class="hero-aura pointer-events-none absolute inset-0" aria-hidden="true"></div>
-  <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white opacity-10" />
-  <div class="hero-enter relative mx-auto max-w-6xl px-4 md:px-8">
+  <!-- WebGL living-gradient layer. Transparent (opacity-0) until the shader renders its
+       first frame, so mobile / reduced-motion / no-JS / no-WebGL visitors only ever see
+       the .hero-aura beneath. Lazy-initialised by home-motion.ts (desktop-only gates). -->
+  <canvas data-hero-canvas class="pointer-events-none absolute inset-0 h-full w-full opacity-0 transition-opacity duration-1000" aria-hidden="true"></canvas>
+  <!-- Depth: a second, larger stroke layer drifting on parallax behind the drawn one. -->
+  <div class="pointer-events-none absolute inset-0" data-parallax="0.25" aria-hidden="true">
+    <HerbalStrokes class="h-full w-full scale-125 text-white opacity-[0.06]" />
+  </div>
+  <HerbalStrokes draw class="pointer-events-none absolute inset-0 h-full w-full text-white opacity-10" />
+  <div class="hero-enter relative mx-auto w-full max-w-6xl px-4 md:px-8">
     <h1 class={`mx-auto max-w-4xl ${serif} font-bold text-white`}>
       <span class={lang === "en" ? "block text-3xl text-balance md:text-5xl md:leading-tight" : "block text-2xl leading-normal md:text-4xl md:leading-normal"}>{t.h1Line1[lang]}</span>
       <span class={lang === "en" ? "mt-3 block text-lg font-normal text-white/90 md:text-2xl" : "mt-3 block text-lg font-normal leading-normal text-white/90 md:text-2xl md:leading-normal"}>{t.h1Line2[lang]}</span>
@@ -44,5 +52,9 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
     <div class="mx-auto mt-10 max-w-2xl overflow-hidden rounded-2xl shadow-soft-lg">
       <YouTubeEmbed id={t.videoId} title={t.videoTitle[lang]} />
     </div>
+  </div>
+  <!-- Decorative scroll cue (gold pulse falls along a hairline; static under reduced motion). -->
+  <div class="pointer-events-none absolute inset-x-0 bottom-5 hidden justify-center md:flex" aria-hidden="true">
+    <span class="scroll-cue-line"></span>
   </div>
 </section>

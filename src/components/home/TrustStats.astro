@@ -1,9 +1,10 @@
 ---
 // src/components/home/TrustStats.astro
-// Trust intro — the brand story with the two Business Times archive links. The links are
-// assembled from structured data (real <a> elements, never set:html) so the crawlable
-// copy stays verbatim. Named TrustStats because the Phase 3 redesign adds the count-up
-// stat band here (21 · 68 · 170+ · 16 outlets).
+// Trust intro — the brand story with the two Business Times archive links, plus the
+// count-up stat band (21 · 68 · 170+ · 16 outlets, restating the paragraph's own
+// numbers). Links are assembled from structured data (real <a> elements, never
+// set:html) so the crawlable copy stays verbatim. Stat integers are server-rendered
+// in final form with a reserved ch-width — the JS count-up causes zero layout shift.
 import { HOME, type Lang } from "../../data/home";
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = HOME.trust;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 ---
 
 <section class="py-16 md:py-24">
@@ -23,5 +25,15 @@ const t = HOME.trust;
       {t.p2Between[lang]}
       <a class="text-brand-green underline" target="_blank" rel="noopener" href={t.p2Link2.href}>"{t.p2Link2.text[lang]}"</a>{t.p2After[lang]}
     </p>
+  </div>
+  <div class="reveal mx-auto mt-12 grid max-w-4xl grid-cols-2 gap-8 px-4 text-center md:mt-16 md:grid-cols-4 md:px-8">
+    {t.stats.map((stat) => (
+      <div>
+        <p class={`${serif} text-3xl font-bold text-brand-green md:text-5xl`}>
+          <span class="stat-num inline-block" data-countup={stat.value} style={`min-width:${String(stat.value).length}ch`}>{stat.value}</span>{stat.suffix && <span class="text-brand-root">{stat.suffix}</span>}
+        </p>
+        <p class="mt-1 text-xs tracking-wide text-brand-origin uppercase md:text-sm">{stat.label[lang]}</p>
+      </div>
+    ))}
   </div>
 </section>

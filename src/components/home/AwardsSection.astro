@@ -19,17 +19,24 @@ const h2Class =
     ? "mb-3 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl"
     : "mb-10 font-serif-thai text-2xl font-bold text-brand-green md:text-3xl";
 const awards = t.items.map((item) => ({ img: item.img, alt: item.alt[lang] }));
+// Second (decorative, aria-hidden) row: empty alts — the names are announced once above.
+const awardsReversed = t.items.map((item) => ({ img: item.img, alt: "" })).reverse();
 ---
 
 <section class="py-16 text-center md:py-24">
   <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
-    <h2 class={h2Class}>{t.heading[lang]}</h2>
+    <h2 data-mask-reveal class={h2Class}>{t.heading[lang]}</h2>
     {lang === "en" && (
       <p class="mx-auto mb-10 max-w-2xl text-sm leading-relaxed text-brand-origin">
         {t.intro[lang]}
       </p>
     )}
     <AwardsMarquee {awards} />
-    <Image src={awardsBanner} alt={t.bannerAlt[lang]} width={800} height={240} class="mx-auto mt-10 h-auto w-full max-w-3xl rounded-xl shadow-soft" />
+    <!-- Second row of the kinetic wall: same badges reversed, opposite drift. Purely
+         decorative repeat — aria-hidden so the 12 awards aren't announced twice. -->
+    <div class="mt-6" aria-hidden="true">
+      <AwardsMarquee awards={awardsReversed} reverse />
+    </div>
+    <Image src={awardsBanner} alt={t.bannerAlt[lang]} width={800} height={240} class="mx-auto mt-10 h-auto w-full max-w-3xl rounded-xl shadow-soft" data-parallax="0.1" />
   </div>
 </section>
