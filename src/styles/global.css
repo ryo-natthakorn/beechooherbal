@@ -20,6 +20,9 @@
   --color-brand-root: #D47E00;
   --color-brand-nude: #F6B9A7;
   --color-brand-serenity: #B2E1D8;
+  --color-brand-ink: #26201A;     /* warm near-black (neutral, not a brand-guide colour) — the
+                                     blessed ink for text on brand-yellow: 10.2:1, vs 3.7:1 for
+                                     brand-origin which fails WCAG AA */
 
   /* Body text: Roboto (EN) / Noto Sans Thai (TH). Headings: Lora (EN) / Noto Serif Thai (TH) —
      the brand guide's digital typeface set (Lora stands in for print-only Minion Pro). */

@@ -3,36 +3,46 @@
 // Photo-forward treatment card. Both the title and "Read more" link point at the SAME
 // beechooherbal.com URL — fixes the live site's bug where the heading wrongly links to
 // beechooladies.com.sg while only the button links correctly.
+// `featured` spans the card across two grid columns (used for the flagship Hair Loss
+// treatment) — it kills the 7th-card orphan row AND gives the core service visual rank.
 import { Image } from "astro:assets";
 import type { Treatment } from "../data/treatments";
 
 interface Props {
   treatment: Treatment;
   lang: "en" | "th";
+  featured?: boolean;
 }
 
-const { treatment, lang } = Astro.props;
+const { treatment, lang, featured = false } = Astro.props;
 const href = treatment.href[lang];
 const readMore = lang === "th" ? "คลิกเพื่ออ่านต่อ" : "Read more";
 const headingFont = lang === "th" ? "font-serif-thai" : "font-serif";
 ---
 
-<article class="flex flex-col overflow-hidden rounded-2xl bg-white shadow-soft transition duration-200 motion-safe:hover:-translate-y-1 hover:shadow-soft-lg">
-  <Image
-    src={treatment.image}
-    alt={treatment.alt[lang]}
-    width={480}
-    height={320}
-    class="h-48 w-full object-cover"
-  />
+<article
+  class:list={[
+    "group flex flex-col overflow-hidden rounded-2xl bg-white shadow-soft transition duration-200 motion-safe:hover:-translate-y-1 hover:shadow-soft-lg",
+    featured && "sm:col-span-2",
+  ]}
+>
+  <div class:list={["overflow-hidden", featured ? "h-56 md:h-64" : "h-48"]}>
+    <Image
+      src={treatment.image}
+      alt={treatment.alt[lang]}
+      width={768}
+      height={512}
+      class="h-full w-full object-cover transition-transform duration-300 motion-safe:group-hover:scale-105"
+    />
+  </div>
   <div class="flex flex-1 flex-col gap-2 p-5">
-    <h3 class={`${headingFont} text-lg font-bold text-brand-green`}>
+    <h3 class:list={[headingFont, "font-bold text-brand-green", featured ? "text-xl" : "text-lg"]}>
       <a href={href} class="hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">{treatment.title[lang]}</a>
     </h3>
     <p class="flex-1 text-sm leading-relaxed text-brand-origin">{treatment.teaser[lang]}</p>
     <a
       href={href}
-      class="mt-3 inline-block rounded-full bg-brand-green px-5 py-2.5 text-center text-sm font-bold text-white transition-colors duration-200 hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+      class="mt-3 inline-block rounded-full bg-brand-green px-5 py-3 text-center text-sm font-bold text-white transition-colors duration-200 hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
     >
       {readMore} &rarr;
     </a>

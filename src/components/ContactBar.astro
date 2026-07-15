@@ -1,0 +1,45 @@
+---
+// src/components/ContactBar.astro
+// Sticky mobile-only contact bar. The whole conversion model is Call/Facebook/LINE,
+// but on phones the header scrolls away and the footer is seven sections down — this
+// keeps one of each reachable at all times. Hidden from md: up (desktop keeps the
+// sticky header's phone pill). Links reuse the exact confirmed CTA set (CLAUDE.md §2).
+import { UI } from "../i18n/ui";
+
+interface Props {
+  lang: "en" | "th";
+}
+const { lang } = Astro.props;
+const ui = UI[lang];
+---
+
+<nav
+  aria-label={ui.misc.contact}
+  class="fixed inset-x-0 bottom-0 z-30 grid grid-cols-3 border-t border-brand-earth bg-white md:hidden"
+>
+  <a
+    href="tel:+66020726698"
+    class="flex min-h-14 items-center justify-center gap-2 font-bold text-brand-green transition-colors duration-200 active:bg-brand-green/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green"
+  >
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+      <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.57 1 1 0 0 1-.25 1.02z" />
+    </svg>
+    {ui.bar.call}
+  </a>
+  <a
+    href="https://www.facebook.com/beechooherbal/"
+    target="_blank"
+    rel="noopener"
+    class="flex min-h-14 items-center justify-center border-x border-brand-earth font-bold text-brand-green transition-colors duration-200 active:bg-brand-green/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green"
+  >
+    {ui.bar.facebook}
+  </a>
+  <a
+    href="https://lin.ee/ll3injb"
+    target="_blank"
+    rel="noopener"
+    class="flex min-h-14 items-center justify-center font-bold text-brand-green transition-colors duration-200 active:bg-brand-green/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green"
+  >
+    {ui.bar.line}
+  </a>
+</nav>

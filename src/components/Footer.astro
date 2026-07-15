@@ -14,38 +14,42 @@ const { lang } = Astro.props;
 const ui = UI[lang];
 ---
 
-<footer class="bg-brand-green px-4 py-10 text-white md:px-8">
+<footer class="bg-brand-green px-4 py-12 text-white md:px-8">
   <div class="mx-auto flex max-w-5xl flex-col items-center gap-6 text-center">
     <Image src={logoFull} alt="Bee Choo Origin" width={160} height={226} />
-    <!-- Slogan is serif italic per brand guide (Minion Pro italic in print → Lora italic digital);
-         Earth tone instead of pink — Gentle Pink is skipped on the homepage by design decision. -->
-    <p class="font-serif italic text-brand-earth">{ui.footer.tagline}</p>
+    <!-- Slogan is serif italic per brand guide; brand-serenity is the only on-green brand
+         token that clears WCAG AA (4.55:1 — brand-earth fails at 4.14:1). -->
+    <p class="font-serif text-lg italic text-brand-serenity">{ui.footer.tagline}</p>
 
     <div class="flex flex-wrap justify-center gap-3">
       <a
         href="tel:+66020726698"
-        class="rounded bg-brand-yellow px-5 py-2 font-bold text-brand-origin hover:bg-brand-yellow/90"
+        class="flex min-h-11 items-center rounded-full bg-brand-yellow px-6 font-bold text-brand-ink transition-colors duration-200 hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
         {ui.cta.call}
       </a>
       <a
         href="https://www.facebook.com/beechooherbal/"
-        class="rounded bg-white px-5 py-2 font-bold text-brand-green hover:bg-white/90"
+        target="_blank"
+        rel="noopener"
+        class="flex min-h-11 items-center rounded-full bg-white px-6 font-bold text-brand-green transition-colors duration-200 hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
         {ui.cta.facebook}
       </a>
       <a
         href="https://lin.ee/ll3injb"
-        class="rounded bg-white px-5 py-2 font-bold text-brand-green hover:bg-white/90"
+        target="_blank"
+        rel="noopener"
+        class="flex min-h-11 items-center rounded-full bg-white px-6 font-bold text-brand-green transition-colors duration-200 hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
         {ui.cta.line}
       </a>
     </div>
 
-    <div class="flex gap-4 text-sm">
-      <a href="https://www.facebook.com/beechooherbal/" class="hover:text-brand-yellow">{ui.footer.socialFacebook}</a>
-      <a href="https://www.youtube.com/channel/UCx7bazL8Sco0j3LnVnbO3Lg/featured" class="hover:text-brand-yellow">{ui.footer.socialYoutube}</a>
-      <a href="https://tiktok.com/@beechooth" class="hover:text-brand-yellow">{ui.footer.socialTiktok}</a>
+    <div class="flex flex-wrap justify-center gap-2 text-sm">
+      <a href="https://www.facebook.com/beechooherbal/" target="_blank" rel="noopener" class="flex min-h-11 items-center px-3 underline-offset-4 decoration-brand-yellow decoration-2 transition-colors duration-200 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{ui.footer.socialFacebook}</a>
+      <a href="https://www.youtube.com/channel/UCx7bazL8Sco0j3LnVnbO3Lg/featured" target="_blank" rel="noopener" class="flex min-h-11 items-center px-3 underline-offset-4 decoration-brand-yellow decoration-2 transition-colors duration-200 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{ui.footer.socialYoutube}</a>
+      <a href="https://tiktok.com/@beechooth" target="_blank" rel="noopener" class="flex min-h-11 items-center px-3 underline-offset-4 decoration-brand-yellow decoration-2 transition-colors duration-200 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{ui.footer.socialTiktok}</a>
     </div>
   </div>
 </footer>

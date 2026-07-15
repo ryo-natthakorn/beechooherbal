@@ -1,21 +1,26 @@
 ---
 // src/components/LanguageSwitcher.astro
-// Floating pill toggle, fixed to the right edge, vertically centred. Asks the
-// same registry SEOHead uses ("what's my twin?") and links to it — no
+// Floating horizontal pill, fixed top-right BELOW the sticky header (top-20) so it
+// never collides with the header's own controls, stays out of the right-thumb scroll
+// sweep mid-viewport, and clears the mobile contact bar at the bottom. Targets are
+// ≥44px (min-h-11) and the nav label is localized per page language.
+//
+// It asks the same registry SEOHead uses ("what's my twin?") and links to it — no
 // hardcoded URLs; pairs.ts is the single source of truth.
 //
-// Clicking a language sets the `beechoo_lang` cookie so the root-language
-// middleware (middleware.ts) treats it as an EXPLICIT choice and stops
-// auto-redirecting on "/". Without this, a Thai-browser visitor who clicks
-// "EN" lands on "/" and the middleware bounces them straight back to
-// /th/home/ — i.e. the toggle appears broken (Thai only). Explicit choice
-// always wins over Accept-Language.
+// Clicking a language sets the `beechoo_lang` cookie so the root-language middleware
+// (middleware.ts) treats it as an EXPLICIT choice and stops auto-redirecting on "/".
+// Without this, a Thai-browser visitor who clicks "EN" lands on "/" and the middleware
+// bounces them straight back to /th/home/ — i.e. the toggle appears broken (Thai
+// only). Explicit choice always wins over Accept-Language.
 import { getPair } from "../i18n/pairs";
+import { UI } from "../i18n/ui";
 
 interface Props {
   lang: "en" | "th";
 }
 const { lang } = Astro.props;
+const ui = UI[lang];
 
 const pair = getPair(Astro.url.pathname);
 
@@ -24,25 +29,29 @@ const pair = getPair(Astro.url.pathname);
 const enHref = pair?.en ?? "/";
 const thHref = pair?.th ?? "/th/home/";
 
-const base = "px-4 py-2 text-sm font-bold text-center transition-colors";
+const base =
+  "flex min-h-11 items-center px-4 text-sm font-bold transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green";
 const active = "bg-brand-green text-white";
 const idle = "text-brand-green hover:bg-brand-green/10";
 ---
 
-<div class="fixed right-3 top-1/2 z-50 -translate-y-1/2">
+<!-- z-scale: header/switcher/contact-bar all sit at z-30 (no stacking conflicts by placement). -->
+<div class="fixed top-20 right-3 z-30">
   <nav
-    aria-label="Language switcher"
-    class="flex flex-col overflow-hidden rounded-full border border-brand-green bg-white shadow-lg"
+    aria-label={ui.misc.languageSwitcher}
+    class="flex overflow-hidden rounded-full border border-brand-green/40 bg-white shadow-soft-lg"
   >
     <a
       href={enHref}
       data-setlang="en"
+      lang="en"
       aria-current={lang === "en" ? "page" : undefined}
       class:list={[base, lang === "en" ? active : idle]}>EN</a
     >
     <a
       href={thHref}
       data-setlang="th"
+      lang="th"
       aria-current={lang === "th" ? "page" : undefined}
       class:list={[base, lang === "th" ? active : idle]}>ไทย</a
     >
