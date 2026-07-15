@@ -1,0 +1,28 @@
+---
+// src/components/home/PricingSection.astro
+// Price-list image + pricing copy on the Earth-tint band.
+import { Image } from "astro:assets";
+import { HOME, type Lang } from "../../data/home";
+import priceList from "../../assets/images/price-list.jpg";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = HOME.pricing;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+---
+
+<section class="bg-brand-earth/25 py-16 text-center md:py-24">
+  <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
+    <h2 class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+      {t.heading[lang]}
+    </h2>
+    <Image src={priceList} alt={t.imageAlt[lang]} width={700} height={990} class="mx-auto rounded-xl shadow-soft" />
+    <p class="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-brand-origin">
+      {t.body[lang]}
+    </p>
+  </div>
+</section>

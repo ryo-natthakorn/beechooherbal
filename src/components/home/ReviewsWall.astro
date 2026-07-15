@@ -1,0 +1,38 @@
+---
+// src/components/home/ReviewsWall.astro
+// Review screenshots on the Earth-tint band with the Motion reveal hooks
+// (.review-reveal / data-reveal-index — see src/scripts/reviews-reveal.ts). Named Wall
+// because Phase 4 of the redesign turns this into the continuous-motion testimonial wall;
+// this static grid remains the reduced-motion/no-JS fallback.
+import { Image } from "astro:assets";
+import LeafDivider from "../LeafDivider.astro";
+import { HOME, type Lang } from "../../data/home";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = HOME.reviews;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+---
+
+<section class="bg-brand-earth/25 py-16 text-center md:py-24">
+  <div class="mx-auto max-w-6xl px-4 md:px-8">
+    <LeafDivider />
+    <h2 class={`reveal mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+      {t.heading[lang]}
+    </h2>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {t.items.map((review, i) => (
+        <div class="review-reveal overflow-hidden rounded-xl shadow-soft" data-reveal-index={i}>
+          <Image src={review.img} alt={review.alt[lang]} width={400} height={400} class="h-auto w-full transition-transform duration-300 ease-spring motion-safe:hover:scale-105" />
+        </div>
+      ))}
+    </div>
+    <a href={t.readMoreHref[lang]} class="btn-tactile mt-6 inline-flex min-h-11 items-center px-3 text-brand-green underline hover:text-brand-green/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+      {t.readMoreLabel[lang]} &rarr;
+    </a>
+  </div>
+</section>

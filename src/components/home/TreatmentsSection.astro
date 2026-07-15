@@ -1,0 +1,30 @@
+---
+// src/components/home/TreatmentsSection.astro
+// The 7 treatment cards on the Earth-tint band; first card is featured (spans 2 cols).
+// Card markup + Motion reveal hooks live in TreatmentCard.astro. EN headings carry
+// text-balance; TH headings never do (unreliable with space-free Thai script).
+import TreatmentCard from "../TreatmentCard.astro";
+import LeafDivider from "../LeafDivider.astro";
+import { TREATMENTS } from "../../data/treatments";
+import { HOME, type Lang } from "../../data/home";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+---
+
+<section class="bg-brand-earth/25 py-16 md:py-24">
+  <div class="mx-auto max-w-6xl px-4 md:px-8">
+    <LeafDivider />
+    <h2 class={`reveal mb-8 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+      {HOME.treatments.heading[lang]}
+    </h2>
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {TREATMENTS.map((treatment, i) => <TreatmentCard {treatment} {lang} featured={i === 0} index={i} />)}
+    </div>
+  </div>
+</section>

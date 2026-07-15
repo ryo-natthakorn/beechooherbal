@@ -1,0 +1,27 @@
+---
+// src/components/home/TrustStats.astro
+// Trust intro — the brand story with the two Business Times archive links. The links are
+// assembled from structured data (real <a> elements, never set:html) so the crawlable
+// copy stays verbatim. Named TrustStats because the Phase 3 redesign adds the count-up
+// stat band here (21 · 68 · 170+ · 16 outlets).
+import { HOME, type Lang } from "../../data/home";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = HOME.trust;
+---
+
+<section class="py-16 md:py-24">
+  <div class="reveal mx-auto max-w-prose px-4 md:px-8 text-brand-origin leading-relaxed">
+    <p>{t.p1[lang]}</p>
+    <p class="mt-4">
+      {t.p2Before[lang]}
+      <a class="text-brand-green underline" target="_blank" rel="noopener" href={t.p2Link1.href}>"{t.p2Link1.text[lang]}"</a>
+      {t.p2Between[lang]}
+      <a class="text-brand-green underline" target="_blank" rel="noopener" href={t.p2Link2.href}>"{t.p2Link2.text[lang]}"</a>{t.p2After[lang]}
+    </p>
+  </div>
+</section>

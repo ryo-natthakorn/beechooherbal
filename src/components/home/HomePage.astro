@@ -1,0 +1,46 @@
+---
+// src/components/home/HomePage.astro
+// Composes the homepage from shared, lang-driven section components — build it once,
+// render it twice (/ and /th/home/). Copy comes from src/data/home.ts; the route files
+// are thin shells that only set lang + title/description. This component also owns the
+// homepage <script> imports so motion is wired identically in both languages.
+// Layout system: Harmony-Green drenched hero over a white/Earth-tint band alternation,
+// Soft UI elevation on cards, serif headings (Lora / Noto Serif Thai), leaf dividers on
+// the two key sections only, zero-JS scroll reveals (see global.css).
+import HeroScene from "./HeroScene.astro";
+import TrustStats from "./TrustStats.astro";
+import TreatmentsSection from "./TreatmentsSection.astro";
+import HowItWorksScene from "./HowItWorksScene.astro";
+import ReviewsWall from "./ReviewsWall.astro";
+import AwardsSection from "./AwardsSection.astro";
+import PricingSection from "./PricingSection.astro";
+import LocationsSection from "./LocationsSection.astro";
+import type { Lang } from "../../data/home";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<main id="main">
+  <HeroScene {lang} />
+  <TrustStats {lang} />
+  <TreatmentsSection {lang} />
+
+  <script>
+    import "../../scripts/treatment-card-reveal";
+  </script>
+
+  <HowItWorksScene {lang} />
+  <ReviewsWall {lang} />
+
+  <script>
+    import "../../scripts/reviews-reveal";
+  </script>
+
+  <AwardsSection {lang} />
+  <PricingSection {lang} />
+  <LocationsSection {lang} />
+</main>

@@ -1,0 +1,48 @@
+---
+// src/components/home/HeroScene.astro
+// Hero — drenched in Harmony Green (brand-committed colour strategy: the primary colour
+// carries the surface), with the guide's hand-drawn stroke line work behind and a layered
+// brand-white/brand-yellow glow for depth (no off-brand hues). The two-tier H1 uses nested
+// spans so the rendered hierarchy changes while the DOM text stays identical to the live
+// site (SEO). TH spans force leading-normal (text-balance is unreliable with space-free
+// Thai script) — see the class ternaries below.
+import YouTubeEmbed from "../YouTubeEmbed.astro";
+import HerbalStrokes from "../HerbalStrokes.astro";
+import { HOME, type Lang } from "../../data/home";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = HOME.hero;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+---
+
+<section class="relative overflow-hidden bg-brand-green py-20 text-center md:py-28">
+  <div class="hero-aura pointer-events-none absolute inset-0" aria-hidden="true"></div>
+  <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white opacity-10" />
+  <div class="hero-enter relative mx-auto max-w-6xl px-4 md:px-8">
+    <h1 class={`mx-auto max-w-4xl ${serif} font-bold text-white`}>
+      <span class={lang === "en" ? "block text-3xl text-balance md:text-5xl md:leading-tight" : "block text-2xl leading-normal md:text-4xl md:leading-normal"}>{t.h1Line1[lang]}</span>
+      <span class={lang === "en" ? "mt-3 block text-lg font-normal text-white/90 md:text-2xl" : "mt-3 block text-lg font-normal leading-normal text-white/90 md:text-2xl md:leading-normal"}>{t.h1Line2[lang]}</span>
+    </h1>
+    <p class="mt-5 text-xl font-bold text-brand-yellow md:text-2xl">
+      {t.tagline[lang]}
+    </p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="tel:+66020726698" class="btn-tactile flex min-h-11 items-center rounded-full bg-white px-7 font-bold text-brand-green shadow-soft-lg hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+        {t.ctaCall[lang]}
+      </a>
+      <a href="https://www.facebook.com/beechooherbal/" target="_blank" rel="noopener" class="btn-tactile flex min-h-11 items-center rounded-full bg-brand-yellow px-7 font-bold text-brand-ink shadow-soft-lg hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+        {t.ctaFacebook[lang]}
+      </a>
+      <a href="https://lin.ee/ll3injb" target="_blank" rel="noopener" class="btn-tactile flex min-h-11 items-center rounded-full border border-white/60 px-7 font-bold text-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+        {t.ctaLine[lang]}
+      </a>
+    </div>
+    <div class="mx-auto mt-10 max-w-2xl overflow-hidden rounded-2xl shadow-soft-lg">
+      <YouTubeEmbed id={t.videoId} title={t.videoTitle[lang]} />
+    </div>
+  </div>
+</section>

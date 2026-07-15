@@ -1,0 +1,32 @@
+---
+// src/components/home/LocationsSection.astro
+// Outlet map linking to the per-language locations page.
+import { Image } from "astro:assets";
+import { HOME, type Lang } from "../../data/home";
+import { UI } from "../../i18n/ui";
+import locationsMap from "../../assets/images/locations-map.jpg";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = HOME.locations;
+const ui = UI[lang];
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+---
+
+<section class="py-16 text-center md:py-24">
+  <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
+    <h2 class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>{t.heading[lang]}</h2>
+    <a href={t.href[lang]} class="inline-block overflow-hidden rounded-xl shadow-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+      <Image src={locationsMap} alt={t.mapAlt[lang]} width={900} height={600} class="mx-auto transition-transform duration-300 ease-spring hover:scale-105" />
+    </a>
+    <div>
+      <a href={t.href[lang]} class="btn-tactile mt-6 inline-flex min-h-11 items-center rounded-full bg-brand-green px-7 font-bold text-white shadow-soft hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+        {ui.misc.viewLocations} &rarr;
+      </a>
+    </div>
+  </div>
+</section>
