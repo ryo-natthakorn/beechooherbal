@@ -1,10 +1,16 @@
 ---
 // src/pages/th/home.astro
+// Same layout system as the EN homepage (see src/pages/index.astro header comment),
+// with Noto Serif Thai headings — Lora has no Thai glyphs. No text-balance here:
+// its interaction with Thai's space-free script is unreliable.
 import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TreatmentCard from "../../components/TreatmentCard.astro";
 import YouTubeEmbed from "../../components/YouTubeEmbed.astro";
+import LeafDivider from "../../components/LeafDivider.astro";
+import HerbalStrokes from "../../components/HerbalStrokes.astro";
 import { TREATMENTS } from "../../data/treatments";
+import { UI } from "../../i18n/ui";
 import howItWorks from "../../assets/images/how-it-works.jpg";
 import priceList from "../../assets/images/price-list.jpg";
 import locationsMap from "../../assets/images/locations-map.jpg";
@@ -27,6 +33,7 @@ import sinChewBusiness from "../../assets/images/awards/sin-chew-business.jpg";
 import tapAwards from "../../assets/images/awards/tap-awards-most-innovative.png";
 
 const lang = "th" as const;
+const ui = UI[lang];
 const title = "Bee Choo Herbal - ทรีตเมนต์สมุนไพรรักษาผมและหนังศีรษะ กรุงเทพฯ";
 const description =
   "คลินิกทรีตเมนต์สมุนไพรธรรมชาติ 100% รักษาผมร่วง หนังศีรษะมัน รังแค ผมขาว ในกรุงเทพฯ ได้รับรางวัลการันตี";
@@ -45,126 +52,161 @@ const awards = [
   { img: sinChewBusiness, alt: "รางวัล Sin Chew Business Excellence" },
   { img: tapAwards, alt: "ตรา TAP Awards — Most Innovative" },
 ];
+
+// ถอดความจากภาพรีวิวจริง (การ์ดรีวิวของแบรนด์) — เดิม alt ทั้งสี่ภาพซ้ำกัน
+// ผู้ใช้โปรแกรมอ่านหน้าจอจึงไม่ได้รับข้อมูลใดๆ จากรีวิวเลย
+const reviews = [
+  { img: review1, alt: "รีวิวลูกค้า: ทำสีผมสมุนไพรแล้วประทับใจ สีผมสวยถูกใจ พนักงานบริการดีน่ารัก มาใช้บริการครั้งที่ 2 แล้ว" },
+  { img: review2, alt: "รีวิวลูกค้า: อาการหนังศีรษะมันดีขึ้นชัดเจนหลังลองทำ รู้สึกหนังศีรษะสะอาดและสุขภาพดี" },
+  { img: review3, alt: "รีวิวลูกค้า: หนังศีรษะสดชื่นตั้งแต่ครั้งแรกที่ทำ บริการที่หนึ่ง ผ่อนคลายด้วยการนวดก่อนลงสมุนไพรจนถึงสระ" },
+  { img: review4, alt: "รีวิวลูกค้า: อาการคันหนังศีรษะ รังแค และผมร่วงหมดไปด้วยสมุนไพรของทางร้าน บริการประทับใจมาก" },
+];
 ---
 
 <BaseLayout {title} {description} {lang}>
-  <main class="mx-auto max-w-6xl px-4 md:px-8">
+  <main id="main">
 
-    <!-- Hero -->
-    <section class="py-12 text-center">
-      <YouTubeEmbed id="c8x_e1zPvMY" title="วิดีโอแนะนำทรีตเมนต์สมุนไพรบีชู" />
-      <h1 class="mt-8 font-thai text-3xl font-bold text-brand-green md:text-5xl">
-        การรักษาผมร่วง ผมบาง หนังศีรษะมันและคันหนังศีรษะ ผมขาว ผมหงอก ขจัดรังแค ด้วยสมุนไพรธรรมชาติ 100%, ปลอดภัย, มีประสิทธิภาพสูง, ได้รับรางวัลร้านทำผมยอดเยี่ยม
-      </h1>
-      <p class="mt-4 text-xl font-bold text-brand-root">
-        ซาลอน/คลินิกรักษาผมร่วง ผมบาง ที่ดีที่สุดในประเทศไทย
-      </p>
-      <div class="mt-6 flex flex-wrap justify-center gap-3">
-        <a href="tel:+66020726698" class="rounded bg-brand-green px-6 py-3 font-bold text-white hover:bg-brand-green/90">
-          Call Us Today
-        </a>
-        <a href="https://www.facebook.com/beechooherbal/" class="rounded bg-brand-yellow px-6 py-3 font-bold text-brand-origin hover:bg-brand-yellow/90">
-          พูดคุยกับเราผ่านเฟสบุ๊ค
-        </a>
-        <a href="https://lin.ee/ll3injb" class="rounded bg-brand-pink px-6 py-3 font-bold text-white hover:bg-brand-pink/90">
-          เพิ่มเพื่อนทาง LINE
-        </a>
+    <!-- Hero — drenched in Harmony Green with the guide's stroke line work (see EN page). -->
+    <section class="relative overflow-hidden bg-brand-green py-14 text-center md:py-20">
+      <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white opacity-10" />
+      <div class="relative mx-auto max-w-6xl px-4 md:px-8">
+        <h1 class="mx-auto max-w-4xl font-serif-thai font-bold text-white">
+          <span class="block text-2xl leading-normal md:text-4xl md:leading-normal">การรักษาผมร่วง ผมบาง หนังศีรษะมันและคันหนังศีรษะ ผมขาว ผมหงอก ขจัดรังแค ด้วยสมุนไพรธรรมชาติ 100%,</span>
+          <span class="mt-3 block text-lg font-normal leading-normal text-white/90 md:text-2xl md:leading-normal">ปลอดภัย, มีประสิทธิภาพสูง, ได้รับรางวัลร้านทำผมยอดเยี่ยม</span>
+        </h1>
+        <p class="mt-5 text-xl font-bold text-brand-yellow md:text-2xl">
+          ซาลอน/คลินิกรักษาผมร่วง ผมบาง ที่ดีที่สุดในประเทศไทย
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          <a href="tel:+66020726698" class="flex min-h-11 items-center rounded-full bg-white px-7 font-bold text-brand-green shadow-soft-lg transition-colors duration-200 hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+            Call Us Today
+          </a>
+          <a href="https://www.facebook.com/beechooherbal/" target="_blank" rel="noopener" class="flex min-h-11 items-center rounded-full bg-brand-yellow px-7 font-bold text-brand-ink shadow-soft-lg transition-colors duration-200 hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+            พูดคุยกับเราผ่านเฟสบุ๊ค
+          </a>
+          <a href="https://lin.ee/ll3injb" target="_blank" rel="noopener" class="flex min-h-11 items-center rounded-full border border-white/60 px-7 font-bold text-white transition-colors duration-200 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+            เพิ่มเพื่อนทาง LINE
+          </a>
+        </div>
+        <div class="mt-10">
+          <YouTubeEmbed id="c8x_e1zPvMY" title="วิดีโอแนะนำทรีตเมนต์สมุนไพรบีชู" />
+        </div>
       </div>
     </section>
 
     <!-- Trust intro -->
-    <section class="py-8 text-brand-origin">
-      <p>
-        บีชู ออริจิน เป็นทรีตเมนต์ซาลอนและคลินิกรักษาผมร่วงที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง
-        รักษาผมบาง รังแค หนังศีรษะมัน และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา
-        ในมาเลเซียจำนวน 68 สาขา และมากกว่า 170 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ
-        ประเทศไทย และจะมีทั้งหมด 16 สาขาภายในสิ้นปี 2568 นี้ พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมากที่สุด
-      </p>
-      <p class="mt-4">
-        บีชู ได้ก่อตั้งเมื่อปี 2000 โดยคุณเชีย บี ชู และด้วยชื่อเสียงของแบรนด์ที่มีเสมอมา
-        การันตีโดยรางวัลมากมายในสิงคโปร์ คุณสามารถอ่านเรื่องราวเพิ่มเติมได้ในนิตยสาร ไทม์ สิงคโปร์ ในหัวข้อ
-        <a class="text-brand-green underline" href="https://web.archive.org/web/20181020133432/http://www.businesstimes.com.sg/hub/bt-salutes-enterprise-2016/power-of-testimonies-drives-business-growth">
-          "ผลลัพธ์จากการการันตีที่ทำให้ธุรกิจเติบโต"
-        </a>
-        และ
-        <a class="text-brand-green underline" href="https://web.archive.org/web/20181020133432/http://www.businesstimes.com.sg/hub-projects/ceo-conversations-2017/sincerity-before-profit">
-          "ความจริงใจมาก่อนผลกำไร"
-        </a>
-      </p>
+    <section class="py-12 md:py-16">
+      <div class="reveal mx-auto max-w-prose px-4 md:px-8 text-brand-origin leading-relaxed">
+        <p>
+          บีชู ออริจิน เป็นทรีตเมนต์ซาลอนและคลินิกรักษาผมร่วงที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง
+          รักษาผมบาง รังแค หนังศีรษะมัน และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา
+          ในมาเลเซียจำนวน 68 สาขา และมากกว่า 170 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ
+          ประเทศไทย และจะมีทั้งหมด 16 สาขาภายในสิ้นปี 2568 นี้ พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมากที่สุด
+        </p>
+        <p class="mt-4">
+          บีชู ได้ก่อตั้งเมื่อปี 2000 โดยคุณเชีย บี ชู และด้วยชื่อเสียงของแบรนด์ที่มีเสมอมา
+          การันตีโดยรางวัลมากมายในสิงคโปร์ คุณสามารถอ่านเรื่องราวเพิ่มเติมได้ในนิตยสาร ไทม์ สิงคโปร์ ในหัวข้อ
+          <a class="text-brand-green underline" target="_blank" rel="noopener" href="https://web.archive.org/web/20181020133432/http://www.businesstimes.com.sg/hub/bt-salutes-enterprise-2016/power-of-testimonies-drives-business-growth">
+            "ผลลัพธ์จากการการันตีที่ทำให้ธุรกิจเติบโต"
+          </a>
+          และ
+          <a class="text-brand-green underline" target="_blank" rel="noopener" href="https://web.archive.org/web/20181020133432/http://www.businesstimes.com.sg/hub-projects/ceo-conversations-2017/sincerity-before-profit">
+            "ความจริงใจมาก่อนผลกำไร"
+          </a>
+        </p>
+      </div>
     </section>
 
     <!-- Treatment cards -->
-    <section class="py-8">
-      <h2 class="mb-6 text-center font-thai text-2xl font-bold text-brand-green">
-        7 ทรีตเมนต์สำหรับเส้นผมและหนังศีรษะในกรุงเทพฯ
-      </h2>
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {TREATMENTS.map((treatment) => <TreatmentCard {treatment} {lang} />)}
+    <section class="bg-brand-earth/25 py-12 md:py-16">
+      <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
+        <LeafDivider />
+        <h2 class="mb-8 text-center font-serif-thai text-2xl font-bold text-brand-green md:text-3xl">
+          7 ทรีตเมนต์สำหรับเส้นผมและหนังศีรษะในกรุงเทพฯ
+        </h2>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {TREATMENTS.map((treatment, i) => <TreatmentCard {treatment} {lang} featured={i === 0} />)}
+        </div>
       </div>
     </section>
 
     <!-- How it works -->
-    <section class="py-8 text-center">
-      <h2 class="mb-4 font-thai text-2xl font-bold text-brand-green">
-        ทรีตเมนต์สมุนไพร 100เปอร์เซ็น ให้ผลยังไงมาดูกัน!
-      </h2>
-      <Image src={howItWorks} alt="ขั้นตอนทรีตเมนต์สมุนไพรบีชู 4 สเต็ป: เสปรย์และนวดโทนิค ทาครีมสมุนไพร อบไอน้ำ 45 นาที ล้างและปรับสภาพหนังศีรษะ" width={900} height={506} class="mx-auto rounded-lg" />
-      <div class="mt-6">
-        <YouTubeEmbed id="QOgcSx7_C7w" title="ทรีตเมนต์สมุนไพรบีชูให้ผลอย่างไร" />
+    <section class="py-12 text-center md:py-16">
+      <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
+        <h2 class="mb-6 font-serif-thai text-2xl font-bold text-brand-green md:text-3xl">
+          ทรีตเมนต์สมุนไพร 100เปอร์เซ็น ให้ผลยังไงมาดูกัน!
+        </h2>
+        <Image src={howItWorks} alt="ขั้นตอนทรีตเมนต์สมุนไพรบีชู 4 สเต็ป: เสปรย์และนวดโทนิค ทาครีมสมุนไพร อบไอน้ำ 45 นาที ล้างและปรับสภาพหนังศีรษะ" width={900} height={506} class="mx-auto rounded-xl shadow-soft" />
+        <div class="mt-6">
+          <YouTubeEmbed id="QOgcSx7_C7w" title="ทรีตเมนต์สมุนไพรบีชูให้ผลอย่างไร" />
+        </div>
+        <p class="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-brand-origin">
+          มีให้เลือก 3 สี ได้แก่ แบบมีสี / แบบไม่มีสี / แบบมีสี (สีพิเศษ) สำหรับข้อมูลเพิ่มเติม
+          ศึกษาได้จากหน้าคำถามที่พบบ่อย (FAQ) ข้อควรระวัง: ผลลัพธ์ที่ได้อาจแตกต่างกันขึ้นอยู่กับปัจจัยต่าง ๆ
+          เช่น ประเภทของผม อายุ เชื้อชาติ ฯลฯ
+        </p>
       </div>
-      <p class="mx-auto mt-4 max-w-2xl text-sm text-brand-origin">
-        มีให้เลือก 3 สี ได้แก่ แบบมีสี / แบบไม่มีสี / แบบมีสี (สีพิเศษ) สำหรับข้อมูลเพิ่มเติม
-        ศึกษาได้จากหน้าคำถามที่พบบ่อย (FAQ) ข้อควรระวัง: ผลลัพธ์ที่ได้อาจแตกต่างกันขึ้นอยู่กับปัจจัยต่าง ๆ
-        เช่น ประเภทของผม อายุ เชื้อชาติ ฯลฯ
-      </p>
     </section>
 
     <!-- Reviews -->
-    <section class="py-8 text-center">
-      <h2 class="mb-6 font-thai text-2xl font-bold text-brand-green">
-        รีวิว บีชู แฮร์ ทรีตเมนต์
-      </h2>
-      <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <Image src={review1} alt="รีวิวจากลูกค้าที่ใช้ทรีตเมนต์สมุนไพรบีชู" width={400} height={400} class="h-auto w-full rounded-lg" />
-        <Image src={review2} alt="รีวิวจากลูกค้าที่ใช้ทรีตเมนต์สมุนไพรบีชู" width={400} height={400} class="h-auto w-full rounded-lg" />
-        <Image src={review3} alt="รีวิวจากลูกค้าที่ใช้ทรีตเมนต์สมุนไพรบีชู" width={400} height={400} class="h-auto w-full rounded-lg" />
-        <Image src={review4} alt="รีวิวจากลูกค้าที่ใช้ทรีตเมนต์สมุนไพรบีชู" width={400} height={400} class="h-auto w-full rounded-lg" />
+    <section class="bg-brand-earth/25 py-12 text-center md:py-16">
+      <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
+        <LeafDivider />
+        <h2 class="mb-8 font-serif-thai text-2xl font-bold text-brand-green md:text-3xl">
+          รีวิว บีชู แฮร์ ทรีตเมนต์
+        </h2>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {reviews.map((review) => (
+            <Image src={review.img} alt={review.alt} width={400} height={400} class="h-auto w-full rounded-xl shadow-soft" />
+          ))}
+        </div>
+        <a href="/th/รีวิวทรีทเม้นท์ที่ดี/" class="mt-6 inline-flex min-h-11 items-center px-3 text-brand-green underline transition-colors duration-200 hover:text-brand-green/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+          อ่านรีวิวและความคิดเห็นจากลูกค้าเพิ่มเติม &rarr;
+        </a>
       </div>
-      <a href="/th/รีวิวทรีทเม้นท์ที่ดี/" class="mt-6 inline-block text-brand-green underline">
-        อ่านรีวิวและความคิดเห็นจากลูกค้าเพิ่มเติม &rarr;
-      </a>
     </section>
 
     <!-- Awards -->
-    <section class="py-8 text-center">
-      <h2 class="mb-2 font-thai text-2xl font-bold text-brand-green">ความคิดเห็นจากลูกค้าของเรา / รางวัลการันตี</h2>
-      <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6">
-        {awards.map((award) => (
-          <Image src={award.img} alt={award.alt} width={100} height={100} class="mx-auto" />
-        ))}
+    <section class="py-12 text-center md:py-16">
+      <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
+        <h2 class="mb-8 font-serif-thai text-2xl font-bold text-brand-green md:text-3xl">ความคิดเห็นจากลูกค้าของเรา / รางวัลการันตี</h2>
+        <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6">
+          {awards.map((award) => (
+            <Image src={award.img} alt={award.alt} width={100} height={100} class="mx-auto h-24 w-24 rounded-full bg-white object-contain p-2 shadow-soft transition-transform duration-200 motion-safe:hover:scale-105" />
+          ))}
+        </div>
+        <Image src={awardsBanner} alt="รางวัลและการรับรองของบีชู ออริจิน" width={800} height={240} class="mx-auto mt-10 h-auto w-full max-w-3xl rounded-xl shadow-soft" />
       </div>
-      <Image src={awardsBanner} alt="รางวัลและการรับรองของบีชู ออริจิน" width={800} height={240} class="mx-auto mt-8 h-auto w-full max-w-3xl rounded-lg" />
     </section>
 
     <!-- Pricing -->
-    <section class="py-8 text-center">
-      <h2 class="mb-4 font-thai text-2xl font-bold text-brand-green">
-        ทรีตเมนต์ผมราคาจับต้องได้ในประเทศไทย
-      </h2>
-      <Image src={priceList} alt="ราคาทรีตเมนต์บีชู 800 ถึง 1200 บาท ขึ้นอยู่กับความยาวผม ไม่มีค่าใช้จ่ายแอบแฝง" width={700} height={990} class="mx-auto rounded-lg" />
-      <p class="mx-auto mt-4 max-w-2xl text-sm text-brand-origin">
-        ราคาในการให้บริการของเรานั้นขึ้นอยู่กับความยาวของเส้นผม โดยเริ่มต้นที่ 800 บาท ไปจนถึง 1,200 บาท
-        ในการทำ à la carte ทรีตเมนต์สมุนไพร ซึ่งทางเราไม่มีการคิดเงินเกินจากที่กำหนดไว้แน่นอน
-        ลูกค้าสามารถตกลงราคาก่อนที่จะทำทรีตเมนต์ได้
-      </p>
+    <section class="bg-brand-earth/25 py-12 text-center md:py-16">
+      <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
+        <h2 class="mb-6 font-serif-thai text-2xl font-bold text-brand-green md:text-3xl">
+          ทรีตเมนต์ผมราคาจับต้องได้ในประเทศไทย
+        </h2>
+        <Image src={priceList} alt="ราคาทรีตเมนต์บีชู 800 ถึง 1200 บาท ขึ้นอยู่กับความยาวผม ไม่มีค่าใช้จ่ายแอบแฝง" width={700} height={990} class="mx-auto rounded-xl shadow-soft" />
+        <p class="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-brand-origin">
+          ราคาในการให้บริการของเรานั้นขึ้นอยู่กับความยาวของเส้นผม โดยเริ่มต้นที่ 800 บาท ไปจนถึง 1,200 บาท
+          ในการทำ à la carte ทรีตเมนต์สมุนไพร ซึ่งทางเราไม่มีการคิดเงินเกินจากที่กำหนดไว้แน่นอน
+          ลูกค้าสามารถตกลงราคาก่อนที่จะทำทรีตเมนต์ได้
+        </p>
+      </div>
     </section>
 
     <!-- Locations -->
-    <section class="py-8 text-center">
-      <h2 class="mb-4 font-thai text-2xl font-bold text-brand-green">BEE CHOO THAILAND LOCATIONS</h2>
-      <a href="/th/สถานที่ตั้งของร้านค้า/">
-        <Image src={locationsMap} alt="แผนที่สาขาบีชู ประเทศไทย ในกรุงเทพฯ" width={900} height={600} class="mx-auto rounded-lg" />
-      </a>
+    <section class="py-12 text-center md:py-16">
+      <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
+        <h2 class="mb-6 font-serif-thai text-2xl font-bold text-brand-green md:text-3xl">BEE CHOO THAILAND LOCATIONS</h2>
+        <a href="/th/สถานที่ตั้งของร้านค้า/" class="inline-block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+          <Image src={locationsMap} alt="แผนที่สาขาบีชู ประเทศไทย ในกรุงเทพฯ" width={900} height={600} class="mx-auto rounded-xl shadow-soft" />
+        </a>
+        <div>
+          <a href="/th/สถานที่ตั้งของร้านค้า/" class="mt-6 inline-flex min-h-11 items-center rounded-full bg-brand-green px-7 font-bold text-white shadow-soft transition-colors duration-200 hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+            {ui.misc.viewLocations} &rarr;
+          </a>
+        </div>
+      </div>
     </section>
 
   </main>

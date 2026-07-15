@@ -1,5 +1,8 @@
 ---
 // src/components/Header.astro
+// Sticky so the phone CTA and nav stay reachable mid-page. Mobile gets a CSS-only
+// <details> menu (no JS) — previously the nav was `hidden md:flex` with no fallback,
+// leaving phones with no navigation at all.
 import { Image } from "astro:assets";
 import logoLeaf from "../assets/images/logo-leaf.jpg";
 import { UI, NAV_HREFS } from "../i18n/ui";
@@ -12,27 +15,77 @@ const { lang } = Astro.props;
 const ui = UI[lang];
 const hrefs = NAV_HREFS[lang];
 const wordmark = lang === "th" ? "บีชู เฮอร์เบิล" : "Bee Choo Herbal";
-const fontClass = lang === "th" ? "font-thai" : "font-sans";
+// Serif wordmark — matches the logotype's serif letterforms (brand guide main logomark).
+const fontClass = lang === "th" ? "font-serif-thai" : "font-serif";
+
+const navItems = (Object.keys(ui.nav) as Array<keyof typeof ui.nav>).map((key) => ({
+  label: ui.nav[key],
+  href: hrefs[key],
+}));
+const isCurrent = (href: string) => decodeURI(Astro.url.pathname) === href;
 ---
 
-<header class="flex items-center justify-between border-b border-brand-earth bg-white px-4 py-3 md:px-8">
-  <a href={hrefs.home} class="flex items-center gap-2">
+<header class="sticky top-0 z-30 flex items-center justify-between gap-2 border-b border-brand-earth bg-white px-4 py-3 md:px-8">
+  <a href={hrefs.home} class="flex min-h-11 items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
     <Image src={logoLeaf} alt="Bee Choo Herbal" width={36} height={31} />
     <span class={`${fontClass} text-lg font-bold text-brand-green`}>{wordmark}</span>
   </a>
 
-  <nav class="hidden items-center gap-6 md:flex">
-    <a href={hrefs.home} class="text-brand-origin hover:text-brand-green">{ui.nav.home}</a>
-    <a href={hrefs.about} class="text-brand-origin hover:text-brand-green">{ui.nav.about}</a>
-    <a href={hrefs.locations} class="text-brand-origin hover:text-brand-green">{ui.nav.locations}</a>
-    <a href={hrefs.faq} class="text-brand-origin hover:text-brand-green">{ui.nav.faq}</a>
-    <a href={hrefs.blog} class="text-brand-origin hover:text-brand-green">{ui.nav.blog}</a>
+  <nav aria-label={ui.misc.menu} class="hidden items-center gap-6 md:flex">
+    {
+      navItems.map((item) => (
+        <a
+          href={item.href}
+          aria-current={isCurrent(item.href) ? "page" : undefined}
+          class:list={[
+            "py-2 transition-colors duration-200 hover:text-brand-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green",
+            isCurrent(item.href)
+              ? "font-bold text-brand-green underline decoration-brand-yellow decoration-2 underline-offset-8"
+              : "text-brand-origin",
+          ]}
+        >
+          {item.label}
+        </a>
+      ))
+    }
   </nav>
 
-  <a
-    href="tel:+66020726698"
-    class="rounded bg-brand-green px-4 py-2 text-sm font-bold text-white hover:bg-brand-green/90"
-  >
-    +66 02 072 6698
-  </a>
+  <div class="flex items-center gap-2">
+    <a
+      href="tel:+66020726698"
+      class="flex min-h-11 items-center rounded-full bg-brand-green px-4 text-sm font-bold text-white transition-colors duration-200 hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+    >
+      +66 02 072 6698
+    </a>
+
+    <details class="relative md:hidden">
+      <summary class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full text-brand-green transition-colors duration-200 hover:bg-brand-green/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green [&::-webkit-details-marker]:hidden">
+        <span class="sr-only">{ui.misc.menu}</span>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="h-6 w-6">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </summary>
+      <nav
+        aria-label={ui.misc.menu}
+        class="absolute top-full right-0 mt-2 w-56 rounded-2xl border border-brand-earth bg-white p-2 shadow-soft-lg"
+      >
+        {
+          navItems.map((item) => (
+            <a
+              href={item.href}
+              aria-current={isCurrent(item.href) ? "page" : undefined}
+              class:list={[
+                "block rounded-xl px-4 py-3 font-bold transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green",
+                isCurrent(item.href)
+                  ? "bg-brand-green/10 text-brand-green"
+                  : "text-brand-origin hover:bg-brand-green/5 hover:text-brand-green",
+              ]}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+    </details>
+  </div>
 </header>

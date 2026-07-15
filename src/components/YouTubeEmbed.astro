@@ -1,25 +1,90 @@
 ---
 // src/components/YouTubeEmbed.astro
-// Responsive 16:9 YouTube embed. Uses youtube-nocookie + native loading="lazy"
-// so it stays light (no JS library, no autoplay) — matches CLAUDE.md's
-// "near-zero JS" / "no heavy JavaScript libraries" rules. Reused for the hero
-// intro video and the "how it works" treatment video, both present on the
-// live site (EN + TH).
+// Click-to-load facade: first paint is a self-hosted thumbnail + brand play button;
+// the youtube-nocookie iframe (~0.5MB of player JS) is injected only on click. This
+// keeps LCP clean even when the video sits above the fold (where loading="lazy" is a
+// no-op) and spares keyboard users the iframe tab gauntlet. Matches CLAUDE.md's
+// "near-zero JS" rule — the activation script is a few lines, no library.
+// Unknown video ids fall back to the plain lazy iframe so the component stays reusable.
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import introThumb from "../assets/images/video-thumbs/c8x_e1zPvMY.jpg";
+import howItWorksThumb from "../assets/images/video-thumbs/QOgcSx7_C7w.jpg";
+
 interface Props {
   id: string;
   title: string;
 }
 const { id, title } = Astro.props;
+
+const THUMBS: Record<string, ImageMetadata> = {
+  c8x_e1zPvMY: introThumb,
+  QOgcSx7_C7w: howItWorksThumb,
+};
+const thumb = THUMBS[id];
 ---
 
-<div class="relative mx-auto aspect-video w-full max-w-3xl overflow-hidden rounded-lg shadow-sm">
-  <iframe
-    class="absolute inset-0 h-full w-full"
-    src={`https://www.youtube-nocookie.com/embed/${id}`}
-    title={title}
-    loading="lazy"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen></iframe>
-</div>
+{
+  thumb ? (
+    <div
+      class="yt-facade relative mx-auto aspect-video w-full max-w-3xl overflow-hidden rounded-xl bg-brand-green shadow-soft"
+      data-yt-id={id}
+      data-yt-title={title}
+    >
+      <Image
+        src={thumb}
+        alt=""
+        width={768}
+        height={432}
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+      <button type="button" data-yt-play class="group absolute inset-0 flex cursor-pointer items-center justify-center focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-white">
+        <span class="sr-only">{title}</span>
+        <span
+          aria-hidden="true"
+          class="flex h-16 w-16 items-center justify-center rounded-full bg-brand-green/95 text-white shadow-soft-lg transition-transform duration-200 motion-safe:group-hover:scale-110"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" class="ml-1 h-7 w-7">
+            <path d="M8 5.14v13.72L19 12 8 5.14z" />
+          </svg>
+        </span>
+      </button>
+      <noscript>
+        <a class="absolute inset-0" href={`https://www.youtube.com/watch?v=${id}`}>
+          <span class="sr-only">{title}</span>
+        </a>
+      </noscript>
+    </div>
+  ) : (
+    <div class="relative mx-auto aspect-video w-full max-w-3xl overflow-hidden rounded-xl shadow-soft">
+      <iframe
+        class="absolute inset-0 h-full w-full border-0"
+        src={`https://www.youtube-nocookie.com/embed/${id}`}
+        title={title}
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      />
+    </div>
+  )
+}
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".yt-facade [data-yt-play]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const facade = btn.closest<HTMLElement>(".yt-facade");
+      if (!facade || !facade.dataset.ytId) return;
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube-nocookie.com/embed/${facade.dataset.ytId}?autoplay=1`;
+      iframe.title = facade.dataset.ytTitle ?? "";
+      iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      iframe.className = "absolute inset-0 h-full w-full border-0";
+      facade.replaceChildren(iframe);
+      iframe.focus();
+    });
+  });
+</script>

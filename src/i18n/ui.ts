@@ -22,6 +22,20 @@ export interface UiStrings {
     socialTiktok: string;
     tagline: string;
   };
+  // Accessibility / chrome labels (not page content).
+  misc: {
+    menu: string;
+    skipToContent: string;
+    languageSwitcher: string;
+    contact: string;
+    viewLocations: string;
+  };
+  // Short labels for the mobile sticky contact bar.
+  bar: {
+    call: string;
+    facebook: string;
+    line: string;
+  };
 }
 
 export const UI: Record<"en" | "th", UiStrings> = {
@@ -45,6 +59,18 @@ export const UI: Record<"en" | "th", UiStrings> = {
       socialTiktok: "Tiktok",
       tagline: "Naturally Confident",
     },
+    misc: {
+      menu: "Menu",
+      skipToContent: "Skip to content",
+      languageSwitcher: "Language",
+      contact: "Contact",
+      viewLocations: "View all locations",
+    },
+    bar: {
+      call: "Call",
+      facebook: "Facebook",
+      line: "LINE",
+    },
   },
   th: {
     nav: {
@@ -65,6 +91,18 @@ export const UI: Record<"en" | "th", UiStrings> = {
       socialYoutube: "Youtube",
       socialTiktok: "Tiktok",
       tagline: "Naturally Confident",
+    },
+    misc: {
+      menu: "เมนู",
+      skipToContent: "ข้ามไปยังเนื้อหา",
+      languageSwitcher: "เลือกภาษา",
+      contact: "ติดต่อเรา",
+      viewLocations: "ดูสาขาทั้งหมด",
+    },
+    bar: {
+      call: "โทร",
+      facebook: "Facebook",
+      line: "LINE",
     },
   },
 };

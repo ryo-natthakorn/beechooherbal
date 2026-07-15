@@ -3,19 +3,60 @@
 @import "@fontsource/roboto/700.css";
 @import "@fontsource/noto-sans-thai/400.css";
 @import "@fontsource/noto-sans-thai/700.css";
+@import "@fontsource/lora/400.css";
+@import "@fontsource/lora/400-italic.css";
+@import "@fontsource/lora/700.css";
+@import "@fontsource/noto-serif-thai/400.css";
+@import "@fontsource/noto-serif-thai/700.css";
 
 /* Brand tokens — from 2026 BC_brandguide_R4_18122025.pdf, primary + secondary colour system. */
 @theme {
   --color-brand-green: #2D6946;   /* Harmony Green — primary: headings, logo, nav, CTAs */
   --color-brand-yellow: #FFC600;  /* Oriental Yellow — CTA accents, alerts */
-  --color-brand-pink: #EFA693;    /* Gentle Pink — soft accents, hover states */
+  --color-brand-pink: #EFA693;    /* Gentle Pink — soft accents (not used on homepage by design) */
   --color-brand-earth: #DBCBC1;   /* section backgrounds, dividers */
   --color-brand-origin: #6F6259;  /* body text on light backgrounds */
   --color-brand-treasure: #DAC556;
   --color-brand-root: #D47E00;
   --color-brand-nude: #F6B9A7;
   --color-brand-serenity: #B2E1D8;
+  --color-brand-ink: #26201A;     /* warm near-black (neutral, not a brand-guide colour) — the
+                                     blessed ink for text on brand-yellow: 10.2:1, vs 3.7:1 for
+                                     brand-origin which fails WCAG AA */
 
+  /* Body text: Roboto (EN) / Noto Sans Thai (TH). Headings: Lora (EN) / Noto Serif Thai (TH) —
+     the brand guide's digital typeface set (Lora stands in for print-only Minion Pro). */
   --font-sans: "Roboto", system-ui, sans-serif;
   --font-thai: "Noto Sans Thai", sans-serif;
+  --font-serif: "Lora", Georgia, serif;
+  --font-serif-thai: "Noto Serif Thai", "Lora", Georgia, serif;
+
+  /* Soft UI Evolution elevation — green-cast soft shadows instead of hard borders. */
+  --shadow-soft: 0 4px 16px rgb(45 105 70 / 0.08), 0 1px 3px rgb(0 0 0 / 0.05);
+  --shadow-soft-lg: 0 12px 32px rgb(45 105 70 / 0.12), 0 2px 6px rgb(0 0 0 / 0.06);
+}
+
+/* Scroll-driven section reveal — zero JS. Content is fully visible by default;
+   the animation only engages when the browser supports scroll timelines AND the
+   visitor allows motion, so nothing can ever ship hidden (headless renderers,
+   hidden tabs, old browsers, reduced-motion all get the static page). */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-up 1ms linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }

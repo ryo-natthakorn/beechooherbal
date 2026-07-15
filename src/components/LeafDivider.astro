@@ -1,0 +1,16 @@
+---
+// src/components/LeafDivider.astro
+// Subtle section divider: hairlines flanking the brand leaf mark (brand guide §Iconography —
+// unaltered icon, used as a standalone ornament, not a bullet point). The white disc keeps the
+// JPG's white background looking intentional on the Earth-tinted section bands.
+import { Image } from "astro:assets";
+import logoLeaf from "../assets/images/logo-leaf.jpg";
+---
+
+<div class="mx-auto mb-6 flex max-w-xs items-center gap-4" aria-hidden="true">
+  <div class="h-px flex-1 bg-brand-earth"></div>
+  <div class="rounded-full bg-white p-2 shadow-soft">
+    <Image src={logoLeaf} alt="" width={24} height={21} />
+  </div>
+  <div class="h-px flex-1 bg-brand-earth"></div>
+</div>

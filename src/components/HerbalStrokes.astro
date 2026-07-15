@@ -1,0 +1,39 @@
+---
+// src/components/HerbalStrokes.astro
+// Decorative organic line work following the brand guide's "Strokes & Lines"
+// direction: hand-drawn feel, natural geometry, thin varied stroke weights
+// (0.5–3pt scaled to artwork size). Draws in currentColor so the parent chooses
+// the hue (white over the green hero/footer). Purely ornamental — aria-hidden,
+// no pointer events. This is NOT the logo mark (the guide forbids watermarking
+// the logo); it's freehand botanical line work in the guide's illustration style.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+  aria-hidden="true"
+  class={className}
+  viewBox="0 0 1440 720"
+  fill="none"
+  preserveAspectRatio="xMidYMid slice"
+>
+  <g stroke="currentColor" stroke-linecap="round" fill="none">
+    <!-- flowing grass sweep, lower left -->
+    <path d="M-60 640 C 200 540, 340 680, 580 580 S 1000 440, 1200 490" stroke-width="2" />
+    <path d="M-40 676 C 230 586, 380 716, 640 626 S 1050 496, 1250 536" stroke-width="1.25" />
+    <path d="M-20 712 C 260 632, 420 752, 700 672 S 1110 552, 1310 582" stroke-width="0.75" />
+    <!-- drifting stem cluster, upper right -->
+    <path d="M880 40 C 1040 92, 1130 28, 1280 82 S 1440 148, 1540 112" stroke-width="1.75" />
+    <path d="M840 92 C 1010 144, 1110 84, 1265 134 S 1450 196, 1550 162" stroke-width="1" />
+    <path d="M800 144 C 980 196, 1090 140, 1250 186 S 1460 244, 1560 212" stroke-width="0.6" />
+    <!-- leaf-vein flourish, upper left -->
+    <path d="M110 130 C 155 84, 220 72, 285 94" stroke-width="0.9" />
+    <path d="M140 165 C 185 119, 252 107, 318 129" stroke-width="0.7" />
+    <path d="M170 200 C 215 154, 284 142, 350 164" stroke-width="0.5" />
+    <!-- single falling stem, mid right -->
+    <path d="M1180 320 C 1230 380, 1210 450, 1150 500 C 1110 534, 1100 580, 1120 620" stroke-width="0.8" />
+    <path d="M1150 500 C 1190 490, 1230 500, 1255 528" stroke-width="0.6" />
+  </g>
+</svg>
