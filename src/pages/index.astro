@@ -12,6 +12,7 @@ import TreatmentCard from "../components/TreatmentCard.astro";
 import YouTubeEmbed from "../components/YouTubeEmbed.astro";
 import LeafDivider from "../components/LeafDivider.astro";
 import HerbalStrokes from "../components/HerbalStrokes.astro";
+import AwardsMarquee from "../components/AwardsMarquee.astro";
 import { TREATMENTS } from "../data/treatments";
 import { UI } from "../i18n/ui";
 import howItWorks from "../assets/images/how-it-works.jpg";
@@ -41,10 +42,20 @@ const title = "Bee Choo Herbal - Herbal Hair & Scalp Treatment, Bangkok";
 const description =
   "Award-winning 100% natural herbal hair and scalp treatment clinic in Bangkok, Thailand. Hair loss, oily scalp, dandruff, grey hair and more.";
 
+// Same 4 steps the process photo shows, transcribed as real text (previously these only
+// existed in the image's alt attribute, unreadable to sighted visitors and uncrawlable
+// by search engines) so the section is both accessible and indexable.
+const howItWorksSteps = [
+  "Spray and massage tonic",
+  "Apply herbal cream",
+  "Steam for 45 minutes",
+  "Rinse and condition",
+];
+
 const awards = [
   { img: singaporeExcellenceAward, alt: "Singapore Excellence Award" },
   { img: singaporeHeartland, alt: "Singapore Heartland Award" },
-  { img: singaporePrestigeWinner, alt: "Singapore Prestige Award — Winner" },
+  { img: singaporePrestigeWinner, alt: "Singapore Prestige Award - Winner" },
   { img: singaporePrestige, alt: "Singapore Prestige Award" },
   { img: superHealthBrand, alt: "Super Health Brand Award" },
   { img: theEntrepreneur, alt: "The Entrepreneur Award" },
@@ -53,15 +64,15 @@ const awards = [
   { img: readersChoice, alt: "Reader's Choice Award" },
   { img: serviceClass, alt: "Service Class Award" },
   { img: sinChewBusiness, alt: "Sin Chew Business Excellence Award" },
-  { img: tapAwards, alt: "TAP Awards — Most Innovative Badge" },
+  { img: tapAwards, alt: "TAP Awards - Most Innovative Badge" },
 ];
 
 // Alt text transcribed from the actual screenshots (they are branded Thai testimonial
 // cards) — previously all four shared one identical alt, so screen-reader users got
 // zero information from the page's key social proof.
 const reviews = [
-  { img: review1, alt: "Customer review: loved the herbal hair colouring — beautiful colour, lovely helpful staff, back for a second visit and planning to keep coming" },
-  { img: review2, alt: "Customer review: oily scalp visibly improved after trying the treatment — scalp feels clean and healthy" },
+  { img: review1, alt: "Customer review: loved the herbal hair colouring. Beautiful colour, lovely helpful staff, back for a second visit and planning to keep coming" },
+  { img: review2, alt: "Customer review: oily scalp visibly improved after trying the treatment. Scalp feels clean and healthy" },
   { img: review3, alt: "Customer review: scalp felt refreshed almost from the first session, first-class service with a relaxing massage from the herbal application through to the wash" },
   { img: review4, alt: "Customer review: itchy scalp, dandruff and hair loss all gone thanks to the shop's herbal treatment, with truly enjoyable service" },
 ];
@@ -71,8 +82,10 @@ const reviews = [
   <main id="main">
 
     <!-- Hero — drenched in Harmony Green (brand-committed strategy: the primary colour
-         carries the surface), with the guide's hand-drawn stroke line work behind. -->
-    <section class="relative overflow-hidden bg-brand-green py-14 text-center md:py-20">
+         carries the surface), with the guide's hand-drawn stroke line work behind and a
+         layered brand-white/brand-yellow glow for depth (no off-brand hues). -->
+    <section class="relative overflow-hidden bg-brand-green py-20 text-center md:py-28">
+      <div class="hero-aura pointer-events-none absolute inset-0" aria-hidden="true"></div>
       <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white opacity-10" />
       <div class="hero-enter relative mx-auto max-w-6xl px-4 md:px-8">
         <h1 class="mx-auto max-w-4xl font-serif font-bold text-white">
@@ -83,24 +96,24 @@ const reviews = [
           BEST HAIR LOSS TREATMENT CLINIC IN BANGKOK, Thailand
         </p>
         <div class="mt-8 flex flex-wrap justify-center gap-3">
-          <a href="tel:+66020726698" class="flex min-h-11 items-center rounded-full bg-white px-7 font-bold text-brand-green shadow-soft-lg transition-colors duration-200 hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+          <a href="tel:+66020726698" class="btn-tactile flex min-h-11 items-center rounded-full bg-white px-7 font-bold text-brand-green shadow-soft-lg hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
             Call Us Today
           </a>
-          <a href="https://www.facebook.com/beechooherbal/" target="_blank" rel="noopener" class="flex min-h-11 items-center rounded-full bg-brand-yellow px-7 font-bold text-brand-ink shadow-soft-lg transition-colors duration-200 hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+          <a href="https://www.facebook.com/beechooherbal/" target="_blank" rel="noopener" class="btn-tactile flex min-h-11 items-center rounded-full bg-brand-yellow px-7 font-bold text-brand-ink shadow-soft-lg hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
             Talk to us on Facebook!
           </a>
-          <a href="https://lin.ee/ll3injb" target="_blank" rel="noopener" class="flex min-h-11 items-center rounded-full border border-white/60 px-7 font-bold text-white transition-colors duration-200 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+          <a href="https://lin.ee/ll3injb" target="_blank" rel="noopener" class="btn-tactile flex min-h-11 items-center rounded-full border border-white/60 px-7 font-bold text-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
             Add us on LINE
           </a>
         </div>
-        <div class="mt-10">
+        <div class="mx-auto mt-10 max-w-2xl overflow-hidden rounded-2xl shadow-soft-lg">
           <YouTubeEmbed id="c8x_e1zPvMY" title="Bee Choo Herbal hair treatment introduction" />
         </div>
       </div>
     </section>
 
     <!-- Trust intro -->
-    <section class="py-12 md:py-16">
+    <section class="py-16 md:py-24">
       <div class="reveal mx-auto max-w-prose px-4 md:px-8 text-brand-origin leading-relaxed">
         <p>
           Bee Choo Origin is the largest scalp/hair loss treatment clinic specialising in the
@@ -126,7 +139,7 @@ const reviews = [
     </section>
 
     <!-- Treatment cards -->
-    <section class="bg-brand-earth/25 py-12 md:py-16">
+    <section class="bg-brand-earth/25 py-16 md:py-24">
       <div class="mx-auto max-w-6xl px-4 md:px-8">
         <LeafDivider />
         <h2 class="reveal mb-8 text-center font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">
@@ -143,13 +156,25 @@ const reviews = [
     </script>
 
     <!-- How it works -->
-    <section class="py-12 text-center md:py-16">
-      <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
-        <h2 class="mb-6 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">
+    <section class="py-16 md:py-24">
+      <div class="reveal mx-auto max-w-6xl px-4 text-center md:px-8">
+        <h2 class="mb-8 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">
           100% NATURAL HERBAL HAIR TREATMENT - HOW IT WORKS
         </h2>
-        <Image src={howItWorks} alt="Bee Choo herbal hair treatment 4-step process: spray and massage tonic, apply herbal cream, steam for 45 minutes, rinse and condition" width={900} height={506} class="mx-auto rounded-xl shadow-soft" />
-        <div class="mt-6">
+        <div class="grid gap-8 text-left md:grid-cols-2 md:items-center md:gap-12">
+          <Image src={howItWorks} alt="Bee Choo herbal hair treatment process" width={900} height={506} class="mx-auto h-auto w-full rounded-xl shadow-soft" />
+          <ol class="flex flex-col gap-4">
+            {howItWorksSteps.map((step, i) => (
+              <li class="flex items-start gap-4">
+                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-green font-serif text-sm font-bold text-white">
+                  {i + 1}
+                </span>
+                <span class="pt-1.5 leading-relaxed text-brand-origin">{step}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div class="mx-auto mt-8 max-w-2xl">
           <YouTubeEmbed id="QOgcSx7_C7w" title="How Bee Choo herbal hair treatment works" />
         </div>
         <p class="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-brand-origin">
@@ -161,46 +186,48 @@ const reviews = [
     </section>
 
     <!-- Reviews -->
-    <section class="bg-brand-earth/25 py-12 text-center md:py-16">
-      <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
+    <section class="bg-brand-earth/25 py-16 text-center md:py-24">
+      <div class="mx-auto max-w-6xl px-4 md:px-8">
         <LeafDivider />
-        <h2 class="mb-8 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">
+        <h2 class="reveal mb-8 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">
           REVIEWS ON BEECHOO HAIR TREATMENT
         </h2>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {reviews.map((review) => (
-            <Image src={review.img} alt={review.alt} width={400} height={400} class="h-auto w-full rounded-xl shadow-soft" />
+          {reviews.map((review, i) => (
+            <div class="review-reveal overflow-hidden rounded-xl shadow-soft" data-reveal-index={i}>
+              <Image src={review.img} alt={review.alt} width={400} height={400} class="h-auto w-full transition-transform duration-300 ease-spring motion-safe:hover:scale-105" />
+            </div>
           ))}
         </div>
-        <a href="/reviews-and-testimonials-of-bee-choo-origin-treatment/" class="mt-6 inline-flex min-h-11 items-center px-3 text-brand-green underline transition-colors duration-200 hover:text-brand-green/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+        <a href="/reviews-and-testimonials-of-bee-choo-origin-treatment/" class="btn-tactile mt-6 inline-flex min-h-11 items-center px-3 text-brand-green underline hover:text-brand-green/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
           Read more reviews and testimonials &rarr;
         </a>
       </div>
     </section>
 
+    <script>
+      import "../scripts/reviews-reveal";
+    </script>
+
     <!-- Awards -->
-    <section class="py-12 text-center md:py-16">
+    <section class="py-16 text-center md:py-24">
       <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
         <h2 class="mb-3 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">OUR AWARDS &amp; RECOGNITIONS</h2>
-        <p class="mx-auto mb-8 max-w-2xl text-sm leading-relaxed text-brand-origin">
+        <p class="mx-auto mb-10 max-w-2xl text-sm leading-relaxed text-brand-origin">
           Certified with TQCSI, Bee Choo Herbal Hair Treatment surpassed the stringent criteria of
           the ISO standards and demonstrates consistent ability to enhance customer satisfaction and
           assurance to deliver quality service, which enables Bee Choo to receive a number of
           awards in the Asia Pacific.
         </p>
-        <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6">
-          {awards.map((award) => (
-            <Image src={award.img} alt={award.alt} width={100} height={100} class="mx-auto h-24 w-24 rounded-full bg-white object-contain p-2 shadow-soft transition-transform duration-200 motion-safe:hover:scale-105" />
-          ))}
-        </div>
+        <AwardsMarquee {awards} />
         <Image src={awardsBanner} alt="Bee Choo Origin awards and recognitions" width={800} height={240} class="mx-auto mt-10 h-auto w-full max-w-3xl rounded-xl shadow-soft" />
       </div>
     </section>
 
     <!-- Pricing -->
-    <section class="bg-brand-earth/25 py-12 text-center md:py-16">
+    <section class="bg-brand-earth/25 py-16 text-center md:py-24">
       <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
-        <h2 class="mb-6 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">
+        <h2 class="mb-8 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">
           AFFORDABLE HAIR TREATMENT IN Bangkok, Thailand
         </h2>
         <Image src={priceList} alt="Bee Choo hair treatment price list: 800 to 1200 Baht depending on hair length, no hidden charges" width={700} height={990} class="mx-auto rounded-xl shadow-soft" />
@@ -213,14 +240,14 @@ const reviews = [
     </section>
 
     <!-- Locations -->
-    <section class="py-12 text-center md:py-16">
+    <section class="py-16 text-center md:py-24">
       <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
-        <h2 class="mb-6 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">BEE CHOO THAILAND LOCATIONS</h2>
-        <a href="/locations/" class="inline-block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
-          <Image src={locationsMap} alt="Map of Bee Choo Thailand outlet locations in Bangkok" width={900} height={600} class="mx-auto rounded-xl shadow-soft" />
+        <h2 class="mb-8 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">BEE CHOO THAILAND LOCATIONS</h2>
+        <a href="/locations/" class="inline-block overflow-hidden rounded-xl shadow-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+          <Image src={locationsMap} alt="Map of Bee Choo Thailand outlet locations in Bangkok" width={900} height={600} class="mx-auto transition-transform duration-300 ease-spring hover:scale-105" />
         </a>
         <div>
-          <a href="/locations/" class="mt-6 inline-flex min-h-11 items-center rounded-full bg-brand-green px-7 font-bold text-white shadow-soft transition-colors duration-200 hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+          <a href="/locations/" class="btn-tactile mt-6 inline-flex min-h-11 items-center rounded-full bg-brand-green px-7 font-bold text-white shadow-soft hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
             {ui.misc.viewLocations} &rarr;
           </a>
         </div>

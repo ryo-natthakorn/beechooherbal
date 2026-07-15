@@ -24,7 +24,7 @@ const headingFont = lang === "th" ? "font-serif-thai" : "font-serif";
 <article
   data-reveal-index={index}
   class:list={[
-    "card-reveal group flex flex-col overflow-hidden rounded-2xl bg-white shadow-soft transition duration-200 motion-safe:hover:-translate-y-1 hover:shadow-soft-lg",
+    "card-reveal group flex flex-col overflow-hidden rounded-2xl bg-white shadow-soft transition duration-300 ease-spring motion-safe:hover:-translate-y-2 hover:shadow-soft-lg",
     featured && "sm:col-span-2",
   ]}
 >
@@ -44,7 +44,7 @@ const headingFont = lang === "th" ? "font-serif-thai" : "font-serif";
     <p class="flex-1 text-sm leading-relaxed text-brand-origin">{treatment.teaser[lang]}</p>
     <a
       href={href}
-      class="mt-3 inline-block rounded-full bg-brand-green px-5 py-3 text-center text-sm font-bold text-white transition-colors duration-200 hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+      class="btn-tactile mt-3 inline-block rounded-full bg-brand-green px-5 py-3 text-center text-sm font-bold text-white hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
     >
       {readMore} &rarr;
     </a>

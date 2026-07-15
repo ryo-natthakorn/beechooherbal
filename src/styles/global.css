@@ -34,6 +34,27 @@
   /* Soft UI Evolution elevation — green-cast soft shadows instead of hard borders. */
   --shadow-soft: 0 4px 16px rgb(45 105 70 / 0.08), 0 1px 3px rgb(0 0 0 / 0.05);
   --shadow-soft-lg: 0 12px 32px rgb(45 105 70 / 0.12), 0 2px 6px rgb(0 0 0 / 0.06);
+
+  /* Spring-like ease for a more premium feel on hover/press transitions. */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Tactile press feedback (Section 4.5) — every interactive pill/button on the site
+   uses this instead of repeating transition/active declarations per instance. */
+@layer components {
+  .btn-tactile {
+    transition-property: transform, background-color, border-color, box-shadow, color;
+    transition-timing-function: var(--ease-spring);
+    transition-duration: 250ms;
+  }
+}
+@media (hover: hover) {
+  .btn-tactile:hover {
+    transform: translateY(-2px);
+  }
+}
+.btn-tactile:active {
+  transform: scale(0.97);
 }
 
 /* Scroll-driven section reveal — zero JS. Content is fully visible by default;
@@ -53,11 +74,63 @@
 @keyframes reveal-up {
   from {
     opacity: 0;
-    transform: translateY(1.5rem);
+    transform: translateY(2rem) scale(0.98);
   }
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Hero aura — layered radial glow in brand white + brand yellow (no off-brand hues),
+   sitting under the HerbalStrokes line art for depth on the green hero/footer. */
+.hero-aura {
+  background:
+    radial-gradient(60% 80% at 15% 0%, rgb(255 255 255 / 0.12), transparent 60%),
+    radial-gradient(55% 65% at 100% 100%, rgb(255 198 0 / 0.14), transparent 65%);
+}
+
+/* Awards marquee — continuous strip instead of a flat 12-icon grid. The track is
+   the real award list rendered twice back to back; translating it by exactly -50%
+   loops seamlessly. The second copy is aria-hidden (decorative repeat, not new
+   content) and is hidden outright under reduced motion, where the track falls back
+   to a static wrapped row of the real (first) copy only. */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 2rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track {
+    animation: marquee-scroll 40s linear infinite;
+  }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .marquee-track [data-marquee-clone] {
+    display: none;
+  }
+}
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
 

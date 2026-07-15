@@ -49,7 +49,7 @@ export const TREATMENTS: Treatment[] = [
     alt: { en: "Bee Choo grey and white hair herbal treatment", th: "ทรีตเมนต์สมุนไพรรักษาผมขาวผมหงอกจากบีชู" },
     title: { en: "White or Grey Hair Treatment", th: "ทรีตเมนต์รักษาผมขาว / รักษาผมหงอก" },
     teaser: {
-      en: "Grey hair occurs at the hair follicles where melanin pigment production has ceased — this is permanent.",
+      en: "Grey hair occurs at the hair follicles where melanin pigment production has ceased. This is permanent.",
       th: "ผมขาวหรือผมหงอกนั้นเกิดขึ้นอยู่ในบริเวณรูขุมขนของเส้นผมของเรา ซึ่งในรูขุมขนนั้นมีการสร้างเม็ดสีเมลานินอยู่เสมอ",
     },
     href: { en: "/reverse-premature-grey-white-hair-by-herbal-treatment/", th: "/th/ปิดผมหงอกวิธีธรรมชาติ/" },
@@ -93,7 +93,7 @@ export const TREATMENTS: Treatment[] = [
     alt: { en: "Bee Choo postpartum hair loss herbal treatment", th: "ทรีตเมนต์สมุนไพรรักษาผมร่วงหลังคลอดจากบีชู" },
     title: { en: "PostPartum hair loss treatment", th: "ทรีตเมนต์แก้ปัญหาผมร่วงสำหรับคุณแม่หลังคลอด" },
     teaser: {
-      en: "Many women experience increased hair fall 2–4 months after giving birth.",
+      en: "Many women experience increased hair fall 2-4 months after giving birth.",
       th: "ผู้หญิงหลายคนประสบการณ์ผมขาดหลุดร่วงมากขึ้นภายหลัง 2-4 เดือนหลังคลอดบุตร",
     },
     href: { en: "/postpartum-hair-loss-treatment-in-thailand/", th: "/th/ภาวะผมร่วงเฉียบพลันของ/" },
