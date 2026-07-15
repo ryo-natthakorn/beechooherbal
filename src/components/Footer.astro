@@ -4,6 +4,7 @@
 // plus YouTube and TikTok as on the current site. No online booking system.
 import { Image } from "astro:assets";
 import logoFull from "../assets/images/logo-full.png";
+import HerbalStrokes from "./HerbalStrokes.astro";
 import { UI } from "../i18n/ui";
 
 interface Props {
@@ -14,8 +15,9 @@ const { lang } = Astro.props;
 const ui = UI[lang];
 ---
 
-<footer class="bg-brand-green px-4 py-12 text-white md:px-8">
-  <div class="mx-auto flex max-w-5xl flex-col items-center gap-6 text-center">
+<footer class="relative overflow-hidden bg-brand-green px-4 py-12 text-white md:px-8">
+  <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white opacity-10" />
+  <div class="relative mx-auto flex max-w-5xl flex-col items-center gap-6 text-center">
     <Image src={logoFull} alt="Bee Choo Origin" width={160} height={226} />
     <!-- Slogan is serif italic per brand guide; brand-serenity is the only on-green brand
          token that clears WCAG AA (4.55:1 — brand-earth fails at 4.14:1). -->

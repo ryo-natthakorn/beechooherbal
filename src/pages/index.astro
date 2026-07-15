@@ -10,6 +10,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import TreatmentCard from "../components/TreatmentCard.astro";
 import YouTubeEmbed from "../components/YouTubeEmbed.astro";
 import LeafDivider from "../components/LeafDivider.astro";
+import HerbalStrokes from "../components/HerbalStrokes.astro";
 import { TREATMENTS } from "../data/treatments";
 import howItWorks from "../assets/images/how-it-works.jpg";
 import priceList from "../assets/images/price-list.jpg";
@@ -66,24 +67,26 @@ const reviews = [
 <BaseLayout {title} {description} {lang}>
   <main id="main">
 
-    <!-- Hero -->
-    <section class="py-12 text-center md:py-16">
-      <div class="mx-auto max-w-6xl px-4 md:px-8">
-        <h1 class="mx-auto max-w-4xl font-serif font-bold text-brand-green">
+    <!-- Hero — drenched in Harmony Green (brand-committed strategy: the primary colour
+         carries the surface), with the guide's hand-drawn stroke line work behind. -->
+    <section class="relative overflow-hidden bg-brand-green py-14 text-center md:py-20">
+      <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white opacity-10" />
+      <div class="relative mx-auto max-w-6xl px-4 md:px-8">
+        <h1 class="mx-auto max-w-4xl font-serif font-bold text-white">
           <span class="block text-3xl text-balance md:text-5xl md:leading-tight">100% Natural Herbal Hair Treatment,</span>
-          <span class="mt-3 block text-lg font-normal text-brand-origin md:text-2xl">Safe, Highly Effective, Proven, Award Winning Hair Salon Clinic</span>
+          <span class="mt-3 block text-lg font-normal text-white/90 md:text-2xl">Safe, Highly Effective, Proven, Award Winning Hair Salon Clinic</span>
         </h1>
-        <p class="mt-5 text-xl font-bold text-brand-green md:text-2xl">
+        <p class="mt-5 text-xl font-bold text-brand-yellow md:text-2xl">
           BEST HAIR LOSS TREATMENT CLINIC IN BANGKOK, Thailand
         </p>
         <div class="mt-8 flex flex-wrap justify-center gap-3">
-          <a href="tel:+66020726698" class="flex min-h-11 items-center rounded-full bg-brand-green px-7 font-bold text-white shadow-soft transition-colors duration-200 hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+          <a href="tel:+66020726698" class="flex min-h-11 items-center rounded-full bg-white px-7 font-bold text-brand-green shadow-soft-lg transition-colors duration-200 hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
             Call Us Today
           </a>
-          <a href="https://www.facebook.com/beechooherbal/" target="_blank" rel="noopener" class="flex min-h-11 items-center rounded-full bg-brand-yellow px-7 font-bold text-brand-ink shadow-soft transition-colors duration-200 hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+          <a href="https://www.facebook.com/beechooherbal/" target="_blank" rel="noopener" class="flex min-h-11 items-center rounded-full bg-brand-yellow px-7 font-bold text-brand-ink shadow-soft-lg transition-colors duration-200 hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
             Talk to us on Facebook!
           </a>
-          <a href="https://lin.ee/ll3injb" target="_blank" rel="noopener" class="flex min-h-11 items-center rounded-full border border-brand-green/30 bg-white px-7 font-bold text-brand-green shadow-soft transition-colors duration-200 hover:bg-brand-green/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+          <a href="https://lin.ee/ll3injb" target="_blank" rel="noopener" class="flex min-h-11 items-center rounded-full border border-white/60 px-7 font-bold text-white transition-colors duration-200 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
             Add us on LINE
           </a>
         </div>
@@ -94,8 +97,8 @@ const reviews = [
     </section>
 
     <!-- Trust intro -->
-    <section class="bg-brand-earth/25 py-12 md:py-16">
-      <div class="mx-auto max-w-prose px-4 md:px-8 text-brand-origin leading-relaxed">
+    <section class="py-12 md:py-16">
+      <div class="reveal mx-auto max-w-prose px-4 md:px-8 text-brand-origin leading-relaxed">
         <p>
           Bee Choo Origin is the largest scalp/hair loss treatment clinic specialising in the
           treatment of hair loss, dandruff, oily itchy scalp and other hair issues. There are 21
@@ -120,8 +123,8 @@ const reviews = [
     </section>
 
     <!-- Treatment cards -->
-    <section class="py-12 md:py-16">
-      <div class="mx-auto max-w-6xl px-4 md:px-8">
+    <section class="bg-brand-earth/25 py-12 md:py-16">
+      <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
         <LeafDivider />
         <h2 class="mb-8 text-center font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">
           Hair Treatment in Bangkok, Thailand (7 Types)
@@ -133,9 +136,8 @@ const reviews = [
     </section>
 
     <!-- How it works -->
-    <section class="bg-brand-earth/25 py-12 text-center md:py-16">
-      <div class="mx-auto max-w-6xl px-4 md:px-8">
-        <LeafDivider />
+    <section class="py-12 text-center md:py-16">
+      <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
         <h2 class="mb-6 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">
           100% NATURAL HERBAL HAIR TREATMENT - HOW IT WORKS
         </h2>
@@ -152,8 +154,8 @@ const reviews = [
     </section>
 
     <!-- Reviews -->
-    <section class="py-12 text-center md:py-16">
-      <div class="mx-auto max-w-6xl px-4 md:px-8">
+    <section class="bg-brand-earth/25 py-12 text-center md:py-16">
+      <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
         <LeafDivider />
         <h2 class="mb-8 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">
           REVIEWS ON BEECHOO HAIR TREATMENT
@@ -170,9 +172,8 @@ const reviews = [
     </section>
 
     <!-- Awards -->
-    <section class="bg-brand-earth/25 py-12 text-center md:py-16">
-      <div class="mx-auto max-w-6xl px-4 md:px-8">
-        <LeafDivider />
+    <section class="py-12 text-center md:py-16">
+      <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
         <h2 class="mb-3 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">OUR AWARDS &amp; RECOGNITIONS</h2>
         <p class="mx-auto mb-8 max-w-2xl text-sm leading-relaxed text-brand-origin">
           Certified with TQCSI, Bee Choo Herbal Hair Treatment surpassed the stringent criteria of
@@ -182,7 +183,7 @@ const reviews = [
         </p>
         <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6">
           {awards.map((award) => (
-            <Image src={award.img} alt={award.alt} width={100} height={100} class="mx-auto h-24 w-24 rounded-full bg-white object-contain p-2 shadow-soft" />
+            <Image src={award.img} alt={award.alt} width={100} height={100} class="mx-auto h-24 w-24 rounded-full bg-white object-contain p-2 shadow-soft transition-transform duration-200 motion-safe:hover:scale-105" />
           ))}
         </div>
         <Image src={awardsBanner} alt="Bee Choo Origin awards and recognitions" width={800} height={240} class="mx-auto mt-10 h-auto w-full max-w-3xl rounded-xl shadow-soft" />
@@ -190,9 +191,8 @@ const reviews = [
     </section>
 
     <!-- Pricing -->
-    <section class="py-12 text-center md:py-16">
-      <div class="mx-auto max-w-6xl px-4 md:px-8">
-        <LeafDivider />
+    <section class="bg-brand-earth/25 py-12 text-center md:py-16">
+      <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
         <h2 class="mb-6 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">
           AFFORDABLE HAIR TREATMENT IN Bangkok, Thailand
         </h2>
@@ -206,9 +206,8 @@ const reviews = [
     </section>
 
     <!-- Locations -->
-    <section class="bg-brand-earth/25 py-12 text-center md:py-16">
-      <div class="mx-auto max-w-6xl px-4 md:px-8">
-        <LeafDivider />
+    <section class="py-12 text-center md:py-16">
+      <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
         <h2 class="mb-6 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl">BEE CHOO THAILAND LOCATIONS</h2>
         <a href="/locations/" class="inline-block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
           <Image src={locationsMap} alt="Map of Bee Choo Thailand outlet locations in Bangkok" width={900} height={600} class="mx-auto rounded-xl shadow-soft" />
