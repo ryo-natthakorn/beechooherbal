@@ -1,8 +1,9 @@
 ---
 // src/pages/index.astro
-// Layout system: white page with alternating Earth-tint full-width bands (brand guide:
-// "white/light background for all touchpoints"), Soft UI elevation on cards, Lora serif
-// headings (the guide's digital stand-in for print-only Minion Pro), leaf-motif dividers.
+// Layout system: Harmony-Green drenched hero (brand-committed color strategy) over a
+// white/Earth-tint band alternation, Soft UI elevation on cards, Lora serif headings
+// (the guide's digital stand-in for print-only Minion Pro), leaf dividers on the two
+// key sections only, zero-JS scroll reveals (see global.css).
 // All copy is verbatim from the live site (SEO) — the two-tier H1 uses nested spans so
 // the rendered hierarchy changes while the DOM text stays identical.
 import { Image } from "astro:assets";
@@ -12,6 +13,7 @@ import YouTubeEmbed from "../components/YouTubeEmbed.astro";
 import LeafDivider from "../components/LeafDivider.astro";
 import HerbalStrokes from "../components/HerbalStrokes.astro";
 import { TREATMENTS } from "../data/treatments";
+import { UI } from "../i18n/ui";
 import howItWorks from "../assets/images/how-it-works.jpg";
 import priceList from "../assets/images/price-list.jpg";
 import locationsMap from "../assets/images/locations-map.jpg";
@@ -34,6 +36,7 @@ import sinChewBusiness from "../assets/images/awards/sin-chew-business.jpg";
 import tapAwards from "../assets/images/awards/tap-awards-most-innovative.png";
 
 const lang = "en" as const;
+const ui = UI[lang];
 const title = "Bee Choo Herbal - Herbal Hair & Scalp Treatment, Bangkok";
 const description =
   "Award-winning 100% natural herbal hair and scalp treatment clinic in Bangkok, Thailand. Hair loss, oily scalp, dandruff, grey hair and more.";
@@ -214,7 +217,7 @@ const reviews = [
         </a>
         <div>
           <a href="/locations/" class="mt-6 inline-flex min-h-11 items-center rounded-full bg-brand-green px-7 font-bold text-white shadow-soft transition-colors duration-200 hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
-            View all locations &rarr;
+            {ui.misc.viewLocations} &rarr;
           </a>
         </div>
       </div>

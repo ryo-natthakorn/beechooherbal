@@ -10,6 +10,7 @@ import YouTubeEmbed from "../../components/YouTubeEmbed.astro";
 import LeafDivider from "../../components/LeafDivider.astro";
 import HerbalStrokes from "../../components/HerbalStrokes.astro";
 import { TREATMENTS } from "../../data/treatments";
+import { UI } from "../../i18n/ui";
 import howItWorks from "../../assets/images/how-it-works.jpg";
 import priceList from "../../assets/images/price-list.jpg";
 import locationsMap from "../../assets/images/locations-map.jpg";
@@ -32,6 +33,7 @@ import sinChewBusiness from "../../assets/images/awards/sin-chew-business.jpg";
 import tapAwards from "../../assets/images/awards/tap-awards-most-innovative.png";
 
 const lang = "th" as const;
+const ui = UI[lang];
 const title = "Bee Choo Herbal - ทรีตเมนต์สมุนไพรรักษาผมและหนังศีรษะ กรุงเทพฯ";
 const description =
   "คลินิกทรีตเมนต์สมุนไพรธรรมชาติ 100% รักษาผมร่วง หนังศีรษะมัน รังแค ผมขาว ในกรุงเทพฯ ได้รับรางวัลการันตี";
@@ -201,7 +203,7 @@ const reviews = [
         </a>
         <div>
           <a href="/th/สถานที่ตั้งของร้านค้า/" class="mt-6 inline-flex min-h-11 items-center rounded-full bg-brand-green px-7 font-bold text-white shadow-soft transition-colors duration-200 hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
-            ดูสาขาทั้งหมด &rarr;
+            {ui.misc.viewLocations} &rarr;
           </a>
         </div>
       </div>
