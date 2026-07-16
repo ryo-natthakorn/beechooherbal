@@ -48,7 +48,12 @@ function headerOverlay() {
 /** Botanical line art draws itself on when it enters the viewport (hero draws on load,
  *  footer as you reach it). SSR state is fully drawn; the dash "hidden" state is set
  *  only here, when JS is confirmed live. Strokes are aria-hidden at ~0.1 opacity, so
- *  the single-frame swap is imperceptible. */
+ *  the single-frame swap is imperceptible.
+ *
+ *  Uses native Element.animate() (WAAPI) rather than Motion's animate() — verified in
+ *  a real browser that Motion does not interpolate the strokeDashoffset SVG
+ *  presentation property (it silently no-ops; opacity/transform/filter work fine
+ *  elsewhere in this module). WAAPI reliably supports this exact technique. */
 function drawStrokes() {
   const done = new WeakSet<Element>();
   inView(
@@ -60,10 +65,11 @@ function drawStrokes() {
         const len = path.getTotalLength();
         path.style.strokeDasharray = `${len}`;
         path.style.strokeDashoffset = `${len}`;
-        animate(path, { strokeDashoffset: [len, 0] }, {
-          duration: 1.5,
-          delay: i * 0.08,
-          ease: [0.16, 1, 0.3, 1],
+        path.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], {
+          duration: 1500,
+          delay: i * 80,
+          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+          fill: "forwards",
         });
       });
     },

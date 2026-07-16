@@ -284,6 +284,23 @@
   display: flex;
   min-height: 100svh;
   align-items: center;
+  justify-content: center;
+  background: radial-gradient(120% 100% at 50% 15%, rgb(219 203 193 / 0.35), transparent 70%);
+  background-color: rgb(219 203 193 / 0.14);
+}
+.scene-hint {
+  display: none;
+}
+.scene-active .scene-hint {
+  position: absolute;
+  top: 1.5rem;
+  left: 50%;
+  translate: -50% 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-brand-origin);
+  opacity: 0.6;
 }
 .scene-active .scene-step {
   opacity: 0.35;
