@@ -33,6 +33,10 @@
   --font-serif: "Lora", Georgia, serif;
   --font-serif-thai: "Noto Serif Thai", "Lora", Georgia, serif;
 
+  /* One step below text-xs — lets the longest stat label ("Outlets across Asia Pacific")
+     stay on a single line in the mobile 2-col stat grid instead of an arbitrary value. */
+  --text-2xs: 0.65rem;
+
   /* Soft UI Evolution elevation — green-cast soft shadows instead of hard borders. */
   --shadow-soft: 0 4px 16px rgb(45 105 70 / 0.08), 0 1px 3px rgb(0 0 0 / 0.05);
   --shadow-soft-lg: 0 12px 32px rgb(45 105 70 / 0.12), 0 2px 6px rgb(0 0 0 / 0.06);
@@ -90,9 +94,9 @@
    no-JS, or WebGL-unavailable all land here). */
 .hero-aura {
   background:
-    radial-gradient(60% 80% at 15% 0%, rgb(255 255 255 / 0.12), transparent 60%),
-    radial-gradient(55% 65% at 100% 100%, rgb(255 198 0 / 0.14), transparent 65%),
-    linear-gradient(170deg, transparent 35%, rgb(31 74 49 / 0.65) 100%);
+    radial-gradient(65% 85% at 15% 0%, rgb(255 255 255 / 0.2), transparent 65%),
+    radial-gradient(60% 70% at 100% 100%, rgb(255 198 0 / 0.18), transparent 65%),
+    linear-gradient(170deg, transparent 45%, rgb(31 74 49 / 0.42) 100%);
 }
 
 /* Hero scroll cue — purely decorative (aria-hidden), a thin line with a falling
@@ -164,11 +168,34 @@
   }
 }
 
-/* Treatment-card reveal runs on Motion (see src/scripts/home-motion.ts) instead of
-   this CSS technique — it needs IntersectionObserver-based cross-browser reach (the
-   animation-timeline: view() trick above skips browsers without scroll-timeline
-   support) and spring easing. The .card-reveal hook class lives on
-   TreatmentCard.astro; nothing here targets it, so there's no double-animation. */
+/* Treatments master-detail — CSS-only via :has(). Default state (no :has() support)
+   keeps every panel visible as a plain stacked list, so nothing content-bearing ever
+   ships hidden: the display:none only applies inside the @supports block below. Label
+   active/hover state uses Tailwind's built-in has-checked: variant directly in
+   TreatmentsSection.astro (the radio lives inside its own label, so no :has() reach-
+   around is needed there) — only the detail panel, which lives in a different column,
+   needs this shared-ancestor :has() rule. */
+[data-panel] {
+  display: block;
+}
+[data-panel] + [data-panel] {
+  margin-top: 1.5rem;
+}
+@supports selector(:has(a)) {
+  [data-panel] {
+    display: none;
+    margin-top: 0;
+  }
+  .treatments-md:has(#treatment-0:checked) [data-panel="0"],
+  .treatments-md:has(#treatment-1:checked) [data-panel="1"],
+  .treatments-md:has(#treatment-2:checked) [data-panel="2"],
+  .treatments-md:has(#treatment-3:checked) [data-panel="3"],
+  .treatments-md:has(#treatment-4:checked) [data-panel="4"],
+  .treatments-md:has(#treatment-5:checked) [data-panel="5"],
+  .treatments-md:has(#treatment-6:checked) [data-panel="6"] {
+    display: block;
+  }
+}
 
 /* Hero entrance — plays once on load (document timeline, not scroll-linked). Kept short
    and restrained: this is a trust-first health clinic, not an agency showreel. */
@@ -213,61 +240,47 @@
   }
 }
 
-/* Reviews wall — vertical marquee columns (real items + aria-hidden clones, the
-   awards-marquee technique rotated 90°). Items use margin-bottom instead of flex
-   gap so the -50% translate loops exactly. Hover/focus pauses; reduced motion
-   collapses to the classic static grid with clones removed. */
+/* Reviews reveal-and-disappear fader (Ryo revision) — replaces the old two-column
+   marquee. Default/reduced-motion state is a plain stacked list of all 4 reviews
+   (nothing hidden). Only under prefers-reduced-motion:no-preference does the fader
+   go absolute + square and cycle: each item shares one 16s keyframe loop, offset by
+   a negative animation-delay of `var(--i) * -4s` (set inline per item in
+   ReviewsWall.astro) so exactly one review is visible — reveal, hold, fade — at a
+   time, in sequence, forever. */
+.reviews-fade-item {
+  margin-top: 1rem;
+}
+.reviews-fade-item:first-child {
+  margin-top: 0;
+}
 @media (prefers-reduced-motion: no-preference) {
-  .reviews-wall {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    height: 32rem;
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(180deg, transparent, black 10%, black 90%, transparent);
-    mask-image: linear-gradient(180deg, transparent, black 10%, black 90%, transparent);
+  .reviews-fader {
+    aspect-ratio: 1 / 1;
   }
-  .reviews-col {
-    display: flex;
-    flex-direction: column;
-    animation: reviews-scroll-y 30s linear infinite;
-  }
-  .reviews-col > * {
-    margin-bottom: 1rem;
-  }
-  .reviews-col-reverse {
-    animation-direction: reverse;
-    animation-duration: 36s;
-  }
-  .reviews-wall:hover .reviews-col,
-  .reviews-wall:focus-within .reviews-col {
-    animation-play-state: paused;
+  .reviews-fade-item {
+    position: absolute;
+    inset: 0;
+    margin-top: 0;
+    opacity: 0;
+    animation: reviews-fade-cycle 16s infinite;
+    animation-delay: calc(var(--i) * -4s);
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .reviews-wall {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 1rem;
+@keyframes reviews-fade-cycle {
+  0%,
+  2% {
+    opacity: 0;
+    transform: translateY(6px);
   }
-  .reviews-col {
-    display: contents;
-  }
-  .reviews-wall [data-marquee-clone] {
-    display: none;
-  }
-}
-@media (prefers-reduced-motion: reduce) and (min-width: 640px) {
-  .reviews-wall {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@keyframes reviews-scroll-y {
-  from {
+  4%,
+  21% {
+    opacity: 1;
     transform: translateY(0);
   }
-  to {
-    transform: translateY(-50%);
+  23%,
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
   }
 }
 
@@ -277,6 +290,18 @@
    No-JS / reduced-motion / mobile never see any of this. */
 .scene-active {
   height: 280vh;
+}
+/* One photo per step (Ryo revision): the static/mobile/no-JS default is a plain 2x2
+   grid of all 4 step photos; .scene-active (desktop + JS + motion-allowed only) swaps
+   to the single-image crossfade stack that home-motion.ts drives off scroll progress. */
+.scene-visual-stack {
+  display: none;
+}
+.scene-active .static-steps-grid {
+  display: none;
+}
+.scene-active .scene-visual-stack {
+  display: block;
 }
 .scene-active .scene-pin {
   position: sticky;

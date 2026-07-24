@@ -1,9 +1,12 @@
 ---
 // src/components/home/PricingSection.astro
-// Price-list image + pricing copy on the Earth-tint band.
+// 5-tier price grid (redesign revision): one card per hair-length tier — its own
+// cropped illustration (see src/assets/images/pricing) + price + length name + cm
+// range — instead of the old single big composite image. Length name/price/cm range
+// render as real text (SEO), matching the "How It Works" steps' text-transcription
+// approach.
 import { Image } from "astro:assets";
 import { HOME, type Lang } from "../../data/home";
-import priceList from "../../assets/images/price-list.jpg";
 
 interface Props {
   lang: Lang;
@@ -17,11 +20,25 @@ const balance = lang === "en" ? " text-balance" : "";
 
 <section class="bg-brand-earth/25 py-16 text-center md:py-24">
   <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
-    <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+    <h2 data-mask-reveal class={`mb-10 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
       {t.heading[lang]}
     </h2>
-    <Image src={priceList} alt={t.imageAlt[lang]} width={700} height={990} class="mx-auto rounded-xl shadow-soft" data-parallax="0.08" />
-    <p class="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-brand-origin">
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-6">
+      {t.tiers.map((tier) => (
+        <div class="flex flex-col overflow-hidden rounded-2xl bg-white shadow-soft">
+          <Image src={tier.image} alt={`Hair length illustration: ${tier.lengthName[lang]}`} width={350} height={380} class="aspect-square w-full object-cover object-top" />
+          <div class="flex flex-1 flex-col gap-1 p-4">
+            <p class="text-sm font-bold text-brand-origin">{tier.lengthName[lang]}</p>
+            {tier.cmRange[lang] && <p class="text-xs text-brand-origin/70">{tier.cmRange[lang]}</p>}
+            <p class={`mt-auto ${serif} text-xl font-bold text-brand-green md:text-2xl`}>
+              {tier.price}
+              <span class="ml-1 text-xs font-normal text-brand-root uppercase">{t.currency[lang]}</span>
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <p class="mx-auto mt-8 max-w-2xl text-sm leading-relaxed text-brand-origin">
       {t.body[lang]}
     </p>
   </div>

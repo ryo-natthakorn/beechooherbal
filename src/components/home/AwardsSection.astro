@@ -18,9 +18,11 @@ const h2Class =
   lang === "en"
     ? "mb-3 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl"
     : "mb-10 font-serif-thai text-2xl font-bold text-brand-green md:text-3xl";
-const awards = t.items.map((item) => ({ img: item.img, alt: item.alt[lang] }));
-// Second (decorative, aria-hidden) row: empty alts — the names are announced once above.
-const awardsReversed = t.items.map((item) => ({ img: item.img, alt: "" })).reverse();
+// Two rows of 6 DISTINCT awards each (not the same 12 shown twice) — each row still
+// clones its own 6 internally for the seamless marquee loop (see AwardsMarquee.astro),
+// but the two rows never share a badge.
+const row1 = t.items.slice(0, 6).map((item) => ({ img: item.img, alt: item.alt[lang] }));
+const row2 = t.items.slice(6, 12).map((item) => ({ img: item.img, alt: item.alt[lang] }));
 ---
 
 <section class="py-16 text-center md:py-24">
@@ -31,11 +33,10 @@ const awardsReversed = t.items.map((item) => ({ img: item.img, alt: "" })).rever
         {t.intro[lang]}
       </p>
     )}
-    <AwardsMarquee {awards} />
-    <!-- Second row of the kinetic wall: same badges reversed, opposite drift. Purely
-         decorative repeat — aria-hidden so the 12 awards aren't announced twice. -->
-    <div class="mt-6" aria-hidden="true">
-      <AwardsMarquee awards={awardsReversed} reverse />
+    <AwardsMarquee awards={row1} />
+    <!-- Second row of the kinetic wall: the other 6 awards, opposite drift. -->
+    <div class="mt-6">
+      <AwardsMarquee awards={row2} reverse />
     </div>
     <Image src={awardsBanner} alt={t.bannerAlt[lang]} width={800} height={240} class="mx-auto mt-10 h-auto w-full max-w-3xl rounded-xl shadow-soft" data-parallax="0.1" />
   </div>

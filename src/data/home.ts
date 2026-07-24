@@ -20,6 +20,11 @@ import review1 from "../assets/images/reviews/review-1.jpg";
 import review2 from "../assets/images/reviews/review-2.jpg";
 import review3 from "../assets/images/reviews/review-3.jpg";
 import review4 from "../assets/images/reviews/review-4.jpg";
+import pricingTier1 from "../assets/images/pricing/tier-1.jpg";
+import pricingTier2 from "../assets/images/pricing/tier-2.jpg";
+import pricingTier3 from "../assets/images/pricing/tier-3.jpg";
+import pricingTier4 from "../assets/images/pricing/tier-4.jpg";
+import pricingTier5 from "../assets/images/pricing/tier-5.jpg";
 
 export type Lang = "en" | "th";
 type L = Record<Lang, string>;
@@ -52,8 +57,8 @@ export const HOME = {
 
   trust: {
     p1: {
-      en: "Bee Choo Origin is the largest scalp/hair loss treatment clinic specialising in the treatment of hair loss, dandruff, oily itchy scalp and other hair issues. There are 21 outlets in Singapore, 68 outlets in Malaysia with more than 170 outlets across Asia Pacific. The Group has expanded into Bangkok, and by end 2025, Bee Choo Thailand has 16 outlets. Annually, we serve millions of happy customers with effective and proven results.",
-      th: "บีชู ออริจิน เป็นทรีตเมนต์ซาลอนและคลินิกรักษาผมร่วงที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง รักษาผมบาง รังแค หนังศีรษะมัน และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา ในมาเลเซียจำนวน 68 สาขา และมากกว่า 170 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ ประเทศไทย และจะมีทั้งหมด 16 สาขาภายในสิ้นปี 2568 นี้ พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมากที่สุด",
+      en: "Bee Choo Origin is the largest scalp/hair loss treatment clinic specialising in the treatment of hair loss, dandruff, oily itchy scalp and other hair issues. There are 21 outlets in Singapore, 68 outlets in Malaysia with more than 170 outlets across Asia Pacific. The Group has expanded into Bangkok, and Bee Choo Thailand now has 17 outlets. Annually, we serve millions of happy customers with effective and proven results.",
+      th: "บีชู ออริจิน เป็นทรีตเมนต์ซาลอนและคลินิกรักษาผมร่วงที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง รักษาผมบาง รังแค หนังศีรษะมัน และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา ในมาเลเซียจำนวน 68 สาขา และมากกว่า 170 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ ประเทศไทย และมีทั้งหมด 17 สาขาแล้ว พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมากที่สุด",
     } as L,
     // The second paragraph embeds two Business Times archive links. Stored structurally
     // (never flattened / never set:html) so the component renders real <a> elements and
@@ -69,7 +74,7 @@ export const HOME = {
         en: "Power of testimonies drives business growth",
         th: "ผลลัพธ์จากการการันตีที่ทำให้ธุรกิจเติบโต",
       } as L,
-      href: "https://web.archive.org/web/20181020133432/http://www.businesstimes.com.sg/hub/bt-salutes-enterprise-2016/power-of-testimonies-drives-business-growth",
+      href: "https://www.businesstimes.com.sg/incoming/power-testimonies-drives-business-growth",
     },
     p2Between: { en: "and", th: "และ" } as L,
     p2Link2: {
@@ -77,7 +82,7 @@ export const HOME = {
         en: "Sincerity before profit",
         th: "ความจริงใจมาก่อนผลกำไร",
       } as L,
-      href: "https://web.archive.org/web/20181020133432/http://www.businesstimes.com.sg/hub-projects/ceo-conversations-2017/sincerity-before-profit",
+      href: "https://www.businesstimes.com.sg/ceo-conversations-2017/sincerity-profit",
     },
     // EN closes the sentence with a period after the second link; TH does not.
     p2After: { en: ".", th: "" } as L,
@@ -88,7 +93,7 @@ export const HOME = {
       { value: 21, suffix: "", label: { en: "Outlets in Singapore", th: "สาขาในสิงคโปร์" } as L },
       { value: 68, suffix: "", label: { en: "Outlets in Malaysia", th: "สาขาในมาเลเซีย" } as L },
       { value: 170, suffix: "+", label: { en: "Outlets across Asia Pacific", th: "สาขาทั่วเอเชียแปซิฟิก" } as L },
-      { value: 16, suffix: "", label: { en: "Outlets in Thailand by end 2025", th: "สาขาในประเทศไทยภายในสิ้นปี 2568" } as L },
+      { value: 17, suffix: "", label: { en: "Outlets in Thailand", th: "สาขาในประเทศไทย" } as L },
     ],
   },
 
@@ -104,12 +109,9 @@ export const HOME = {
       en: "100% NATURAL HERBAL HAIR TREATMENT - HOW IT WORKS",
       th: "ทรีตเมนต์สมุนไพร 100เปอร์เซ็น ให้ผลยังไงมาดูกัน!",
     } as L,
-    imageAlt: {
-      en: "Bee Choo herbal hair treatment process",
-      th: "ภาพขั้นตอนทรีตเมนต์สมุนไพรบีชู",
-    } as L,
-    // Same 4 steps the process photo shows, transcribed as real text (previously these
-    // only existed in the image's alt attribute) — accessible and indexable.
+    // Same 4 steps the process photos show, transcribed as real text (previously these
+    // only existed in the image's alt attribute) — accessible and indexable. Also
+    // doubles as the alt text for each step's own cropped photo (see HowItWorksScene).
     steps: {
       en: [
         "Spray and massage tonic",
@@ -218,10 +220,19 @@ export const HOME = {
       en: "AFFORDABLE HAIR TREATMENT IN Bangkok, Thailand",
       th: "ทรีตเมนต์ผมราคาจับต้องได้ในประเทศไทย",
     } as L,
-    imageAlt: {
-      en: "Bee Choo hair treatment price list: 800 to 1200 Baht depending on hair length, no hidden charges",
-      th: "ราคาทรีตเมนต์บีชู 800 ถึง 1200 บาท ขึ้นอยู่กับความยาวผม ไม่มีค่าใช้จ่ายแอบแฝง",
-    } as L,
+    // 5-tier price grid (redesign revision — was one big composite image). Length
+    // names and cm ranges were only ever printed as English text inside the original
+    // graphic, on both language versions of the live page — kept in English for both
+    // `en`/`th` here rather than inventing a Thai translation that never existed
+    // (same pattern as ctaCall/locations.heading above).
+    tiers: [
+      { price: 800, lengthName: { en: "Men Short Hairstyle", th: "Men Short Hairstyle" } as L, cmRange: { en: "", th: "" } as L, image: pricingTier1 },
+      { price: 900, lengthName: { en: "Middle Neck", th: "Middle Neck" } as L, cmRange: { en: "<30 cm", th: "<30 cm" } as L, image: pricingTier2 },
+      { price: 1000, lengthName: { en: "Below Shoulder", th: "Below Shoulder" } as L, cmRange: { en: "30–39.9 cm", th: "30–39.9 cm" } as L, image: pricingTier3 },
+      { price: 1100, lengthName: { en: "Middle Arm", th: "Middle Arm" } as L, cmRange: { en: "40–45 cm", th: "40–45 cm" } as L, image: pricingTier4 },
+      { price: 1200, lengthName: { en: "Below Middle Arm", th: "Below Middle Arm" } as L, cmRange: { en: ">45 cm", th: ">45 cm" } as L, image: pricingTier5 },
+    ],
+    currency: { en: "Baht", th: "บาท" } as L,
     body: {
       en: "Our prices are based on your hair length between 800 Baht to 1200 Baht for à la carte herbal hair treatment. Strictly no hidden charges. You may choose to make upfront payment before treatment.",
       th: "ราคาในการให้บริการของเรานั้นขึ้นอยู่กับความยาวของเส้นผม โดยเริ่มต้นที่ 800 บาท ไปจนถึง 1,200 บาท ในการทำ à la carte ทรีตเมนต์สมุนไพร ซึ่งทางเราไม่มีการคิดเงินเกินจากที่กำหนดไว้แน่นอน ลูกค้าสามารถตกลงราคาก่อนที่จะทำทรีตเมนต์ได้",

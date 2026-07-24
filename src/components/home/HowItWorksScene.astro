@@ -6,7 +6,10 @@
 import { Image } from "astro:assets";
 import YouTubeEmbed from "../YouTubeEmbed.astro";
 import { HOME, type Lang } from "../../data/home";
-import howItWorks from "../../assets/images/how-it-works.jpg";
+import step1 from "../../assets/images/steps/step-1.jpg";
+import step2 from "../../assets/images/steps/step-2.jpg";
+import step3 from "../../assets/images/steps/step-3.jpg";
+import step4 from "../../assets/images/steps/step-4.jpg";
 
 interface Props {
   lang: Lang;
@@ -16,6 +19,10 @@ const { lang } = Astro.props;
 const t = HOME.howItWorks;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
+// One photo per step, cropped from the old composite (see src/assets/images/steps).
+// Alt text reuses the step copy itself — the same text a sighted visitor reads next
+// to the photo — rather than inventing new strings.
+const stepImages = [step1, step2, step3, step4];
 ---
 
 <section class="py-16 md:py-24">
@@ -35,7 +42,27 @@ const balance = lang === "en" ? " text-balance" : "";
           </h2>
           <div class="grid gap-8 text-left md:grid-cols-2 md:items-center md:gap-14">
             <div class="relative aspect-4/3 overflow-hidden rounded-xl shadow-soft-lg">
-              <Image src={howItWorks} alt={t.imageAlt[lang]} width={900} height={506} class="absolute inset-0 h-full w-full object-cover" data-scene-visual />
+              <!-- Static/mobile/no-JS fallback: a plain 2x2 grid of all 4 step photos.
+                   home-motion.ts only adds .scene-active on desktop + JS + motion-allowed,
+                   at which point this grid hides and the single-image crossfade below
+                   takes over — so nothing here ever ships hidden by default. -->
+              <div class="static-steps-grid grid h-full w-full grid-cols-2 grid-rows-2 gap-1">
+                {stepImages.map((img, i) => (
+                  <Image src={img} alt={t.steps[lang][i]} width={450} height={450} class="h-full w-full object-cover" />
+                ))}
+              </div>
+              <div class="scene-visual-stack absolute inset-0 h-full w-full">
+                {stepImages.map((img, i) => (
+                  <Image
+                    src={img}
+                    alt={t.steps[lang][i]}
+                    width={900}
+                    height={900}
+                    data-scene-visual
+                    class:list={["absolute inset-0 h-full w-full object-cover transition-opacity duration-500", i === 0 ? "opacity-100" : "opacity-0"]}
+                  />
+                ))}
+              </div>
               <div class="scene-progress absolute inset-x-0 bottom-0" aria-hidden="true"></div>
             </div>
             <ol class="flex flex-col gap-5">

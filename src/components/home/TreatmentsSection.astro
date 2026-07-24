@@ -1,9 +1,15 @@
 ---
 // src/components/home/TreatmentsSection.astro
-// The 7 treatment cards on the Earth-tint band; first card is featured (spans 2 cols).
-// Card markup + Motion reveal hooks live in TreatmentCard.astro. EN headings carry
-// text-balance; TH headings never do (unreliable with space-free Thai script).
-import TreatmentCard from "../TreatmentCard.astro";
+// Master-detail treatments list (redesign): the 7 names stack vertically on the left;
+// selecting one reveals its photo + teaser + "Read more" in the detail panel on the
+// right. CSS-only via :has() (no JS required) — the radio lives inside its own label
+// (Tailwind's has-checked: variant styles the active row), and a shared :has() rule on
+// the wrapper toggles which detail panel is visible (see [data-panel] rules in
+// global.css). A browser without :has() support just falls back to a plain stacked
+// list of all 7 full panels — nothing content-bearing ever ships hidden by default.
+// Same title + "Read more" URL fix as the old TreatmentCard: both point at
+// beechooherbal.com (the live site's heading wrongly links to beechooladies.com.sg).
+import { Image } from "astro:assets";
 import LeafDivider from "../LeafDivider.astro";
 import { TREATMENTS } from "../../data/treatments";
 import { HOME, type Lang } from "../../data/home";
@@ -15,6 +21,7 @@ interface Props {
 const { lang } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
+const readMore = lang === "th" ? "คลิกเพื่ออ่านต่อ" : "Read more";
 ---
 
 <section class="bg-brand-earth/25 py-16 md:py-24">
@@ -23,8 +30,50 @@ const balance = lang === "en" ? " text-balance" : "";
     <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
       {HOME.treatments.heading[lang]}
     </h2>
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {TREATMENTS.map((treatment, i) => <TreatmentCard {treatment} {lang} featured={i === 0} index={i} />)}
+
+    <div class="treatments-md" data-treatments-md>
+      <div class="grid gap-6 md:grid-cols-[280px_1fr] md:items-start">
+        <div class="flex flex-col overflow-hidden rounded-2xl border border-brand-earth bg-white">
+          {TREATMENTS.map((treatment, i) => (
+            <label
+              for={`treatment-${i}`}
+              class="md-label flex cursor-pointer items-center gap-3 border-b border-brand-earth px-5 py-4 font-bold text-brand-origin transition-colors duration-200 last:border-b-0 hover:bg-brand-earth/20 has-checked:bg-brand-green/8 has-checked:text-brand-green"
+            >
+              <input
+                type="radio"
+                name="treatment-select"
+                id={`treatment-${i}`}
+                checked={i === 0}
+                data-index={i}
+                class="md-radio h-4 w-4 shrink-0 accent-brand-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+              />
+              {treatment.title[lang]}
+            </label>
+          ))}
+        </div>
+
+        <div class="relative">
+          {TREATMENTS.map((treatment, i) => (
+            <article data-panel={i} class="md-panel overflow-hidden rounded-2xl bg-white shadow-soft md:grid md:grid-cols-2">
+              <div class="h-52 overflow-hidden md:h-full">
+                <Image src={treatment.image} alt={treatment.alt[lang]} width={768} height={512} class="h-full w-full object-cover" />
+              </div>
+              <div class="flex flex-col gap-3 p-6">
+                <h3 class:list={[serif, "text-xl font-bold text-brand-green"]}>
+                  <a href={treatment.href[lang]} class="hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">{treatment.title[lang]}</a>
+                </h3>
+                <p class="flex-1 text-sm leading-relaxed text-brand-origin">{treatment.teaser[lang]}</p>
+                <a
+                  href={treatment.href[lang]}
+                  class="btn-tactile mt-1 inline-block self-start rounded-full bg-brand-green px-5 py-3 text-center text-sm font-bold text-white hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+                >
+                  {readMore} &rarr;
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 </section>
