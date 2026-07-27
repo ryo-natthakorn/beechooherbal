@@ -28,6 +28,13 @@ export interface UiStrings {
     skipToContent: string;
     languageSwitcher: string;
     viewLocations: string;
+    enableMapInteraction: string;
+  };
+  // Per-outlet card labels (LocationsSection's mobile list).
+  outlet: {
+    call: string;
+    hours: string;
+    directions: string;
   };
 }
 
@@ -57,6 +64,12 @@ export const UI: Record<"en" | "th", UiStrings> = {
       skipToContent: "Skip to content",
       languageSwitcher: "Language",
       viewLocations: "View all locations",
+      enableMapInteraction: "Click to interact with map",
+    },
+    outlet: {
+      call: "Call",
+      hours: "Hours",
+      directions: "Directions",
     },
   },
   th: {
@@ -84,6 +97,12 @@ export const UI: Record<"en" | "th", UiStrings> = {
       skipToContent: "ข้ามไปยังเนื้อหา",
       languageSwitcher: "เลือกภาษา",
       viewLocations: "ดูสาขาทั้งหมด",
+      enableMapInteraction: "คลิกเพื่อใช้งานแผนที่",
+    },
+    outlet: {
+      call: "โทร",
+      hours: "เวลาทำการ",
+      directions: "นำทาง",
     },
   },
 };
