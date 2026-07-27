@@ -38,11 +38,17 @@ void main() {
 
   /* Cloth cursor-push: the flow field bulges away from the pointer, as if the
      cursor is pressing into fabric. u_mouseStrength eases 0<->1 in JS on
-     hover/leave so the push fades in/out instead of snapping. */
+     hover/leave so the push fades in/out instead of snapping.
+     Calibrated down after stakeholder review called the original (radius 1.4,
+     multiplier 0.7) "gimmicky" / "visual noise" — a smaller radius keeps the
+     effect local to the cursor instead of bulging across most of the visible
+     field, and the lower multiplier keeps the displacement subtle rather than
+     an obvious cloth-poke. See hero-webgl.ts's mouseStrength easing below for
+     the matching slow-fade half of this change. */
   vec2 mp = (u_mouse - 0.5) * aspect * 3.2;
   vec2 toPoint = p - mp;
   float dist = length(toPoint);
-  float push = u_mouseStrength * smoothstep(1.4, 0.0, dist) * 0.7;
+  float push = u_mouseStrength * smoothstep(0.75, 0.0, dist) * 0.22;
   p += normalize(toPoint + 1e-4) * push;
 
   float n = fbm(p + vec2(0.0, u_time * 0.10));
@@ -140,7 +146,9 @@ export function initHeroShader(canvas: HTMLCanvasElement): void {
   const start = performance.now();
   const frame = (now: number) => {
     if (inViewport && !document.hidden) {
-      mouseStrength += (mouseTargetStrength - mouseStrength) * 0.08;
+      // Slower ease (was 0.08) so the push fades in/out more gently — pairs with
+      // the smaller/weaker shader push above to keep the whole effect subtle.
+      mouseStrength += (mouseTargetStrength - mouseStrength) * 0.045;
       gl.uniform2f(uRes, canvas.width, canvas.height);
       gl.uniform1f(uTime, (now - start) / 1000);
       gl.uniform2f(uMouse, mouseX, 1 - mouseY);
