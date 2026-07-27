@@ -20,11 +20,6 @@ import review1 from "../assets/images/reviews/review-1.jpg";
 import review2 from "../assets/images/reviews/review-2.jpg";
 import review3 from "../assets/images/reviews/review-3.jpg";
 import review4 from "../assets/images/reviews/review-4.jpg";
-import pricingTier1 from "../assets/images/pricing/tier-1.jpg";
-import pricingTier2 from "../assets/images/pricing/tier-2.jpg";
-import pricingTier3 from "../assets/images/pricing/tier-3.jpg";
-import pricingTier4 from "../assets/images/pricing/tier-4.jpg";
-import pricingTier5 from "../assets/images/pricing/tier-5.jpg";
 
 export type Lang = "en" | "th";
 type L = Record<Lang, string>;
@@ -220,17 +215,18 @@ export const HOME = {
       en: "AFFORDABLE HAIR TREATMENT IN Bangkok, Thailand",
       th: "ทรีตเมนต์ผมราคาจับต้องได้ในประเทศไทย",
     } as L,
-    // 5-tier price grid (redesign revision — was one big composite image). Length
-    // names and cm ranges were only ever printed as English text inside the original
-    // graphic, on both language versions of the live page — kept in English for both
-    // `en`/`th` here rather than inventing a Thai translation that never existed
-    // (same pattern as ctaCall/locations.heading above).
+    // Length names and cm ranges were only ever printed as English text inside the
+    // original price-list graphic (src/assets/images/price-list.jpg, rendered as a
+    // single image by PricingSection — see that file), on both language versions of
+    // the live page — kept in English for both `en`/`th` here (feeds the image's alt
+    // text) rather than inventing a Thai translation that never existed (same pattern
+    // as ctaCall/locations.heading above).
     tiers: [
-      { price: 800, lengthName: { en: "Men Short Hairstyle", th: "Men Short Hairstyle" } as L, cmRange: { en: "", th: "" } as L, image: pricingTier1 },
-      { price: 900, lengthName: { en: "Middle Neck", th: "Middle Neck" } as L, cmRange: { en: "<30 cm", th: "<30 cm" } as L, image: pricingTier2 },
-      { price: 1000, lengthName: { en: "Below Shoulder", th: "Below Shoulder" } as L, cmRange: { en: "30–39.9 cm", th: "30–39.9 cm" } as L, image: pricingTier3 },
-      { price: 1100, lengthName: { en: "Middle Arm", th: "Middle Arm" } as L, cmRange: { en: "40–45 cm", th: "40–45 cm" } as L, image: pricingTier4 },
-      { price: 1200, lengthName: { en: "Below Middle Arm", th: "Below Middle Arm" } as L, cmRange: { en: ">45 cm", th: ">45 cm" } as L, image: pricingTier5 },
+      { price: 800, lengthName: { en: "Men Short Hairstyle", th: "Men Short Hairstyle" } as L, cmRange: { en: "", th: "" } as L },
+      { price: 900, lengthName: { en: "Middle Neck", th: "Middle Neck" } as L, cmRange: { en: "<30 cm", th: "<30 cm" } as L },
+      { price: 1000, lengthName: { en: "Below Shoulder", th: "Below Shoulder" } as L, cmRange: { en: "30–39.9 cm", th: "30–39.9 cm" } as L },
+      { price: 1100, lengthName: { en: "Middle Arm", th: "Middle Arm" } as L, cmRange: { en: "40–45 cm", th: "40–45 cm" } as L },
+      { price: 1200, lengthName: { en: "Below Middle Arm", th: "Below Middle Arm" } as L, cmRange: { en: ">45 cm", th: ">45 cm" } as L },
     ],
     currency: { en: "Baht", th: "บาท" } as L,
     body: {
