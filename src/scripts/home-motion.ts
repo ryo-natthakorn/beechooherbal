@@ -20,7 +20,6 @@ if (!prefersReducedMotion) {
   countUpStats();
   parallaxLayers();
   treatmentsMasterDetail();
-  howItWorksScene();
   heroShader();
 }
 
@@ -164,33 +163,6 @@ function treatmentsMasterDetail() {
       animate(panel, { opacity: [0, 1], y: [8, 0] }, { duration: 0.35, ease: "easeOut" });
     });
   });
-}
-
-/** Pinned, scroll-scrubbed How-It-Works. The section ships as a normal static block;
- *  desktop + JS + motion-allowed adds .scene-active (tall track + sticky stage) and
- *  scrubs the 4 steps, gold progress bar, and a subtle image zoom off scroll progress.
- *  Mobile and no-JS keep the plain layout — no dead scroll distance. */
-function howItWorksScene() {
-  const track = document.querySelector<HTMLElement>("[data-scene-track]");
-  if (!track) return;
-  if (!window.matchMedia("(min-width: 768px)").matches) return;
-  track.classList.add("scene-active");
-  const steps = Array.from(track.querySelectorAll<HTMLElement>(".scene-step"));
-  const progressBar = track.querySelector<HTMLElement>(".scene-progress");
-  const visuals = Array.from(track.querySelectorAll<HTMLElement>("[data-scene-visual]"));
-  scroll(
-    (progress: number) => {
-      const idx = Math.min(steps.length - 1, Math.floor(progress * steps.length));
-      steps.forEach((step, i) => step.setAttribute("data-active", String(i === idx)));
-      if (progressBar) progressBar.style.transform = `scaleX(${progress})`;
-      visuals.forEach((visual, i) => {
-        const active = i === idx;
-        visual.style.opacity = active ? "1" : "0";
-        visual.style.transform = active ? `scale(${1 + progress * 0.05})` : "scale(1)";
-      });
-    },
-    { target: track, offset: ["start start", "end end"] },
-  );
 }
 
 /** WebGL hero shader — lazy-loaded and hard-gated: desktop width + fine pointer only

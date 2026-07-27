@@ -305,69 +305,6 @@
   }
 }
 
-/* Pinned How-It-Works scene. The markup ships as a normal static section; the
-   homepage motion module adds .scene-active (desktop + motion-allowed + JS only),
-   which stretches the track and pins the stage so scrolling scrubs the steps.
-   No-JS / reduced-motion / mobile never see any of this. */
-.scene-active {
-  height: 280vh;
-}
-/* One photo per step (Ryo revision): the static/mobile/no-JS default is a plain 2x2
-   grid of all 4 step photos; .scene-active (desktop + JS + motion-allowed only) swaps
-   to the single-image crossfade stack that home-motion.ts drives off scroll progress. */
-.scene-visual-stack {
-  display: none;
-}
-.scene-active .static-steps-grid {
-  display: none;
-}
-.scene-active .scene-visual-stack {
-  display: block;
-}
-.scene-active .scene-pin {
-  position: sticky;
-  top: 0;
-  display: flex;
-  min-height: 100svh;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(120% 100% at 50% 15%, rgb(219 203 193 / 0.35), transparent 70%);
-  background-color: rgb(219 203 193 / 0.14);
-}
-.scene-hint {
-  display: none;
-}
-.scene-active .scene-hint {
-  position: absolute;
-  top: 1.5rem;
-  left: 50%;
-  translate: -50% 0;
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--color-brand-origin);
-  opacity: 0.6;
-}
-.scene-active .scene-step {
-  opacity: 0.35;
-  transition: opacity 0.4s var(--ease-spring), transform 0.4s var(--ease-spring);
-}
-.scene-active .scene-step[data-active="true"] {
-  opacity: 1;
-  transform: translateX(6px);
-}
-.scene-progress {
-  opacity: 0;
-  height: 4px;
-  width: 100%;
-  background: var(--color-brand-yellow);
-  transform: scaleX(0);
-  transform-origin: left center;
-}
-.scene-active .scene-progress {
-  opacity: 1;
-}
-
 /* Count-up stat numerals — tabular digits so the ticker doesn't wobble; the
    final integer is server-rendered, JS only animates 0 → N. */
 .stat-num {
