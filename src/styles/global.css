@@ -168,32 +168,38 @@
   }
 }
 
-/* Treatments master-detail — CSS-only via :has(). Default state (no :has() support)
-   keeps every panel visible as a plain stacked list, so nothing content-bearing ever
-   ships hidden: the display:none only applies inside the @supports block below. Label
-   active/hover state uses Tailwind's built-in has-checked: variant directly in
-   TreatmentsSection.astro (the radio lives inside its own label, so no :has() reach-
-   around is needed there) — only the detail panel, which lives in a different column,
-   needs this shared-ancestor :has() rule. */
-[data-panel] {
+/* Treatments — one row per treatment (label + its own panel), CSS-only via :has().
+   Default state (no :has() support) keeps every panel visible as a plain stacked
+   list, so nothing content-bearing ever ships hidden: the display:none only applies
+   inside the @supports block below. Label active/hover state uses Tailwind's built-in
+   has-checked: variant directly in TreatmentsSection.astro.
+   Mobile: `.treatment-row` is a normal block box, so a checked row's panel appears
+   right inside that same card, directly under its own label — a per-row accordion.
+   md+: `.treatment-row` becomes display:contents (see TreatmentsSection.astro's
+   md:contents), so the label/panel stop being grouped and become direct children of
+   the outer grid — labels pinned to column 1 by `md:flex-1` sizing within that
+   column, panels to column 2. A hidden panel is display:none, which removes it from
+   grid placement entirely, so whichever ONE panel is visible always lands in the
+   single column-2 cell regardless of which row is active. */
+.md-panel {
   display: block;
 }
-[data-panel] + [data-panel] {
-  margin-top: 1.5rem;
-}
 @supports selector(:has(a)) {
-  [data-panel] {
+  .md-panel {
     display: none;
-    margin-top: 0;
   }
-  .treatments-md:has(#treatment-0:checked) [data-panel="0"],
-  .treatments-md:has(#treatment-1:checked) [data-panel="1"],
-  .treatments-md:has(#treatment-2:checked) [data-panel="2"],
-  .treatments-md:has(#treatment-3:checked) [data-panel="3"],
-  .treatments-md:has(#treatment-4:checked) [data-panel="4"],
-  .treatments-md:has(#treatment-5:checked) [data-panel="5"],
-  .treatments-md:has(#treatment-6:checked) [data-panel="6"] {
+  .treatment-row:has(.md-radio:checked) .md-panel {
     display: block;
+  }
+}
+/* .treatment-row's own display:contents at md+ is Tailwind's md:contents class in
+   the markup; only the grid-column placement needs to live here. */
+@media (min-width: 48rem) {
+  .md-panel {
+    grid-column: 2;
+  }
+  .md-label {
+    grid-column: 1;
   }
 }
 

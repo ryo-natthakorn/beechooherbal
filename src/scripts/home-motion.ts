@@ -149,16 +149,17 @@ function parallaxLayers() {
   });
 }
 
-/** Treatments master-detail — the CSS :has() toggle in global.css already makes this
- *  fully functional with zero JS; this only layers a soft crossfade onto the detail
- *  panel when a different treatment is selected. `data-index` on both the radio and
- *  its panel link the two without depending on DOM sibling order. */
+/** Treatments accordion / master-detail — the CSS :has() toggle in global.css already
+ *  makes this fully functional with zero JS (mobile: per-row accordion; md+: master-
+ *  detail); this only layers a soft crossfade onto a panel when it becomes visible.
+ *  Each radio and its own panel are siblings inside the same `.treatment-row`, so
+ *  `closest()` finds the right one without needing an index attribute. */
 function treatmentsMasterDetail() {
   const root = document.querySelector<HTMLElement>("[data-treatments-md]");
   if (!root) return;
   root.querySelectorAll<HTMLInputElement>(".md-radio").forEach((radio) => {
     radio.addEventListener("change", () => {
-      const panel = root.querySelector<HTMLElement>(`[data-panel="${radio.dataset.index}"]`);
+      const panel = radio.closest(".treatment-row")?.querySelector<HTMLElement>(".md-panel");
       if (!panel) return;
       animate(panel, { opacity: [0, 1], y: [8, 0] }, { duration: 0.35, ease: "easeOut" });
     });
