@@ -27,14 +27,7 @@ export interface UiStrings {
     menu: string;
     skipToContent: string;
     languageSwitcher: string;
-    contact: string;
     viewLocations: string;
-  };
-  // Short labels for the mobile sticky contact bar.
-  bar: {
-    call: string;
-    facebook: string;
-    line: string;
   };
 }
 
@@ -63,13 +56,7 @@ export const UI: Record<"en" | "th", UiStrings> = {
       menu: "Menu",
       skipToContent: "Skip to content",
       languageSwitcher: "Language",
-      contact: "Contact",
       viewLocations: "View all locations",
-    },
-    bar: {
-      call: "Call",
-      facebook: "Facebook",
-      line: "LINE",
     },
   },
   th: {
@@ -96,13 +83,7 @@ export const UI: Record<"en" | "th", UiStrings> = {
       menu: "เมนู",
       skipToContent: "ข้ามไปยังเนื้อหา",
       languageSwitcher: "เลือกภาษา",
-      contact: "ติดต่อเรา",
       viewLocations: "ดูสาขาทั้งหมด",
-    },
-    bar: {
-      call: "โทร",
-      facebook: "Facebook",
-      line: "LINE",
     },
   },
 };
