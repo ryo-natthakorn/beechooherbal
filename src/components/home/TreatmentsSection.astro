@@ -41,12 +41,16 @@ const readMore = lang === "th" ? "คลิกเพื่ออ่านต่�
       {HOME.treatments.heading[lang]}
     </h2>
 
-    <div class="treatments-md flex flex-col gap-3 md:grid md:grid-cols-[280px_1fr] md:items-stretch md:gap-6" data-treatments-md>
+    <div
+      class="treatments-md flex flex-col gap-3 md:grid md:grid-cols-[280px_1fr] md:items-stretch md:gap-6"
+      style={`--treatment-count: ${TREATMENTS.length}`}
+      data-treatments-md
+    >
       {TREATMENTS.map((treatment, i) => (
         <div class="treatment-row overflow-hidden rounded-2xl border border-brand-earth bg-white md:contents">
           <label
             for={`treatment-${i}`}
-            class="md-label flex cursor-pointer items-center gap-3 px-5 py-4 font-bold text-brand-origin transition-colors duration-200 hover:bg-brand-earth/20 has-checked:bg-brand-green/8 has-checked:text-brand-green md:flex-1 md:border-b md:border-brand-earth md:first:rounded-t-2xl md:last:rounded-b-2xl md:last:border-b-0"
+            class="md-label flex cursor-pointer items-center gap-3 px-5 py-4 font-bold text-brand-origin transition-colors duration-200 hover:bg-brand-earth/20 has-checked:bg-brand-green/8 has-checked:text-brand-green md:border-b md:border-brand-earth md:first:rounded-t-2xl md:last:rounded-b-2xl md:last:border-b-0"
           >
             <input
               type="radio"

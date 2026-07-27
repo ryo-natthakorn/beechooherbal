@@ -177,26 +177,41 @@
    right inside that same card, directly under its own label — a per-row accordion.
    md+: `.treatment-row` becomes display:contents (see TreatmentsSection.astro's
    md:contents), so the label/panel stop being grouped and become direct children of
-   the outer grid — labels pinned to column 1 by `md:flex-1` sizing within that
-   column, panels to column 2. A hidden panel is display:none, which removes it from
-   grid placement entirely, so whichever ONE panel is visible always lands in the
-   single column-2 cell regardless of which row is active. */
+   the outer grid — labels pinned to column 1, panels to column 2. A hidden panel is
+   display:none, which removes it from grid placement entirely, so whichever ONE
+   panel is visible always lands in the single column-2 cell regardless of which row
+   is active.
+   Whenever a panel IS shown, `display: revert-layer` (not a hardcoded block/grid) is
+   used deliberately — this plain stylesheet sits outside Tailwind's cascade layers,
+   so it always outranks Tailwind's utilities regardless of specificity; hardcoding
+   `display: block` here would have permanently defeated the panel's own `md:grid`
+   utility (its internal image | text side-by-side layout). revert-layer instead
+   drops back into the utilities layer so Tailwind's own block/md:grid keeps working
+   for whichever panel is actually visible. */
 .md-panel {
-  display: block;
+  display: revert-layer;
 }
 @supports selector(:has(a)) {
   .md-panel {
     display: none;
   }
   .treatment-row:has(.md-radio:checked) .md-panel {
-    display: block;
+    display: revert-layer;
   }
 }
 /* .treatment-row's own display:contents at md+ is Tailwind's md:contents class in
-   the markup; only the grid-column placement needs to live here. */
+   the markup; only the grid placement needs to live here.
+   The visible panel spans every row (1 / span --treatment-count, set inline on
+   .treatments-md from TREATMENTS.length — not hardcoded, so it stays correct if a
+   treatment is added/removed), not just row 1 — otherwise, with 7 labels each
+   auto-placed into their own row, the panel would only occupy row 1's height and the
+   label column would run on far past its bottom edge. Spanning the full row range and
+   letting Grid's default align-self: stretch fill that whole span is what makes the
+   two columns strict-symmetry equal height, top-aligned. */
 @media (min-width: 48rem) {
   .md-panel {
     grid-column: 2;
+    grid-row: 1 / span var(--treatment-count, 7);
   }
   .md-label {
     grid-column: 1;
