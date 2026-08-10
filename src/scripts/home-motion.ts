@@ -45,9 +45,16 @@ function headerOverlay() {
 }
 
 /** Botanical line art keeps drawing itself on, in an endless loop, once it enters the
- *  viewport (hero on load, footer as you reach it). SSR state is fully drawn; the dash
- *  "hidden" state is set only here, when JS is confirmed live. Strokes are aria-hidden
- *  at ~0.1 opacity, so the single-frame swap into the animated state is imperceptible.
+ *  viewport (hero on load, footer as you reach it — both instances share this one
+ *  driver, intentionally: Crispin's "reduce the self-drawing SVG animations" feedback
+ *  applies to both). SSR state is fully drawn; the dash "hidden" state is set only
+ *  here, when JS is confirmed live. Strokes are aria-hidden at ~0.1 opacity, so the
+ *  single-frame swap into the animated state is imperceptible.
+ *
+ *  Only the 4 paths carrying `data-draw-path` (the heaviest stroke in each of
+ *  HerbalStrokes.astro's 4 clusters) animate; the other 7 stay statically fully drawn.
+ *  This took the effect from "11 lines flickering in and out" to "8 solid lines with 4
+ *  drawing themselves" — calmer, but the composition never looks empty.
  *
  *  The 3-keyframe len -> 0 -> -len loop is the standard SVG line-draw trick: with
  *  strokeDasharray set to the path's own length (dash == gap == len), an offset of 0 is
@@ -66,15 +73,15 @@ function drawStrokes() {
     (element) => {
       if (done.has(element)) return;
       done.add(element);
-      element.querySelectorAll("path").forEach((path, i) => {
+      element.querySelectorAll<SVGPathElement>("path[data-draw-path]").forEach((path, i) => {
         const len = path.getTotalLength();
         path.style.strokeDasharray = `${len}`;
         path.style.strokeDashoffset = `${len}`;
         path.animate(
           [{ strokeDashoffset: len }, { strokeDashoffset: 0 }, { strokeDashoffset: -len }],
           {
-            duration: 7000,
-            delay: i * 200,
+            duration: 9000,
+            delay: i * 600,
             easing: "cubic-bezier(0.45, 0, 0.55, 1)",
             iterations: Infinity,
           },

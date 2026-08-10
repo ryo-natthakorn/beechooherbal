@@ -11,8 +11,11 @@
 const VERT = `attribute vec2 p; void main() { gl_Position = vec4(p, 0.0, 1.0); }`;
 
 // Flow speeds tuned per stakeholder review of the design preview (~3x the first cut).
-// Colours lifted a step + vignette floor raised (0.75 -> 0.88) after mobile-outdoor
-// legibility feedback — same brand-green family, just lighter overall.
+// Colours lifted again + vignette range compressed (0.88-1.08 -> 0.94-1.00) after
+// Crispin's "brighten + remove the yellow tint + soften shadows" feedback — the old
+// gold glow peaked exactly where the vignette was brightest (hero centre, under the
+// H1), which pushed contrast at the text down to ~3:1. Removing the glow and flattening
+// the vignette both brightens the field AND raises text contrast at every point.
 const FRAG = `
 precision highp float;
 uniform vec2 u_res;
@@ -52,16 +55,14 @@ void main() {
   p += normalize(toPoint + 1e-4) * push;
 
   float n = fbm(p + vec2(0.0, u_time * 0.10));
-  float glow = fbm(p * 0.6 - vec2(u_time * 0.07, 0.0));
-  vec3 deep = vec3(0.118, 0.255, 0.164); /* lifted deep shade */
-  vec3 mid  = vec3(0.157, 0.345, 0.230); /* lifted ~ brand-green-deep #1F4A31 */
-  vec3 base = vec3(0.212, 0.463, 0.310); /* lifted brand-green #2D6946 */
-  vec3 gold = vec3(1.0, 0.776, 0.0);     /* brand-yellow #FFC600 */
+  vec3 deep = vec3(0.161, 0.345, 0.231); /* lifted floor — was 0.118, 0.255, 0.164 */
+  vec3 mid  = vec3(0.188, 0.408, 0.272); /* lifted mid — was 0.157, 0.345, 0.230 */
+  vec3 base = vec3(0.212, 0.463, 0.310); /* brand-green #2D6946 — unchanged, this is
+                                             the contrast ceiling for text sitting on top */
   vec3 col = mix(deep, mid, smoothstep(-0.6, 0.5, n));
   col = mix(col, base, smoothstep(0.0, 0.9, n));
-  col = mix(col, gold, smoothstep(0.55, 0.95, glow) * 0.35);
   float vig = smoothstep(1.3, 0.2, length(p * 0.5));
-  col *= mix(0.88, 1.08, vig);
+  col *= mix(0.94, 1.00, vig);
   gl_FragColor = vec4(col, 1.0);
 }
 `;

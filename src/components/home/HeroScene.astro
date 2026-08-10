@@ -25,10 +25,6 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
        first frame, so mobile / reduced-motion / no-JS / no-WebGL visitors only ever see
        the .hero-aura beneath. Lazy-initialised by home-motion.ts (desktop-only gates). -->
   <canvas data-hero-canvas class="pointer-events-none absolute inset-0 h-full w-full opacity-0 transition-opacity duration-1000" aria-hidden="true"></canvas>
-  <!-- Depth: a second, larger stroke layer drifting on parallax behind the drawn one. -->
-  <div class="pointer-events-none absolute inset-0" data-parallax="0.25" aria-hidden="true">
-    <HerbalStrokes class="h-full w-full scale-125 text-white opacity-[0.06]" />
-  </div>
   <HerbalStrokes draw class="pointer-events-none absolute inset-0 h-full w-full text-white opacity-10" />
   <div class="hero-enter relative mx-auto w-full max-w-6xl px-4 md:px-8">
     <h1 class={`mx-auto max-w-4xl ${serif} font-bold text-white`}>
