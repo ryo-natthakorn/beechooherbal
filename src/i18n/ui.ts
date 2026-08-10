@@ -29,6 +29,7 @@ export interface UiStrings {
     languageSwitcher: string;
     viewLocations: string;
     enableMapInteraction: string;
+    lockMap: string;
   };
   // Per-outlet card labels (LocationsSection's mobile list).
   outlet: {
@@ -65,6 +66,7 @@ export const UI: Record<"en" | "th", UiStrings> = {
       languageSwitcher: "Language",
       viewLocations: "View all locations",
       enableMapInteraction: "Click to interact with map",
+      lockMap: "Lock map",
     },
     outlet: {
       call: "Call",
@@ -98,6 +100,7 @@ export const UI: Record<"en" | "th", UiStrings> = {
       languageSwitcher: "เลือกภาษา",
       viewLocations: "ดูสาขาทั้งหมด",
       enableMapInteraction: "คลิกเพื่อใช้งานแผนที่",
+      lockMap: "ล็อกแผนที่",
     },
     outlet: {
       call: "โทร",

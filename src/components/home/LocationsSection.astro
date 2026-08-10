@@ -1,23 +1,30 @@
 ---
 // src/components/home/LocationsSection.astro
-// Crispin's feedback: replace the static map image with an interactive map showing
-// all 16 outlets (17 by August), modernised vs. the legacy site, and make sure mobile
-// never scroll-traps on it.
+// Crispin's feedback (round 2): add the interactive map on mobile too, and use a
+// 2-column card grid there to cut vertical scrolling. Was: map on desktop only, a
+// full-width single-column 16-card list on mobile with no map — that design assumed
+// the map would scroll-trap mobile touch scrolling, but the existing CSS-only gate
+// below (`pointer-events-none` until tapped) already prevents that: pointer-events:
+// none removes the iframe from hit-testing for ALL pointer input including touch, so
+// a swipe over an un-tapped map scrolls the page normally. One iframe now serves every
+// width (a duplicate mobile iframe would double-load the My Maps embed and duplicate
+// the `map-gate` id).
 //
-// Desktop (md+): the business's own Google My Maps embed — same map ID the live
-// WordPress site already embeds (verified: 200 OK, real "Bee Choo" outlet pins), just
-// restyled into a modern rounded/shadowed card. Re-using it means the pins are
-// accurate and business-maintained; we're not hand-geocoding 16 addresses ourselves.
-// A CSS-only (:checked, no JS) click-to-interact gate sits over the iframe so a
-// visitor scrolling the page with their cursor over the map doesn't get their scroll
-// hijacked by the map's own scroll-zoom — the iframe stays pointer-events-none until
-// the small pill label is clicked.
+// The map, at every width: the business's own Google My Maps embed — same map ID the
+// live WordPress site already embeds (verified: 200 OK, real "Bee Choo" outlet pins).
+// Re-using it means the pins are accurate and business-maintained; we're not
+// hand-geocoding 16 addresses ourselves. The CSS-only (:checked, no JS) gate stays: a
+// visitor scrolling with their cursor/finger over the map doesn't get hijacked by the
+// map's own scroll-zoom until they deliberately tap the pill to arm it. Because that
+// gate is otherwise one-way (no way to disarm once tapped, which matters more on
+// mobile where the map sits inline in the scroll flow), a second "Lock map" label
+// appears once armed so it can be turned back off.
 //
-// Mobile (below md): no iframe at all — a full list of all 16 outlets (name, call,
-// hours, directions) from src/data/locations.ts instead. This is the client's own
-// suggested alternative for avoiding scroll-trapping on mobile, and it sidesteps the
-// problem entirely rather than mitigating it (there's nothing pannable to trap
-// scroll on mobile in the first place).
+// Below the map: all 16 outlets (name, phone, hours, directions) from
+// src/data/locations.ts, in a 2-column grid at every width the list is shown
+// (currently just mobile, since md+ has the full map instead — see the `md:hidden` on
+// the <ul>). Compact by necessity: `hours` strings are long, so they get their own
+// line and a smaller size rather than competing with the name/phone for width.
 //
 // `/locations/` (t.href) isn't built yet — until it exists, the "View all locations"
 // button and each outlet's "Directions" link point at a Google Maps search instead so
@@ -44,13 +51,15 @@ const outletMapsHref = (name: string) => `https://www.google.com/maps/search/?ap
   <div class="mx-auto max-w-6xl px-4 md:px-8">
     <h2 class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>{t.heading[lang]}</h2>
 
-    <!-- Desktop: interactive map (the live site's own My Maps embed). -->
-    <div class="relative mx-auto hidden max-w-4xl overflow-hidden rounded-2xl shadow-soft-lg md:block">
+    <!-- Interactive map (the live site's own My Maps embed) — every width now, not
+         just desktop. See the file header for why the mobile scroll-trap concern that
+         used to justify a map-free mobile view doesn't actually apply here. -->
+    <div class="relative mx-auto max-w-4xl overflow-hidden rounded-2xl shadow-soft-lg">
       <input type="checkbox" id="map-gate" class="peer sr-only" />
       <iframe
         src="https://www.google.com/maps/d/embed?mid=1877_7x9CBuDCk-PxD79RPqWKixsevYU&noprof=1"
         title={t.mapAlt[lang]}
-        class="h-[450px] w-full pointer-events-none peer-checked:pointer-events-auto"
+        class="h-[320px] w-full pointer-events-none peer-checked:pointer-events-auto md:h-[450px]"
         style="border:0"
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
@@ -61,29 +70,42 @@ const outletMapsHref = (name: string) => `https://www.google.com/maps/search/?ap
       >
         {ui.misc.enableMapInteraction}
       </label>
+      <label
+        for="map-gate"
+        class="btn-tactile absolute inset-x-0 bottom-4 z-10 mx-auto hidden w-fit cursor-pointer items-center gap-2 rounded-full bg-brand-ink/80 px-4 py-2 text-xs font-bold text-white shadow-soft hover:bg-brand-ink/90 peer-checked:flex"
+      >
+        {ui.misc.lockMap}
+      </label>
     </div>
 
-    <!-- Mobile: outlet list (no pannable map — nothing to scroll-trap on). -->
-    <ul class="mx-auto grid max-w-2xl gap-3 text-left md:hidden">
+    <!-- Outlet list — a compact 2-column grid so all 16 fit with less vertical scroll,
+         especially now that the map above also takes mobile height. Shown wherever the
+         map itself isn't the primary view (currently: mobile only, via md:hidden). -->
+    <ul class="mx-auto mt-6 grid max-w-2xl grid-cols-2 gap-3 text-left md:hidden">
       {OUTLETS.map((outlet) => (
-        <li class="rounded-2xl border border-brand-earth bg-white p-4">
-          <p class="font-bold text-brand-green">{outlet.name}</p>
-          <p class="mt-1 text-sm text-brand-origin">{outlet.hours}</p>
-          <div class="mt-3 flex flex-wrap gap-2">
+        <li class="flex flex-col rounded-2xl border border-brand-earth bg-white p-3">
+          <p class="text-sm font-bold leading-snug text-brand-green">{outlet.name}</p>
+          <p class="mt-0.5 text-[11px] font-bold tabular-nums text-brand-origin">{outlet.phoneDisplay}</p>
+          <p class="mt-1 flex-1 text-[11px] leading-snug text-brand-origin">
+            <span class="sr-only">{ui.outlet.hours}: </span>{outlet.hours}
+          </p>
+          <div class="mt-2 flex flex-wrap gap-1.5">
             <a
               href={`tel:${outlet.phoneHref}`}
-              class="btn-tactile flex min-h-9 items-center gap-1.5 rounded-full bg-brand-green px-4 text-xs font-bold text-white hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+              aria-label={`${ui.outlet.call} ${outlet.name}: ${outlet.phoneDisplay}`}
+              class="btn-tactile flex min-h-11 flex-1 basis-16 items-center justify-center gap-1 rounded-full bg-brand-green px-2 text-2xs font-bold whitespace-nowrap text-white hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
             >
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5 shrink-0">
                 <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.57 1 1 0 0 1-.25 1.02z" />
               </svg>
-              {ui.outlet.call}: {outlet.phoneDisplay}
+              {ui.outlet.call}
             </a>
             <a
               href={outletMapsHref(outlet.name)}
               target="_blank"
               rel="noopener"
-              class="btn-tactile flex min-h-9 items-center gap-1.5 rounded-full border border-brand-green px-4 text-xs font-bold text-brand-green hover:bg-brand-green/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+              aria-label={`${ui.outlet.directions} — ${outlet.name}`}
+              class="btn-tactile flex min-h-11 flex-1 basis-16 items-center justify-center rounded-full border border-brand-green px-2 text-2xs font-bold whitespace-nowrap text-brand-green hover:bg-brand-green/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
             >
               {ui.outlet.directions}
             </a>
