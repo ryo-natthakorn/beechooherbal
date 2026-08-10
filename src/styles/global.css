@@ -88,15 +88,21 @@
   }
 }
 
-/* Hero aura — layered radial glow in brand white + brand yellow (no off-brand hues),
-   deepening toward brand-green-deep at the base for cinematic depth. Doubles as the
-   always-on fallback surface beneath the WebGL hero canvas (mobile, reduced-motion,
-   no-JS, or WebGL-unavailable all land here). */
+/* Hero aura — layered radial glow in brand white (no off-brand hues; the yellow tint
+   this had is gone per Crispin's feedback), deepening only slightly toward
+   brand-green-deep at the base. Doubles as the always-on fallback surface beneath the
+   WebGL hero canvas (mobile, reduced-motion, no-JS, or WebGL-unavailable all land
+   here). The flat background-color lift + widened/lowered radials + shallower dark
+   wash brighten the whole field and soften the shadowed base, while staying under the
+   ~0.14 composited-white ceiling the brand-yellow tagline needs to hold 3:1 contrast.
+   Must stay background-color + background-image (not the `background` shorthand,
+   which would reset background-color to transparent). */
 .hero-aura {
-  background:
-    radial-gradient(65% 85% at 15% 0%, rgb(255 255 255 / 0.2), transparent 65%),
-    radial-gradient(60% 70% at 100% 100%, rgb(255 198 0 / 0.18), transparent 65%),
-    linear-gradient(170deg, transparent 45%, rgb(31 74 49 / 0.42) 100%);
+  background-color: rgb(255 255 255 / 0.05);
+  background-image:
+    radial-gradient(72% 92% at 16% 0%, rgb(255 255 255 / 0.08), transparent 72%),
+    radial-gradient(70% 60% at 100% 100%, rgb(255 255 255 / 0.05), transparent 70%),
+    linear-gradient(170deg, transparent 55%, rgb(31 74 49 / 0.16) 100%);
 }
 
 /* Hero scroll cue — purely decorative (aria-hidden), a thin line with a falling
@@ -141,8 +147,12 @@
   gap: 2rem;
 }
 @media (prefers-reduced-motion: no-preference) {
+  /* 80s (was 40s) — the track now carries all 12 awards instead of 6, doubling its
+     own width; translateX(-50%) covers twice the distance, so the duration had to
+     double too just to hold the same ~19px/s drift (a single row at the old 40s would
+     have looked twice as fast). */
   .marquee-track {
-    animation: marquee-scroll 40s linear infinite;
+    animation: marquee-scroll 80s linear infinite;
   }
   .marquee:hover .marquee-track,
   .marquee:focus-within .marquee-track {
@@ -157,6 +167,13 @@
   }
   .marquee-track [data-marquee-clone] {
     display: none;
+  }
+  /* With 12 badges wrapping instead of 6, the outermost badge in each row now sits
+     inside the edge-fade mask — turn the fade off since there's no longer a scrolling
+     edge to soften. */
+  .marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 }
 @keyframes marquee-scroll {
@@ -251,15 +268,6 @@
    of the safe baseline above: reduced-motion always gets a static, fully
    visible page, and nothing content-bearing ships hidden.
    --------------------------------------------------------------------------- */
-
-/* Reverse row for the kinetic awards wall — same seamless -50% loop, opposite
-   direction and slightly desynced duration so the two rows never tile visually. */
-@media (prefers-reduced-motion: no-preference) {
-  .marquee-track-reverse {
-    animation-direction: reverse;
-    animation-duration: 34s;
-  }
-}
 
 /* Reviews reveal-and-disappear fader (Ryo revision) — replaces the old two-column
    marquee. Default/reduced-motion state is a plain stacked list of all 4 reviews

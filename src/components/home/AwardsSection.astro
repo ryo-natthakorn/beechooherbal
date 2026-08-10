@@ -18,11 +18,11 @@ const h2Class =
   lang === "en"
     ? "mb-3 font-serif text-2xl font-bold text-balance text-brand-green md:text-3xl"
     : "mb-10 font-serif-thai text-2xl font-bold text-brand-green md:text-3xl";
-// Two rows of 6 DISTINCT awards each (not the same 12 shown twice) — each row still
-// clones its own 6 internally for the seamless marquee loop (see AwardsMarquee.astro),
-// but the two rows never share a badge.
-const row1 = t.items.slice(0, 6).map((item) => ({ img: item.img, alt: item.alt[lang] }));
-const row2 = t.items.slice(6, 12).map((item) => ({ img: item.img, alt: item.alt[lang] }));
+// Single row of all 12 awards — clones its own 12 internally for the seamless marquee
+// loop (see AwardsMarquee.astro). Was two 6-badge rows with opposite drift; collapsed
+// to one line per Crispin's "limit the moving recognition ticker to a single line"
+// feedback.
+const awards = t.items.map((item) => ({ img: item.img, alt: item.alt[lang] }));
 ---
 
 <section class="py-16 text-center md:py-24">
@@ -33,11 +33,7 @@ const row2 = t.items.slice(6, 12).map((item) => ({ img: item.img, alt: item.alt[
         {t.intro[lang]}
       </p>
     )}
-    <AwardsMarquee awards={row1} />
-    <!-- Second row of the kinetic wall: the other 6 awards, opposite drift. -->
-    <div class="mt-6">
-      <AwardsMarquee awards={row2} reverse />
-    </div>
+    <AwardsMarquee awards={awards} />
     <Image src={awardsBanner} alt={t.bannerAlt[lang]} width={800} height={240} class="mx-auto mt-10 h-auto w-full max-w-3xl rounded-xl shadow-soft" data-parallax="0.1" />
   </div>
 </section>

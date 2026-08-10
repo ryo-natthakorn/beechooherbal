@@ -1,9 +1,12 @@
 ---
 // src/components/AwardsMarquee.astro
-// Replaces a flat 12-icon grid with a continuous strip (see .marquee in global.css) —
-// a long, same-shape list of award badges reads better as a slow ticker than a static
-// wall. Zero JS: pure CSS animation, paused on hover/focus, real content only (no
-// text labels under the logos per the "logo wall = logo only" rule).
+// Replaces a flat 12-icon grid with a single continuous strip (see .marquee in
+// global.css) — a long, same-shape list of award badges reads better as a slow ticker
+// than a static wall. Zero JS: pure CSS animation, paused on hover/focus, real content
+// only (no text labels under the logos per the "logo wall = logo only" rule).
+// Was a two-row wall (opposite-drift rows); collapsed to one row per Crispin's
+// "limit the moving recognition ticker to a single line" feedback — see
+// AwardsSection.astro for the single call site.
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
@@ -14,16 +17,13 @@ interface AwardItem {
 
 interface Props {
   awards: AwardItem[];
-  /** Runs the loop in the opposite direction (slightly desynced duration) — used for
-   *  the second, aria-hidden row of the kinetic awards wall. */
-  reverse?: boolean;
 }
 
-const { awards, reverse = false } = Astro.props;
+const { awards } = Astro.props;
 ---
 
 <div class="marquee">
-  <div class:list={["marquee-track", reverse && "marquee-track-reverse"]}>
+  <div class="marquee-track">
     {awards.map((award) => (
       <Image
         src={award.img}
