@@ -27,14 +27,14 @@ export interface UiStrings {
     menu: string;
     skipToContent: string;
     languageSwitcher: string;
-    contact: string;
     viewLocations: string;
+    enableMapInteraction: string;
   };
-  // Short labels for the mobile sticky contact bar.
-  bar: {
+  // Per-outlet card labels (LocationsSection's mobile list).
+  outlet: {
     call: string;
-    facebook: string;
-    line: string;
+    hours: string;
+    directions: string;
   };
 }
 
@@ -63,13 +63,13 @@ export const UI: Record<"en" | "th", UiStrings> = {
       menu: "Menu",
       skipToContent: "Skip to content",
       languageSwitcher: "Language",
-      contact: "Contact",
       viewLocations: "View all locations",
+      enableMapInteraction: "Click to interact with map",
     },
-    bar: {
+    outlet: {
       call: "Call",
-      facebook: "Facebook",
-      line: "LINE",
+      hours: "Hours",
+      directions: "Directions",
     },
   },
   th: {
@@ -96,13 +96,13 @@ export const UI: Record<"en" | "th", UiStrings> = {
       menu: "เมนู",
       skipToContent: "ข้ามไปยังเนื้อหา",
       languageSwitcher: "เลือกภาษา",
-      contact: "ติดต่อเรา",
       viewLocations: "ดูสาขาทั้งหมด",
+      enableMapInteraction: "คลิกเพื่อใช้งานแผนที่",
     },
-    bar: {
+    outlet: {
       call: "โทร",
-      facebook: "Facebook",
-      line: "LINE",
+      hours: "เวลาทำการ",
+      directions: "นำทาง",
     },
   },
 };

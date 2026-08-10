@@ -19,8 +19,7 @@ if (!prefersReducedMotion) {
   maskHeadlines();
   countUpStats();
   parallaxLayers();
-  treatmentCards();
-  howItWorksScene();
+  treatmentsMasterDetail();
   heroShader();
 }
 
@@ -45,10 +44,16 @@ function headerOverlay() {
   );
 }
 
-/** Botanical line art draws itself on when it enters the viewport (hero draws on load,
- *  footer as you reach it). SSR state is fully drawn; the dash "hidden" state is set
- *  only here, when JS is confirmed live. Strokes are aria-hidden at ~0.1 opacity, so
- *  the single-frame swap is imperceptible.
+/** Botanical line art keeps drawing itself on, in an endless loop, once it enters the
+ *  viewport (hero on load, footer as you reach it). SSR state is fully drawn; the dash
+ *  "hidden" state is set only here, when JS is confirmed live. Strokes are aria-hidden
+ *  at ~0.1 opacity, so the single-frame swap into the animated state is imperceptible.
+ *
+ *  The 3-keyframe len -> 0 -> -len loop is the standard SVG line-draw trick: with
+ *  strokeDasharray set to the path's own length (dash == gap == len), an offset of 0 is
+ *  fully drawn and an offset of ±len is fully hidden (same visual state, opposite phase),
+ *  so animating continuously through len -> 0 -> -len with iterations: Infinity reads as
+ *  a calm, seamless draw-on/draw-off cycle rather than a jump cut.
  *
  *  Uses native Element.animate() (WAAPI) rather than Motion's animate() — verified in
  *  a real browser that Motion does not interpolate the strokeDashoffset SVG
@@ -65,12 +70,15 @@ function drawStrokes() {
         const len = path.getTotalLength();
         path.style.strokeDasharray = `${len}`;
         path.style.strokeDashoffset = `${len}`;
-        path.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], {
-          duration: 1500,
-          delay: i * 80,
-          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-          fill: "forwards",
-        });
+        path.animate(
+          [{ strokeDashoffset: len }, { strokeDashoffset: 0 }, { strokeDashoffset: -len }],
+          {
+            duration: 7000,
+            delay: i * 200,
+            easing: "cubic-bezier(0.45, 0, 0.55, 1)",
+            iterations: Infinity,
+          },
+        );
       });
     },
     { amount: 0.15 },
@@ -140,51 +148,21 @@ function parallaxLayers() {
   });
 }
 
-/** Treatment-card choreography — the Phase 3 upgrade of the old uniform reveal:
- *  spring rise + de-blur with a per-column stagger. Cards ship visible (the [0,1]
- *  opacity "from" only exists while this animation runs). */
-function treatmentCards() {
-  inView(
-    ".card-reveal",
-    (element) => {
-      const index = Number((element as HTMLElement).dataset.revealIndex ?? "0");
-      animate(
-        element,
-        { opacity: [0, 1], y: [36, 0], scale: [0.96, 1], filter: ["blur(8px)", "blur(0px)"] },
-        {
-          delay: (index % 3) * 0.07,
-          opacity: { duration: 0.45, ease: "easeOut" },
-          filter: { duration: 0.5, ease: "easeOut" },
-          y: { type: "spring", stiffness: 120, damping: 17 },
-          scale: { type: "spring", stiffness: 120, damping: 17 },
-        },
-      );
-    },
-    { margin: "0px 0px 15% 0px" },
-  );
-}
-
-/** Pinned, scroll-scrubbed How-It-Works. The section ships as a normal static block;
- *  desktop + JS + motion-allowed adds .scene-active (tall track + sticky stage) and
- *  scrubs the 4 steps, gold progress bar, and a subtle image zoom off scroll progress.
- *  Mobile and no-JS keep the plain layout — no dead scroll distance. */
-function howItWorksScene() {
-  const track = document.querySelector<HTMLElement>("[data-scene-track]");
-  if (!track) return;
-  if (!window.matchMedia("(min-width: 768px)").matches) return;
-  track.classList.add("scene-active");
-  const steps = Array.from(track.querySelectorAll<HTMLElement>(".scene-step"));
-  const progressBar = track.querySelector<HTMLElement>(".scene-progress");
-  const visual = track.querySelector<HTMLElement>("[data-scene-visual]");
-  scroll(
-    (progress: number) => {
-      const idx = Math.min(steps.length - 1, Math.floor(progress * steps.length));
-      steps.forEach((step, i) => step.setAttribute("data-active", String(i === idx)));
-      if (progressBar) progressBar.style.transform = `scaleX(${progress})`;
-      if (visual) visual.style.transform = `scale(${1 + progress * 0.05})`;
-    },
-    { target: track, offset: ["start start", "end end"] },
-  );
+/** Treatments accordion / master-detail — the CSS :has() toggle in global.css already
+ *  makes this fully functional with zero JS (mobile: per-row accordion; md+: master-
+ *  detail); this only layers a soft crossfade onto a panel when it becomes visible.
+ *  Each radio and its own panel are siblings inside the same `.treatment-row`, so
+ *  `closest()` finds the right one without needing an index attribute. */
+function treatmentsMasterDetail() {
+  const root = document.querySelector<HTMLElement>("[data-treatments-md]");
+  if (!root) return;
+  root.querySelectorAll<HTMLInputElement>(".md-radio").forEach((radio) => {
+    radio.addEventListener("change", () => {
+      const panel = radio.closest(".treatment-row")?.querySelector<HTMLElement>(".md-panel");
+      if (!panel) return;
+      animate(panel, { opacity: [0, 1], y: [8, 0] }, { duration: 0.35, ease: "easeOut" });
+    });
+  });
 }
 
 /** WebGL hero shader — lazy-loaded and hard-gated: desktop width + fine pointer only

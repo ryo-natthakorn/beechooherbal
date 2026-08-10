@@ -1,9 +1,14 @@
 ---
 // src/components/home/PricingSection.astro
-// Price-list image + pricing copy on the Earth-tint band.
+// Simplified back to a single static image (Crispin's feedback: remove all the
+// effects, put the original picture back, keep it simple) — same trade as
+// HowItWorksScene: the 5-tier grid used to render length name/price/cm range as
+// real, crawlable text alongside each tier's own cropped illustration; Crispin chose
+// image-only, matching the legacy site's single price-list graphic, over keeping
+// that text. The per-tier data below only feeds the image's alt text now.
 import { Image } from "astro:assets";
 import { HOME, type Lang } from "../../data/home";
-import priceList from "../../assets/images/price-list.jpg";
+import priceListImage from "../../assets/images/price-list.jpg";
 
 interface Props {
   lang: Lang;
@@ -13,15 +18,18 @@ const { lang } = Astro.props;
 const t = HOME.pricing;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
+const imageAlt = `${t.heading[lang]}: ${t.tiers
+  .map((tier) => `${tier.lengthName[lang]}${tier.cmRange[lang] ? ` (${tier.cmRange[lang]})` : ""} — ${tier.price} ${t.currency[lang]}`)
+  .join(", ")}`;
 ---
 
 <section class="bg-brand-earth/25 py-16 text-center md:py-24">
-  <div class="reveal mx-auto max-w-6xl px-4 md:px-8">
-    <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+  <div class="mx-auto max-w-6xl px-4 md:px-8">
+    <h2 class={`mb-10 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
       {t.heading[lang]}
     </h2>
-    <Image src={priceList} alt={t.imageAlt[lang]} width={700} height={990} class="mx-auto rounded-xl shadow-soft" data-parallax="0.08" />
-    <p class="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-brand-origin">
+    <Image src={priceListImage} alt={imageAlt} width={1600} height={1132} class="mx-auto w-full max-w-2xl rounded-xl shadow-soft-lg" />
+    <p class="mx-auto mt-8 max-w-2xl text-sm leading-relaxed text-brand-origin">
       {t.body[lang]}
     </p>
   </div>

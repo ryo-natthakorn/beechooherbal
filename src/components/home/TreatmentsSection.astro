@@ -1,9 +1,25 @@
 ---
 // src/components/home/TreatmentsSection.astro
-// The 7 treatment cards on the Earth-tint band; first card is featured (spans 2 cols).
-// Card markup + Motion reveal hooks live in TreatmentCard.astro. EN headings carry
-// text-balance; TH headings never do (unreliable with space-free Thai script).
-import TreatmentCard from "../TreatmentCard.astro";
+// One row per treatment: a radio-driven label (the name) plus its own panel (photo +
+// teaser + "Read more"), each pair wrapped in `.treatment-row`. CSS-only via :has()
+// (no JS) and the SAME markup serves both layouts:
+//   - Mobile: `.treatment-row` is a normal bordered card; the panel sits right inside
+//     it, directly under its own label, and only shows once that row's radio is
+//     checked — a plain per-row accordion, so you never have to scroll away from a
+//     name to see its photo/description (the old shared-panel-below-the-list layout
+//     made you do exactly that).
+//   - md+: `.treatment-row` switches to `display: contents`, so the label and panel
+//     become direct children of the outer grid instead of a grouped box — labels are
+//     pinned to column 1, panels to column 2. Hidden panels are `display: none`,
+//     which removes them from grid placement entirely, so whichever ONE panel is
+//     currently visible always lands in the single column-2 cell no matter which of
+//     the 7 rows is active — that reproduces the master-detail layout with no
+//     per-index CSS needed. See `.treatment-row` / `.md-panel` rules in global.css.
+// A browser without :has() support falls back to every panel visible as a plain
+// stacked list — nothing content-bearing ever ships hidden by default.
+// Same title + "Read more" URL fix as the old TreatmentCard: both point at
+// beechooherbal.com (the live site's heading wrongly links to beechooladies.com.sg).
+import { Image } from "astro:assets";
 import LeafDivider from "../LeafDivider.astro";
 import { TREATMENTS } from "../../data/treatments";
 import { HOME, type Lang } from "../../data/home";
@@ -15,6 +31,7 @@ interface Props {
 const { lang } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
+const readMore = lang === "th" ? "คลิกเพื่ออ่านต่อ" : "Read more";
 ---
 
 <section class="bg-brand-earth/25 py-16 md:py-24">
@@ -23,8 +40,47 @@ const balance = lang === "en" ? " text-balance" : "";
     <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
       {HOME.treatments.heading[lang]}
     </h2>
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {TREATMENTS.map((treatment, i) => <TreatmentCard {treatment} {lang} featured={i === 0} index={i} />)}
+
+    <div
+      class="treatments-md flex flex-col gap-3 md:grid md:grid-cols-[280px_1fr] md:items-stretch md:gap-6"
+      style={`--treatment-count: ${TREATMENTS.length}`}
+      data-treatments-md
+    >
+      {TREATMENTS.map((treatment, i) => (
+        <div class="treatment-row overflow-hidden rounded-2xl border border-brand-earth bg-white md:contents">
+          <label
+            for={`treatment-${i}`}
+            class="md-label flex cursor-pointer items-center gap-3 px-5 py-4 font-bold text-brand-origin transition-colors duration-200 hover:bg-brand-earth/20 has-checked:bg-brand-green/8 has-checked:text-brand-green md:border-b md:border-brand-earth md:first:rounded-t-2xl md:last:rounded-b-2xl md:last:border-b-0"
+          >
+            <input
+              type="radio"
+              name="treatment-select"
+              id={`treatment-${i}`}
+              checked={i === 0}
+              class="md-radio h-4 w-4 shrink-0 accent-brand-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+            />
+            {treatment.title[lang]}
+          </label>
+
+          <article class="md-panel border-t border-brand-earth md:grid md:grid-cols-2 md:rounded-2xl md:border-t-0 md:shadow-soft">
+            <div class="h-52 overflow-hidden md:h-full">
+              <Image src={treatment.image} alt={treatment.alt[lang]} width={768} height={512} class="h-full w-full object-cover" />
+            </div>
+            <div class="flex flex-col gap-3 p-6">
+              <h3 class:list={[serif, "text-xl font-bold text-brand-green"]}>
+                <a href={treatment.href[lang]} class="hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">{treatment.title[lang]}</a>
+              </h3>
+              <p class="flex-1 text-sm leading-relaxed text-brand-origin">{treatment.teaser[lang]}</p>
+              <a
+                href={treatment.href[lang]}
+                class="btn-tactile mt-1 inline-block self-start rounded-full bg-brand-green px-5 py-3 text-center text-sm font-bold text-white hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+              >
+                {readMore} &rarr;
+              </a>
+            </div>
+          </article>
+        </div>
+      ))}
     </div>
   </div>
 </section>

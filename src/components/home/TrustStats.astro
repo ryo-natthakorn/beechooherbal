@@ -32,7 +32,11 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
         <p class={`${serif} text-3xl font-bold text-brand-green md:text-5xl`}>
           <span class="stat-num inline-block" data-countup={stat.value} style={`min-width:${String(stat.value).length}ch`}>{stat.value}</span>{stat.suffix && <span class="text-brand-root">{stat.suffix}</span>}
         </p>
-        <p class="mt-1 text-xs tracking-wide text-brand-origin uppercase md:text-sm">{stat.label[lang]}</p>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mt-2 h-5 w-5 text-brand-green/55">
+          <path d="M12 21s-7-7.58-7-12a7 7 0 1 1 14 0c0 4.42-7 12-7 12z" />
+          <circle cx="12" cy="9" r="2.5" />
+        </svg>
+        <p class="mt-2 text-nowrap text-2xs tracking-wide text-brand-origin uppercase md:text-sm">{stat.label[lang]}</p>
       </div>
     ))}
   </div>

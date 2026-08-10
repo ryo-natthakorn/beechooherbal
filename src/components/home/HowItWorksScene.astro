@@ -1,12 +1,15 @@
 ---
 // src/components/home/HowItWorksScene.astro
-// Process section: photo + the 4 steps as real text (accessible + indexable) + video.
-// Named Scene because Phase 6 of the redesign turns this into the pinned scroll-scrubbed
-// centerpiece; the SSR'd image/ol/video here remain the no-JS fallback.
+// Process section — simplified back to a single static image (Crispin's feedback:
+// remove the pinned scroll-scrubbed scene and the 4 split-out step photos, put the
+// original "4 steps" composite graphic back, keep it simple). Deliberate trade: the
+// step list used to also exist as real, crawlable text (see git history) — Crispin
+// chose image-only, matching the legacy site, over keeping that text alongside the
+// image. The 4 steps therefore now only exist inside this image and its alt text.
 import { Image } from "astro:assets";
 import YouTubeEmbed from "../YouTubeEmbed.astro";
 import { HOME, type Lang } from "../../data/home";
-import howItWorks from "../../assets/images/how-it-works.jpg";
+import howItWorksImage from "../../assets/images/how-it-works.jpg";
 
 interface Props {
   lang: Lang;
@@ -16,41 +19,19 @@ const { lang } = Astro.props;
 const t = HOME.howItWorks;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
+const imageAlt =
+  lang === "th"
+    ? `${t.heading[lang]}: ${t.steps[lang].map((step, i) => `${i + 1}. ${step}`).join(" ")}`
+    : `${t.heading[lang]} — ${t.steps[lang].map((step, i) => `${i + 1}. ${step}`).join(", ")}`;
 ---
 
 <section class="py-16 md:py-24">
   <div class="mx-auto max-w-6xl px-4 text-center md:px-8">
-    <!-- Ships as a normal static block. home-motion.ts adds .scene-active (desktop +
-         motion-allowed + JS only), which stretches this track to 280vh, pins the stage,
-         and applies the brand-earth backdrop + scroll hint (both CSS-gated on
-         .scene-active so the plain static layout never shows them). Scrolling then
-         scrubs the steps, gold progress bar, and image zoom. Mobile / no-JS /
-         reduced-motion read it exactly as laid out here, undecorated. -->
-    <div data-scene-track>
-      <div class="scene-pin">
-        <span class="scene-hint" aria-hidden="true">Scroll to explore &darr;</span>
-        <div class="mx-auto w-full max-w-4xl">
-          <h2 data-mask-reveal class={`mb-10 ${serif} text-2xl font-bold${balance} text-brand-green md:text-4xl`}>
-            {t.heading[lang]}
-          </h2>
-          <div class="grid gap-8 text-left md:grid-cols-2 md:items-center md:gap-14">
-            <div class="relative aspect-4/3 overflow-hidden rounded-xl shadow-soft-lg">
-              <Image src={howItWorks} alt={t.imageAlt[lang]} width={900} height={506} class="absolute inset-0 h-full w-full object-cover" data-scene-visual />
-              <div class="scene-progress absolute inset-x-0 bottom-0" aria-hidden="true"></div>
-            </div>
-            <ol class="flex flex-col gap-5">
-              {t.steps[lang].map((step, i) => (
-                <li class="scene-step flex items-start gap-4">
-                  <span class={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-green ${serif} text-base font-bold text-white`}>
-                    {i + 1}
-                  </span>
-                  <span class="pt-2 text-lg leading-relaxed text-brand-origin">{step}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </div>
+    <div class="mx-auto w-full max-w-4xl">
+      <h2 class={`mb-10 ${serif} text-2xl font-bold${balance} text-brand-green md:text-4xl`}>
+        {t.heading[lang]}
+      </h2>
+      <Image src={howItWorksImage} alt={imageAlt} width={1600} height={838} class="mx-auto w-full rounded-xl shadow-soft-lg" />
     </div>
     <div class="mx-auto mt-8 max-w-2xl">
       <YouTubeEmbed id={t.videoId} title={t.videoTitle[lang]} />

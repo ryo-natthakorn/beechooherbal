@@ -63,10 +63,15 @@ const isCurrent = (href: string) => decodeURI(Astro.url.pathname) === href;
 
   <div class="flex items-center gap-2">
     <a
-      href="tel:+66020726698"
-      class="btn-tactile flex min-h-11 items-center rounded-full bg-brand-green px-4 text-sm font-bold text-white hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green group-data-[at-top]:bg-brand-yellow group-data-[at-top]:text-brand-ink group-data-[at-top]:hover:bg-brand-yellow/90"
+      href="https://lin.ee/ll3injb"
+      target="_blank"
+      rel="noopener"
+      class="btn-tactile flex min-h-11 items-center gap-2 rounded-full bg-brand-green px-4 text-sm font-bold text-white hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green group-data-[at-top]:bg-brand-yellow group-data-[at-top]:text-brand-ink group-data-[at-top]:hover:bg-brand-yellow/90"
     >
-      +66 02 072 6698
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0">
+        <path d="M12 3C6.48 3 2 6.58 2 11c0 2.61 1.61 4.93 4.11 6.41-.18.94-.66 2.49-1.51 3.99a.4.4 0 0 0 .5.55c2.11-.76 3.66-1.7 4.51-2.29.76.14 1.55.21 2.39.21 5.52 0 10-3.58 10-8s-4.48-8-10-8z" />
+      </svg>
+      {ui.cta.line}
     </a>
 
     <details class="relative md:hidden">

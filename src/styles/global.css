@@ -33,6 +33,10 @@
   --font-serif: "Lora", Georgia, serif;
   --font-serif-thai: "Noto Serif Thai", "Lora", Georgia, serif;
 
+  /* One step below text-xs — lets the longest stat label ("Outlets across Asia Pacific")
+     stay on a single line in the mobile 2-col stat grid instead of an arbitrary value. */
+  --text-2xs: 0.65rem;
+
   /* Soft UI Evolution elevation — green-cast soft shadows instead of hard borders. */
   --shadow-soft: 0 4px 16px rgb(45 105 70 / 0.08), 0 1px 3px rgb(0 0 0 / 0.05);
   --shadow-soft-lg: 0 12px 32px rgb(45 105 70 / 0.12), 0 2px 6px rgb(0 0 0 / 0.06);
@@ -90,9 +94,9 @@
    no-JS, or WebGL-unavailable all land here). */
 .hero-aura {
   background:
-    radial-gradient(60% 80% at 15% 0%, rgb(255 255 255 / 0.12), transparent 60%),
-    radial-gradient(55% 65% at 100% 100%, rgb(255 198 0 / 0.14), transparent 65%),
-    linear-gradient(170deg, transparent 35%, rgb(31 74 49 / 0.65) 100%);
+    radial-gradient(65% 85% at 15% 0%, rgb(255 255 255 / 0.2), transparent 65%),
+    radial-gradient(60% 70% at 100% 100%, rgb(255 198 0 / 0.18), transparent 65%),
+    linear-gradient(170deg, transparent 45%, rgb(31 74 49 / 0.42) 100%);
 }
 
 /* Hero scroll cue — purely decorative (aria-hidden), a thin line with a falling
@@ -164,11 +168,55 @@
   }
 }
 
-/* Treatment-card reveal runs on Motion (see src/scripts/home-motion.ts) instead of
-   this CSS technique — it needs IntersectionObserver-based cross-browser reach (the
-   animation-timeline: view() trick above skips browsers without scroll-timeline
-   support) and spring easing. The .card-reveal hook class lives on
-   TreatmentCard.astro; nothing here targets it, so there's no double-animation. */
+/* Treatments — one row per treatment (label + its own panel), CSS-only via :has().
+   Default state (no :has() support) keeps every panel visible as a plain stacked
+   list, so nothing content-bearing ever ships hidden: the display:none only applies
+   inside the @supports block below. Label active/hover state uses Tailwind's built-in
+   has-checked: variant directly in TreatmentsSection.astro.
+   Mobile: `.treatment-row` is a normal block box, so a checked row's panel appears
+   right inside that same card, directly under its own label — a per-row accordion.
+   md+: `.treatment-row` becomes display:contents (see TreatmentsSection.astro's
+   md:contents), so the label/panel stop being grouped and become direct children of
+   the outer grid — labels pinned to column 1, panels to column 2. A hidden panel is
+   display:none, which removes it from grid placement entirely, so whichever ONE
+   panel is visible always lands in the single column-2 cell regardless of which row
+   is active.
+   Whenever a panel IS shown, `display: revert-layer` (not a hardcoded block/grid) is
+   used deliberately — this plain stylesheet sits outside Tailwind's cascade layers,
+   so it always outranks Tailwind's utilities regardless of specificity; hardcoding
+   `display: block` here would have permanently defeated the panel's own `md:grid`
+   utility (its internal image | text side-by-side layout). revert-layer instead
+   drops back into the utilities layer so Tailwind's own block/md:grid keeps working
+   for whichever panel is actually visible. */
+.md-panel {
+  display: revert-layer;
+}
+@supports selector(:has(a)) {
+  .md-panel {
+    display: none;
+  }
+  .treatment-row:has(.md-radio:checked) .md-panel {
+    display: revert-layer;
+  }
+}
+/* .treatment-row's own display:contents at md+ is Tailwind's md:contents class in
+   the markup; only the grid placement needs to live here.
+   The visible panel spans every row (1 / span --treatment-count, set inline on
+   .treatments-md from TREATMENTS.length — not hardcoded, so it stays correct if a
+   treatment is added/removed), not just row 1 — otherwise, with 7 labels each
+   auto-placed into their own row, the panel would only occupy row 1's height and the
+   label column would run on far past its bottom edge. Spanning the full row range and
+   letting Grid's default align-self: stretch fill that whole span is what makes the
+   two columns strict-symmetry equal height, top-aligned. */
+@media (min-width: 48rem) {
+  .md-panel {
+    grid-column: 2;
+    grid-row: 1 / span var(--treatment-count, 7);
+  }
+  .md-label {
+    grid-column: 1;
+  }
+}
 
 /* Hero entrance — plays once on load (document timeline, not scroll-linked). Kept short
    and restrained: this is a trust-first health clinic, not an agency showreel. */
@@ -213,113 +261,48 @@
   }
 }
 
-/* Reviews wall — vertical marquee columns (real items + aria-hidden clones, the
-   awards-marquee technique rotated 90°). Items use margin-bottom instead of flex
-   gap so the -50% translate loops exactly. Hover/focus pauses; reduced motion
-   collapses to the classic static grid with clones removed. */
+/* Reviews reveal-and-disappear fader (Ryo revision) — replaces the old two-column
+   marquee. Default/reduced-motion state is a plain stacked list of all 4 reviews
+   (nothing hidden). Only under prefers-reduced-motion:no-preference does the fader
+   go absolute + square and cycle: each item shares one 16s keyframe loop, offset by
+   a negative animation-delay of `var(--i) * -4s` (set inline per item in
+   ReviewsWall.astro) so exactly one review is visible — reveal, hold, fade — at a
+   time, in sequence, forever. */
+.reviews-fade-item {
+  margin-top: 1rem;
+}
+.reviews-fade-item:first-child {
+  margin-top: 0;
+}
 @media (prefers-reduced-motion: no-preference) {
-  .reviews-wall {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    height: 32rem;
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(180deg, transparent, black 10%, black 90%, transparent);
-    mask-image: linear-gradient(180deg, transparent, black 10%, black 90%, transparent);
+  .reviews-fader {
+    aspect-ratio: 1 / 1;
   }
-  .reviews-col {
-    display: flex;
-    flex-direction: column;
-    animation: reviews-scroll-y 30s linear infinite;
-  }
-  .reviews-col > * {
-    margin-bottom: 1rem;
-  }
-  .reviews-col-reverse {
-    animation-direction: reverse;
-    animation-duration: 36s;
-  }
-  .reviews-wall:hover .reviews-col,
-  .reviews-wall:focus-within .reviews-col {
-    animation-play-state: paused;
+  .reviews-fade-item {
+    position: absolute;
+    inset: 0;
+    margin-top: 0;
+    opacity: 0;
+    animation: reviews-fade-cycle 16s infinite;
+    animation-delay: calc(var(--i) * -4s);
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .reviews-wall {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 1rem;
+@keyframes reviews-fade-cycle {
+  0%,
+  2% {
+    opacity: 0;
+    transform: translateY(6px);
   }
-  .reviews-col {
-    display: contents;
-  }
-  .reviews-wall [data-marquee-clone] {
-    display: none;
-  }
-}
-@media (prefers-reduced-motion: reduce) and (min-width: 640px) {
-  .reviews-wall {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@keyframes reviews-scroll-y {
-  from {
+  4%,
+  21% {
+    opacity: 1;
     transform: translateY(0);
   }
-  to {
-    transform: translateY(-50%);
+  23%,
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
   }
-}
-
-/* Pinned How-It-Works scene. The markup ships as a normal static section; the
-   homepage motion module adds .scene-active (desktop + motion-allowed + JS only),
-   which stretches the track and pins the stage so scrolling scrubs the steps.
-   No-JS / reduced-motion / mobile never see any of this. */
-.scene-active {
-  height: 280vh;
-}
-.scene-active .scene-pin {
-  position: sticky;
-  top: 0;
-  display: flex;
-  min-height: 100svh;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(120% 100% at 50% 15%, rgb(219 203 193 / 0.35), transparent 70%);
-  background-color: rgb(219 203 193 / 0.14);
-}
-.scene-hint {
-  display: none;
-}
-.scene-active .scene-hint {
-  position: absolute;
-  top: 1.5rem;
-  left: 50%;
-  translate: -50% 0;
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--color-brand-origin);
-  opacity: 0.6;
-}
-.scene-active .scene-step {
-  opacity: 0.35;
-  transition: opacity 0.4s var(--ease-spring), transform 0.4s var(--ease-spring);
-}
-.scene-active .scene-step[data-active="true"] {
-  opacity: 1;
-  transform: translateX(6px);
-}
-.scene-progress {
-  opacity: 0;
-  height: 4px;
-  width: 100%;
-  background: var(--color-brand-yellow);
-  transform: scaleX(0);
-  transform-origin: left center;
-}
-.scene-active .scene-progress {
-  opacity: 1;
 }
 
 /* Count-up stat numerals — tabular digits so the ticker doesn't wobble; the
