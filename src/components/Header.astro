@@ -9,7 +9,7 @@
 // safe white bar on every page.
 import { Image } from "astro:assets";
 import logoLeaf from "../assets/images/logo-leaf.jpg";
-import { UI, NAV_HREFS } from "../i18n/ui";
+import { UI, NAV, type NavGroup } from "../i18n/ui";
 
 interface Props {
   lang: "en" | "th";
@@ -18,16 +18,43 @@ interface Props {
 
 const { lang, overlay = false } = Astro.props;
 const ui = UI[lang];
-const hrefs = NAV_HREFS[lang];
+const navItems = NAV[lang];
 const wordmark = lang === "th" ? "บีชู เฮอร์เบิล" : "Bee Choo Herbal";
 // Serif wordmark — matches the logotype's serif letterforms (brand guide main logomark).
 const fontClass = lang === "th" ? "font-serif-thai" : "font-serif";
 
-const navItems = (Object.keys(ui.nav) as Array<keyof typeof ui.nav>).map((key) => ({
-  label: ui.nav[key],
-  href: hrefs[key],
-}));
-const isCurrent = (href: string) => decodeURI(Astro.url.pathname) === href;
+const currentPath = decodeURI(Astro.url.pathname);
+const isCurrent = (href: string) => currentPath === href;
+const isGroup = (item: (typeof navItems)[number]): item is NavGroup => "children" in item;
+const isCurrentGroup = (item: NavGroup) => item.children.some((child) => isCurrent(child.href));
+// First NAV entry is always the Home leaf link (see src/i18n/ui.ts).
+const homeHref = navItems[0].href as string;
+
+const topLevelLinkClass = (current: boolean) =>
+  [
+    "py-2 transition-colors duration-200 hover:text-brand-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green",
+    current
+      ? "font-bold text-brand-green underline decoration-brand-yellow decoration-2 underline-offset-8 group-data-[at-top]:text-white"
+      : "text-brand-origin group-data-[at-top]:text-white/85 group-data-[at-top]:hover:text-white",
+  ].join(" ");
+
+const mobileLinkClass = (current: boolean) =>
+  [
+    "block rounded-xl px-4 py-3 font-bold transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green",
+    current ? "bg-brand-green/10 text-brand-green" : "text-brand-origin hover:bg-brand-green/5 hover:text-brand-green",
+  ].join(" ");
+
+const mobileChildLinkClass = (current: boolean) =>
+  [
+    "block rounded-lg px-4 py-2.5 text-sm transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green",
+    current ? "bg-brand-green/10 font-bold text-brand-green" : "text-brand-origin hover:bg-brand-green/5 hover:text-brand-green",
+  ].join(" ");
+
+const desktopChildLinkClass = (current: boolean) =>
+  [
+    "block rounded-xl px-4 py-2.5 text-sm transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green",
+    current ? "bg-brand-green/10 font-bold text-brand-green" : "text-brand-origin hover:bg-brand-green/5 hover:text-brand-green",
+  ].join(" ");
 ---
 
 <header
@@ -37,27 +64,46 @@ const isCurrent = (href: string) => decodeURI(Astro.url.pathname) === href;
     overlay ? "fixed inset-x-0 top-0 data-[at-top]:border-transparent data-[at-top]:bg-transparent" : "sticky top-0",
   ]}
 >
-  <a href={hrefs.home} class="flex min-h-11 items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+  <a href={homeHref} class="flex min-h-11 items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
     <Image src={logoLeaf} alt="Bee Choo Herbal" width={36} height={31} class="rounded-md" />
     <span class={`${fontClass} text-lg font-bold text-brand-green transition-colors duration-500 group-data-[at-top]:text-white`}>{wordmark}</span>
   </a>
 
   <nav aria-label={ui.misc.menu} class="hidden items-center gap-6 md:flex">
     {
-      navItems.map((item) => (
-        <a
-          href={item.href}
-          aria-current={isCurrent(item.href) ? "page" : undefined}
-          class:list={[
-            "py-2 transition-colors duration-200 hover:text-brand-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green",
-            isCurrent(item.href)
-              ? "font-bold text-brand-green underline decoration-brand-yellow decoration-2 underline-offset-8 group-data-[at-top]:text-white"
-              : "text-brand-origin group-data-[at-top]:text-white/85 group-data-[at-top]:hover:text-white",
-          ]}
-        >
-          {item.label}
-        </a>
-      ))
+      navItems.map((item) =>
+        isGroup(item) ? (
+          <div class="group/nav relative">
+            <button type="button" aria-haspopup="true" class={`flex items-center gap-1 ${topLevelLinkClass(isCurrentGroup(item))}`}>
+              {item.label}
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                class="h-4 w-4 shrink-0 transition-transform duration-200 group-hover/nav:rotate-180 group-focus-within/nav:rotate-180"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+            <div class="invisible absolute top-full left-1/2 z-40 w-64 -translate-x-1/2 pt-2 opacity-0 transition-[opacity,visibility] duration-150 group-hover/nav:visible group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:opacity-100">
+              <div class="rounded-2xl border border-brand-earth bg-white p-2 shadow-soft-lg">
+                {item.children.map((child) => (
+                  <a href={child.href} aria-current={isCurrent(child.href) ? "page" : undefined} class={desktopChildLinkClass(isCurrent(child.href))}>
+                    {child.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined} class={topLevelLinkClass(isCurrent(item.href))}>
+            {item.label}
+          </a>
+        ),
+      )
     }
   </nav>
 
@@ -83,23 +129,42 @@ const isCurrent = (href: string) => decodeURI(Astro.url.pathname) === href;
       </summary>
       <nav
         aria-label={ui.misc.menu}
-        class="absolute top-full right-0 mt-2 w-56 rounded-2xl border border-brand-earth bg-white p-2 shadow-soft-lg"
+        class="absolute top-full right-0 mt-2 w-72 max-h-[calc(100vh-6rem)] overflow-y-auto rounded-2xl border border-brand-earth bg-white p-2 shadow-soft-lg"
       >
         {
-          navItems.map((item) => (
-            <a
-              href={item.href}
-              aria-current={isCurrent(item.href) ? "page" : undefined}
-              class:list={[
-                "block rounded-xl px-4 py-3 font-bold transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green",
-                isCurrent(item.href)
-                  ? "bg-brand-green/10 text-brand-green"
-                  : "text-brand-origin hover:bg-brand-green/5 hover:text-brand-green",
-              ]}
-            >
-              {item.label}
-            </a>
-          ))
+          navItems.map((item) =>
+            isGroup(item) ? (
+              <details class="group/acc">
+                <summary
+                  class={`flex cursor-pointer list-none items-center justify-between [&::-webkit-details-marker]:hidden ${mobileLinkClass(isCurrentGroup(item))}`}
+                >
+                  {item.label}
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    class="h-4 w-4 shrink-0 transition-transform duration-200 group-open/acc:rotate-180"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </summary>
+                <div class="ml-3 border-l border-brand-earth pl-2">
+                  {item.children.map((child) => (
+                    <a href={child.href} aria-current={isCurrent(child.href) ? "page" : undefined} class={mobileChildLinkClass(isCurrent(child.href))}>
+                      {child.label}
+                    </a>
+                  ))}
+                </div>
+              </details>
+            ) : (
+              <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined} class={mobileLinkClass(isCurrent(item.href))}>
+                {item.label}
+              </a>
+            ),
+          )
         }
       </nav>
     </details>
