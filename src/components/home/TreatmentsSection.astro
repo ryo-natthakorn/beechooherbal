@@ -35,14 +35,21 @@ import { Image } from "astro:assets";
 import LeafDivider from "../LeafDivider.astro";
 import { TREATMENTS } from "../../data/treatments";
 import { HOME, type Lang } from "../../data/home";
+import type { Inline } from "../../data/treatment-pages";
 
+// `heading` / `paragraphs` are optional overrides used by the TREATMENT pages only: the
+// legacy treatment pages carry this block under a different heading and with two real
+// company paragraphs beneath it. The homepage passes neither and renders exactly as before.
 interface Props {
   lang: Lang;
+  heading?: string;
+  paragraphs?: Inline[][];
 }
 
-const { lang } = Astro.props;
+const { lang, heading, paragraphs = [] } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
+const sectionHeading = heading ?? HOME.treatments.heading[lang];
 const readMore = lang === "th" ? "คลิกเพื่ออ่านต่อ" : "Read more";
 
 // The desktop band renders at 784px (max-w-6xl minus padding/label column/gap); below
@@ -59,8 +66,33 @@ const bandWidths = (intrinsicWidth: number) =>
   <div class="mx-auto max-w-6xl px-4 md:px-8">
     <LeafDivider />
     <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
-      {HOME.treatments.heading[lang]}
+      {sectionHeading}
     </h2>
+
+    {
+      paragraphs.length > 0 && (
+        <div class="mx-auto mb-10 flex max-w-3xl flex-col gap-4 text-brand-origin">
+          {paragraphs.map((para) => (
+            <p class="leading-relaxed">
+              {para.map((seg) =>
+                typeof seg === "string" ? (
+                  seg
+                ) : (
+                  <a
+                    href={seg.href}
+                    target="_blank"
+                    rel="noopener"
+                    class="font-bold text-brand-green underline decoration-brand-yellow decoration-2 underline-offset-4 hover:decoration-brand-green"
+                  >
+                    {seg.text}
+                  </a>
+                ),
+              )}
+            </p>
+          ))}
+        </div>
+      )
+    }
 
     <div
       class="treatments-md flex flex-col gap-3 md:grid md:grid-cols-[280px_1fr] md:items-stretch md:gap-6"

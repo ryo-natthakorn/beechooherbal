@@ -1,37 +1,74 @@
 ---
 // src/components/treatment/BeforeAfterGallery.astro
-// Renders nothing when there are no images yet — before/after photos haven't been
-// sourced from the legacy media library (spec's Content gaps §1: naive extraction was
-// unreliable, needs a careful per-page re-pass + magic-byte validation per CLAUDE.md
-// §7). A graceful no-op beats shipping a broken/empty frame.
+// The legacy "SEE OUR CLIENT'S BEFORE AFTER RESULTS" band. The heading and body copy
+// ALWAYS render — they exist on every treatment page on the live site independently of
+// the photos. Only the photo grid is conditional, because the legacy images can't be
+// downloaded from this sandbox yet (see src/data/treatment-pages.ts header). An earlier
+// version guarded the whole <section> on `images.length`, which silently dropped the
+// heading and its paragraph too.
+// Where the before/after visual is an animation rather than photos (oily-scalp), the
+// original embeds a GIPHY clip — reproduced via `giphyId`.
 import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
 import LeafDivider from "../LeafDivider.astro";
+import type { BeforeAfterImage } from "../../data/treatment-pages";
 
 interface Props {
   lang: "en" | "th";
   heading: string;
-  images: { src: ImageMetadata; alt: string }[];
+  body: string[];
+  images: BeforeAfterImage[];
+  giphyId?: string;
 }
 
-const { lang, heading, images } = Astro.props;
+const { lang, heading, body, images, giphyId } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 ---
 
-{
-  images.length > 0 && (
-    <section class="bg-white py-16 md:py-24">
-      <div class="mx-auto max-w-5xl px-4 md:px-8">
-        <LeafDivider />
-        <h2 class={`mb-8 text-center ${serif} text-2xl font-bold text-brand-green md:text-3xl`}>{heading}</h2>
-        <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
-          {images.map(({ src, alt }) => (
-            <div class="overflow-hidden rounded-xl shadow-soft">
-              <Image src={src} alt={alt} widths={[300, 600]} sizes="(min-width: 48rem) 25vw, 50vw" class="h-full w-full object-cover" />
-            </div>
+<section class="bg-white py-16 md:py-24">
+  <div class="mx-auto max-w-5xl px-4 md:px-8">
+    <LeafDivider />
+    <h2 data-mask-reveal class={`mb-6 text-center ${serif} text-2xl font-bold text-brand-green md:text-3xl`}>
+      {heading}
+    </h2>
+
+    {
+      body.length > 0 && (
+        <div class="mx-auto flex max-w-3xl flex-col gap-4 text-center text-brand-origin">
+          {body.map((p) => (
+            <p class="leading-relaxed">{p}</p>
           ))}
         </div>
-      </div>
-    </section>
-  )
-}
+      )
+    }
+
+    {
+      images.length > 0 && (
+        <div class="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+          {images.map(({ src, alt }) => (
+            <figure class="overflow-hidden rounded-xl shadow-soft">
+              <Image src={src} alt={alt} widths={[300, 600]} sizes="(min-width: 48rem) 25vw, 50vw" class="h-full w-full object-cover" />
+              <figcaption class="px-3 py-2 text-center text-sm text-brand-origin">{alt}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      giphyId && (
+        <div class="mx-auto mt-8 max-w-md">
+          <div class="relative aspect-square overflow-hidden rounded-xl shadow-soft">
+            <iframe
+              class="absolute inset-0 h-full w-full border-0"
+              src={`https://giphy.com/embed/${giphyId}`}
+              title={heading}
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            />
+          </div>
+        </div>
+      )
+    }
+  </div>
+</section>

@@ -10,12 +10,22 @@ import { Image } from "astro:assets";
 import { HOME, type Lang } from "../../data/home";
 import priceListImage from "../../assets/images/price-list.jpg";
 
+// `closing` is an optional override used by the TREATMENT pages only — the legacy
+// treatment pages carry three closing lines under the price-list image that the
+// homepage doesn't. The homepage passes nothing and renders exactly as before.
 interface Props {
   lang: Lang;
+  /** Treatment pages pass their own heading/intro — the legacy Thai copy spells
+   *  "treatment" as ทรีทเม้นท์ where the homepage uses ทรีตเมนต์. */
+  heading?: string;
+  intro?: string;
+  closing?: string[];
 }
 
-const { lang } = Astro.props;
+const { lang, heading, intro, closing = [] } = Astro.props;
 const t = HOME.pricing;
+const sectionHeading = heading ?? t.heading[lang];
+const sectionIntro = intro ?? t.body[lang];
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
 const imageAlt = `${t.heading[lang]}: ${t.tiers
@@ -26,11 +36,20 @@ const imageAlt = `${t.heading[lang]}: ${t.tiers
 <section class="bg-brand-earth/25 py-16 text-center md:py-24">
   <div class="mx-auto max-w-6xl px-4 md:px-8">
     <h2 class={`mb-10 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
-      {t.heading[lang]}
+      {sectionHeading}
     </h2>
     <Image src={priceListImage} alt={imageAlt} width={1600} height={1132} class="mx-auto w-full max-w-2xl rounded-xl shadow-soft-lg" />
     <p class="mx-auto mt-8 max-w-2xl text-sm leading-relaxed text-brand-origin">
-      {t.body[lang]}
+      {sectionIntro}
     </p>
+    {
+      closing.length > 0 && (
+        <div class="mx-auto mt-6 flex max-w-2xl flex-col gap-2 text-brand-origin">
+          {closing.map((line) => (
+            <p class="leading-relaxed">{line}</p>
+          ))}
+        </div>
+      )
+    }
   </div>
 </section>

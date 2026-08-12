@@ -32,12 +32,10 @@ if (!treatment || !page) {
 
 const about = page.about[lang];
 const benefits = page.benefits[lang];
+const beforeAfter = page.beforeAfter[lang];
+const tail = page.tail[lang];
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://beechooherbal.com").href;
 const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://beechooherbal.com").href;
-
-// Verbatim shared heading, identical wording across all 7 treatment pages on the live site.
-const beforeAfterHeading =
-  lang === "th" ? "มาดูผล ก่อน - หลัง ของลูกค้าของเรา" : "SEE OUR CLIENT'S BEFORE AFTER RESULTS";
 ---
 
 <main id="main">
@@ -51,16 +49,23 @@ const beforeAfterHeading =
     subsections={about.subsections}
     videoId={page.videoId}
     videoTitle={page.heroTitle[lang]}
+    facebookVideoHref={page.facebookVideoHref}
   />
 
   <TreatmentBenefits lang={lang} heading={benefits.heading} blocks={benefits.blocks} />
 
-  <BeforeAfterGallery lang={lang} heading={beforeAfterHeading} images={[]} />
+  <BeforeAfterGallery
+    lang={lang}
+    heading={beforeAfter.heading}
+    body={beforeAfter.body}
+    images={beforeAfter.images}
+    giphyId={beforeAfter.giphyId}
+  />
 
-  <ReviewsWall lang={lang} />
-  <TreatmentsSection lang={lang} />
-  <HowItWorksScene lang={lang} />
-  <PricingSection lang={lang} />
+  <ReviewsWall lang={lang} heading={tail.reviewsHeading} />
+  <TreatmentsSection lang={lang} heading={tail.crossSell.heading} paragraphs={tail.crossSell.paragraphs} />
+  <HowItWorksScene lang={lang} copy={tail.howItWorks} />
+  <PricingSection lang={lang} heading={tail.pricing.heading} intro={tail.pricing.intro} closing={tail.pricing.closing} />
 </main>
 
 <ServiceSchema

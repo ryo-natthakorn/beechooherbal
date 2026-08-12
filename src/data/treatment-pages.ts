@@ -14,11 +14,22 @@
 // - TH oily-scalp Benefits para 1 has "ปรัฐสภาพผม", almost certainly a live-site typo
 //   for "ปรับสภาพผม" ("restore/adjust the hair's condition") — kept verbatim, flag to
 //   Crispin before launch.
-// - Pure image-caption fragments (e.g. "Example of clogged hair pore") and a stray
-//   "via GIPHY" credit were dropped from the extracted paragraphs — they're captions
-//   for inline images that aren't sourced into this build yet (see spec's Content
-//   gaps §1), and reproducing an orphaned caption with no image would read as a typo,
-//   not fidelity.
+// - Pure image-caption fragments (e.g. "Example of clogged hair pore") were dropped from
+//   the extracted paragraphs — they're captions for inline images that aren't sourced
+//   into this build yet (see spec's Content gaps §1), and reproducing an orphaned
+//   caption with no image would read as a typo, not fidelity.
+//
+// Still missing vs. the live site, blocked NOT by a decision but by network egress —
+// beechooherbal.com is unreachable from the build sandbox (proxy 403), so no legacy
+// binary can be downloaded here. Tracked so it isn't lost:
+// - grey-hair before/after photos: before-treatment-269x300.png ("White Hair Before Bee
+//   Choo Herbal Treatment") + after-1-295x300.png ("White Hairs Covered Immediately
+//   After Treatment"). `beforeAfter.images` is [] until they land; the section renders
+//   its heading and body regardless.
+// - oily-scalp: About-section photo IMG_2850 and two inline FAQ images.
+// - both: the trailing locations map graphic.
+
+import type { ImageMetadata } from "astro";
 
 export type Lang = "en" | "th";
 
@@ -54,6 +65,46 @@ interface BenefitsContent {
   blocks: BenefitsBlock[];
 }
 
+/** An inline run of text, optionally a link. Only needed where the legacy copy has
+ *  links mid-paragraph (the cross-sell block's two Business Times articles). */
+export type Inline = string | { text: string; href: string };
+
+export interface BeforeAfterImage {
+  /** Imported ImageMetadata once the legacy photo is in src/assets/. */
+  src: ImageMetadata;
+  alt: string;
+}
+
+/** The legacy "SEE OUR CLIENT'S BEFORE AFTER RESULTS" band. Heading and body render
+ *  even when `images` is empty — on the live site the heading is always present, and
+ *  for oily-scalp the visual is a GIPHY embed rather than photos. */
+interface BeforeAfterContent {
+  heading: string;
+  /** Paragraph(s) under the heading. */
+  body: string[];
+  /** Legacy photos. Empty where they can't be sourced yet — see the file header. */
+  images: BeforeAfterImage[];
+  /** giphy.com embed id, where the before/after visual is an animation (oily-scalp). */
+  giphyId?: string;
+}
+
+/** Text the legacy treatment pages carry in the four shared tail sections. The HOMEPAGE
+ *  renders these sections image-only (Crispin's explicit call); the treatment pages keep
+ *  their real crawlable text, so it is passed in per-page rather than living in
+ *  src/data/home.ts. It is genuinely per-page, not a constant — the Thai cross-sell
+ *  paragraph names a different condition on each treatment, and oily-scalp carries an
+ *  extra flagship-salon line the others don't. */
+// Headings are carried here too, not taken from src/data/home.ts, because the homepage's
+// Thai copy transliterates "treatment" as "ทรีตเมนต์" while every legacy treatment page
+// uses "ทรีทเม้นท์". The homepage spelling is signed off and stays as it is; the treatment
+// pages must reproduce their own pages verbatim, so they pass their own strings.
+interface TailContent {
+  reviewsHeading: string;
+  crossSell: { heading: string; paragraphs: Inline[][] };
+  howItWorks: { heading: string; intro: string; stepsLead: string; steps: string[]; outro: string };
+  pricing: { heading: string; intro: string; closing: string[] };
+}
+
 export interface TreatmentPageContent {
   /** H1. Distinct from src/data/treatments.ts's homepage-card `title`. */
   heroTitle: Record<Lang, string>;
@@ -69,11 +120,103 @@ export interface TreatmentPageContent {
    *  belong to the reused homepage sections (Reviews, How-It-Works) and don't need
    *  wiring here. */
   videoId: string;
+  /** Some pages (grey-hair) also embed a Facebook video in the About section. Full
+   *  permalink of the source video — the component builds the plugin URL. */
+  facebookVideoHref?: string;
   about: Record<Lang, AboutContent>;
   benefits: Record<Lang, BenefitsContent>;
+  beforeAfter: Record<Lang, BeforeAfterContent>;
+  tail: Record<Lang, TailContent>;
   /** Pages whose meta description isn't real live-site copy yet. */
   descriptionDraftPending?: Lang[];
 }
+
+// The two Business Times articles the cross-sell paragraph links to, on every page.
+const BT_TESTIMONIES = "http://www.businesstimes.com.sg/hub/bt-salutes-enterprise-2016/power-of-testimonies-drives-business-growth";
+const BT_SINCERITY = "http://www.businesstimes.com.sg/hub-projects/ceo-conversations-2017/sincerity-before-profit";
+
+// How-It-Works and the pricing closing lines are word-for-word identical across all 7
+// treatment pages (verified on oily-scalp + grey-hair); the cross-sell block is NOT, so
+// it stays per-page below.
+const REVIEWS_HEADING: Record<Lang, string> = {
+  en: "REVIEWS ON BEECHOO HAIR TREATMENT",
+  th: "รีวิว บีชู แฮร์ ทรีทเม้นท์",
+};
+
+const HOW_IT_WORKS: Record<Lang, TailContent["howItWorks"]> = {
+  en: {
+    heading: "100% NATURAL HERBAL HAIR TREATMENT - HOW IT WORKS",
+    intro:
+      "Consistently rated as the Best Natural Hair Loss Treatment Salon Clinic in Bangkok, our all natural, safe & highly effective herbal hair treatment gives your Unhealthy/Dry/Damaged/Oily scalp instant rejuvenation. The natural dye contained in the treatment also covers your white hair to the roots in the process!",
+    stepsLead: "See how it works above in our simple 4 step treatment process:",
+    steps: [
+      "Step 1: Apply Hair Tonic on your Scalp",
+      "Step 2: Apply Herbal Paste to your Scalp",
+      "Step 3: Steam Treatment of your Hair for 45 minutes",
+      "Step 4: Rinse-off the Herbal Paste, Scalp Massage and Conditioning of your Hair",
+    ],
+    outro: "You can also watch the video showing how our herbal treatment is done!",
+  },
+  th: {
+    heading: "ทรีทเม้นท์สมุนไพร 100เปอร์เซ็น ให้ผลยังไงมาดูกัน!",
+    intro:
+      "ด้วยชื่อเสียงที่มีเสมอมาของซาลอน/คลินิก รักษาผมร่วงที่ดีที่สุด ผลิตภัณฑ์ของเราทั้งหมดมีส่วนผสมจากธรรมชาติและมีความปลอดภัย ให้ผลลัพธ์ที่มีประสิทธิภาพสูง ทำให้เส้นผมที่สุขภาพไม่ดี แห้ง มัน และถูกทำร้ายจะถูกฟื้นฟูอย่างรวดเร็ว สีย้อมผมจากธรรมชาติในทรีทเม้นท์ของเราจะช่วยปกปิดผมขาวจนไปถึงโคนของเส้นผม",
+    stepsLead: "มาดู 4 สเต็ปง่ายๆในการทำทรีทเม้นท์ของเรา :",
+    steps: [
+      "สเต็ปที่ 1 : นวดโทนิคลงไปบนหนังศีรษะ",
+      "สเต็ปที่ 2 : ทาน้ำยาสมุนไพรลงไปบนหนังศีรษะ",
+      "สเต็ปที่ 3 : อบไอน้ำเป็นเวลา 45 นาที",
+      "สเต็ปที่ 4 : ล้างน้ำยาสมุนไพรออก นวดและปรับสภาพหนังศีรษะ",
+    ],
+    outro: "คุณสามารถชมวีดีโอการทำทรีทเม้นท์ของเราจนจบขั้นตอนได้ตามนี้!",
+  },
+};
+
+const PRICING: Record<Lang, TailContent["pricing"]> = {
+  en: {
+    heading: "AFFORDABLE HAIR TREATMENT IN Bangkok, Thailand",
+    intro:
+      "Our prices are based on your hair length between 800 Baht to 1200 Baht for à la carte herbal hair treatment. Strictly no hidden charges. You may choose to make upfront payment before treatment",
+    closing: [
+      "Give your hair a chance at the Best Hair Loss Treatment Clinic in Bangkok – affordable, reasonable for your budget",
+      "Try it out and reserve your first appointment now (limited seats during peak hours)!",
+      "Voted as the best hair loss clinic, hair thinning cure in Bangkok, Thailand!",
+    ],
+  },
+  th: {
+    heading: "ทรีทเม้นท์ผมราคาจับต้องได้ในประเทศไทย",
+    intro:
+      "ราคาในการให้บริการของเรานั้นขึ้นอยู่กับความยาวของเส้นผม โดยเริ่มต้นที่ 800 บาท ไปจนถึง 1,200 บาท ในการทำ à la carte ทรีทเม้นท์สมุนไพร ซึ่งทางเราไม่มีการคิดเงินเกินจากที่กำหนดไว้แน่นอน ลูกค้าสามารถตกลงราคาก่อนที่จะทำทรีทเม้นท์ได้",
+    closing: [
+      "ให้เราได้ดูแลเส้นผมของคุณ!",
+      "ซาลอน/คลินิก รักษาผมร่วงที่ดีที่สุดในกรุงเทพฯ – ราคาเป็นมิตร เข้าถึงได้",
+      "มาลองทำทรีทเม้นท์กับเราได้โดยการสำรองที่นั่งตอนนี้! (ที่นั่งมีจำนวนจำกัดนะคะ)",
+    ],
+  },
+};
+
+/** The cross-sell paragraph 2 is identical everywhere apart from being per-language. */
+const CROSS_SELL_FOUNDER: Record<Lang, Inline[]> = {
+  en: [
+    "A recognised household brand name, established since 2000, our founder Madam Cheah Bee Chew and her brand has won numerous accolades from Singapore Agencies. You may read more from two articles written by Business Times Singapore titled “",
+    { text: "Power of testimonies drives business growth", href: BT_TESTIMONIES },
+    "” and “",
+    { text: "Sincerity before profit", href: BT_SINCERITY },
+    "“.",
+  ],
+  th: [
+    "บีชู ได้ก่อตั้งเมื่อปี 2000 โดยคุณเชีย บี ชู และด้วยชื่อเสียงของแบรนด์ที่มีเสมอมา การันตีโดยรางวัลมากมายในสิงคโปร์ คุณสามารถอ่านเรื่องราวเพิ่มเติมได้ในนิตยสาร ไทม์ สิงคโปร์ ในหัวข้อ “",
+    { text: "ผลลัพธ์จากการการันตีที่ทำให้ธุรกิจเติบโต", href: BT_TESTIMONIES },
+    "” และ “",
+    { text: "ความจริงใจมาก่อนผลกำไร", href: BT_SINCERITY },
+    "”",
+  ],
+};
+
+const CROSS_SELL_HEADING: Record<Lang, string> = {
+  en: "BEST HAIR LOSS TREATMENT SALON CLINIC IN BANGKOK, Thailand",
+  th: "ทรีทเม้นท์รักษาผมร่วงที่เห็นผลมากที่สุดในประเทศไทย",
+};
 
 export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
   "oily-scalp": {
@@ -164,10 +307,6 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
             kind: "p",
             text: "Oily scalp is a common hair issue and it can be solved with Bee Choo Herbal Treatment. At Bee Choo, our herbal paste contains a traditional Chinese herb known as Ling Zhi which is an adaptogen with a dual-modulating function. Ling Zhi helps to modulate your scalp regardless if it is too oily or too dry, bringing your scalp back to its normal and healthy state after each treatment. Stop living with the itch, realise how great it feels to have a squeaky clean scalp!",
           },
-          {
-            kind: "p",
-            text: "Get rid of the itch and excess oil today. With regular treatment, your scalp will be free of itch and excess oil.",
-          },
         ],
       },
       th: {
@@ -177,11 +316,51 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
             kind: "p",
             text: "ปัญหาหนังศีรษะมันเป็นปัญหาธรรมดาที่สามารถรักษาได้ด้วย บีชู เฮอร์เบิล ทรีทเม้นท์ ที่ซาลอน/คลินิก บีชู ของเรา น้ำยาทรีทเม้นท์นั้นทำจาก เห็ดหลินจือ ซึ่งรู้กันดีว่าเป็นสมุนไพรพื้นบ้านของจีน เห็ดหลินจือจะช่วยปรัฐสภาพผมไม่ว่าคุณจะมีหนังศีรษะที่มันหรือแห้งเกินไป ก็จะกลับมาสู่สภาพปกติและมีสุขภาพดีหลังจากการทำทรีทเม้นท์ในแต่ละครั้ง เลิกอยู่กับความคันแล้วมาสัมผัสความสบายและสะอาดของหนังศีรษะกันได้แล้ววันนี้!",
           },
-          {
-            kind: "p",
-            text: "มาลดความมันและความคันของหนังศีรษะกันค่ะ ด้วยทรีทเม้นท์ของพวกเรา คุณจะรู้สึกสบายมากขึ้นเมื่อไม่มีน้ำมันและอาการคันมากวนใจ",
-          },
         ],
+      },
+    },
+    // "Get rid of the itch…" / "มาลดความมันและความคัน…" belongs HERE, not in Benefits:
+    // on the live site it is its own section sitting under the before/after heading.
+    beforeAfter: {
+      en: {
+        heading: "SEE OUR CLIENT'S BEFORE AFTER RESULTS",
+        body: ["Get rid of the itch and excess oil today. With regular treatment, your scalp will be free of itch and excess oil."],
+        images: [],
+        giphyId: "t7752IVYRBN1YzOPaL",
+      },
+      th: {
+        heading: "มาดูผล ก่อน - หลัง ของลูกค้าของเรา",
+        body: ["มาลดความมันและความคันของหนังศีรษะกันค่ะ ด้วยทรีทเม้นท์ของพวกเรา คุณจะรู้สึกสบายมากขึ้นเมื่อไม่มีน้ำมันและอาการคันมากวนใจ"],
+        images: [],
+        giphyId: "t7752IVYRBN1YzOPaL",
+      },
+    },
+    tail: {
+      en: {
+        reviewsHeading: REVIEWS_HEADING.en,
+        crossSell: {
+          heading: CROSS_SELL_HEADING.en,
+          paragraphs: [
+            ["Bee Choo Origin is the largest scalp/hair loss treatment salon/clinic specialising in the treatment of hair loss, dandruff, oily scalp and other hair issues. There are 21 outlets in Singapore, 68 outlets in Malaysia with more than 160 outlets across Asia Pacific. The Group has expanded into Bangkok, Thailand and sees Thailand as a potential market to grow the brand. Annually we serve millions of happy customers with effective and proven results."],
+            CROSS_SELL_FOUNDER.en,
+          ],
+        },
+        howItWorks: HOW_IT_WORKS.en,
+        pricing: PRICING.en,
+      },
+      th: {
+        reviewsHeading: REVIEWS_HEADING.th,
+        crossSell: {
+          heading: CROSS_SELL_HEADING.th,
+          paragraphs: [
+            ["บีชู ออริจิน เป็นทรีทเม้นท์ซาลอนและคลินิกที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง รังแค หนังศีรษะมันและคัน และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา ในมาเลเซียจำนวน 68 สาขา และมากกว่า 160 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ ประเทศไทย พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมาก"],
+            // This flagship-salon line appears on oily-scalp only, not on grey-hair.
+            ["ซาลอนสาขาใหญ่ของเราตั้งอยู่เขตตะวันนา บางกะปิ"],
+            CROSS_SELL_FOUNDER.th,
+          ],
+        },
+        howItWorks: HOW_IT_WORKS.th,
+        pricing: PRICING.th,
       },
     },
     descriptionDraftPending: ["en"],
@@ -206,12 +385,15 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
       },
     },
     videoId: "Kd9EKBizDIg",
+    facebookVideoHref: "https://www.facebook.com/beechooherbal/videos/1096213878455331/",
     about: {
       en: {
         heading: "ABOUT PREMATURE GREY WHITE HAIR",
-        // No plain intro paragraphs on the live EN page — About goes straight from the
-        // video into the FAQ toggle widget (unlike oily-scalp, which has both).
-        intro: [],
+        intro: [
+          "Do take a minute to watch the video above to see how our the natural dye in our herbal paste works. These are all REAL pictures and videos taken at our salon.",
+          "Premature white and grey hair can be annoying and it is irreversible.",
+          "Yes! Once melanin production ceases in a particular hair follicle, it is permanent. This means that all hair produced by that follicle will forever be white / grey. The simplest and easiest way to deal with white / grey hair is to colour it. Bee Choo Herbal Treatment covers white and grey hair with a natural copper colour while leaving black hair unchanged. Because our treatment is chemical free and improves the health of the scalp, many customers achieve two goals when they do regular scalp maintenance with us; they are able to cover all their white hair to the roots and keep their scalp healthy in the process.",
+        ],
         faq: [
           {
             question: "What is Premature Greying/White Hair?",
@@ -318,6 +500,48 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
             ],
           },
         ],
+      },
+    },
+    beforeAfter: {
+      en: {
+        heading: "SEE OUR CLIENT'S BEFORE AFTER RESULTS",
+        body: ["Immediately after herbal treatment, white hair will be covered with a copper dye while leaving black hairs unchanged."],
+        // Legacy photos exist (before-treatment-269x300.png / after-1-295x300.png) but
+        // can't be downloaded from this sandbox — see the file header.
+        images: [],
+      },
+      th: {
+        heading: "มาดูผล ก่อน - หลัง ของลูกค้าของเรากันค่ะ",
+        body: ["สีผมของลูกค้าของเราได้ถูกปกปิดทันทีหลังจากทำทรีทเม้นท์สมุนไพร ด้วยคอปเปอร์ธรรมชาติจะช่วยปกปิดผมขาวและผมหงอกแต่ยังคงสีผมธรรมชาติไว้ตามเดิมค่ะ"],
+        images: [],
+      },
+    },
+    tail: {
+      en: {
+        reviewsHeading: REVIEWS_HEADING.en,
+        crossSell: {
+          heading: CROSS_SELL_HEADING.en,
+          paragraphs: [
+            ["Bee Choo Origin is the largest scalp/hair loss treatment salon/clinic specialising in the treatment of hair loss, dandruff, oily scalp and other hair issues. There are 21 outlets in Singapore, 68 outlets in Malaysia with more than 160 outlets across Asia Pacific. The Group has expanded into Bangkok, Thailand and sees Thailand as a potential market to grow the brand. Annually we serve millions of happy customers with effective and proven results."],
+            CROSS_SELL_FOUNDER.en,
+          ],
+        },
+        howItWorks: HOW_IT_WORKS.en,
+        pricing: PRICING.en,
+      },
+      th: {
+        reviewsHeading: REVIEWS_HEADING.th,
+        crossSell: {
+          heading: CROSS_SELL_HEADING.th,
+          paragraphs: [
+            // Note: this page says "หนังศีรษะเป็นเชื้อรา" where oily-scalp says
+            // "หนังศีรษะมันและคัน" — verbatim per page, which is why this isn't a constant.
+            ["บีชู ออริจิน เป็นทรีทเม้นท์ซาลอนและคลินิกที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง รังแค หนังศีรษะเป็นเชื้อรา และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา ในมาเลเซียจำนวน 68 สาขา และมากกว่า 160 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ ประเทศไทย พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมาก"],
+            CROSS_SELL_FOUNDER.th,
+          ],
+        },
+        howItWorks: HOW_IT_WORKS.th,
+        pricing: PRICING.th,
       },
     },
     descriptionDraftPending: ["en"],

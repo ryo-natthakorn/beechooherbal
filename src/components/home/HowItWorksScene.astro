@@ -11,12 +11,18 @@ import YouTubeEmbed from "../YouTubeEmbed.astro";
 import { HOME, type Lang } from "../../data/home";
 import howItWorksImage from "../../assets/images/how-it-works.jpg";
 
+// `copy` is an optional override used by the TREATMENT pages only. On the homepage the
+// 4 steps live solely inside the image + its alt text (Crispin's explicit image-only
+// call); the legacy treatment pages carry them as real crawlable text, so those pages
+// pass it in. The homepage passes nothing and renders exactly as before.
 interface Props {
   lang: Lang;
+  copy?: { heading: string; intro: string; stepsLead: string; steps: string[]; outro: string };
 }
 
-const { lang } = Astro.props;
+const { lang, copy } = Astro.props;
 const t = HOME.howItWorks;
+const sectionHeading = copy?.heading ?? t.heading[lang];
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
 const imageAlt =
@@ -29,9 +35,30 @@ const imageAlt =
   <div class="mx-auto max-w-6xl px-4 text-center md:px-8">
     <div class="mx-auto w-full max-w-4xl">
       <h2 class={`mb-10 ${serif} text-2xl font-bold${balance} text-brand-green md:text-4xl`}>
-        {t.heading[lang]}
+        {sectionHeading}
       </h2>
+      {
+        copy && (
+          <p class="mx-auto mb-8 max-w-3xl text-left leading-relaxed text-brand-origin">{copy.intro}</p>
+        )
+      }
       <Image src={howItWorksImage} alt={imageAlt} width={1600} height={838} class="mx-auto w-full rounded-xl shadow-soft-lg" />
+      {
+        copy && (
+          <div class="mx-auto mt-8 max-w-3xl text-left">
+            <p class="leading-relaxed text-brand-origin">{copy.stepsLead}</p>
+            <ol class="mt-3 flex flex-col gap-2">
+              {copy.steps.map((step) => (
+                <li class="flex gap-2 leading-relaxed text-brand-origin">
+                  <span aria-hidden="true" class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-green" />
+                  {step}
+                </li>
+              ))}
+            </ol>
+            <p class="mt-4 leading-relaxed text-brand-origin">{copy.outro}</p>
+          </div>
+        )
+      }
     </div>
     <div class="mx-auto mt-8 max-w-2xl">
       <YouTubeEmbed id={t.videoId} title={t.videoTitle[lang]} />

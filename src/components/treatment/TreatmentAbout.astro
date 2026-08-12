@@ -17,9 +17,14 @@ interface Props {
   subsections?: AboutSubsection[];
   videoId: string;
   videoTitle: string;
+  /** Optional second video the legacy page embeds here (grey-hair): a Facebook clip. */
+  facebookVideoHref?: string;
 }
 
-const { lang, heading, intro, faq, subsections = [], videoId, videoTitle } = Astro.props;
+const { lang, heading, intro, faq, subsections = [], videoId, videoTitle, facebookVideoHref } = Astro.props;
+const facebookEmbedSrc = facebookVideoHref
+  ? `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(facebookVideoHref)}&show_text=false`
+  : undefined;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
 ---
@@ -36,6 +41,24 @@ const balance = lang === "en" ? " text-balance" : "";
     <div class="mt-8 flex flex-col gap-4 text-brand-origin">
       {intro.map((p) => <p class="leading-relaxed">{p}</p>)}
     </div>
+
+    {
+      facebookEmbedSrc && (
+        <div class="mx-auto mt-8 max-w-md">
+          <div class="relative aspect-[9/11] overflow-hidden rounded-xl shadow-soft">
+            <iframe
+              class="absolute inset-0 h-full w-full border-0"
+              src={facebookEmbedSrc}
+              title={videoTitle}
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              allowfullscreen
+            />
+          </div>
+        </div>
+      )
+    }
 
     {subsections.length > 0 && (
       <div class="mt-8 flex flex-col gap-6">

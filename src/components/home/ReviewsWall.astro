@@ -11,12 +11,16 @@ import { Image } from "astro:assets";
 import LeafDivider from "../LeafDivider.astro";
 import { HOME, type Lang } from "../../data/home";
 
+// `heading` is an optional override for the TREATMENT pages, whose legacy Thai copy
+// spells "treatment" as ทรีทเม้นท์ where the homepage uses ทรีตเมนต์. Homepage passes none.
 interface Props {
   lang: Lang;
+  heading?: string;
 }
 
-const { lang } = Astro.props;
+const { lang, heading } = Astro.props;
 const t = HOME.reviews;
+const sectionHeading = heading ?? t.heading[lang];
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
 ---
@@ -25,7 +29,7 @@ const balance = lang === "en" ? " text-balance" : "";
   <div class="mx-auto max-w-6xl px-4 md:px-8">
     <LeafDivider />
     <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
-      {t.heading[lang]}
+      {sectionHeading}
     </h2>
     <div class="reviews-fader relative mx-auto max-w-md">
       {t.items.map((review, i) => (
