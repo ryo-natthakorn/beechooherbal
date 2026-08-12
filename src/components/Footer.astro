@@ -15,9 +15,9 @@ const { lang } = Astro.props;
 const ui = UI[lang];
 ---
 
-<footer class="relative overflow-hidden bg-brand-green px-4 py-12 text-white md:px-8">
+<footer class="relative overflow-hidden bg-brand-green px-4 py-8 text-white md:px-8">
   <HerbalStrokes draw class="pointer-events-none absolute inset-0 h-full w-full text-white opacity-10" />
-  <div class="relative mx-auto flex max-w-5xl flex-col items-center gap-6 text-center">
+  <div class="relative mx-auto flex max-w-5xl flex-col items-center gap-4 text-center">
     <!-- logo-full.png is dark-green ink on transparent — never designed to sit on
          bg-brand-green directly (Crispin: "the logo contrast looks weird"). No
          reversed/white lockup asset exists, so brightness-0 + invert reverses it to
@@ -26,7 +26,7 @@ const ui = UI[lang];
          was a flat 160x226 on every breakpoint; w-20/md:w-28 roughly halves the mobile
          footprint. width/height stay as the intrinsic hint for Astro's local-image
          aspect ratio (2480:3508), not the render size. -->
-    <Image src={logoFull} alt="Bee Choo Origin" width={160} height={226} class="h-auto w-20 brightness-0 invert md:w-28" />
+    <Image src={logoFull} alt="Bee Choo Origin" width={160} height={226} class="h-auto w-16 brightness-0 invert md:w-24" />
     <!-- Slogan is serif italic per brand guide; brand-serenity is the only on-green brand
          token that clears WCAG AA (4.55:1 — brand-earth fails at 4.14:1). -->
     <p class="font-serif text-lg italic text-brand-serenity">{ui.footer.tagline}</p>
