@@ -1,0 +1,26 @@
+---
+// src/components/treatment/TreatmentBenefits.astro
+import LeafDivider from "../LeafDivider.astro";
+
+interface Props {
+  lang: "en" | "th";
+  heading: string;
+  paragraphs: string[];
+}
+
+const { lang, heading, paragraphs } = Astro.props;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+---
+
+<section class="bg-brand-earth/25 py-16 md:py-24">
+  <div class="mx-auto max-w-3xl px-4 md:px-8">
+    <LeafDivider />
+    <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+      {heading}
+    </h2>
+    <div class="flex flex-col gap-4 text-brand-origin">
+      {paragraphs.map((p) => <p class="leading-relaxed">{p}</p>)}
+    </div>
+  </div>
+</section>

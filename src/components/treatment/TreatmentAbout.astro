@@ -1,0 +1,58 @@
+---
+// src/components/treatment/TreatmentAbout.astro
+// Intro paragraphs + the per-condition video (About copy literally says "watch the
+// video above" on the live site) + an FAQ accordion. Native <details>/<summary>:
+// zero JS, and every answer stays in the DOM (crawlable) whether expanded or not —
+// matches this project's near-zero-JS rule and doesn't need the treatment-row
+// radio/:has() pattern (FAQ items aren't mutually exclusive like the treatments list).
+import YouTubeEmbed from "../YouTubeEmbed.astro";
+import LeafDivider from "../LeafDivider.astro";
+import type { FaqItem } from "../../data/treatment-pages";
+
+interface Props {
+  lang: "en" | "th";
+  heading: string;
+  intro: string[];
+  faq: FaqItem[];
+  videoId: string;
+  videoTitle: string;
+}
+
+const { lang, heading, intro, faq, videoId, videoTitle } = Astro.props;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+---
+
+<section class="bg-white py-16 md:py-24">
+  <div class="mx-auto max-w-3xl px-4 md:px-8">
+    <LeafDivider />
+    <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+      {heading}
+    </h2>
+
+    <YouTubeEmbed id={videoId} title={videoTitle} />
+
+    <div class="mt-8 flex flex-col gap-4 text-brand-origin">
+      {intro.map((p) => <p class="leading-relaxed">{p}</p>)}
+    </div>
+
+    {faq.length > 0 && (
+      <div class="mt-8 flex flex-col gap-3">
+        {faq.map((item) => (
+          <details class="group overflow-hidden rounded-2xl border border-brand-earth bg-white open:shadow-soft">
+            <summary
+              class:list={[
+                serif,
+                "flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 font-bold text-brand-green marker:content-none",
+              ]}
+            >
+              {item.question}
+              <span aria-hidden="true" class="shrink-0 text-xl leading-none transition-transform duration-200 group-open:rotate-45">+</span>
+            </summary>
+            <p class="border-t border-brand-earth px-5 py-4 leading-relaxed text-brand-origin">{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    )}
+  </div>
+</section>

@@ -1,0 +1,37 @@
+---
+// src/components/treatment/BeforeAfterGallery.astro
+// Renders nothing when there are no images yet — before/after photos haven't been
+// sourced from the legacy media library (spec's Content gaps §1: naive extraction was
+// unreliable, needs a careful per-page re-pass + magic-byte validation per CLAUDE.md
+// §7). A graceful no-op beats shipping a broken/empty frame.
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import LeafDivider from "../LeafDivider.astro";
+
+interface Props {
+  lang: "en" | "th";
+  heading: string;
+  images: { src: ImageMetadata; alt: string }[];
+}
+
+const { lang, heading, images } = Astro.props;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+---
+
+{
+  images.length > 0 && (
+    <section class="bg-white py-16 md:py-24">
+      <div class="mx-auto max-w-5xl px-4 md:px-8">
+        <LeafDivider />
+        <h2 class={`mb-8 text-center ${serif} text-2xl font-bold text-brand-green md:text-3xl`}>{heading}</h2>
+        <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+          {images.map(({ src, alt }) => (
+            <div class="overflow-hidden rounded-xl shadow-soft">
+              <Image src={src} alt={alt} widths={[300, 600]} sizes="(min-width: 48rem) 25vw, 50vw" class="h-full w-full object-cover" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

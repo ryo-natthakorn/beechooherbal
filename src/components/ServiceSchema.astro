@@ -1,0 +1,40 @@
+---
+// src/components/ServiceSchema.astro
+// Service JSON-LD for treatment pages. The legacy site has no Service schema at all
+// (checked yoast_head_json.schema['@graph'] — only WebPage/ImageObject/BreadcrumbList/
+// WebSite/Organization), so this is a net-new improvement, not something copied from
+// source. Deliberately no aggregateRating/offers/review — CLAUDE.md §8 forbids
+// inventing claims, and fabricated review markup is a manual-action risk.
+// audience is intentionally NOT gender-scoped (CLAUDE.md §1 — this clinic serves everyone).
+interface Props {
+  lang: "en" | "th";
+  serviceType: string;
+  name: string;
+  description: string;
+  canonical: string;
+  image: string;
+}
+
+const { lang, serviceType, name, description, canonical, image } = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType,
+  name,
+  description,
+  url: canonical,
+  inLanguage: lang,
+  image,
+  provider: {
+    "@type": "HealthAndBeautyBusiness",
+    name: "Bee Choo Herbal",
+    telephone: "+66 02 072 6698",
+    url: "https://beechooherbal.com/",
+    areaServed: { "@type": "Country", name: "Thailand" },
+  },
+  audience: { "@type": "PeopleAudience" },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

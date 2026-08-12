@@ -1,0 +1,72 @@
+---
+// src/components/treatment/TreatmentPage.astro
+// Composes a treatment detail page from its slug: TreatmentHero/About/Benefits/Gallery
+// are unique per treatment; Reviews/cross-sell/How-It-Works/Pricing are the homepage's
+// own components, reused as-is (spec: "reuse them; do not restyle them"). Mirrors
+// HomePage.astro's shape — thin route shells set lang/title/description, this owns
+// the body. Spec: specs/2026-08-12-treatment-pages-plan.md (Batch 1).
+import TreatmentHero from "./TreatmentHero.astro";
+import TreatmentAbout from "./TreatmentAbout.astro";
+import TreatmentBenefits from "./TreatmentBenefits.astro";
+import BeforeAfterGallery from "./BeforeAfterGallery.astro";
+import ServiceSchema from "../ServiceSchema.astro";
+import ReviewsWall from "../home/ReviewsWall.astro";
+import TreatmentsSection from "../home/TreatmentsSection.astro";
+import HowItWorksScene from "../home/HowItWorksScene.astro";
+import PricingSection from "../home/PricingSection.astro";
+import { TREATMENTS } from "../../data/treatments";
+import { TREATMENT_PAGES } from "../../data/treatment-pages";
+
+interface Props {
+  lang: "en" | "th";
+  slug: string;
+}
+
+const { lang, slug } = Astro.props;
+
+const treatment = TREATMENTS.find((t) => t.slug === slug);
+const page = TREATMENT_PAGES[slug];
+if (!treatment || !page) {
+  throw new Error(`TreatmentPage: no data for slug "${slug}" in treatments.ts / treatment-pages.ts`);
+}
+
+const about = page.about[lang];
+const benefits = page.benefits[lang];
+const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://beechooherbal.com").href;
+const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://beechooherbal.com").href;
+
+// Verbatim shared heading, identical wording across all 7 treatment pages on the live site.
+const beforeAfterHeading =
+  lang === "th" ? "มาดูผล ก่อน - หลัง ของลูกค้าของเรา" : "SEE OUR CLIENT'S BEFORE AFTER RESULTS";
+---
+
+<main id="main">
+  <TreatmentHero lang={lang} heroTitle={page.heroTitle[lang]} image={treatment.image} imageAlt={treatment.alt[lang]} />
+
+  <TreatmentAbout
+    lang={lang}
+    heading={about.heading}
+    intro={about.intro}
+    faq={about.faq}
+    videoId={page.videoId}
+    videoTitle={page.heroTitle[lang]}
+  />
+
+  <TreatmentBenefits lang={lang} heading={benefits.heading} paragraphs={benefits.paragraphs} />
+
+  <BeforeAfterGallery lang={lang} heading={beforeAfterHeading} images={[]} />
+
+  <ReviewsWall lang={lang} />
+  <TreatmentsSection lang={lang} />
+  <HowItWorksScene lang={lang} />
+  <PricingSection lang={lang} />
+</main>
+
+<ServiceSchema
+  lang={lang}
+  serviceType={treatment.title[lang]}
+  name={page.heroTitle[lang]}
+  description={page.seo.description[lang]}
+  canonical={canonical}
+  image={heroImageAbsolute}
+/>

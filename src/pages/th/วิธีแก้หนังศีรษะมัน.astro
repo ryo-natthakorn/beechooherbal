@@ -1,0 +1,22 @@
+---
+// src/pages/th/วิธีแก้หนังศีรษะมัน.astro
+// Thai oily-scalp treatment page — filename IS the URL slug (Astro file-based
+// routing), matching the live site's real translated slug (not derivable from the
+// English one). Thin shell mirroring the EN twin; body in TreatmentPage.astro.
+// Spec: specs/2026-08-12-treatment-pages-plan.md (Batch 1 pilot) — this file's
+// existence is itself the test of the "non-ASCII filename on Windows/git/Vercel"
+// risk flagged there. If build/deploy show any mangling, fall back to a
+// [...slug].astro catch-all with explicit getStaticPaths instead.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TreatmentPage from "../../components/treatment/TreatmentPage.astro";
+import { TREATMENT_PAGES } from "../../data/treatment-pages";
+
+const lang = "th" as const;
+const slug = "oily-scalp";
+const page = TREATMENT_PAGES[slug];
+const { title, description } = page.seo;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} lang={lang}>
+  <TreatmentPage lang={lang} slug={slug} />
+</BaseLayout>
