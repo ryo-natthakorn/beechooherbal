@@ -48,11 +48,12 @@ const beforeAfterHeading =
     heading={about.heading}
     intro={about.intro}
     faq={about.faq}
+    subsections={about.subsections}
     videoId={page.videoId}
     videoTitle={page.heroTitle[lang]}
   />
 
-  <TreatmentBenefits lang={lang} heading={benefits.heading} paragraphs={benefits.paragraphs} />
+  <TreatmentBenefits lang={lang} heading={benefits.heading} blocks={benefits.blocks} />
 
   <BeforeAfterGallery lang={lang} heading={beforeAfterHeading} images={[]} />
 

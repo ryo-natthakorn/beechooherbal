@@ -1,0 +1,20 @@
+---
+// src/pages/reverse-premature-grey-white-hair-by-herbal-treatment.astro
+// English grey/white hair treatment page. Thin shell: body lives in
+// src/components/treatment/TreatmentPage.astro (shared with the TH twin at
+// src/pages/th/ปิดผมหงอกวิธีธรรมชาติ.astro), copy in src/data/treatment-pages.ts.
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+// Spec: specs/2026-08-12-treatment-pages-plan.md (Batch 2).
+import BaseLayout from "../layouts/BaseLayout.astro";
+import TreatmentPage from "../components/treatment/TreatmentPage.astro";
+import { TREATMENT_PAGES } from "../data/treatment-pages";
+
+const lang = "en" as const;
+const slug = "grey-hair";
+const page = TREATMENT_PAGES[slug];
+const { title, description } = page.seo;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} lang={lang}>
+  <TreatmentPage lang={lang} slug={slug} />
+</BaseLayout>

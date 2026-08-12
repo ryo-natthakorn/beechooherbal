@@ -27,20 +27,31 @@ export interface FaqItem {
   answer: string;
 }
 
+export interface AboutSubsection {
+  heading: string;
+  paragraphs: string[];
+}
+
 interface AboutContent {
   heading: string;
-  /** Paragraphs above the FAQ accordion. */
+  /** Paragraphs above the FAQ accordion / subsections. */
   intro: string[];
   /** The live site renders "About" as an intro plus an Elementor FAQ-toggle widget
    *  (not <h2>/<h3> tags — that's why an earlier plain heading-tag scan of this page
    *  missed it). Rendered as a native <details>/<summary> accordion: zero JS, and the
    *  answers stay in the DOM (crawlable) whether expanded or not. */
   faq: FaqItem[];
+  /** Some pages (confirmed: TH grey/white hair) instead render "About" as an intro
+   *  plus several always-visible <h3>-headed sub-sections — real static content, not
+   *  a toggle widget. A page may have `faq`, `subsections`, or neither; not both. */
+  subsections?: AboutSubsection[];
 }
+
+export type BenefitsBlock = { kind: "p"; text: string } | { kind: "list"; items: string[] };
 
 interface BenefitsContent {
   heading: string;
-  paragraphs: string[];
+  blocks: BenefitsBlock[];
 }
 
 export interface TreatmentPageContent {
@@ -148,16 +159,164 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     benefits: {
       en: {
         heading: "BENEFITS OF 100% NATURAL HERBAL TREATMENT",
-        paragraphs: [
-          "Oily scalp is a common hair issue and it can be solved with Bee Choo Herbal Treatment. At Bee Choo, our herbal paste contains a traditional Chinese herb known as Ling Zhi which is an adaptogen with a dual-modulating function. Ling Zhi helps to modulate your scalp regardless if it is too oily or too dry, bringing your scalp back to its normal and healthy state after each treatment. Stop living with the itch, realise how great it feels to have a squeaky clean scalp!",
-          "Get rid of the itch and excess oil today. With regular treatment, your scalp will be free of itch and excess oil.",
+        blocks: [
+          {
+            kind: "p",
+            text: "Oily scalp is a common hair issue and it can be solved with Bee Choo Herbal Treatment. At Bee Choo, our herbal paste contains a traditional Chinese herb known as Ling Zhi which is an adaptogen with a dual-modulating function. Ling Zhi helps to modulate your scalp regardless if it is too oily or too dry, bringing your scalp back to its normal and healthy state after each treatment. Stop living with the itch, realise how great it feels to have a squeaky clean scalp!",
+          },
+          {
+            kind: "p",
+            text: "Get rid of the itch and excess oil today. With regular treatment, your scalp will be free of itch and excess oil.",
+          },
         ],
       },
       th: {
         heading: "ประโยชน์ของการทำทรีทเม้นท์ สมุนไพรธรรมชาติ 100เปอร์เซ็น",
-        paragraphs: [
-          "ปัญหาหนังศีรษะมันเป็นปัญหาธรรมดาที่สามารถรักษาได้ด้วย บีชู เฮอร์เบิล ทรีทเม้นท์ ที่ซาลอน/คลินิก บีชู ของเรา น้ำยาทรีทเม้นท์นั้นทำจาก เห็ดหลินจือ ซึ่งรู้กันดีว่าเป็นสมุนไพรพื้นบ้านของจีน เห็ดหลินจือจะช่วยปรัฐสภาพผมไม่ว่าคุณจะมีหนังศีรษะที่มันหรือแห้งเกินไป ก็จะกลับมาสู่สภาพปกติและมีสุขภาพดีหลังจากการทำทรีทเม้นท์ในแต่ละครั้ง เลิกอยู่กับความคันแล้วมาสัมผัสความสบายและสะอาดของหนังศีรษะกันได้แล้ววันนี้!",
-          "มาลดความมันและความคันของหนังศีรษะกันค่ะ ด้วยทรีทเม้นท์ของพวกเรา คุณจะรู้สึกสบายมากขึ้นเมื่อไม่มีน้ำมันและอาการคันมากวนใจ",
+        blocks: [
+          {
+            kind: "p",
+            text: "ปัญหาหนังศีรษะมันเป็นปัญหาธรรมดาที่สามารถรักษาได้ด้วย บีชู เฮอร์เบิล ทรีทเม้นท์ ที่ซาลอน/คลินิก บีชู ของเรา น้ำยาทรีทเม้นท์นั้นทำจาก เห็ดหลินจือ ซึ่งรู้กันดีว่าเป็นสมุนไพรพื้นบ้านของจีน เห็ดหลินจือจะช่วยปรัฐสภาพผมไม่ว่าคุณจะมีหนังศีรษะที่มันหรือแห้งเกินไป ก็จะกลับมาสู่สภาพปกติและมีสุขภาพดีหลังจากการทำทรีทเม้นท์ในแต่ละครั้ง เลิกอยู่กับความคันแล้วมาสัมผัสความสบายและสะอาดของหนังศีรษะกันได้แล้ววันนี้!",
+          },
+          {
+            kind: "p",
+            text: "มาลดความมันและความคันของหนังศีรษะกันค่ะ ด้วยทรีทเม้นท์ของพวกเรา คุณจะรู้สึกสบายมากขึ้นเมื่อไม่มีน้ำมันและอาการคันมากวนใจ",
+          },
+        ],
+      },
+    },
+    descriptionDraftPending: ["en"],
+  },
+
+  "grey-hair": {
+    heroTitle: {
+      en: "REVERSE PREMATURE GREY WHITE HAIR",
+      th: "ลดผมขาวและผมหงอกอย่างถาวร",
+    },
+    seo: {
+      title: {
+        en: "Reverse Premature Grey White Hair by Herbal Treatment - Bee Choo Herbal",
+        th: "ปิดผมหงอกและผมขาวโดยวิธีธรรมชาติ - Bee Choo Herbal",
+      },
+      description: {
+        // No real Yoast description exists on the live EN page — condensed from this
+        // page's own About/Benefits copy below, not invented. Needs Crispin's sign-off.
+        en: "100% natural herbal treatment covers premature grey and white hair with a natural dye, right to the roots, while treating the scalp. Safe, non-invasive, no elaborate course required.",
+        // Real live-site Yoast description, verbatim (Yoast's own 154-char cut, not ours).
+        th: "โดยปกติแล้วหนังศีรษะของลูกค้าของเราจะได้รับการรักษาไปพร้อมๆกับการปกปิดผมหงอกและผมขาวโดยผลิตภัณฑ์ บีชู เฮอร์เบิล จะช่วยปกปิดผมขาวตั้งแต่โคนจรดปลายโดยไม่ก่อ",
+      },
+    },
+    videoId: "Kd9EKBizDIg",
+    about: {
+      en: {
+        heading: "ABOUT PREMATURE GREY WHITE HAIR",
+        // No plain intro paragraphs on the live EN page — About goes straight from the
+        // video into the FAQ toggle widget (unlike oily-scalp, which has both).
+        intro: [],
+        faq: [
+          {
+            question: "What is Premature Greying/White Hair?",
+            answer:
+              "Typically, white people (caucasians) start going grey when they are in their mid-30s, but we Thais (Asians) are usually luckier in that aspect. Normally, Thais only start to see signs of greying when they are in their late 30s or after that. Hence, if you start to see your hair turning white or grey in your 20s, it will be considered as premature greying.",
+          },
+          {
+            question: "At what age is it normal to see streaks of white hair?",
+            answer:
+              "From a survey done at one of our outlets, the highest percentage of people with white hair issues are above 40. From another study in a mixed gender outlet, male customer, on average, start having white hair earlier than female customers by about 5 years. However, we note there is no minimum age, we have seen teenagers as young as 14 years old having streaks and streaks of white hair. A quick rule of thumb used is the 50:50:50 rule: By the age of 50, 50% of the population will have 50% grey hair.",
+          },
+          {
+            question: "What causes Premature Greying/White Hair?",
+            answer:
+              "The reason why your former black hair is turning grey or white is because the colour-producing cells have stopped producing the pigments that give it that rich and deep colour. Your hair follicles contain pigmentation cells, which are also called melanin. While these cells are tiny and might seem insignificant, they are responsible for giving our hair its natural colour. The higher melanin content generated by your hair follicles, the darker your hair will be. Conversely, the lower the melanin content that is generated by your hair follicles, the lighter the colour of your hair will be. Another possible reason is that naturally occurring hydrogen peroxide might have built up in your hair, causing it to be bleached.",
+          },
+          {
+            question: "Are there any complications from having Premature Greying/White Hair?",
+            answer:
+              "There is no physical harm derived from having grey or white hair. You could have a perfectly healthy scalp but have loads of white hair. The texture of the white hair is, however, not the same as normal hair. Melanin supplies the hair with moisture, thus, the white hair has less bounce and looks “lifeless”. Yet, when a person, suffers from premature greying, it could affect the self-image of that person. This can be stressful and frightening for some and could even affect their confidence and psychological well-being. Most of the complications that arise from premature greying and white hair derives from how an individual deals with the white hair issue. If a person constantly covers her white hair using chemical dye, it damages her hair and may even harm the scalp if the chemical dye is not done correctly. We have seen customers with severe hair loss caused by chemical burns to the scalp! Our advice is: if you have to constantly cover your white hair, it would be best to opt for a natural dye like ours. Keeping your scalp healthy plus covering those white hair naturally!",
+          },
+        ],
+      },
+      th: {
+        heading: "เกี่ยวกับ ผมขาว / ผมหงอก ถาวร",
+        intro: [
+          "เรามาดูวีดีโอการทำทรีทเม้นท์ของเรากันค่ะ ครีมทรีทเม้นท์ของเราทำจากสมุนไพรธรรมชาติเลยนะคะ และรูปทั้งหมดเป็นรูปที่ถ่ายในร้านของเราค่ะ ผมหงอก ผมขาว ใช่ค่ะ! มันเป็นปัญหาที่น่ารำคาญ เมื่อเมลานินในรูขุมขนเส้นผมของเราลดลง ซึ่งเป็นการลดลงอย่างถาวรนะคะ ทำให้ผมที่เกิดขึ้นมาใหม่เรื่อยๆกลายเป็นสีเทาหรือสีขาว และวิธีที่จะช่วยแก้ปัญหาของผมหงอกและผมขาวที่ง่ายที่สุดคือการย้อมค่ะ บีชู เฮอร์เบิล ทรีทเม้นท์ จะช่วยในการปกปิดผมขาว ผมหงอก ของคุณ ด้วย คอปเปอร์จากธรรมชาติ ทรีทเม้นท์ของเราไม่มีส่วนประกอบของสารเคมีใดๆ และพิสูจน์แล้วว่าช่วยทำให้หนังศีรษะมีสุขภาพแข็งแรง ลูกค้าหลายท่านของเราพึงพอใจเป็นอย่างมากในการรักษาเส้นผมและหนังศีรษะของทางร้านเรา ผมขาวทั้งหมดถูกปกปิดตั้งแต่โคนจรดปลายและหนังศีรษะยังมีสุขภาพดีด้วยค่ะ",
+        ],
+        // No FAQ toggle on the live TH page — instead four always-visible <h3>
+        // sub-sections. See AboutSubsection note above.
+        faq: [],
+        subsections: [
+          {
+            heading: "อะไรคือผมขาว ผมหงอก",
+            paragraphs: [
+              "ปกติแล้วชาวตะวันตกจะเริ่มมีผมขาวในช่วงอายุ 30 กลางๆ และโชคดีสำหรับคนไทยที่พบว่าผมขาวนั้นจะเริ่มขึ้นในช่วงอายุ 30 ปลายๆ และถ้าคุณเริ่มสังเกตเห็นผมขาว หรือผมหงอกที่เริ่มจะงอกขึ้นมาตอนช่วงอายุ 20 นั้น อาจจะเป็นสัญญาณว่าคุณกำลังจะมีผมหงอกก่อนวัยอันควร",
+            ],
+          },
+          {
+            heading: "อายุเท่าไหร่ทีจะมีผมขาวอย่างรวดเร็ว",
+            paragraphs: [
+              "จากผลสำรวจของทางร้านของเรา ผู้ที่มีอายุ 40 ปีขึ้นไปนั้นจะมีเปอร์เซ็นของผมขาวที่เพิ่มขึ้นทั้งในเพศชายและเพศหญิง แต่ในเพศชายผมขาวนั้นจะมาเร็วกว่าเพศหญิงประมาณ 5 ปี แต่ถึงอย่างไรก็ตามการเริ่มมีผมขาวนั้นไม่มีอายุเฉลี่ยที่แน่นอน เพราะเราเคยพบกับลูกค้าที่ต้องเผชิญกับผมขาวในวัยเพียง 14 ปีเท่านั้น",
+            ],
+          },
+          {
+            heading: "สาเหตุของผมขาว ผมหงอก",
+            paragraphs: [
+              "สาเหตุที่ทำให้ผมดำธรรมชาติกลายเป็นสีเทาหรือขาวนั้น เป็นเพราะเมลานิน หรือเซลล์ผลิตเม็ดสีซึ่งอยู่ในรูขุมขนเส้นผมของเรานั้นหยุดการสร้างเม็ดสี",
+              "ในขณะที่เซลล์ผลิตเม็ดสีนั้นมีขนาดที่เล็กมากและอาจจะดูไม่สำคัญแต่จะช่วยให้สีผมมีสีธรรมชาติ ระดับของเมลานินและความเข้มของสีผมนั้นขึ้นอยู่กับรูขุมขนเส้นผมของคนเราถ้ามีรูขุมขนเส้นผมจำนวนมาก สีผมก็เข้มขึ้นด้วนเช่นกัน และในทางกลับกัน ถ้าระดับเมลานินในรูขุมขนเส้นผมน้อยก็จะทำให้สีผมมีสีอ่อน และเกิดจากสาเหตุอื่น คือการมีไฮโดรเจนเปอร์ออกไซด์มากเกินไป(เกิดขึ้นเองตามธรรมชาติ)ทำให้เส้นผมมีสีที่จางลง",
+            ],
+          },
+          {
+            heading: "มีโรคแทรกซ้อนจากการมีผมขาว ผมหงอกก่อนวัยมั้ย?",
+            paragraphs: [
+              "โดยปกติแล้วไม่มีอันตรายใดๆในการมีผมขาวหรือผมหงอก คุณสามารถมีหนังศีรษะที่แข็งแรงแต่มีผมขาวผมหงอกทั้งหนังศีรษะได้ แต่ด้วยลักษณะของผมขาวผมหงอกนั้นจะแตกต่างกับผมสีธรรมชาติเพราะเมลานินจะช่วยให้ผมมีความชุ่มชื่น ดังนั้นผมขาวจะดูไม่มีวอลลุมและไม่มีชีวิตชีวา",
+              "ถึงอย่างนั้นแล้ว มีผู้คนจำนวนมากมายที่ต้องเผชิญปัญหาผมหงอกและผมขาวก่อนวัย ทำให้สูญเสียความมั่นใจในตนเองและเกิดความกังวลใจในเวลาต่อๆมา",
+              "โรคแทรกซ้อนโดยส่วนมากที่เกิดจากการมีผมขาวและผมหงอกคือการใช้ผลิตภัณฑ์ที่มีสารเคมีในการปกปิดสีผม ทำให้สารเคมีนั้นทำอันตรายกับหนังศีรษะเนื่องจากย้อมในวิธีที่ไม่ถูกต้อง พวกเรานั้นเคยพบกับลูกค้าที่มีปัญหาผมร่วงเนื่องจากหนังศีรษะไหม้เพราะสารเคมีมาแล้ว! ทางเลือกที่ดีที่สุดสำหรับผู้ที่มีผมหงอกและผมขาวคือควรเลือกใช้ผลิตภัณฑ์ที่มีส่วนผสมจากธรรมชาติดังเช่นผลิตภัณฑ์ของพวกเราซึ่งจะช่วยให้หนังศีรษะคุณมีสุขภาพที่ดีและช่วยปกปิดผมขาวของคุณอย่างแนบสนิท!",
+            ],
+          },
+        ],
+      },
+    },
+    benefits: {
+      en: {
+        heading: "BENEFITS OF NATURAL DYE",
+        blocks: [
+          {
+            kind: "p",
+            text: "Our customers come to us regularly to cover their white / grey hair and at the same time get their scalp treated. By choosing Bee Choo Herbal, they are able to cover their white hair safely to the roots without worrying about damaging their scalp or their hair ends.",
+          },
+          { kind: "p", text: "Our herbal treatment is:" },
+          {
+            kind: "list",
+            items: [
+              "Safe and non-invasive",
+              "Pain-free, natural and effective",
+              "No elaborate course purchase required, you can do one treatment at a time",
+              "Price Transparent; and",
+              "Covers white hair with a natural reddish/brownish colour",
+            ],
+          },
+          {
+            kind: "p",
+            text: "However, because our treatment relies only on traditional Chinese herbs, the choice of colouring is also limited.",
+          },
+        ],
+      },
+      th: {
+        heading: "ประโยชน์ของการใช้ผลิตภัณฑ์จากธรรมชาติในการย้อมผม",
+        blocks: [
+          {
+            kind: "p",
+            text: "โดยปกติแล้วหนังศีรษะของลูกค้าของเราจะได้รับการรักษาไปพร้อมๆกับการปกปิดผมหงอกและผมขาวโดยผลิตภัณฑ์ บีชู เฮอร์เบิล จะช่วยปกปิดผมขาวตั้งแต่โคนจรดปลายโดยไม่ก่อให้เกิดอันตรายต่อเส้นผมและหนังศีรษะ",
+          },
+          {
+            kind: "list",
+            items: [
+              "ข้อดีของทรีทเม้นท์สมุนไพรของพวกเรานั่นก็คือ",
+              "ปลอดภัยไม่มีผลข้างเคียง",
+              "ไม่แสบเนื่องจากเป็นส่วนผสมจากธรรมชาติ แต่มีประสิทธิภาพสูง",
+              "ไม่มีการคิดราคาที่ไม่เป็นธรรม คุณสามารถทำทรีทเม้นท์ในราคาที่ได้ตกลงไว้และสมเหตุสมผล",
+              "ปกปิดผมขาวด้วยสีน้ำตาลธรรมชาติ",
+              "แต่ถึงอย่างไรก็ตามเนื่องจากผลิตภัณฑ์ของเรามีส่วนผสมของสมุนไพรจีนพื้นบ้านอาจจะทำให้มีสีที่จำกัดในการย้อม",
+            ],
+          },
         ],
       },
     },

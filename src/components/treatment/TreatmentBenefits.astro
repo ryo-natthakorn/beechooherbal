@@ -1,14 +1,15 @@
 ---
 // src/components/treatment/TreatmentBenefits.astro
 import LeafDivider from "../LeafDivider.astro";
+import type { BenefitsBlock } from "../../data/treatment-pages";
 
 interface Props {
   lang: "en" | "th";
   heading: string;
-  paragraphs: string[];
+  blocks: BenefitsBlock[];
 }
 
-const { lang, heading, paragraphs } = Astro.props;
+const { lang, heading, blocks } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
 ---
@@ -20,7 +21,22 @@ const balance = lang === "en" ? " text-balance" : "";
       {heading}
     </h2>
     <div class="flex flex-col gap-4 text-brand-origin">
-      {paragraphs.map((p) => <p class="leading-relaxed">{p}</p>)}
+      {
+        blocks.map((block) =>
+          block.kind === "list" ? (
+            <ul class="flex flex-col gap-2 pl-1">
+              {block.items.map((item) => (
+                <li class="flex gap-2 leading-relaxed">
+                  <span aria-hidden="true" class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-green" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="leading-relaxed">{block.text}</p>
+          ),
+        )
+      }
     </div>
   </div>
 </section>
