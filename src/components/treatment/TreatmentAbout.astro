@@ -5,6 +5,8 @@
 // zero JS, and every answer stays in the DOM (crawlable) whether expanded or not —
 // matches this project's near-zero-JS rule and doesn't need the treatment-row
 // radio/:has() pattern (FAQ items aren't mutually exclusive like the treatments list).
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import YouTubeEmbed from "../YouTubeEmbed.astro";
 import LeafDivider from "../LeafDivider.astro";
 import type { FaqItem, AboutSubsection } from "../../data/treatment-pages";
@@ -12,6 +14,8 @@ import type { FaqItem, AboutSubsection } from "../../data/treatment-pages";
 interface Props {
   lang: "en" | "th";
   heading: string;
+  /** Trust-building salon/founder photo the legacy page shows under the intro. */
+  image?: { src: ImageMetadata; alt: string };
   intro: string[];
   faq: FaqItem[];
   subsections?: AboutSubsection[];
@@ -21,7 +25,7 @@ interface Props {
   facebookVideoHref?: string;
 }
 
-const { lang, heading, intro, faq, subsections = [], videoId, videoTitle, facebookVideoHref } = Astro.props;
+const { lang, heading, image, intro, faq, subsections = [], videoId, videoTitle, facebookVideoHref } = Astro.props;
 const facebookEmbedSrc = facebookVideoHref
   ? `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(facebookVideoHref)}&show_text=false`
   : undefined;
@@ -41,6 +45,12 @@ const balance = lang === "en" ? " text-balance" : "";
     <div class="mt-8 flex flex-col gap-4 text-brand-origin">
       {intro.map((p) => <p class="leading-relaxed">{p}</p>)}
     </div>
+
+    {
+      image && (
+        <Image src={image.src} alt={image.alt} width={1024} height={682} class="mx-auto mt-8 w-full max-w-lg rounded-xl shadow-soft" />
+      )
+    }
 
     {
       facebookEmbedSrc && (
@@ -86,7 +96,17 @@ const balance = lang === "en" ? " text-balance" : "";
               {item.question}
               <span aria-hidden="true" class="shrink-0 text-xl leading-none transition-transform duration-200 group-open:rotate-45">+</span>
             </summary>
-            <p class="border-t border-brand-earth px-5 py-4 leading-relaxed text-brand-origin">{item.answer}</p>
+            <div class="border-t border-brand-earth px-5 py-4">
+              <p class="leading-relaxed text-brand-origin">{item.answer}</p>
+              {
+                item.image && (
+                  <figure class="mx-auto mt-4 max-w-xs">
+                    <Image src={item.image.src} alt={item.image.alt} width={300} height={225} class="w-full rounded-lg shadow-soft" />
+                    <figcaption class="mt-2 text-center text-sm italic text-brand-origin/80">{item.image.caption}</figcaption>
+                  </figure>
+                )
+              }
+            </div>
           </details>
         ))}
       </div>

@@ -14,28 +14,60 @@
 // - TH oily-scalp Benefits para 1 has "ปรัฐสภาพผม", almost certainly a live-site typo
 //   for "ปรับสภาพผม" ("restore/adjust the hair's condition") — kept verbatim, flag to
 //   Crispin before launch.
-// - Pure image-caption fragments (e.g. "Example of clogged hair pore") were dropped from
-//   the extracted paragraphs — they're captions for inline images that aren't sourced
-//   into this build yet (see spec's Content gaps §1), and reproducing an orphaned
-//   caption with no image would read as a typo, not fidelity.
+// - TH oily-scalp's inline FAQ photo (legacy filename "2017-06-31-top-1-225x300.jpg")
+//   is hotlinked on the live TH page from the SISTER SINGAPORE SITE
+//   (www.beechooladies.com.sg), not beechooherbal.com — the same class of cross-domain
+//   bug CLAUDE.md §1 already documents for the homepage service links. Not reproduced
+//   here (we don't want this build depending on a different business's domain staying
+//   up); flag to Crispin. EN's two inline FAQ photos are unaffected (own domain) and
+//   are sourced below.
+// - grey-hair's About-section photo (BCL-Shop-in-operations.jpeg) is broken on the live
+//   site itself — HTTP 200 but `Content-Length: 0`, Cloudflare-cached since 2022. Can't
+//   be sourced from a broken source; left unset (see `AboutContent.image` doc comment).
 //
-// Still missing vs. the live site, blocked NOT by a decision but by network egress —
-// beechooherbal.com is unreachable from the build sandbox (proxy 403), so no legacy
-// binary can be downloaded here. Tracked so it isn't lost:
-// - grey-hair before/after photos: before-treatment-269x300.png ("White Hair Before Bee
-//   Choo Herbal Treatment") + after-1-295x300.png ("White Hairs Covered Immediately
-//   After Treatment"). `beforeAfter.images` is [] until they land; the section renders
-//   its heading and body regardless.
-// - oily-scalp: About-section photo IMG_2850 and two inline FAQ images.
-// - both: the trailing locations map graphic.
+// Previously tracked as blocked by sandbox network egress — RESOLVED. All 5 files were
+// unreachable from the build sandbox (proxy 403) but download fine from a normal
+// network; confirmed genuine images (magic-byte checked), sourced full-resolution
+// (unscaled originals, not the WP thumbnail crops the page HTML links to), and wired in:
+// - grey-hair before/after: before-treatment.png + after-1.png → `beforeAfter.images`.
+//   Alt text corrected to match the live page's actual attributes (a previous session's
+//   tracking note paraphrased them slightly).
+// - oily-scalp: About-section photo (IMG_2850) → `about.image`; two inline FAQ photos
+//   (oily-hair, 180125-R-side) → `about.faq[n].image`, captions restored alongside them.
+//
+// Not reproduced by design (not a gap — see file):
+// - The legacy pricing-chart image and the "How It Works" 4-step composite are already
+//   rendered by the reused PricingSection/HowItWorksScene components (src/assets/images/
+//   price-list.jpg, how-it-works.jpg) — sourced once for the homepage, shared here.
+// - The legacy Reviews-section disclaimer sentence is already present site-wide via
+//   HowItWorksScene's `t.disclaimer` (src/data/home.ts) — same sentence, attached to a
+//   different section than the legacy page's placement; not duplicated here.
+// - The legacy hero strapline is already hard-coded in TreatmentHero.astro (shared
+//   across all 7 treatment pages on the live site).
+// - The legacy inline LINE "Add Friend" badge/QR image (th.png) is NOT reproduced —
+//   redundant with the Call/Facebook/LINE CTA set already on every page (CLAUDE.md §2);
+//   flag to Crispin if he wants the graphic itself restored.
+//
+// Still missing vs. the live site:
+// - the trailing locations map graphic (Bee-Choo-Location-ENG/THA-Ver_FINAL.jpg) — real
+//   URLs now confirmed reachable (/wp-content/uploads/2025/09/), not yet sourced/wired.
 
 import type { ImageMetadata } from "astro";
+import oilyScalpAboutImage from "../assets/images/treatments/oily-scalp-about.jpg";
+import oilyScalpFaqCloggedPore from "../assets/images/treatments/oily-scalp-faq-clogged-pore.jpeg";
+import oilyScalpFaqScan from "../assets/images/treatments/oily-scalp-faq-scan.jpg";
+import greyHairBeforeImage from "../assets/images/treatments/grey-hair-before.png";
+import greyHairAfterImage from "../assets/images/treatments/grey-hair-after.png";
 
 export type Lang = "en" | "th";
 
 export interface FaqItem {
   question: string;
   answer: string;
+  /** Inline photo the legacy page shows inside this FAQ answer, with its own short
+   *  italicised caption underneath (not a real alt on the live site in most cases —
+   *  where the source has no alt, the caption text doubles as one here). */
+  image?: { src: ImageMetadata; alt: string; caption: string };
 }
 
 export interface AboutSubsection {
@@ -47,6 +79,12 @@ interface AboutContent {
   heading: string;
   /** Paragraphs above the FAQ accordion / subsections. */
   intro: string[];
+  /** A trust-building salon/founder photo the live page shows under the intro, before
+   *  the FAQ accordion. Per-page, not shared — oily-scalp's is sourced; grey-hair's
+   *  live source file (BCL-Shop-in-operations.jpeg) returns HTTP 200 with a 0-byte
+   *  body (confirmed via response headers, `Content-Length: 0`, cached since 2022) —
+   *  a bug on the legacy site itself, not something we can source. Left unset there. */
+  image?: { src: ImageMetadata; alt: string };
   /** The live site renders "About" as an intro plus an Elementor FAQ-toggle widget
    *  (not <h2>/<h3> tags — that's why an earlier plain heading-tag scan of this page
    *  missed it). Rendered as a native <details>/<summary> accordion: zero JS, and the
@@ -242,6 +280,7 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     about: {
       en: {
         heading: "ABOUT ITCHY OILY SCALP HAIR CONDITION",
+        image: { src: oilyScalpAboutImage, alt: "Bee Choo Herbal salon" },
         intro: [
           "Do take a minute to watch the video above to see how our customer had recovered from his oily scalp condition. These are all REAL pictures and videos taken at our salon. Oily Scalp in both men and women can be treated effectively with Bee Choo Herbal Hair Treatment. Thousands of customers trust us with their hair.",
           "Our scalp naturally secretes oil via the sebaceous glands and this oil protects the hair and sustains its structure. However, due to several factors, the sebum production could go into overdrive, causing excessive oil on the scalp, a condition known as seborrheic dermatitis. Excessive oil not only causes you to feel uncomfortable and itchy and it could ultimately lead to hair loss if left untreated!",
@@ -251,6 +290,7 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
             question: "What is Itchy and Oily Scalp?",
             answer:
               "The hot weather in Thailand, unhealthy diet, stress and wrong use of shampoo are factors that cause excess oil production in our scalp. Prolong usage of helmet and poor hygiene conditions relating to headgears and helmet also irritates and causes the scalp to overproduce oil. Excess oil builds up on the scalp causing hair follicles to get clogged.",
+            image: { src: oilyScalpFaqCloggedPore, alt: "Example of clogged hair pore", caption: "Example of clogged hair pore" },
           },
           {
             question: "Why am I suffering from Itchy and Oily Scalp?",
@@ -260,7 +300,8 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
           {
             question: "What exactly causes Itchy and Oily Scalp?",
             answer:
-              "The condition is scientifically known seborrheic dermatitis. This condition is triggered by oily scalp and an overgrowth of yeast. Bacteria and yeast can infect the hair follicles leading to the itchiness felt in your scalp! Poor hygiene is another main culprit. Poorly kept scalp induces the production of sebum in the scalp. If hair is not washed with right shampoo frequent enough, the oils on the scalp will accumulate. Oily scalp can even lead to dandruff, dandruff caused by excess oil are yellowish in colour and the flakes are larger than their counter-parts caused by dry scalp.",
+              "The condition is scientifically known seborrheic dermatitis. This condition is triggered by oily scalp and an overgrowth of yeast. Bacteria and yeast can infect the hair follicles leading to the itchiness felt in your scalp! Poor hygiene is another main culprit. Poorly kept scalp induces the production of sebum in the scalp. If hair is not washed with right shampoo frequent enough, the oils on the scalp will accumulate. Oily scalp can even lead to dandruff, dandruff caused by excess oil are yellowish in colour and the flakes are larger than their counter-parts caused by dry scalp. Under a hair microscope it could look like this:",
+            image: { src: oilyScalpFaqScan, alt: "dandruff scalp hair scan", caption: "example of oil accumulation on scalp" },
           },
           {
             question: "Could oily and itchy scalp lead to hair loss?",
@@ -271,6 +312,7 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
       },
       th: {
         heading: "ผมมันและอาการคันหนังศีรษะ",
+        image: { src: oilyScalpAboutImage, alt: "ร้านบีชู เฮอร์เบิล" },
         intro: [
           "เรามาดูวีดีโอในการรักษาหนังศีรษะมันและคันของลูกค้าของเรากันค่ะ รูปภาพทุกภาพเป็นภาพจริงที่ถ่ายในซาลอน/คลินิก ของเรานะคะ โดยปกติทั้งผู้ชายและผู้หญิงสามารถมีหนังศีรษะมันและคันได้ทั้งนั้น และสามารถรักษาได้อย่างมีประสิทธิภาพด้วย บีชู แฮร์ ทรีทเม้นท์ของเราค่ะ ลูกค้าจำนวนมากพึงพอใจในการรักษาเส้นผมกับเรา",
           "โดยปกติแล้วหนังศีรษะเรามีการผลิตน้ำมันผ่านทางต่อมไขมันของเรา และน้ำมันนี้เองจะช่วยปกป้องเส้นผมและคงสภาพโครงสร้างของเส้นผม แต่ทั้งนี้ทั้งนั้นก็ยังคงมีปัจจัยต่างๆที่ทำให้ต่อมไขมันผลิตน้ำมันออกมามากกว่าปกติ ทำให้ต่อมไขมันเกิดการอักเสบ น้ำมันที่มากเกิดไปนอกจากจะทำให้คุณรู้สึกไม่สบายและคันแล้วยังนำไปสู่ปัญหาผมร่วงถ้าไม่ได้รับการรักษา",
@@ -506,14 +548,22 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
       en: {
         heading: "SEE OUR CLIENT'S BEFORE AFTER RESULTS",
         body: ["Immediately after herbal treatment, white hair will be covered with a copper dye while leaving black hairs unchanged."],
-        // Legacy photos exist (before-treatment-269x300.png / after-1-295x300.png) but
-        // can't be downloaded from this sandbox — see the file header.
-        images: [],
+        // Alt text is the live page's actual attribute, verbatim (a previous session's
+        // tracking note in this file's header paraphrased it slightly — corrected here).
+        images: [
+          { src: greyHairBeforeImage, alt: "White hair before herbal treatment" },
+          { src: greyHairAfterImage, alt: "White Hairs Gone Immediately After Treatment" },
+        ],
       },
       th: {
         heading: "มาดูผล ก่อน - หลัง ของลูกค้าของเรากันค่ะ",
         body: ["สีผมของลูกค้าของเราได้ถูกปกปิดทันทีหลังจากทำทรีทเม้นท์สมุนไพร ด้วยคอปเปอร์ธรรมชาติจะช่วยปกปิดผมขาวและผมหงอกแต่ยังคงสีผมธรรมชาติไว้ตามเดิมค่ะ"],
-        images: [],
+        // Live TH page's <img> tags have no alt attribute at all; these are a plain
+        // factual description (not invented marketing copy) to meet CLAUDE.md §7.
+        images: [
+          { src: greyHairBeforeImage, alt: "ผมขาวก่อนทำทรีทเม้นท์" },
+          { src: greyHairAfterImage, alt: "ผมขาวหลังทำทรีทเม้นท์ทันที" },
+        ],
       },
     },
     tail: {
