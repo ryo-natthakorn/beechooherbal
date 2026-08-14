@@ -165,6 +165,17 @@ export interface TreatmentPageContent {
    *  reordering, so it carries no SEO content risk (same URL, same text, same
    *  headings, all still server-rendered and crawlable). */
   sectionOrder?: SectionKey[];
+  /** Per-page tint override, keyed by section. Omit a key to keep that section's own
+   *  component default. Only needed by pages with a custom `sectionOrder` — the
+   *  default alternation is correct for the legacy order. */
+  sectionBackground?: Partial<Record<SectionKey, "white" | "earth">>;
+  /** Set false to hide Benefits' own divider ornament — used when Benefits is
+   *  repositioned flush against another same-tint section (see grey-hair). */
+  benefitsDivider?: boolean;
+  /** Set false to drop the 7-treatment cross-sell grid, keeping only its heading and
+   *  brand paragraphs — re-listing every treatment (incl. the current one) reads as
+   *  filler once a page's own body already made its case. */
+  showTreatmentsGrid?: boolean;
   seo: {
     title: Record<Lang, string>;
     /** <= ~150 chars. Marked draftPending where the live site has no real Yoast
@@ -177,9 +188,17 @@ export interface TreatmentPageContent {
    *  belong to the reused homepage sections (Reviews, How-It-Works) and don't need
    *  wiring here. */
   videoId: string;
-  /** Some pages (grey-hair) also embed a Facebook video in the About section. Full
-   *  permalink of the source video — the component builds the plugin URL. */
+  /** Some pages (grey-hair) also carry a second, Facebook-hosted video, rendered under
+   *  the Benefits heading sized to match the hero video. Full permalink of the source
+   *  video — the component builds the plugin URL. */
   facebookVideoHref?: string;
+  /** Per-page override for the shared "How It Works" video (src/data/home.ts's
+   *  HOME.howItWorks.videoId is, per YouTube's own oEmbed title, "Bee Choo Branding
+   *  2025" — a generic brand reel, not this section's process video). Scoped per-page
+   *  rather than fixed at the source: the homepage (Crispin-signed-off) and Oily Scalp
+   *  (shipped) still show the wrong one until that's a deliberate call, not a side
+   *  effect of another page's edit. */
+  howItWorksVideo?: { id: string; title: Record<Lang, string> };
   about: Record<Lang, AboutContent>;
   benefits: Record<Lang, BenefitsContent>;
   beforeAfter: Record<Lang, BeforeAfterContent>;
@@ -445,6 +464,14 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     // it is merely collapsed into the accordion the EN page already uses. See the
     // `subsections` note in `about.th` below.
     sectionOrder: ["about", "beforeAfter", "benefits", "howItWorks", "pricing", "reviews", "crossSell"],
+    // Before/After now sits directly against Benefits (see sectionOrder above) — same
+    // tint removes the need for a colour-change seam between them, so Benefits also
+    // drops its own divider ornament (About keeps its usual tint/divider).
+    sectionBackground: { about: "earth", beforeAfter: "earth", reviews: "white" },
+    benefitsDivider: false,
+    // The 7-card cross-sell grid re-lists every treatment, including this one, right
+    // after the page has already made its own case — redundant filler here.
+    showTreatmentsGrid: false,
     seo: {
       title: {
         en: "Reverse Premature Grey White Hair by Herbal Treatment - Bee Choo Herbal",
@@ -460,6 +487,16 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     },
     videoId: "Kd9EKBizDIg",
     facebookVideoHref: "https://www.facebook.com/beechooherbal/videos/1096213878455331/",
+    // The wrong "How It Works" video, confirmed via YouTube's own oEmbed title
+    // ("Bee Choo Branding 2025") — see the field's doc comment above. This ID is what
+    // the legacy site itself actually embeds in this exact section on both languages.
+    howItWorksVideo: {
+      id: "Uwty-ZDdPYc",
+      title: {
+        en: "How Bee Choo herbal hair treatment works",
+        th: "ทรีตเมนต์สมุนไพรบีชูให้ผลอย่างไร",
+      },
+    },
     about: {
       en: {
         heading: "ABOUT PREMATURE GREY WHITE HAIR",

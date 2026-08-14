@@ -46,9 +46,13 @@ interface Props {
   paragraphs?: Inline[][];
   /** Tint override, used only by treatment pages that reorder their sections. */
   background?: "white" | "earth";
+  /** Set false to render only the heading + brand paragraphs, without the 7-card
+   *  treatment grid — used where re-listing every treatment (including the one the
+   *  visitor is already reading) is redundant. Defaults to shown (homepage's usage). */
+  showTreatmentGrid?: boolean;
 }
 
-const { lang, heading, paragraphs = [], background } = Astro.props;
+const { lang, heading, paragraphs = [], background, showTreatmentGrid = true } = Astro.props;
 const bgClass = background === "white" ? "bg-white" : "bg-brand-earth/25";
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
@@ -97,6 +101,7 @@ const bandWidths = (intrinsicWidth: number) =>
       )
     }
 
+    {showTreatmentGrid && (
     <div
       class="treatments-md flex flex-col gap-3 md:grid md:grid-cols-[280px_1fr] md:items-stretch md:gap-6"
       style={`--treatment-count: ${TREATMENTS.length}`}
@@ -145,5 +150,6 @@ const bandWidths = (intrinsicWidth: number) =>
         </div>
       ))}
     </div>
+    )}
   </div>
 </section>

@@ -40,26 +40,17 @@ const tail = page.tail[lang];
 // it keep the legacy order byte-for-byte.
 const sectionOrder = page.sectionOrder ?? LEGACY_SECTION_ORDER;
 
-// Each section paints its own tint, and those defaults only alternate correctly in the
-// legacy order — a reorder can strand two same-tinted sections next to each other (they
-// then read as one long band). So when a page overrides the order, drive the tint from
-// position instead of the component defaults. Only the sections whose default doesn't
-// already match the alternation actually receive an override.
-const DEFAULT_BACKGROUND: Record<SectionKey, "white" | "earth"> = {
-  about: "white",
-  benefits: "earth",
-  beforeAfter: "white",
-  reviews: "earth",
-  crossSell: "earth",
-  howItWorks: "white",
-  pricing: "earth",
-};
-const isReordered = page.sectionOrder !== undefined;
-const backgroundFor = (key: SectionKey): "white" | "earth" | undefined => {
-  if (!isReordered) return undefined;
-  const wanted = sectionOrder.indexOf(key) % 2 === 0 ? "earth" : "white";
-  return wanted === DEFAULT_BACKGROUND[key] ? undefined : wanted;
-};
+// Tint is explicit per page (see `sectionBackground`), not auto-alternated — a page
+// with a custom order may need two adjacent sections to deliberately SHARE a tint
+// (e.g. grey-hair's Before/After + Benefits, rendered as one seamless band), which a
+// purely positional alternation can't express. Omitted keys keep the component's own
+// default, which is already correct for every page using the legacy order.
+const backgroundFor = (key: SectionKey): "white" | "earth" | undefined => page.sectionBackground?.[key];
+
+const facebookVideo = page.facebookVideoHref
+  ? { src: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(page.facebookVideoHref)}&show_text=false`, title: page.heroTitle[lang] }
+  : undefined;
+
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://beechooherbal.com").href;
 const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://beechooherbal.com").href;
 ---
@@ -80,13 +71,19 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
             subsections={about.subsections}
             videoId={page.videoId}
             videoTitle={page.heroTitle[lang]}
-            facebookVideoHref={page.facebookVideoHref}
             background={backgroundFor("about")}
           />
         )}
 
         {key === "benefits" && (
-          <TreatmentBenefits lang={lang} heading={benefits.heading} blocks={benefits.blocks} background={backgroundFor("benefits")} />
+          <TreatmentBenefits
+            lang={lang}
+            heading={benefits.heading}
+            blocks={benefits.blocks}
+            background={backgroundFor("benefits")}
+            divider={page.benefitsDivider}
+            video={facebookVideo}
+          />
         )}
 
         {key === "beforeAfter" && (
@@ -108,10 +105,18 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
             heading={tail.crossSell.heading}
             paragraphs={tail.crossSell.paragraphs}
             background={backgroundFor("crossSell")}
+            showTreatmentGrid={page.showTreatmentsGrid}
           />
         )}
 
-        {key === "howItWorks" && <HowItWorksScene lang={lang} copy={tail.howItWorks} background={backgroundFor("howItWorks")} />}
+        {key === "howItWorks" && (
+          <HowItWorksScene
+            lang={lang}
+            copy={tail.howItWorks}
+            background={backgroundFor("howItWorks")}
+            video={page.howItWorksVideo && { id: page.howItWorksVideo.id, title: page.howItWorksVideo.title[lang] }}
+          />
+        )}
 
         {key === "pricing" && (
           <PricingSection

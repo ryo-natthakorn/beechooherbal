@@ -21,11 +21,19 @@ interface Props {
   /** Tint override, used only by treatment pages that reorder their sections. Omitted
    *  everywhere else, which leaves this section untinted as it is on the homepage. */
   background?: "white" | "earth";
+  /** Per-page video override. HOME.howItWorks.videoId ("QOgcSx7_C7w") is, per YouTube's
+   *  own oEmbed title, "Bee Choo Branding 2025" — a generic brand reel, not a process
+   *  video. It's also what the homepage (Crispin-signed-off) and Oily Scalp (shipped)
+   *  currently show, so this is scoped per-page rather than fixed at the source until
+   *  that's a deliberate decision, not a side effect of this page's changes. */
+  video?: { id: string; title: string };
 }
 
-const { lang, copy, background } = Astro.props;
+const { lang, copy, background, video } = Astro.props;
 const bgClass = background === "earth" ? "bg-brand-earth/25" : background === "white" ? "bg-white" : "";
 const t = HOME.howItWorks;
+const videoId = video?.id ?? t.videoId;
+const videoTitle = video?.title ?? t.videoTitle[lang];
 const sectionHeading = copy?.heading ?? t.heading[lang];
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
@@ -65,7 +73,7 @@ const imageAlt =
       }
     </div>
     <div class="mx-auto mt-8 max-w-2xl">
-      <YouTubeEmbed id={t.videoId} title={t.videoTitle[lang]} />
+      <YouTubeEmbed id={videoId} title={videoTitle} />
     </div>
     <p class="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-brand-origin">
       {t.disclaimer[lang]}

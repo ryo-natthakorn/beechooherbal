@@ -21,17 +21,12 @@ interface Props {
   subsections?: AboutSubsection[];
   videoId: string;
   videoTitle: string;
-  /** Optional second video the legacy page embeds here (grey-hair): a Facebook clip. */
-  facebookVideoHref?: string;
   /** Tint override, used only by pages that reorder their sections (see
    *  TreatmentPage.astro). Omitted everywhere else, which keeps the default. */
   background?: "white" | "earth";
 }
 
-const { lang, heading, image, intro, faq, subsections = [], videoId, videoTitle, facebookVideoHref, background } = Astro.props;
-const facebookEmbedSrc = facebookVideoHref
-  ? `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(facebookVideoHref)}&show_text=false`
-  : undefined;
+const { lang, heading, image, intro, faq, subsections = [], videoId, videoTitle, background } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
 const bgClass = background === "earth" ? "bg-brand-earth/25" : "bg-white";
@@ -62,24 +57,6 @@ const accordionItems = [
     {
       image && (
         <Image src={image.src} alt={image.alt} width={1024} height={682} class="mx-auto mt-8 w-full max-w-lg rounded-xl shadow-soft" />
-      )
-    }
-
-    {
-      facebookEmbedSrc && (
-        <div class="mx-auto mt-8 max-w-md">
-          <div class="relative aspect-[9/11] overflow-hidden rounded-xl shadow-soft">
-            <iframe
-              class="absolute inset-0 h-full w-full border-0"
-              src={facebookEmbedSrc}
-              title={videoTitle}
-              loading="lazy"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-              allowfullscreen
-            />
-          </div>
-        </div>
       )
     }
 
