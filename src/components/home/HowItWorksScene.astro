@@ -18,9 +18,13 @@ import howItWorksImage from "../../assets/images/how-it-works.jpg";
 interface Props {
   lang: Lang;
   copy?: { heading: string; intro: string; stepsLead: string; steps: string[]; outro: string };
+  /** Tint override, used only by treatment pages that reorder their sections. Omitted
+   *  everywhere else, which leaves this section untinted as it is on the homepage. */
+  background?: "white" | "earth";
 }
 
-const { lang, copy } = Astro.props;
+const { lang, copy, background } = Astro.props;
+const bgClass = background === "earth" ? "bg-brand-earth/25" : background === "white" ? "bg-white" : "";
 const t = HOME.howItWorks;
 const sectionHeading = copy?.heading ?? t.heading[lang];
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
@@ -31,7 +35,7 @@ const imageAlt =
     : `${t.heading[lang]} — ${t.steps[lang].map((step, i) => `${i + 1}. ${step}`).join(", ")}`;
 ---
 
-<section class="py-16 md:py-24">
+<section class:list={[bgClass, "py-16 md:py-24"]}>
   <div class="mx-auto max-w-6xl px-4 text-center md:px-8">
     <div class="mx-auto w-full max-w-4xl">
       <h2 class={`mb-10 ${serif} text-2xl font-bold${balance} text-brand-green md:text-4xl`}>

@@ -23,17 +23,30 @@ interface Props {
   videoTitle: string;
   /** Optional second video the legacy page embeds here (grey-hair): a Facebook clip. */
   facebookVideoHref?: string;
+  /** Tint override, used only by pages that reorder their sections (see
+   *  TreatmentPage.astro). Omitted everywhere else, which keeps the default. */
+  background?: "white" | "earth";
 }
 
-const { lang, heading, image, intro, faq, subsections = [], videoId, videoTitle, facebookVideoHref } = Astro.props;
+const { lang, heading, image, intro, faq, subsections = [], videoId, videoTitle, facebookVideoHref, background } = Astro.props;
 const facebookEmbedSrc = facebookVideoHref
   ? `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(facebookVideoHref)}&show_text=false`
   : undefined;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
+const bgClass = background === "earth" ? "bg-brand-earth/25" : "bg-white";
+
+// The live TH grey-hair page ships its four education topics as one undivided wall of
+// text while the EN page collapses the same four into an accordion. Rendering both the
+// same way is a presentation fix only — the copy is untouched and, because <details>
+// keeps its contents in the DOM, every word stays server-rendered and crawlable.
+const accordionItems = [
+  ...faq.map((item) => ({ summary: item.question, paragraphs: [item.answer], image: item.image })),
+  ...subsections.map((section) => ({ summary: section.heading, paragraphs: section.paragraphs, image: undefined })),
+];
 ---
 
-<section class="bg-white py-16 md:py-24">
+<section class={`${bgClass} py-16 md:py-24`}>
   <div class="mx-auto max-w-3xl px-4 md:px-8">
     <LeafDivider />
     <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
@@ -70,22 +83,9 @@ const balance = lang === "en" ? " text-balance" : "";
       )
     }
 
-    {subsections.length > 0 && (
-      <div class="mt-8 flex flex-col gap-6">
-        {subsections.map((section) => (
-          <div>
-            <h3 class={`mb-2 ${serif} text-lg font-bold text-brand-green`}>{section.heading}</h3>
-            <div class="flex flex-col gap-3 text-brand-origin">
-              {section.paragraphs.map((p) => <p class="leading-relaxed">{p}</p>)}
-            </div>
-          </div>
-        ))}
-      </div>
-    )}
-
-    {faq.length > 0 && (
+    {accordionItems.length > 0 && (
       <div class="mt-8 flex flex-col gap-3">
-        {faq.map((item) => (
+        {accordionItems.map((item) => (
           <details class="group overflow-hidden rounded-2xl border border-brand-earth bg-white open:shadow-soft">
             <summary
               class:list={[
@@ -93,14 +93,16 @@ const balance = lang === "en" ? " text-balance" : "";
                 "flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 font-bold text-brand-green marker:content-none",
               ]}
             >
-              {item.question}
+              {item.summary}
               <span aria-hidden="true" class="shrink-0 text-xl leading-none transition-transform duration-200 group-open:rotate-45">+</span>
             </summary>
-            <div class="border-t border-brand-earth px-5 py-4">
-              <p class="leading-relaxed text-brand-origin">{item.answer}</p>
+            <div class="flex flex-col gap-3 border-t border-brand-earth px-5 py-4">
+              {item.paragraphs.map((p) => (
+                <p class="leading-relaxed text-brand-origin">{p}</p>
+              ))}
               {
                 item.image && (
-                  <figure class="mx-auto mt-4 max-w-xs">
+                  <figure class="mx-auto mt-1 max-w-xs">
                     <Image src={item.image.src} alt={item.image.alt} width={300} height={225} class="w-full rounded-lg shadow-soft" />
                     <figcaption class="mt-2 text-center text-sm italic text-brand-origin/80">{item.image.caption}</figcaption>
                   </figure>

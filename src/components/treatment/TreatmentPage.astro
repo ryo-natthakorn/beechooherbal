@@ -15,7 +15,7 @@ import TreatmentsSection from "../home/TreatmentsSection.astro";
 import HowItWorksScene from "../home/HowItWorksScene.astro";
 import PricingSection from "../home/PricingSection.astro";
 import { TREATMENTS } from "../../data/treatments";
-import { TREATMENT_PAGES } from "../../data/treatment-pages";
+import { TREATMENT_PAGES, LEGACY_SECTION_ORDER, type SectionKey } from "../../data/treatment-pages";
 
 interface Props {
   lang: "en" | "th";
@@ -34,6 +34,32 @@ const about = page.about[lang];
 const benefits = page.benefits[lang];
 const beforeAfter = page.beforeAfter[lang];
 const tail = page.tail[lang];
+
+// Body section order is data-driven so a page can carry a revised IA without forking
+// this component (see `sectionOrder` in src/data/treatment-pages.ts). Pages that omit
+// it keep the legacy order byte-for-byte.
+const sectionOrder = page.sectionOrder ?? LEGACY_SECTION_ORDER;
+
+// Each section paints its own tint, and those defaults only alternate correctly in the
+// legacy order — a reorder can strand two same-tinted sections next to each other (they
+// then read as one long band). So when a page overrides the order, drive the tint from
+// position instead of the component defaults. Only the sections whose default doesn't
+// already match the alternation actually receive an override.
+const DEFAULT_BACKGROUND: Record<SectionKey, "white" | "earth"> = {
+  about: "white",
+  benefits: "earth",
+  beforeAfter: "white",
+  reviews: "earth",
+  crossSell: "earth",
+  howItWorks: "white",
+  pricing: "earth",
+};
+const isReordered = page.sectionOrder !== undefined;
+const backgroundFor = (key: SectionKey): "white" | "earth" | undefined => {
+  if (!isReordered) return undefined;
+  const wanted = sectionOrder.indexOf(key) % 2 === 0 ? "earth" : "white";
+  return wanted === DEFAULT_BACKGROUND[key] ? undefined : wanted;
+};
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://beechooherbal.com").href;
 const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://beechooherbal.com").href;
 ---
@@ -41,32 +67,64 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
 <main id="main">
   <TreatmentHero lang={lang} heroTitle={page.heroTitle[lang]} image={treatment.image} imageAlt={treatment.alt[lang]} />
 
-  <TreatmentAbout
-    lang={lang}
-    heading={about.heading}
-    image={about.image}
-    intro={about.intro}
-    faq={about.faq}
-    subsections={about.subsections}
-    videoId={page.videoId}
-    videoTitle={page.heroTitle[lang]}
-    facebookVideoHref={page.facebookVideoHref}
-  />
+  {
+    sectionOrder.map((key) => (
+      <>
+        {key === "about" && (
+          <TreatmentAbout
+            lang={lang}
+            heading={about.heading}
+            image={about.image}
+            intro={about.intro}
+            faq={about.faq}
+            subsections={about.subsections}
+            videoId={page.videoId}
+            videoTitle={page.heroTitle[lang]}
+            facebookVideoHref={page.facebookVideoHref}
+            background={backgroundFor("about")}
+          />
+        )}
 
-  <TreatmentBenefits lang={lang} heading={benefits.heading} blocks={benefits.blocks} />
+        {key === "benefits" && (
+          <TreatmentBenefits lang={lang} heading={benefits.heading} blocks={benefits.blocks} background={backgroundFor("benefits")} />
+        )}
 
-  <BeforeAfterGallery
-    lang={lang}
-    heading={beforeAfter.heading}
-    body={beforeAfter.body}
-    images={beforeAfter.images}
-    giphyId={beforeAfter.giphyId}
-  />
+        {key === "beforeAfter" && (
+          <BeforeAfterGallery
+            lang={lang}
+            heading={beforeAfter.heading}
+            body={beforeAfter.body}
+            images={beforeAfter.images}
+            giphyId={beforeAfter.giphyId}
+            background={backgroundFor("beforeAfter")}
+          />
+        )}
 
-  <ReviewsWall lang={lang} heading={tail.reviewsHeading} />
-  <TreatmentsSection lang={lang} heading={tail.crossSell.heading} paragraphs={tail.crossSell.paragraphs} />
-  <HowItWorksScene lang={lang} copy={tail.howItWorks} />
-  <PricingSection lang={lang} heading={tail.pricing.heading} intro={tail.pricing.intro} closing={tail.pricing.closing} />
+        {key === "reviews" && <ReviewsWall lang={lang} heading={tail.reviewsHeading} background={backgroundFor("reviews")} />}
+
+        {key === "crossSell" && (
+          <TreatmentsSection
+            lang={lang}
+            heading={tail.crossSell.heading}
+            paragraphs={tail.crossSell.paragraphs}
+            background={backgroundFor("crossSell")}
+          />
+        )}
+
+        {key === "howItWorks" && <HowItWorksScene lang={lang} copy={tail.howItWorks} background={backgroundFor("howItWorks")} />}
+
+        {key === "pricing" && (
+          <PricingSection
+            lang={lang}
+            heading={tail.pricing.heading}
+            intro={tail.pricing.intro}
+            closing={tail.pricing.closing}
+            background={backgroundFor("pricing")}
+          />
+        )}
+      </>
+    ))
+  }
 </main>
 
 <ServiceSchema

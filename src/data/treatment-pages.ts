@@ -143,9 +143,28 @@ interface TailContent {
   pricing: { heading: string; intro: string; closing: string[] };
 }
 
+/** The body sections a treatment page can render, in the order they appear. */
+export type SectionKey = "about" | "benefits" | "beforeAfter" | "reviews" | "crossSell" | "howItWorks" | "pricing";
+
+/** The legacy page order, reproduced faithfully — the default for every treatment page. */
+export const LEGACY_SECTION_ORDER: SectionKey[] = [
+  "about",
+  "benefits",
+  "beforeAfter",
+  "reviews",
+  "crossSell",
+  "howItWorks",
+  "pricing",
+];
+
 export interface TreatmentPageContent {
   /** H1. Distinct from src/data/treatments.ts's homepage-card `title`. */
   heroTitle: Record<Lang, string>;
+  /** Per-page override of the body section order. Omit to keep the legacy order.
+   *  This is a PRESENTATION choice only — no copy is added, removed, or reworded by
+   *  reordering, so it carries no SEO content risk (same URL, same text, same
+   *  headings, all still server-rendered and crawlable). */
+  sectionOrder?: SectionKey[];
   seo: {
     title: Record<Lang, string>;
     /** <= ~150 chars. Marked draftPending where the live site has no real Yoast
@@ -413,6 +432,19 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
       en: "REVERSE PREMATURE GREY WHITE HAIR",
       th: "ลดผมขาวและผมหงอกอย่างถาวร",
     },
+    // Revised IA (this page only, for now). The legacy page buries the payoff: a visitor
+    // meets ~2,700 characters of education about what grey hair IS before learning what
+    // the treatment DOES, then reaches "how it works" and the price only after a block of
+    // brand/awards copy. Two moves fix that without touching a single string:
+    //   1. proof (before/after photos) now comes straight after the education, not after
+    //      Benefits — the strongest evidence lands earlier;
+    //   2. How-It-Works + Pricing move ahead of Reviews + the brand/awards block, so the
+    //      practical "what happens and what does it cost" answers sit together, before
+    //      the credibility filler rather than behind it.
+    // The education block itself deliberately STAYS high (it is what the page ranks for);
+    // it is merely collapsed into the accordion the EN page already uses. See the
+    // `subsections` note in `about.th` below.
+    sectionOrder: ["about", "beforeAfter", "benefits", "howItWorks", "pricing", "reviews", "crossSell"],
     seo: {
       title: {
         en: "Reverse Premature Grey White Hair by Herbal Treatment - Bee Choo Herbal",
@@ -466,6 +498,13 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
         ],
         // No FAQ toggle on the live TH page — instead four always-visible <h3>
         // sub-sections. See AboutSubsection note above.
+        //
+        // NOTE on presentation: the live TH page ships this as ONE undivided 2,716-char
+        // text-editor blob with the four <h3>s embedded in it — no toggles, nothing
+        // collapsed. The live EN page carries the SAME four topics as a collapsed
+        // 4-item accordion. That asymmetry is why the TH page reads as a wall of text
+        // while EN doesn't. We render both languages as the accordion: identical copy,
+        // still server-rendered and crawlable inside <details>, just scannable.
         faq: [],
         subsections: [
           {

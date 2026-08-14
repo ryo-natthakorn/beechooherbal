@@ -18,13 +18,16 @@ interface Props {
   body: string[];
   images: BeforeAfterImage[];
   giphyId?: string;
+  /** Tint override, used only by pages that reorder their sections. */
+  background?: "white" | "earth";
 }
 
-const { lang, heading, body, images, giphyId } = Astro.props;
+const { lang, heading, body, images, giphyId, background } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const bgClass = background === "earth" ? "bg-brand-earth/25" : "bg-white";
 ---
 
-<section class="bg-white py-16 md:py-24">
+<section class={`${bgClass} py-16 md:py-24`}>
   <div class="mx-auto max-w-5xl px-4 md:px-8">
     <LeafDivider />
     <h2 data-mask-reveal class={`mb-6 text-center ${serif} text-2xl font-bold text-brand-green md:text-3xl`}>
