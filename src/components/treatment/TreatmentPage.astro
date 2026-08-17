@@ -16,7 +16,7 @@ import TreatmentsSection from "../home/TreatmentsSection.astro";
 import HowItWorksScene from "../home/HowItWorksScene.astro";
 import PricingSection from "../home/PricingSection.astro";
 import { TREATMENTS } from "../../data/treatments";
-import { TREATMENT_PAGES, LEGACY_SECTION_ORDER, type SectionKey } from "../../data/treatment-pages";
+import { TREATMENT_PAGES, LEGACY_SECTION_ORDER, CLOSING_SECTIONS, type SectionKey } from "../../data/treatment-pages";
 
 interface Props {
   lang: "en" | "th";
@@ -65,6 +65,16 @@ const SECTION_LABEL: Record<SectionKey, string> = {
 const anchorId = (key: SectionKey) => `section-${key}`;
 const tocItems = sectionOrder.map((key) => ({ id: anchorId(key), label: SECTION_LABEL[key] }));
 
+// Closing band: the trailing sections whose copy is byte-identical on all 7 legacy pages.
+// They keep every word (still in the DOM, still crawlable) but render at a lower visual
+// rank than the sections about the visitor's own condition — see .closing-band in
+// global.css. The first one carries a hairline rule to mark where the page turns from
+// "your problem" to "our credentials"; with scrollTint on, section tints are transparent
+// and dividers are hidden, so without it the two zones would run together.
+const closingStart = sectionOrder.findIndex((key) => CLOSING_SECTIONS.includes(key));
+const closingClass = (index: number, key: SectionKey) =>
+  CLOSING_SECTIONS.includes(key) ? ["closing-band", index === closingStart && "closing-band-start"] : [];
+
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://beechooherbal.com").href;
 // Schema.org still wants a representative image even where the page renders no hero
 // photo (heroVariant "plain"), so this always points at the treatment's own photo.
@@ -84,8 +94,8 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
   {page.readingAids && <TreatmentToc lang={lang} items={tocItems} />}
 
   {
-    sectionOrder.map((key) => (
-      <div id={anchorId(key)} data-section-anchor>
+    sectionOrder.map((key, index) => (
+      <div id={anchorId(key)} data-section-anchor class:list={closingClass(index, key)}>
         {key === "about" && (
           <TreatmentAbout
             lang={lang}
@@ -132,6 +142,8 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
             paragraphs={tail.crossSell.paragraphs}
             background={backgroundFor("crossSell")}
             showTreatmentGrid={page.showTreatmentsGrid}
+            excludeSlug={slug}
+            showAwards
           />
         )}
 

@@ -25,6 +25,19 @@
 //   site itself — HTTP 200 but `Content-Length: 0`, Cloudflare-cached since 2022. Can't
 //   be sourced from a broken source; left unset (see `AboutContent.image` doc comment).
 //
+// Two transcription deviations from earlier batches, found 2026-08-17 by diffing the
+// built HTML against the REST export. Both are cosmetic and the copy is otherwise
+// character-for-character intact, so they are recorded rather than "corrected" (the
+// house rule is to flag, not silently rewrite — see the ปรัฐสภาพผม note above):
+// - EN grey-hair FAQ 2: the live page reads "are above 40 ." with a stray space before
+//   the full stop. Transcribed here as "above 40." Restoring the legacy space would be
+//   worse typography for an invisible gain; flag to Crispin only if strict byte parity
+//   is ever required.
+// - EN oily-scalp FAQ 4: the live page splits this answer across two <p>s, the second
+//   starting "If you are prone to scratching...". Transcribed as one string joined with
+//   "This is why: if you are prone...", which lowercases that sentence-initial "I". No
+//   words added or dropped.
+//
 // Previously tracked as blocked by sandbox network egress — RESOLVED. All 5 files were
 // unreachable from the build sandbox (proxy 403) but download fine from a normal
 // network; confirmed genuine images (magic-byte checked), sourced full-resolution
@@ -51,6 +64,13 @@
 // Still missing vs. the live site:
 // - the trailing locations map graphic (Bee-Choo-Location-ENG/THA-Ver_FINAL.jpg) — real
 //   URLs now confirmed reachable (/wp-content/uploads/2025/09/), not yet sourced/wired.
+//
+// CLOSED 2026-08-17 (was an unlogged gap, found during the 7-page content review): the
+// legacy "BEST HAIR LOSS TREATMENT SALON CLINIC IN BANGKOK" block carries a 12-badge
+// award carousel on all 7 pages, byte-identical to the homepage's. The build was
+// dropping it on treatment pages entirely. Now rendered inside that same section via
+// the existing AwardsMarquee component (src/components/AwardsMarquee.astro, already
+// sourced for the homepage) — see TreatmentsSection's `showAwards` prop.
 
 import type { ImageMetadata } from "astro";
 import oilyScalpAboutImage from "../assets/images/treatments/oily-scalp-about.jpg";
@@ -152,7 +172,8 @@ interface TailContent {
 /** The body sections a treatment page can render, in the order they appear. */
 export type SectionKey = "about" | "benefits" | "beforeAfter" | "reviews" | "crossSell" | "howItWorks" | "pricing";
 
-/** The legacy page order, reproduced faithfully — the default for every treatment page. */
+/** The legacy page order, reproduced faithfully. Kept as documentation of the source
+ *  order and as the fallback for any page that has not opted into the standard below. */
 export const LEGACY_SECTION_ORDER: SectionKey[] = [
   "about",
   "benefits",
@@ -162,6 +183,40 @@ export const LEGACY_SECTION_ORDER: SectionKey[] = [
   "howItWorks",
   "pricing",
 ];
+
+/** The standard order for ALL 7 treatment pages: everything about the visitor's own
+ *  concern first, then the shared brand material as a closing band.
+ *
+ *  Measured against inventory/rest-pages.json, ~14,000 characters per legacy page — about
+ *  30% of its weight — is byte-identical boilerplate repeated on all 7 (Reviews and the
+ *  BEST-IN-BANGKOK block are byte-identical; How-It-Works differs only by video id;
+ *  Pricing has two wording variants). Only the hero H1, the About block, the before/after
+ *  caption + media, and (on 4 of 7) the Benefits prose are genuinely per-condition. The
+ *  legacy template interleaves those few unique sections with the repeated ones.
+ *
+ *  This is a PRESENTATION change only — no copy is added, removed, or reworded, so it
+ *  carries no SEO content risk (same URL, same text, same headings, all still
+ *  server-rendered). Two moves relative to the first grey-hair pass:
+ *    1. Pricing rises above the shared blocks — the conversion action should not sit
+ *       behind ~1,000 words of brand copy.
+ *    2. crossSell becomes last, where a "what else do you treat" grid is genuine exit
+ *       navigation rather than mid-page filler (which is why showTreatmentsGrid is back
+ *       on, with the current page filtered out of its own grid).
+ */
+export const STANDARD_SECTION_ORDER: SectionKey[] = [
+  "about",
+  "beforeAfter",
+  "benefits",
+  "howItWorks",
+  "pricing",
+  "reviews",
+  "crossSell",
+];
+
+/** Trailing sections whose copy is shared across all 7 pages. TreatmentPage renders these
+ *  inside `.closing-band` — same words, lower visual rank (see global.css). Nothing here
+ *  is hidden; compressing is a type-scale and spacing change, not a content one. */
+export const CLOSING_SECTIONS: SectionKey[] = ["reviews", "crossSell"];
 
 export interface TreatmentPageContent {
   /** H1. Distinct from src/data/treatments.ts's homepage-card `title`. */
@@ -321,12 +376,45 @@ const CROSS_SELL_HEADING: Record<Lang, string> = {
   th: "ทรีทเม้นท์รักษาผมร่วงที่เห็นผลมากที่สุดในประเทศไทย",
 };
 
+/** Assembles a page's `tail` from the four shared constants above. Only the cross-sell
+ *  paragraphs are genuinely per-page (the Thai one names a different condition on each
+ *  treatment, and oily-scalp carries an extra flagship-salon line), so they are the one
+ *  argument. Everything else is word-for-word identical across all 7 legacy pages.
+ *  Exists so the five remaining pages can't drift by hand-copying 12 lines of wiring. */
+const sharedTail = (lang: Lang, crossSellParagraphs: Inline[][]): TailContent => ({
+  reviewsHeading: REVIEWS_HEADING[lang],
+  crossSell: { heading: CROSS_SELL_HEADING[lang], paragraphs: crossSellParagraphs },
+  howItWorks: HOW_IT_WORKS[lang],
+  pricing: PRICING[lang],
+});
+
+/** The chrome every treatment page shares, so a new page opts in with one spread rather
+ *  than six flags it might get subtly wrong. Established on grey-hair and standardised
+ *  across all 7 (2026-08-17 handoff open question #4).
+ *
+ *  NOTE on `heroVariant: "plain"`: grey-hair's original justification was page-specific
+ *  (its only candidate photos were clinical scalp macros). It is applied site-wide here
+ *  as a deliberate consistency call, NOT because that reasoning generalises — revisit
+ *  per page if Crispin wants a hero photo back on pages with an inviting one. */
+const STANDARD_CHROME = {
+  sectionOrder: STANDARD_SECTION_ORDER,
+  scrollTint: true,
+  hideDividers: true,
+  readingAids: true,
+  pricingCta: true,
+  heroVariant: "plain",
+} as const satisfies Partial<TreatmentPageContent>;
+
 export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
   "oily-scalp": {
     heroTitle: {
       en: "OILY ITCHY SCALP HAIR TREATMENT",
       th: "ทรีทเม้นท์สำหรับผมมันและอาการคันหนังศีรษะ",
     },
+    // Moved off the legacy order onto the shared standard. This page previously shipped
+    // the legacy section order and the homepage design language; it now matches every
+    // other treatment page. No copy changed — see STANDARD_SECTION_ORDER.
+    ...STANDARD_CHROME,
     seo: {
       title: {
         en: "Herbal Treatment to get rid of oily scalp - Bee Choo Herbal",
@@ -443,32 +531,16 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
       },
     },
     tail: {
-      en: {
-        reviewsHeading: REVIEWS_HEADING.en,
-        crossSell: {
-          heading: CROSS_SELL_HEADING.en,
-          paragraphs: [
-            ["Bee Choo Origin is the largest scalp/hair loss treatment salon/clinic specialising in the treatment of hair loss, dandruff, oily scalp and other hair issues. There are 21 outlets in Singapore, 68 outlets in Malaysia with more than 160 outlets across Asia Pacific. The Group has expanded into Bangkok, Thailand and sees Thailand as a potential market to grow the brand. Annually we serve millions of happy customers with effective and proven results."],
-            CROSS_SELL_FOUNDER.en,
-          ],
-        },
-        howItWorks: HOW_IT_WORKS.en,
-        pricing: PRICING.en,
-      },
-      th: {
-        reviewsHeading: REVIEWS_HEADING.th,
-        crossSell: {
-          heading: CROSS_SELL_HEADING.th,
-          paragraphs: [
-            ["บีชู ออริจิน เป็นทรีทเม้นท์ซาลอนและคลินิกที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง รังแค หนังศีรษะมันและคัน และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา ในมาเลเซียจำนวน 68 สาขา และมากกว่า 160 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ ประเทศไทย พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมาก"],
-            // This flagship-salon line appears on oily-scalp only, not on grey-hair.
-            ["ซาลอนสาขาใหญ่ของเราตั้งอยู่เขตตะวันนา บางกะปิ"],
-            CROSS_SELL_FOUNDER.th,
-          ],
-        },
-        howItWorks: HOW_IT_WORKS.th,
-        pricing: PRICING.th,
-      },
+      en: sharedTail("en", [
+        ["Bee Choo Origin is the largest scalp/hair loss treatment salon/clinic specialising in the treatment of hair loss, dandruff, oily scalp and other hair issues. There are 21 outlets in Singapore, 68 outlets in Malaysia with more than 160 outlets across Asia Pacific. The Group has expanded into Bangkok, Thailand and sees Thailand as a potential market to grow the brand. Annually we serve millions of happy customers with effective and proven results."],
+        CROSS_SELL_FOUNDER.en,
+      ]),
+      th: sharedTail("th", [
+        ["บีชู ออริจิน เป็นทรีทเม้นท์ซาลอนและคลินิกที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง รังแค หนังศีรษะมันและคัน และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา ในมาเลเซียจำนวน 68 สาขา และมากกว่า 160 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ ประเทศไทย พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมาก"],
+        // This flagship-salon line appears on oily-scalp only, not on grey-hair.
+        ["ซาลอนสาขาใหญ่ของเราตั้งอยู่เขตตะวันนา บางกะปิ"],
+        CROSS_SELL_FOUNDER.th,
+      ]),
     },
     descriptionDraftPending: ["en"],
   },
@@ -478,41 +550,24 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
       en: "REVERSE PREMATURE GREY WHITE HAIR",
       th: "ลดผมขาวและผมหงอกอย่างถาวร",
     },
-    // Revised IA (this page only, for now). The legacy page buries the payoff: a visitor
-    // meets ~2,700 characters of education about what grey hair IS before learning what
-    // the treatment DOES, then reaches "how it works" and the price only after a block of
-    // brand/awards copy. Two moves fix that without touching a single string:
-    //   1. proof (before/after photos) now comes straight after the education, not after
-    //      Benefits — the strongest evidence lands earlier;
-    //   2. How-It-Works + Pricing move ahead of Reviews + the brand/awards block, so the
-    //      practical "what happens and what does it cost" answers sit together, before
-    //      the credibility filler rather than behind it.
-    // The education block itself deliberately STAYS high (it is what the page ranks for);
-    // it is merely collapsed into the accordion the EN page already uses. See the
-    // `subsections` note in `about.th` below.
+    // This page piloted the revised IA; it now follows the shared standard instead of
+    // its own order. The rationale that drove it still holds and is preserved in
+    // STANDARD_SECTION_ORDER: the legacy page makes a visitor read ~2,700 characters of
+    // education about what grey hair IS before learning what the treatment DOES, then
+    // buries "how it works" and the price behind a block of brand/awards copy.
     //
-    // crossSell/pricing swapped vs. the first pass: Pricing now carries its own CTA
-    // (see pricingCta below), so it — not brand/awards trivia — is the last thing a
-    // visitor sees.
-    sectionOrder: ["about", "beforeAfter", "benefits", "howItWorks", "crossSell", "reviews", "pricing"],
-    // One continuous page tint (white easing to mint on scroll) replaces the previous
-    // per-section white/earth bands, so `sectionBackground` / `benefitsAccent` are
-    // gone — they'd be inert, since .scroll-tint forces every section transparent.
-    // `benefitsDivider` is likewise superseded by `hideDividers` below.
-    scrollTint: true,
-    hideDividers: true,
-    readingAids: true,
-    pricingCta: true,
-    // The 7-card cross-sell grid re-lists every treatment, including this one, right
-    // after the page has already made its own case — redundant filler here.
-    showTreatmentsGrid: false,
-    // No hero photo on this page. Every candidate was an extreme macro of a scalp —
-    // the homepage-card "before" shot (a hand parting hair to expose grey roots) and
-    // the "after" shot both read as clinical rather than inviting at hero scale. The
-    // legacy site's own hero area carries no photo either (only a video, see this
-    // file's audit history), so nothing is lost against the original. Dropping the
-    // green banner with it lets the H1 + CTAs open the page on the plain background.
-    heroVariant: "plain",
+    // Changes from this page's own first pass: Pricing rises above Reviews/crossSell
+    // rather than sitting last, and the 7-card grid comes back (it was off because
+    // re-listing every treatment mid-page read as filler — as the final section it is
+    // exit navigation, and the page no longer lists itself). The education block still
+    // deliberately stays high: it is what the page ranks for, merely collapsed into the
+    // accordion the EN page already uses. See the `subsections` note in `about.th`.
+    //
+    // One continuous page tint (white easing to mint on scroll) replaces per-section
+    // white/earth bands, so `sectionBackground` / `benefitsAccent` are gone — they'd be
+    // inert, since .scroll-tint forces every section transparent. `benefitsDivider` is
+    // likewise superseded by `hideDividers`.
+    ...STANDARD_CHROME,
     seo: {
       title: {
         en: "Reverse Premature Grey White Hair by Herbal Treatment - Bee Choo Herbal",
@@ -697,33 +752,36 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
       },
     },
     tail: {
-      en: {
-        reviewsHeading: REVIEWS_HEADING.en,
-        crossSell: {
-          heading: CROSS_SELL_HEADING.en,
-          paragraphs: [
-            ["Bee Choo Origin is the largest scalp/hair loss treatment salon/clinic specialising in the treatment of hair loss, dandruff, oily scalp and other hair issues. There are 21 outlets in Singapore, 68 outlets in Malaysia with more than 160 outlets across Asia Pacific. The Group has expanded into Bangkok, Thailand and sees Thailand as a potential market to grow the brand. Annually we serve millions of happy customers with effective and proven results."],
-            CROSS_SELL_FOUNDER.en,
-          ],
-        },
-        howItWorks: HOW_IT_WORKS.en,
-        pricing: PRICING.en,
-      },
-      th: {
-        reviewsHeading: REVIEWS_HEADING.th,
-        crossSell: {
-          heading: CROSS_SELL_HEADING.th,
-          paragraphs: [
-            // Note: this page says "หนังศีรษะเป็นเชื้อรา" where oily-scalp says
-            // "หนังศีรษะมันและคัน" — verbatim per page, which is why this isn't a constant.
-            ["บีชู ออริจิน เป็นทรีทเม้นท์ซาลอนและคลินิกที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง รังแค หนังศีรษะเป็นเชื้อรา และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา ในมาเลเซียจำนวน 68 สาขา และมากกว่า 160 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ ประเทศไทย พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมาก"],
-            CROSS_SELL_FOUNDER.th,
-          ],
-        },
-        howItWorks: HOW_IT_WORKS.th,
-        pricing: PRICING.th,
-      },
+      en: sharedTail("en", [
+        ["Bee Choo Origin is the largest scalp/hair loss treatment salon/clinic specialising in the treatment of hair loss, dandruff, oily scalp and other hair issues. There are 21 outlets in Singapore, 68 outlets in Malaysia with more than 160 outlets across Asia Pacific. The Group has expanded into Bangkok, Thailand and sees Thailand as a potential market to grow the brand. Annually we serve millions of happy customers with effective and proven results."],
+        CROSS_SELL_FOUNDER.en,
+      ]),
+      th: sharedTail("th", [
+        // Note: this page says "หนังศีรษะเป็นเชื้อรา" where oily-scalp says
+        // "หนังศีรษะมันและคัน" — verbatim per page, which is why this isn't a constant.
+        ["บีชู ออริจิน เป็นทรีทเม้นท์ซาลอนและคลินิกที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง รังแค หนังศีรษะเป็นเชื้อรา และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา ในมาเลเซียจำนวน 68 สาขา และมากกว่า 160 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ ประเทศไทย พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมาก"],
+        CROSS_SELL_FOUNDER.th,
+      ]),
     },
     descriptionDraftPending: ["en"],
   },
 };
+
+// `sectionOrder` is a WHITELIST, not merely an order: TreatmentPage maps over it, so any
+// key left out is silently never rendered and that section's copy vanishes from the page
+// with no build error. With every page now carrying an explicit order, a single typo
+// would drop indexed content — exactly the failure mode CLAUDE.md §7 exists to prevent.
+// Fail the build instead of shipping a page that quietly lost a section.
+for (const [slug, page] of Object.entries(TREATMENT_PAGES)) {
+  if (!page.sectionOrder) continue;
+  const order = page.sectionOrder;
+  const missing = LEGACY_SECTION_ORDER.filter((key) => !order.includes(key));
+  const duplicated = order.filter((key, i) => order.indexOf(key) !== i);
+  if (missing.length > 0 || duplicated.length > 0) {
+    throw new Error(
+      `treatment-pages: "${slug}" has an invalid sectionOrder` +
+        (missing.length > 0 ? ` — missing section(s) whose copy would silently not render: ${missing.join(", ")}` : "") +
+        (duplicated.length > 0 ? ` — duplicated section(s): ${duplicated.join(", ")}` : ""),
+    );
+  }
+}

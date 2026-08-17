@@ -179,6 +179,39 @@
   display: none;
 }
 
+/* Closing band: the trailing Reviews + brand/awards sections on a treatment page.
+   Their copy is byte-identical across all 7 legacy pages (~14,000 characters, roughly
+   30% of each page, verified against inventory/rest-pages.json), so they are set at a
+   lower visual rank than the sections about the visitor's own condition. Every word
+   still renders in the DOM and stays crawlable: this is type scale and spacing only,
+   never display:none.
+   Colour is deliberately untouched. Dimming shared copy is the obvious way to
+   de-emphasise it and it is how an earlier pass shipped a caption at 3.79:1, under
+   WCAG AA — size and whitespace carry the hierarchy here instead, so contrast is
+   exactly what it was. */
+.closing-band section {
+  padding-block: 2.5rem;
+}
+.closing-band h2 {
+  font-size: 1.25rem;
+}
+@media (min-width: 768px) {
+  .closing-band section {
+    padding-block: 3.5rem;
+  }
+  .closing-band h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Marks where the page turns from "your condition" to "our credentials". A page using
+   scrollTint has transparent sections and hidden dividers, so without a seam here the
+   two zones run together. */
+.closing-band-start {
+  margin-top: 1.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-brand-green) 15%, transparent);
+}
+
 /* Hero aura — layered radial glow in brand white (no off-brand hues; the yellow tint
    this had is gone per Crispin's feedback), deepening only slightly toward
    brand-green-deep at the base. Doubles as the always-on fallback surface beneath the

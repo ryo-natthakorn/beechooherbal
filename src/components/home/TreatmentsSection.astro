@@ -33,6 +33,7 @@
 // just reintroduce the crop).
 import { Image } from "astro:assets";
 import LeafDivider from "../LeafDivider.astro";
+import AwardsMarquee from "../AwardsMarquee.astro";
 import { TREATMENTS } from "../../data/treatments";
 import { HOME, type Lang } from "../../data/home";
 import type { Inline } from "../../data/treatment-pages";
@@ -50,9 +51,20 @@ interface Props {
    *  treatment grid — used where re-listing every treatment (including the one the
    *  visitor is already reading) is redundant. Defaults to shown (homepage's usage). */
   showTreatmentGrid?: boolean;
+  /** Treatment pages pass their own slug so the grid never lists the page the visitor
+   *  is already on — that row is the one card that can't be a useful next step. Omitted
+   *  on the homepage, where all 7 are valid destinations. */
+  excludeSlug?: string;
+  /** Renders the 12-badge award marquee between the brand paragraphs and the grid, which
+   *  is where the legacy treatment pages carry it inside this same block. The homepage
+   *  has its own AwardsSection and passes nothing. */
+  showAwards?: boolean;
 }
 
-const { lang, heading, paragraphs = [], background, showTreatmentGrid = true } = Astro.props;
+const { lang, heading, paragraphs = [], background, showTreatmentGrid = true, excludeSlug, showAwards = false } = Astro.props;
+const treatments = excludeSlug ? TREATMENTS.filter((t) => t.slug !== excludeSlug) : TREATMENTS;
+// Same 12 badges the homepage's AwardsSection renders, per-language alt text.
+const awards = showAwards ? HOME.awards.items.map((item) => ({ img: item.img, alt: item.alt[lang] })) : [];
 const bgClass = background === "white" ? "bg-white" : "bg-brand-earth/25";
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
@@ -101,13 +113,15 @@ const bandWidths = (intrinsicWidth: number) =>
       )
     }
 
+    {showAwards && <div class="mb-10"><AwardsMarquee awards={awards} /></div>}
+
     {showTreatmentGrid && (
     <div
       class="treatments-md flex flex-col gap-3 md:grid md:grid-cols-[280px_1fr] md:items-stretch md:gap-6"
-      style={`--treatment-count: ${TREATMENTS.length}`}
+      style={`--treatment-count: ${treatments.length}`}
       data-treatments-md
     >
-      {TREATMENTS.map((treatment, i) => (
+      {treatments.map((treatment, i) => (
         <div class="treatment-row overflow-hidden rounded-2xl border border-brand-earth bg-white md:contents">
           <label
             for={`treatment-${i}`}
