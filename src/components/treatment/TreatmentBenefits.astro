@@ -16,12 +16,18 @@ interface Props {
   /** Second video the legacy page carries here on some treatments (grey-hair: a
    *  Facebook clip), sized to match the hero video exactly. */
   video?: { src: string; title: string };
+  /** Gives this section its own tone (brand-serenity, currently unused elsewhere on
+   *  the site) instead of the shared white/earth alternation — used where Benefits
+   *  would otherwise sit as a third consecutive same-tint section, reading as one
+   *  undifferentiated block. Kept separate from `background` rather than widening
+   *  that shared prop across all 7 reused components for a tone only this one uses. */
+  accent?: boolean;
 }
 
-const { lang, heading, blocks, background, divider = true, video } = Astro.props;
+const { lang, heading, blocks, background, divider = true, video, accent = false } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
-const bgClass = background === "white" ? "bg-white" : "bg-brand-earth/25";
+const bgClass = accent ? "bg-brand-serenity/30" : background === "white" ? "bg-white" : "bg-brand-earth/25";
 ---
 
 <section class={`${bgClass} py-16 md:py-24`}>

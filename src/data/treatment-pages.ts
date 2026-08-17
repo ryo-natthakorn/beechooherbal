@@ -199,6 +199,23 @@ export interface TreatmentPageContent {
    *  (shipped) still show the wrong one until that's a deliberate call, not a side
    *  effect of another page's edit. */
   howItWorksVideo?: { id: string; title: Record<Lang, string> };
+  /** Page-level hero image/alt override. Distinct from treatments.ts's `image` (the
+   *  homepage condition-card thumbnail) so a hero-only swap doesn't touch that
+   *  already-signed-off card. Omit to keep using the homepage-card photo, as before. */
+  heroImage?: ImageMetadata;
+  heroImageAlt?: Record<Lang, string>;
+  /** CSS object-position for `heroImage`, and whether it needs the deepened gradient
+   *  — see TreatmentHero.astro's prop doc comments. Only meaningful alongside
+   *  `heroImage`; kept as explicit fields (not inferred from heroImage's presence) so
+   *  a future page can override the image without inheriting grey-hair's crop. */
+  heroImagePosition?: string;
+  heroOverlayStrength?: "default" | "strong";
+  /** Gives Benefits its own brand-serenity tone instead of the white/earth
+   *  alternation — see TreatmentBenefits.astro's `accent` prop doc comment. */
+  benefitsAccent?: boolean;
+  /** Adds Call/LINE buttons to the Pricing section — see PricingSection.astro's
+   *  `showCta` prop doc comment. */
+  pricingCta?: boolean;
   about: Record<Lang, AboutContent>;
   benefits: Record<Lang, BenefitsContent>;
   beforeAfter: Record<Lang, BeforeAfterContent>;
@@ -463,15 +480,41 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     // The education block itself deliberately STAYS high (it is what the page ranks for);
     // it is merely collapsed into the accordion the EN page already uses. See the
     // `subsections` note in `about.th` below.
-    sectionOrder: ["about", "beforeAfter", "benefits", "howItWorks", "pricing", "reviews", "crossSell"],
+    //
+    // crossSell/pricing swapped vs. the first pass: Pricing now carries its own CTA
+    // (see pricingCta below), so it — not brand/awards trivia — is the last thing a
+    // visitor sees.
+    sectionOrder: ["about", "beforeAfter", "benefits", "howItWorks", "crossSell", "reviews", "pricing"],
     // Before/After now sits directly against Benefits (see sectionOrder above) — same
     // tint removes the need for a colour-change seam between them, so Benefits also
-    // drops its own divider ornament (About keeps its usual tint/divider).
+    // drops its own divider ornament (About keeps its usual tint/divider). Benefits
+    // itself gets a distinct accent tone (below) rather than joining that band, so the
+    // "what you get" section still reads as its own moment, not a third earth section.
     sectionBackground: { about: "earth", beforeAfter: "earth", reviews: "white" },
     benefitsDivider: false,
+    benefitsAccent: true,
+    pricingCta: true,
     // The 7-card cross-sell grid re-lists every treatment, including this one, right
     // after the page has already made its own case — redundant filler here.
     showTreatmentsGrid: false,
+    // Hero reuses the "after" photo already sourced for the Before/After gallery
+    // (see beforeAfter.images below) rather than treatments.ts's homepage-card photo
+    // (the "before" shot: a hand parting hair to expose the roots) — the legacy site's
+    // own hero area has no photo at all (only a video, see the file's audit history),
+    // so this was always a rebuild-era placeholder, not sourced content; no fidelity
+    // constraint either way. The after-photo is less clinical (one finger, not a whole
+    // hand) and its warm copper tones read better as a hero band once cropped away
+    // from the hand — see TreatmentPage.astro's imagePosition/overlayStrength wiring.
+    heroImage: greyHairAfterImage,
+    heroImageAlt: {
+      en: "Hair after Bee Choo Herbal's natural grey coverage treatment",
+      th: "เส้นผมหลังทำทรีทเม้นท์ปิดผมขาวด้วยสมุนไพรจากบีชู เฮอร์เบิล",
+    },
+    // Crops toward the lower part-line/hair-texture area, away from the finger near
+    // the top of the source photo; deepened gradient keeps the H1/CTAs legible over a
+    // busier, more textural crop than the site's other treatment-page heroes use.
+    heroImagePosition: "center 65%",
+    heroOverlayStrength: "strong",
     seo: {
       title: {
         en: "Reverse Premature Grey White Hair by Herbal Treatment - Bee Choo Herbal",

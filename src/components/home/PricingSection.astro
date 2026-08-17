@@ -8,6 +8,7 @@
 // that text. The per-tier data below only feeds the image's alt text now.
 import { Image } from "astro:assets";
 import { HOME, type Lang } from "../../data/home";
+import { UI } from "../../i18n/ui";
 import priceListImage from "../../assets/images/price-list.jpg";
 
 // `closing` is an optional override used by the TREATMENT pages only — the legacy
@@ -22,10 +23,15 @@ interface Props {
   closing?: string[];
   /** Tint override, used only by treatment pages that reorder their sections. */
   background?: "white" | "earth";
+  /** Adds Call/LINE buttons under the closing lines — this is the page's natural
+   *  conversion moment (price stated, decision made) but had no direct action
+   *  before. Opt-in: the homepage relies on its own hero/header CTAs instead. */
+  showCta?: boolean;
 }
 
-const { lang, heading, intro, closing = [], background } = Astro.props;
+const { lang, heading, intro, closing = [], background, showCta = false } = Astro.props;
 const bgClass = background === "white" ? "bg-white" : "bg-brand-earth/25";
+const ui = UI[lang];
 const t = HOME.pricing;
 const sectionHeading = heading ?? t.heading[lang];
 const sectionIntro = intro ?? t.body[lang];
@@ -51,6 +57,26 @@ const imageAlt = `${t.heading[lang]}: ${t.tiers
           {closing.map((line) => (
             <p class="leading-relaxed">{line}</p>
           ))}
+        </div>
+      )
+    }
+    {
+      showCta && (
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          <a
+            href="tel:+66020726698"
+            class="btn-tactile flex min-h-11 items-center rounded-full bg-brand-yellow px-6 font-bold text-brand-ink hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+          >
+            {ui.cta.call}
+          </a>
+          <a
+            href="https://lin.ee/ll3injb"
+            target="_blank"
+            rel="noopener"
+            class="btn-tactile flex min-h-11 items-center rounded-full bg-brand-green px-6 font-bold text-white hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+          >
+            {ui.cta.line}
+          </a>
         </div>
       )
     }

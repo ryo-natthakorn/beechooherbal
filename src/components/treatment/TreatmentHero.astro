@@ -13,11 +13,21 @@ interface Props {
   heroTitle: string;
   image: ImageMetadata;
   imageAlt: string;
+  /** CSS object-position for the hero photo. Default "center" everywhere except
+   *  pages that need to crop a specific area into the wide 21/9 desktop band. */
+  imagePosition?: string;
+  /** "strong" deepens the gradient for photos that need more separation from the
+   *  H1/CTA text (e.g. a busier or more textural image than the default crop). */
+  overlayStrength?: "default" | "strong";
 }
 
-const { lang, heroTitle, image, imageAlt } = Astro.props;
+const { lang, heroTitle, image, imageAlt, imagePosition = "center", overlayStrength = "default" } = Astro.props;
 const ui = UI[lang];
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const gradientClass =
+  overlayStrength === "strong"
+    ? "bg-gradient-to-t from-brand-green/95 via-brand-green/55 to-brand-green/20"
+    : "bg-gradient-to-t from-brand-green/90 via-brand-green/40 to-brand-green/10";
 
 // Verbatim shared strap line, identical across all 7 treatment pages on the live
 // site (see spec: this is NOT the same string as the homepage's condition-listing
@@ -36,9 +46,10 @@ const strapline =
       widths={[640, 1024, 1440]}
       sizes="100vw"
       loading="eager"
+      style={`object-position: ${imagePosition}`}
       class="absolute inset-0 h-full w-full object-cover"
     />
-    <div class="absolute inset-0 bg-gradient-to-t from-brand-green/90 via-brand-green/40 to-brand-green/10" aria-hidden="true" />
+    <div class={`absolute inset-0 ${gradientClass}`} aria-hidden="true" />
   </div>
 
   <div class="relative mx-auto max-w-4xl px-4 pt-2 pb-10 text-center text-white md:px-8 md:pb-14">

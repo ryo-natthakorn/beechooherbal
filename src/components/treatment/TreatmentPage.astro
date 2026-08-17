@@ -51,12 +51,25 @@ const facebookVideo = page.facebookVideoHref
   ? { src: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(page.facebookVideoHref)}&show_text=false`, title: page.heroTitle[lang] }
   : undefined;
 
+// Hero image/alt can be overridden per page (see `heroImage` doc comment) without
+// touching treatments.ts's `image` — that field also feeds the homepage's condition
+// card, which a hero-only swap must not affect.
+const heroImage = page.heroImage ?? treatment.image;
+const heroImageAlt = page.heroImageAlt?.[lang] ?? treatment.alt[lang];
+
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://beechooherbal.com").href;
-const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://beechooherbal.com").href;
+const heroImageAbsolute = new URL(heroImage.src, Astro.site ?? "https://beechooherbal.com").href;
 ---
 
 <main id="main">
-  <TreatmentHero lang={lang} heroTitle={page.heroTitle[lang]} image={treatment.image} imageAlt={treatment.alt[lang]} />
+  <TreatmentHero
+    lang={lang}
+    heroTitle={page.heroTitle[lang]}
+    image={heroImage}
+    imageAlt={heroImageAlt}
+    imagePosition={page.heroImagePosition}
+    overlayStrength={page.heroOverlayStrength}
+  />
 
   {
     sectionOrder.map((key) => (
@@ -83,6 +96,7 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
             background={backgroundFor("benefits")}
             divider={page.benefitsDivider}
             video={facebookVideo}
+            accent={page.benefitsAccent}
           />
         )}
 
@@ -125,6 +139,7 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
             intro={tail.pricing.intro}
             closing={tail.pricing.closing}
             background={backgroundFor("pricing")}
+            showCta={page.pricingCta}
           />
         )}
       </>
