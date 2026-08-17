@@ -88,6 +88,46 @@
   }
 }
 
+/* Scroll-driven page tint (opt-in via .scroll-tint on <main>) — the page opens white
+   and eases to the brand mint (the same serenity/30 the Benefits band used) as the
+   visitor scrolls. Zero JS: same scroll-timeline mechanism as .reveal above, no
+   listener, no rAF. Without scroll-timeline support (Safari/Firefox today) or under
+   reduced-motion the page simply stays white — a complete, intentional design rather
+   than a broken half-state.
+   Sections are forced transparent so ONE page-level tint shows through, instead of
+   each band painting its own colour over it. This deliberately replaces the
+   alternating white/earth rhythm on pages that opt in. */
+.scroll-tint {
+  background-color: #fff;
+}
+.scroll-tint > section {
+  background-color: transparent;
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .scroll-tint {
+      animation: scroll-tint 1ms linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+
+@keyframes scroll-tint {
+  from {
+    background-color: #fff;
+  }
+  to {
+    background-color: color-mix(in srgb, var(--color-brand-serenity) 30%, #fff);
+  }
+}
+
+/* Decorative leaf ornament between sections — suppressed page-wide where a design
+   opts out (.no-dividers on <main>). The element is aria-hidden already, so hiding
+   it removes nothing from assistive tech. */
+.no-dividers .leaf-divider {
+  display: none;
+}
+
 /* Hero aura — layered radial glow in brand white (no off-brand hues; the yellow tint
    this had is gone per Crispin's feedback), deepening only slightly toward
    brand-green-deep at the base. Doubles as the always-on fallback surface beneath the

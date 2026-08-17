@@ -111,6 +111,12 @@ export interface BeforeAfterImage {
   /** Imported ImageMetadata once the legacy photo is in src/assets/. */
   src: ImageMetadata;
   alt: string;
+  /** Short visible label under the photo. The legacy site shows NO caption on these
+   *  images — the descriptive text below is its `alt` attribute — so the visible
+   *  label is our own presentation choice, not legacy copy. A short one keeps the
+   *  pair symmetrical (the long alt wraps to two lines under one photo and one under
+   *  the other). `alt` still carries the full description for screen readers. */
+  caption?: string;
 }
 
 /** The legacy "SEE OUR CLIENT'S BEFORE AFTER RESULTS" band. Heading and body render
@@ -167,8 +173,15 @@ export interface TreatmentPageContent {
   sectionOrder?: SectionKey[];
   /** Per-page tint override, keyed by section. Omit a key to keep that section's own
    *  component default. Only needed by pages with a custom `sectionOrder` — the
-   *  default alternation is correct for the legacy order. */
+   *  default alternation is correct for the legacy order. Ignored when `scrollTint`
+   *  is on, which paints one tint for the whole page instead. */
   sectionBackground?: Partial<Record<SectionKey, "white" | "earth">>;
+  /** Opens the page white and eases it to the brand mint as the visitor scrolls,
+   *  replacing the alternating per-section bands with one continuous page tint.
+   *  See the `.scroll-tint` rules in src/styles/global.css. */
+  scrollTint?: boolean;
+  /** Drops the decorative leaf ornament between sections page-wide. */
+  hideDividers?: boolean;
   /** Set false to hide Benefits' own divider ornament — used when Benefits is
    *  repositioned flush against another same-tint section (see grey-hair). */
   benefitsDivider?: boolean;
@@ -478,14 +491,12 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     // (see pricingCta below), so it — not brand/awards trivia — is the last thing a
     // visitor sees.
     sectionOrder: ["about", "beforeAfter", "benefits", "howItWorks", "crossSell", "reviews", "pricing"],
-    // Before/After now sits directly against Benefits (see sectionOrder above) — same
-    // tint removes the need for a colour-change seam between them, so Benefits also
-    // drops its own divider ornament (About keeps its usual tint/divider). Benefits
-    // itself gets a distinct accent tone (below) rather than joining that band, so the
-    // "what you get" section still reads as its own moment, not a third earth section.
-    sectionBackground: { about: "earth", beforeAfter: "earth", reviews: "white" },
-    benefitsDivider: false,
-    benefitsAccent: true,
+    // One continuous page tint (white easing to mint on scroll) replaces the previous
+    // per-section white/earth bands, so `sectionBackground` / `benefitsAccent` are
+    // gone — they'd be inert, since .scroll-tint forces every section transparent.
+    // `benefitsDivider` is likewise superseded by `hideDividers` below.
+    scrollTint: true,
+    hideDividers: true,
     pricingCta: true,
     // The 7-card cross-sell grid re-lists every treatment, including this one, right
     // after the page has already made its own case — redundant filler here.
@@ -651,9 +662,13 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
         body: ["Immediately after herbal treatment, white hair will be covered with a copper dye while leaving black hairs unchanged."],
         // Alt text is the live page's actual attribute, verbatim (a previous session's
         // tracking note in this file's header paraphrased it slightly — corrected here).
+        // Captions are short so both photos read as a symmetrical pair — the full
+        // legacy alt text is two lines under one photo and one under the other. The
+        // words come from this page's own verbatim heading ("SEE OUR CLIENT'S BEFORE
+        // AFTER RESULTS"), not from anything invented.
         images: [
-          { src: greyHairBeforeImage, alt: "White hair before herbal treatment" },
-          { src: greyHairAfterImage, alt: "White Hairs Gone Immediately After Treatment" },
+          { src: greyHairBeforeImage, alt: "White hair before herbal treatment", caption: "Before" },
+          { src: greyHairAfterImage, alt: "White Hairs Gone Immediately After Treatment", caption: "After" },
         ],
       },
       th: {
@@ -661,9 +676,12 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
         body: ["สีผมของลูกค้าของเราได้ถูกปกปิดทันทีหลังจากทำทรีทเม้นท์สมุนไพร ด้วยคอปเปอร์ธรรมชาติจะช่วยปกปิดผมขาวและผมหงอกแต่ยังคงสีผมธรรมชาติไว้ตามเดิมค่ะ"],
         // Live TH page's <img> tags have no alt attribute at all; these are a plain
         // factual description (not invented marketing copy) to meet CLAUDE.md §7.
+        // "ก่อน" / "หลัง" are lifted straight from this page's own verbatim TH heading
+        // ("มาดูผล ก่อน - หลัง ของลูกค้าของเรากันค่ะ") — existing site copy, not a
+        // translation of the English labels (CLAUDE.md §8).
         images: [
-          { src: greyHairBeforeImage, alt: "ผมขาวก่อนทำทรีทเม้นท์" },
-          { src: greyHairAfterImage, alt: "ผมขาวหลังทำทรีทเม้นท์ทันที" },
+          { src: greyHairBeforeImage, alt: "ผมขาวก่อนทำทรีทเม้นท์", caption: "ก่อน" },
+          { src: greyHairAfterImage, alt: "ผมขาวหลังทำทรีทเม้นท์ทันที", caption: "หลัง" },
         ],
       },
     },
