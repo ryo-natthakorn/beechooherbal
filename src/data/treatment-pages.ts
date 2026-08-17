@@ -199,17 +199,10 @@ export interface TreatmentPageContent {
    *  (shipped) still show the wrong one until that's a deliberate call, not a side
    *  effect of another page's edit. */
   howItWorksVideo?: { id: string; title: Record<Lang, string> };
-  /** Page-level hero image/alt override. Distinct from treatments.ts's `image` (the
-   *  homepage condition-card thumbnail) so a hero-only swap doesn't touch that
-   *  already-signed-off card. Omit to keep using the homepage-card photo, as before. */
-  heroImage?: ImageMetadata;
-  heroImageAlt?: Record<Lang, string>;
-  /** CSS object-position for `heroImage`, and whether it needs the deepened gradient
-   *  — see TreatmentHero.astro's prop doc comments. Only meaningful alongside
-   *  `heroImage`; kept as explicit fields (not inferred from heroImage's presence) so
-   *  a future page can override the image without inheriting grey-hair's crop. */
-  heroImagePosition?: string;
-  heroOverlayStrength?: "default" | "strong";
+  /** "plain" drops the hero photo band and the green banner behind it, so the H1,
+   *  strapline and CTAs sit on the page background with room above — see
+   *  TreatmentHero.astro's `variant` prop. Omit for the standard photo hero. */
+  heroVariant?: "image" | "plain";
   /** Gives Benefits its own brand-serenity tone instead of the white/earth
    *  alternation — see TreatmentBenefits.astro's `accent` prop doc comment. */
   benefitsAccent?: boolean;
@@ -497,24 +490,13 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     // The 7-card cross-sell grid re-lists every treatment, including this one, right
     // after the page has already made its own case — redundant filler here.
     showTreatmentsGrid: false,
-    // Hero reuses the "after" photo already sourced for the Before/After gallery
-    // (see beforeAfter.images below) rather than treatments.ts's homepage-card photo
-    // (the "before" shot: a hand parting hair to expose the roots) — the legacy site's
-    // own hero area has no photo at all (only a video, see the file's audit history),
-    // so this was always a rebuild-era placeholder, not sourced content; no fidelity
-    // constraint either way. The after-photo is less clinical (one finger, not a whole
-    // hand) and its warm copper tones read better as a hero band once cropped away
-    // from the hand — see TreatmentPage.astro's imagePosition/overlayStrength wiring.
-    heroImage: greyHairAfterImage,
-    heroImageAlt: {
-      en: "Hair after Bee Choo Herbal's natural grey coverage treatment",
-      th: "เส้นผมหลังทำทรีทเม้นท์ปิดผมขาวด้วยสมุนไพรจากบีชู เฮอร์เบิล",
-    },
-    // Crops toward the lower part-line/hair-texture area, away from the finger near
-    // the top of the source photo; deepened gradient keeps the H1/CTAs legible over a
-    // busier, more textural crop than the site's other treatment-page heroes use.
-    heroImagePosition: "center 65%",
-    heroOverlayStrength: "strong",
+    // No hero photo on this page. Every candidate was an extreme macro of a scalp —
+    // the homepage-card "before" shot (a hand parting hair to expose grey roots) and
+    // the "after" shot both read as clinical rather than inviting at hero scale. The
+    // legacy site's own hero area carries no photo either (only a video, see this
+    // file's audit history), so nothing is lost against the original. Dropping the
+    // green banner with it lets the H1 + CTAs open the page on the plain background.
+    heroVariant: "plain",
     seo: {
       title: {
         en: "Reverse Premature Grey White Hair by Herbal Treatment - Bee Choo Herbal",

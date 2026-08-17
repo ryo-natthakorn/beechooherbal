@@ -50,7 +50,10 @@ const accordionItems = [
 
     <YouTubeEmbed id={videoId} title={videoTitle} />
 
-    <div class="mt-8 flex flex-col gap-4 text-brand-origin">
+    {/* max-w-prose (65ch) keeps prose in the comfortable 60-75 character band. The
+        container stays wider so media (video, photos) isn't shrunk with the text —
+        wide media, narrow copy. */}
+    <div class="mx-auto mt-8 flex max-w-prose flex-col gap-4 text-brand-origin">
       {intro.map((p) => <p class="leading-relaxed">{p}</p>)}
     </div>
 
@@ -81,7 +84,11 @@ const accordionItems = [
                 item.image && (
                   <figure class="mx-auto mt-1 max-w-xs">
                     <Image src={item.image.src} alt={item.image.alt} width={300} height={225} class="w-full rounded-lg shadow-soft" />
-                    <figcaption class="mt-2 text-center text-sm italic text-brand-origin/80">{item.image.caption}</figcaption>
+                    {/* Full-strength brand-origin, not /80: at 80% over the white card this
+                        measured 3.79:1, under WCAG AA's 4.5:1 for 14px text. The italic +
+                        smaller size already mark it as a caption, so the opacity was doing
+                        nothing the type didn't already do. Full strength is 5.89:1. */}
+                    <figcaption class="mt-2 text-center text-sm italic text-brand-origin">{item.image.caption}</figcaption>
                   </figure>
                 )
               }

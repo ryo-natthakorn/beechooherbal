@@ -31,6 +31,9 @@ interface Props {
 
 const { lang, heading, intro, closing = [], background, showCta = false } = Astro.props;
 const bgClass = background === "white" ? "bg-white" : "bg-brand-earth/25";
+// Treatment pages pass a much longer `intro` than the homepage's short blurb, so only
+// they get the 65ch prose cap — the homepage (signed off) keeps its existing width.
+const introWidth = intro ? "max-w-prose" : "max-w-2xl";
 const ui = UI[lang];
 const t = HOME.pricing;
 const sectionHeading = heading ?? t.heading[lang];
@@ -48,12 +51,12 @@ const imageAlt = `${t.heading[lang]}: ${t.tiers
       {sectionHeading}
     </h2>
     <Image src={priceListImage} alt={imageAlt} width={1600} height={1132} class="mx-auto w-full max-w-2xl rounded-xl shadow-soft-lg" />
-    <p class="mx-auto mt-8 max-w-2xl text-sm leading-relaxed text-brand-origin">
+    <p class={`mx-auto mt-8 ${introWidth} text-sm leading-relaxed text-brand-origin`}>
       {sectionIntro}
     </p>
     {
       closing.length > 0 && (
-        <div class="mx-auto mt-6 flex max-w-2xl flex-col gap-2 text-brand-origin">
+        <div class="mx-auto mt-6 flex max-w-prose flex-col gap-2 text-brand-origin">
           {closing.map((line) => (
             <p class="leading-relaxed">{line}</p>
           ))}

@@ -51,24 +51,19 @@ const facebookVideo = page.facebookVideoHref
   ? { src: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(page.facebookVideoHref)}&show_text=false`, title: page.heroTitle[lang] }
   : undefined;
 
-// Hero image/alt can be overridden per page (see `heroImage` doc comment) without
-// touching treatments.ts's `image` — that field also feeds the homepage's condition
-// card, which a hero-only swap must not affect.
-const heroImage = page.heroImage ?? treatment.image;
-const heroImageAlt = page.heroImageAlt?.[lang] ?? treatment.alt[lang];
-
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://beechooherbal.com").href;
-const heroImageAbsolute = new URL(heroImage.src, Astro.site ?? "https://beechooherbal.com").href;
+// Schema.org still wants a representative image even where the page renders no hero
+// photo (heroVariant "plain"), so this always points at the treatment's own photo.
+const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://beechooherbal.com").href;
 ---
 
 <main id="main">
   <TreatmentHero
     lang={lang}
     heroTitle={page.heroTitle[lang]}
-    image={heroImage}
-    imageAlt={heroImageAlt}
-    imagePosition={page.heroImagePosition}
-    overlayStrength={page.heroOverlayStrength}
+    image={treatment.image}
+    imageAlt={treatment.alt[lang]}
+    variant={page.heroVariant}
   />
 
   {
