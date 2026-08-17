@@ -88,36 +88,87 @@
   }
 }
 
-/* Scroll-driven page tint (opt-in via .scroll-tint on <main>) — the page opens white
-   and eases to the brand mint (the same serenity/30 the Benefits band used) as the
-   visitor scrolls. Zero JS: same scroll-timeline mechanism as .reveal above, no
-   listener, no rAF. Without scroll-timeline support (Safari/Firefox today) or under
-   reduced-motion the page simply stays white — a complete, intentional design rather
-   than a broken half-state.
-   Sections are forced transparent so ONE page-level tint shows through, instead of
-   each band painting its own colour over it. This deliberately replaces the
-   alternating white/earth rhythm on pages that opt in. */
-.scroll-tint {
-  background-color: #fff;
+/* --scroll-progress (0 -> 1 down the document) is published on <html> by the small
+   script in TreatmentPage.astro and drives both the page tint and the reading-progress
+   bar below. It replaces an earlier CSS `animation-timeline: scroll()` version, which
+   Safari does not support — that shipped as a flat white page on iPhone, i.e. the
+   effect silently did nothing for a large share of this site's traffic. A passive
+   scroll listener batched into one rAF works everywhere and only touches a custom
+   property, so no layout is recalculated. */
+
+/* Page tint: white easing to the brand mint as the visitor scrolls. Sections are
+   forced transparent so ONE page-level tint shows through instead of each band
+   painting over it — this deliberately replaces the alternating white/earth rhythm
+   on pages that opt in.
+   Implemented as a fixed sheet whose OPACITY tracks scroll, rather than animating a
+   colour: opacity takes a bare number straight from the custom property and is
+   universally supported, where interpolating a colour would lean on calc() inside
+   color-mix() — if that failed to parse on any engine the whole effect would silently
+   vanish, which is the exact failure this replaced.
+   The mint is serenity at 65%, not full strength: at 100% body text on it measures
+   4.11:1, under WCAG AA. 65% gives 4.69:1 and is still >2x the previous 30% tint, so
+   the transition is clearly visible. `z-index: -1` keeps it above the page canvas but
+   behind all content; <main> creates no stacking context, and <body> paints no
+   background of its own, so nothing covers it. */
+.page-tint {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: color-mix(in srgb, var(--color-brand-serenity) 65%, #fff);
+  opacity: var(--scroll-progress, 0);
+  pointer-events: none;
 }
-.scroll-tint > section {
+.scroll-tint section {
   background-color: transparent;
 }
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: scroll()) {
-    .scroll-tint {
-      animation: scroll-tint 1ms linear both;
-      animation-timeline: scroll(root block);
-    }
-  }
+
+/* Reading progress: a fixed vertical strip at the left edge whose fill grows as the
+   page scrolls. Purely decorative (the TOC below carries the real navigation), so it
+   is aria-hidden and never focusable. */
+.reading-progress {
+  position: fixed;
+  inset-block: 0;
+  left: 0;
+  z-index: 30;
+  width: 0.25rem;
+  background-color: color-mix(in srgb, var(--color-brand-green) 12%, transparent);
+  pointer-events: none;
+}
+.reading-progress > span {
+  display: block;
+  width: 100%;
+  height: calc(var(--scroll-progress, 0) * 100%);
+  background-color: var(--color-brand-green);
 }
 
-@keyframes scroll-tint {
-  from {
-    background-color: #fff;
+/* Table of contents. Inline card by default (works on every screen, including
+   mobile); only at >=1536px is there enough gutter beside the 72rem content column
+   to float it in the margin without overlapping the text. */
+@media (min-width: 1536px) {
+  .toc {
+    position: fixed;
+    top: 50%;
+    left: 1.25rem;
+    width: 11rem;
+    max-height: 72vh;
+    overflow-y: auto;
+    transform: translateY(-50%);
+    z-index: 20;
   }
-  to {
-    background-color: color-mix(in srgb, var(--color-brand-serenity) 30%, #fff);
+}
+.toc a[aria-current="true"] {
+  color: var(--color-brand-green);
+  font-weight: 700;
+}
+
+/* Anchor jumps must clear the sticky header, and should glide rather than teleport
+   unless the visitor asked for less motion. */
+[data-section-anchor] {
+  scroll-margin-top: 6rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 

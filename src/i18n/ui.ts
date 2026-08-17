@@ -23,6 +23,8 @@ export interface UiStrings {
     viewLocations: string;
     enableMapInteraction: string;
     lockMap: string;
+    onThisPage: string;
+    readingProgress: string;
   };
   // Per-outlet card labels (LocationsSection's mobile list).
   outlet: {
@@ -53,6 +55,8 @@ export const UI: Record<"en" | "th", UiStrings> = {
       viewLocations: "View all locations",
       enableMapInteraction: "Click to interact with map",
       lockMap: "Lock map",
+      onThisPage: "On this page",
+      readingProgress: "Reading progress",
     },
     outlet: {
       call: "Call",
@@ -80,6 +84,8 @@ export const UI: Record<"en" | "th", UiStrings> = {
       viewLocations: "ดูสาขาทั้งหมด",
       enableMapInteraction: "คลิกเพื่อใช้งานแผนที่",
       lockMap: "ล็อกแผนที่",
+      onThisPage: "สารบัญ",
+      readingProgress: "ความคืบหน้าการอ่าน",
     },
     outlet: {
       call: "โทร",

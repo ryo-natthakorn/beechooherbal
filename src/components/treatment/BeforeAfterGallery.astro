@@ -25,6 +25,11 @@ interface Props {
 const { lang, heading, body, images, giphyId, background } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const bgClass = background === "earth" ? "bg-brand-earth/25" : "bg-white";
+
+// The before/after source photos have different aspect ratios (0.897 vs 0.983), so at
+// their intrinsic heights the pair renders visibly mismatched. A shared aspect-ratio
+// box with object-cover makes both exactly the same size; the part-line is centred in
+// both photos, so the crop takes nothing meaningful away.
 ---
 
 <section class={`${bgClass} py-16 md:py-24`}>
@@ -46,11 +51,13 @@ const bgClass = background === "earth" ? "bg-brand-earth/25" : "bg-white";
 
     {
       images.length > 0 && (
-        <div class="mt-8 flex flex-wrap justify-center gap-6">
+        <div class="mt-8 flex flex-wrap items-start justify-center gap-6">
           {images.map(({ src, alt, caption }) => (
-            <figure class="w-full max-w-[280px] overflow-hidden rounded-xl shadow-soft">
-              <Image src={src} alt={alt} widths={[300, 600]} sizes="280px" class="w-full object-cover" />
-              <figcaption class="px-3 py-2 text-center text-sm font-bold text-brand-green">{caption ?? alt}</figcaption>
+            <figure class="w-full max-w-[280px] overflow-hidden rounded-xl bg-white shadow-soft">
+              <div class="aspect-[9/10] w-full overflow-hidden">
+                <Image src={src} alt={alt} widths={[300, 600]} sizes="280px" class="h-full w-full object-cover" />
+              </div>
+              <figcaption class="px-3 py-2 text-center text-sm leading-snug text-brand-origin">{caption ?? alt}</figcaption>
             </figure>
           ))}
         </div>

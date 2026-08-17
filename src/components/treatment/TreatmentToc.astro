@@ -1,0 +1,50 @@
+---
+// src/components/treatment/TreatmentToc.astro
+// Reading-progress strip + jump-to-section list for long treatment pages.
+//
+// Labels are the sections' own real headings, not invented shorthand — nothing here
+// introduces copy that isn't already on the page (CLAUDE.md §8). Only the chrome
+// ("On this page") comes from src/i18n/ui.ts, like every other UI string.
+//
+// Layout: an inline card in the content flow by default, so it works on phones where
+// a floating rail has nowhere to live; from 1536px up (see `.toc` in global.css) it
+// floats in the left margin beside the 72rem content column. One element, two
+// placements — rendering it twice would put duplicate links in the a11y tree.
+import { UI } from "../../i18n/ui";
+
+interface Props {
+  lang: "en" | "th";
+  items: { id: string; label: string }[];
+}
+
+const { lang, items } = Astro.props;
+const ui = UI[lang];
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+---
+
+<div class="reading-progress" aria-hidden="true">
+  <span></span>
+</div>
+
+<nav
+  class="toc mx-auto mt-8 mb-4 max-w-prose rounded-2xl border border-brand-earth bg-white/80 px-5 py-4 2xl:mx-0 2xl:mt-0 2xl:mb-0 2xl:max-w-none"
+  aria-label={ui.misc.onThisPage}
+>
+  <p class:list={[serif, "mb-3 text-sm font-bold text-brand-green"]}>{ui.misc.onThisPage}</p>
+  <ol class="flex flex-col gap-2">
+    {
+      items.map((item) => (
+        <li>
+          <a
+            href={`#${item.id}`}
+            data-toc-link
+            title={item.label}
+            class="block rounded-lg py-1 text-xs leading-snug text-brand-origin transition-colors duration-200 hover:text-brand-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green 2xl:line-clamp-2"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>

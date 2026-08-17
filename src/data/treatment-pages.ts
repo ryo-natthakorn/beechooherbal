@@ -182,6 +182,10 @@ export interface TreatmentPageContent {
   scrollTint?: boolean;
   /** Drops the decorative leaf ornament between sections page-wide. */
   hideDividers?: boolean;
+  /** Adds the reading-progress strip and jump-to-section table of contents
+   *  (src/components/treatment/TreatmentToc.astro). Worth it on long pages; the
+   *  script that drives it only ships when this is on. */
+  readingAids?: boolean;
   /** Set false to hide Benefits' own divider ornament — used when Benefits is
    *  repositioned flush against another same-tint section (see grey-hair). */
   benefitsDivider?: boolean;
@@ -497,6 +501,7 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     // `benefitsDivider` is likewise superseded by `hideDividers` below.
     scrollTint: true,
     hideDividers: true,
+    readingAids: true,
     pricingCta: true,
     // The 7-card cross-sell grid re-lists every treatment, including this one, right
     // after the page has already made its own case — redundant filler here.
@@ -662,13 +667,13 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
         body: ["Immediately after herbal treatment, white hair will be covered with a copper dye while leaving black hairs unchanged."],
         // Alt text is the live page's actual attribute, verbatim (a previous session's
         // tracking note in this file's header paraphrased it slightly — corrected here).
-        // Captions are short so both photos read as a symmetrical pair — the full
-        // legacy alt text is two lines under one photo and one under the other. The
-        // words come from this page's own verbatim heading ("SEE OUR CLIENT'S BEFORE
-        // AFTER RESULTS"), not from anything invented.
         images: [
-          { src: greyHairBeforeImage, alt: "White hair before herbal treatment", caption: "Before" },
-          { src: greyHairAfterImage, alt: "White Hairs Gone Immediately After Treatment", caption: "After" },
+          { src: greyHairBeforeImage, alt: "White hair before herbal treatment", caption: "Before Bee Choo Herbal Treatment" },
+          {
+            src: greyHairAfterImage,
+            alt: "White Hairs Gone Immediately After Treatment",
+            caption: "Immediately After Bee Choo Herbal Treatment",
+          },
         ],
       },
       th: {
@@ -676,12 +681,18 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
         body: ["สีผมของลูกค้าของเราได้ถูกปกปิดทันทีหลังจากทำทรีทเม้นท์สมุนไพร ด้วยคอปเปอร์ธรรมชาติจะช่วยปกปิดผมขาวและผมหงอกแต่ยังคงสีผมธรรมชาติไว้ตามเดิมค่ะ"],
         // Live TH page's <img> tags have no alt attribute at all; these are a plain
         // factual description (not invented marketing copy) to meet CLAUDE.md §7.
-        // "ก่อน" / "หลัง" are lifted straight from this page's own verbatim TH heading
-        // ("มาดูผล ก่อน - หลัง ของลูกค้าของเรากันค่ะ") — existing site copy, not a
-        // translation of the English labels (CLAUDE.md §8).
+        // TH captions were composed from vocabulary already on this page verbatim —
+        // "ก่อน"/"หลัง" and "ทันที" from the section heading and body ("...ถูกปกปิด
+        // ทันทีหลังจากทำทรีทเม้นท์สมุนไพร"), "บีชู เฮอร์เบิล" from the Benefits
+        // paragraph — rather than machine-translated from the English (CLAUDE.md §8).
+        // Still worth Crispin's eye before launch, since the phrasing is assembled.
         images: [
-          { src: greyHairBeforeImage, alt: "ผมขาวก่อนทำทรีทเม้นท์", caption: "ก่อน" },
-          { src: greyHairAfterImage, alt: "ผมขาวหลังทำทรีทเม้นท์ทันที", caption: "หลัง" },
+          { src: greyHairBeforeImage, alt: "ผมขาวก่อนทำทรีทเม้นท์", caption: "ก่อนทำทรีทเม้นท์ บีชู เฮอร์เบิล" },
+          {
+            src: greyHairAfterImage,
+            alt: "ผมขาวหลังทำทรีทเม้นท์ทันที",
+            caption: "ทันทีหลังทำทรีทเม้นท์ บีชู เฮอร์เบิล",
+          },
         ],
       },
     },

@@ -6,6 +6,7 @@
 // HomePage.astro's shape — thin route shells set lang/title/description, this owns
 // the body. Spec: specs/2026-08-12-treatment-pages-plan.md (Batch 1).
 import TreatmentHero from "./TreatmentHero.astro";
+import TreatmentToc from "./TreatmentToc.astro";
 import TreatmentAbout from "./TreatmentAbout.astro";
 import TreatmentBenefits from "./TreatmentBenefits.astro";
 import BeforeAfterGallery from "./BeforeAfterGallery.astro";
@@ -51,6 +52,19 @@ const facebookVideo = page.facebookVideoHref
   ? { src: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(page.facebookVideoHref)}&show_text=false`, title: page.heroTitle[lang] }
   : undefined;
 
+// Table-of-contents entries reuse each section's own real heading — no invented labels.
+const SECTION_LABEL: Record<SectionKey, string> = {
+  about: about.heading,
+  beforeAfter: beforeAfter.heading,
+  benefits: benefits.heading,
+  reviews: tail.reviewsHeading,
+  crossSell: tail.crossSell.heading,
+  howItWorks: tail.howItWorks.heading,
+  pricing: tail.pricing.heading,
+};
+const anchorId = (key: SectionKey) => `section-${key}`;
+const tocItems = sectionOrder.map((key) => ({ id: anchorId(key), label: SECTION_LABEL[key] }));
+
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://beechooherbal.com").href;
 // Schema.org still wants a representative image even where the page renders no hero
 // photo (heroVariant "plain"), so this always points at the treatment's own photo.
@@ -66,9 +80,12 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
     variant={page.heroVariant}
   />
 
+  {page.scrollTint && <div class="page-tint" aria-hidden="true" />}
+  {page.readingAids && <TreatmentToc lang={lang} items={tocItems} />}
+
   {
     sectionOrder.map((key) => (
-      <>
+      <div id={anchorId(key)} data-section-anchor>
         {key === "about" && (
           <TreatmentAbout
             lang={lang}
@@ -137,10 +154,63 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
             showCta={page.pricingCta}
           />
         )}
-      </>
+      </div>
     ))
   }
 </main>
+
+{
+  /* Both the tint and the progress strip read --scroll-progress, so this ships when
+     either is enabled — gating it on readingAids alone would leave a scrollTint-only
+     page stuck at progress 0, i.e. permanently white. */
+  (page.readingAids || page.scrollTint) && (
+    <script>
+      {/* Publishes scroll position as --scroll-progress (0-1) on <html>, driving both
+          the page tint and the progress strip in global.css, and marks the section the
+          visitor is currently reading in the table of contents. Replaces a CSS
+          scroll-timeline version that Safari ignores entirely. Passive listener, all
+          work batched into a single rAF, and it only writes a custom property + one
+          attribute, so it never forces a layout pass. */}
+      const root = document.documentElement;
+      const links = Array.from(document.querySelectorAll("[data-toc-link]"));
+      const targets = links
+        .map((link) => ({ link, el: document.getElementById(link.getAttribute("href").slice(1)) }))
+        .filter((t) => t.el);
+
+      let queued = false;
+
+      function update() {
+        queued = false;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+        root.style.setProperty("--scroll-progress", progress.toFixed(4));
+
+        // Active entry = the last section whose top has passed the upper third of the
+        // viewport, which is where a reader's attention actually sits.
+        const line = window.scrollY + window.innerHeight * 0.3;
+        let active = null;
+        for (const t of targets) {
+          if (t.el.getBoundingClientRect().top + window.scrollY <= line) active = t.link;
+        }
+        for (const { link } of targets) {
+          if (link === active) link.setAttribute("aria-current", "true");
+          else link.removeAttribute("aria-current");
+        }
+      }
+
+      function onScroll() {
+        if (!queued) {
+          queued = true;
+          requestAnimationFrame(update);
+        }
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
+      update();
+    </script>
+  )
+}
 
 <ServiceSchema
   lang={lang}
