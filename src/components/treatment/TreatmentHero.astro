@@ -7,6 +7,7 @@
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import { UI } from "../../i18n/ui";
+import { HOME } from "../../data/home";
 
 interface Props {
   lang: "en" | "th";
@@ -29,7 +30,14 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const focusRing = plain
   ? "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
   : "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
-const btnBase = "btn-tactile flex min-h-11 items-center rounded-full px-6 font-bold";
+// Compact by design: the labels used to be full sentences ("Message us on Facebook"),
+// which flex-wrap broke into three stacked full-width bars that swallowed the whole first
+// screen on a 375px phone. Short labels + icons + tight chrome fit all three on ONE line
+// from 360px up in both languages (measured: EN needs 326px, TH 323px, against 328px of
+// available width at 360). min-h-11 still preserves the 44px tap target, so nothing is
+// traded away for the density. At 320px the row wraps to two — flex-wrap handles it, and
+// two rows is still far better than the three full-width bars this replaced.
+const btnBase = "btn-tactile inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-bold";
 const btnPrimary = `${btnBase} bg-brand-yellow text-brand-ink hover:bg-brand-yellow/90 ${focusRing}`;
 // On the green banner the secondary buttons are white; on a light background that
 // disappears, so they take the brand green instead (same pair used at Pricing).
@@ -69,7 +77,7 @@ const strapline =
   <div
     class:list={[
       "relative mx-auto max-w-4xl px-4 text-center md:px-8",
-      plain ? "pt-14 pb-12 md:pt-20 md:pb-16" : "pt-2 pb-10 text-white md:pb-14",
+      plain ? "pt-10 pb-8 md:pt-14 md:pb-10" : "pt-2 pb-10 text-white md:pb-14",
     ]}
   >
     <h1 class:list={[serif, "text-balance text-3xl font-bold md:text-5xl", plain && "text-brand-green"]}>{heroTitle}</h1>
@@ -77,14 +85,26 @@ const strapline =
       {strapline}
     </p>
 
-    <div class="mt-6 flex flex-wrap justify-center gap-3">
-      <a href="tel:+66020726698" class={btnPrimary}>
+    <div class="mt-6 flex flex-wrap justify-center gap-1.5">
+      {/* Map pin, not a phone: this routes to the locations page rather than dialling.
+          The number it used to dial is one branch's line, and there are 16+ branches
+          each with their own — see src/data/locations.ts. */}
+      <a href={HOME.locations.href[lang]} class={btnPrimary}>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0">
+          <path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" />
+        </svg>
         {ui.cta.call}
       </a>
       <a href="https://www.facebook.com/beechooherbal/" target="_blank" rel="noopener" class={btnSecondary}>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0">
+          <path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.51 1.49-3.89 3.77-3.89 1.09 0 2.24.19 2.24.19v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99A10 10 0 0 0 22 12z" />
+        </svg>
         {ui.cta.facebook}
       </a>
       <a href="https://lin.ee/ll3injb" target="_blank" rel="noopener" class={btnSecondary}>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0">
+          <path d="M12 3C6.48 3 2 6.58 2 11c0 2.61 1.61 4.93 4.11 6.41-.18.94-.66 2.49-1.51 3.99a.4.4 0 0 0 .5.55c2.11-.76 3.66-1.7 4.51-2.29.76.14 1.55.21 2.39.21 5.52 0 10-3.58 10-8s-4.48-8-10-8z" />
+        </svg>
         {ui.cta.line}
       </a>
     </div>

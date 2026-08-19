@@ -6,8 +6,11 @@
 // hero's own text is vertically centered in the viewport — its vertical position
 // shifts with content height/viewport height, so any fixed top offset could still
 // land on top of the H1 on some phone height. Bottom-right is always clear of the
-// hero's centered content and, now that the old bottom mobile ContactBar is gone
-// (see git history), the corner is free. Desktop keeps top-right (never collided —
+// hero's centered content. It is NOT unconditionally free, though — an earlier version
+// of this note claimed it was, having only accounted for the removed mobile ContactBar:
+// at full scroll the pill covered part of the footer's last row (the social icons). That
+// is now handled structurally by .lang-dock, not by reserving footer space.
+// Desktop keeps top-right (never collided —
 // the hero heading is centered in a max-w-4xl column, nowhere near this pill's
 // right-3 position at desktop widths). Targets are ≥44px (min-h-11) and the nav
 // label is localized per page language.
@@ -42,8 +45,12 @@ const active = "bg-brand-green text-white";
 const idle = "text-brand-green hover:bg-brand-green/10";
 ---
 
-<!-- z-scale: header/switcher both sit at z-30 (no stacking conflicts by placement). -->
-<div class="fixed right-3 bottom-4 z-30 md:top-20 md:bottom-auto">
+<!-- z-scale: header/switcher both sit at z-30 (no stacking conflicts by placement).
+     Mobile positioning is owned by .lang-dock in global.css — a zero-height sticky dock
+     placed just above the footer in BaseLayout, so the pill floats bottom-right exactly
+     as before but parks at the footer's top edge instead of covering the footer's own
+     social icons. md+ keeps the fixed top-right pill, which never collided. -->
+<div class="z-30 md:fixed md:top-20 md:right-3">
   <nav
     aria-label={ui.misc.languageSwitcher}
     class="flex overflow-hidden rounded-full border border-brand-green/40 bg-white shadow-soft-lg"

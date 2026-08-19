@@ -105,17 +105,23 @@
    universally supported, where interpolating a colour would lean on calc() inside
    color-mix() — if that failed to parse on any engine the whole effect would silently
    vanish, which is the exact failure this replaced.
-   The mint is serenity at 65%, not full strength: at 100% body text on it measures
-   4.11:1, under WCAG AA. 65% gives 4.69:1 and is still >2x the previous 30% tint, so
-   the transition is clearly visible. `z-index: -1` keeps it above the page canvas but
-   behind all content; <main> creates no stacking context, and <body> paints no
-   background of its own, so nothing covers it. */
+   The mint is serenity at 72%, not 65% and not full strength. Body text (brand-origin,
+   relative luminance 0.1283) measures 4.11:1 on serenity at 100% (fails AA), 4.68:1 at
+   65%, and 4.51:1 at 75% — so 72% (~4.57:1) is the darkest value that still keeps real
+   headroom over the 4.5:1 line. Darkened from 65% so the end of Part 1 reads as clearly
+   distinct from the white Part 2 slab that follows it.
+   Opacity tracks --part1-progress, NOT --scroll-progress: the Part 1/Part 2 seam sits
+   around 45% of the document, so the document-wide value left the final mint section at
+   under half strength. See the script in TreatmentPage.astro.
+   `z-index: -1` keeps it above the page canvas but behind all content; <main> creates
+   no stacking context, and <body> paints no background of its own, so nothing covers
+   it. */
 .page-tint {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background-color: color-mix(in srgb, var(--color-brand-serenity) 65%, #fff);
-  opacity: var(--scroll-progress, 0);
+  background-color: color-mix(in srgb, var(--color-brand-serenity) 72%, #fff);
+  opacity: var(--part1-progress, 0);
   pointer-events: none;
 }
 .scroll-tint section {
@@ -169,9 +175,20 @@
     z-index: 20;
   }
 }
+/* Active TOC entry: a solid brand-green pill. aria-current stays the only hook (the
+   script already sets it), so this needs no new JS. White on brand-green is 6.52:1; the
+   idle state keeps full-strength brand-origin — nothing is dimmed to create the contrast
+   between states, weight and fill do it. Radius is `xl`, not `full`: the longest labels
+   ("Recognitions and Rewards", "ข้อดีของทรีทเม้นท์สมุนไพร") wrap to two lines in the
+   11rem rail, and a two-line pill-radius box reads as a mistake while a two-line
+   0.75rem box reads as a nav item. On one line the two are within 2px. */
 .toc a[aria-current="true"] {
-  color: var(--color-brand-green);
+  background-color: var(--color-brand-green);
+  color: #fff;
   font-weight: 700;
+}
+.toc a[aria-current="true"] .toc-dot {
+  background-color: var(--color-brand-yellow);
 }
 
 /* Reading progress, now living inside the TOC card/bar instead of a separate
@@ -253,41 +270,102 @@
    Colour is deliberately untouched. Dimming shared copy is the obvious way to
    de-emphasise it and it is how an earlier pass shipped a caption at 3.79:1, under
    WCAG AA — size and whitespace carry the hierarchy here instead, so contrast is
-   exactly what it was. */
-.closing-band section {
-  padding-block: 2.5rem;
-}
+   exactly what it was.
+   The separate padding override is gone: .treatment-main below now sets one tighter
+   rhythm for every treatment section, and a further 0.5rem on two of them was
+   invisible. This band's job is the type-scale drop. */
 .closing-band h2 {
   font-size: 1.25rem;
 }
 @media (min-width: 768px) {
-  .closing-band section {
-    padding-block: 3.5rem;
-  }
   .closing-band h2 {
     font-size: 1.5rem;
   }
 }
 
-/* Brand band (Part 2 of a treatment page — "about Bee Choo Herbal"): How It Works,
-   Pricing, Reviews and cross-sell, grouped as one visually distinct part so the page
-   reads as two halves instead of one long scroll — see BRAND_SECTIONS in
-   treatment-pages.ts and the eyebrow label rendered by TreatmentPage.astro just above
-   this rule's target. A translucent white wash lifts the band off the page-wide scroll
-   tint (which stays visible around/through it, since section backgrounds are already
-   forced transparent by .scroll-tint above) without touching text colour, so contrast
-   only improves versus the plain tint, never regresses. Must be declared AFTER
-   .scroll-tint section above: equal specificity, source order decides, and this needs
-   to win. */
-.brand-band section {
-  background-color: rgb(255 255 255 / 0.55);
+/* Treatment-page vertical rhythm. Every body section ships py-16 / md:py-24 because
+   four of them are shared with the signed-off homepage; this scopes a tighter scale to
+   treatment pages only, via .treatment-main on <main> — the same ancestor-class
+   mechanism .closing-band uses. Plain (unlayered) rules outrank Tailwind utilities
+   regardless of specificity, so no !important is needed.
+   Targets the <section> INSIDE each [data-section-anchor] wrapper, not every <section>
+   on the page: TreatmentHero puts its padding on an inner div, so a bare
+   `.treatment-main section` rule would ADD 3rem of padding the hero never had.
+   4rem -> 3rem and 6rem -> 4rem: section-to-section gaps go 8rem -> 6rem (mobile) and
+   12rem -> 8rem (md). The h2 rule also normalises the mixed mb-6/mb-8/mb-10 margins the
+   individual section components ship. */
+.treatment-main [data-section-anchor] > section {
+  padding-block: 3rem;
 }
-/* Marks where the page turns from "your condition" to "our credentials". A page using
-   scrollTint has transparent sections and hidden dividers, so without a seam here the
-   two zones would run together; the eyebrow label right after it names the part. */
+.treatment-main [data-section-anchor] h2 {
+  margin-bottom: 1.5rem;
+}
+@media (min-width: 768px) {
+  .treatment-main [data-section-anchor] > section {
+    padding-block: 4rem;
+  }
+  .treatment-main [data-section-anchor] h2 {
+    margin-bottom: 2rem;
+  }
+}
+
+/* Brand band (Part 2 of a treatment page — "about Bee Choo Herbal"): How It Works,
+   Pricing, Reviews, Recognitions and cross-sell, grouped as one visually distinct part
+   so the page reads as two halves instead of one long scroll. See BRAND_SECTIONS in
+   treatment-pages.ts.
+
+   TWO-STAGE BACKGROUND. Part 1 builds white -> mint on the fixed .page-tint sheet
+   above. Part 2 must RESET to white and build white -> soft green on its own, so the
+   wash lives here rather than on the page sheet:
+   - The wrapper paints an OPAQUE near-white base. Opaque is load-bearing: it covers
+     .page-tint (fixed, z-index -1), so Part 2 starts from a clean white instead of
+     green-over-mint, which would look muddy and invalidate the contrast maths.
+   - ::before is the green wash, its OPACITY tracking --part2-progress. Same house
+     pattern as .page-tint: animate the opacity of a flat sheet using a bare
+     custom-property number. NEVER calc() inside color-mix() — see the note above.
+   - `isolation: isolate` makes the wrapper a stacking context so the wash's
+     `z-index: -1` is trapped inside it: it paints above the wrapper's own background
+     and below all content. With `z-index: 0` instead it would paint OVER the copy.
+   - The base is green at 4% rather than pure #fff so Part 2 stays faintly distinct even
+     with JS off (where --part2-progress is never published and the wash sits at
+     opacity 0). At opacity 1 the wash fully replaces the base, topping out at 15%.
+   CONTRAST. brand-origin body text on brand-green mixed into white: 15% -> 4.73:1,
+   16% -> 4.66:1, 18% -> 4.52:1, 20% -> 4.38:1 (FAILS AA). 15% is the value, chosen for
+   margin. brand-green headings on that ground: ~5.2:1. Text colour is untouched — see
+   the .closing-band note about the 3.79:1 failure that came from dimming type.
+
+   Moving the wash from `.brand-band section` to the wrapper also lands the "About Bee
+   Choo Herbal" eyebrow (a child of the wrapper, not of the section) on the white
+   instead of the mint, with no DOM change. It also removes the old source-order
+   dependency on `.scroll-tint section`: these no longer target the same element. */
+.brand-band {
+  position: relative;
+  isolation: isolate;
+  background-color: color-mix(in srgb, var(--color-brand-green) 4%, #fff);
+}
+.brand-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background-color: color-mix(in srgb, var(--color-brand-green) 15%, #fff);
+  opacity: var(--part2-progress, 0);
+  pointer-events: none;
+}
+/* The band wrappers are separate stacked boxes; a 1px overlap guarantees no sub-pixel
+   hairline of Part 1's mint shows between them at fractional DPR. Both boxes are opaque
+   and identically coloured, so the overlap is invisible. */
+.brand-band + .brand-band {
+  margin-top: -1px;
+}
+/* Marks where the page turns from "your condition" to "our credentials". The 1px rule
+   and the 3rem gap that used to live here are GONE (brief: remove the divider line,
+   tighten the seam). The seam is now carried by the reset to white plus these soft top
+   corners lifting the slab off the mint, and named by the eyebrow label just inside. */
 .brand-band-start {
-  margin-top: 3rem;
-  border-top: 1px solid color-mix(in srgb, var(--color-brand-green) 20%, transparent);
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
 }
 
 /* Hero aura — layered radial glow in brand white (no off-brand hues; the yellow tint
@@ -434,6 +512,79 @@
   }
   .md-label {
     grid-column: 1;
+  }
+}
+
+/* "Other Treatments" accordion — treatment-page presentation only. The homepage's own
+   grid is signed off, so every rule here is scoped by .treatment-main.
+   md+ constraint: .treatment-row is display:contents there (Tailwind's md:contents in
+   the markup), so the row BOX DOES NOT EXIST and cannot be styled — only .md-label and
+   .md-panel can, and they are direct grid children. Below md the row box is real and
+   carries the card. */
+.treatment-main .treatment-row {
+  border-color: color-mix(in srgb, var(--color-brand-earth) 70%, transparent);
+  box-shadow: var(--shadow-soft);
+  transition:
+    box-shadow 250ms var(--ease-spring),
+    border-color 250ms var(--ease-spring);
+}
+.treatment-main .treatment-row:has(.md-radio:checked) {
+  border-color: color-mix(in srgb, var(--color-brand-green) 35%, transparent);
+  box-shadow: var(--shadow-soft-lg);
+}
+@media (min-width: 48rem) {
+  /* Hairline list -> chip list. The active label becomes a white card floating on the
+     greening Part 2 ground, which is the only affordance the md+ layout can carry now
+     that the row box is gone. */
+  .treatment-main .md-label {
+    border-bottom: 0;
+    border-radius: 0.75rem;
+    margin-bottom: 0.25rem;
+    transition:
+      background-color 200ms var(--ease-spring),
+      box-shadow 200ms var(--ease-spring);
+  }
+  .treatment-main .md-label:has(.md-radio:checked) {
+    background-color: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+  .treatment-main .md-panel {
+    border: 1px solid color-mix(in srgb, var(--color-brand-earth) 60%, transparent);
+    border-radius: 1.25rem;
+    box-shadow: var(--shadow-soft-lg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .treatment-main .treatment-row,
+  .treatment-main .md-label {
+    transition: none;
+  }
+}
+
+/* Language pill dock. The pill is fixed bottom-right on mobile, and the footer's last
+   row (the social icons, 44px targets) lands in exactly that corner — at full scroll the
+   pill covered part of the TikTok tap target at 320-414px in both languages. Reserving
+   footer padding would have cost ~64px of the height this pass is meant to remove, so
+   instead the pill lives in a zero-height STICKY dock whose containing block stops at the
+   end of the page content: it floats 1rem off the viewport bottom exactly as before, then
+   parks at the footer's top edge and can never enter the footer. Zero JS, no reserved
+   space, language- and width-independent.
+   height:0 + align-items:flex-end makes the pill overflow UPWARD from the dock's own
+   zero-height line, so the dock contributes nothing to document height. */
+@media (max-width: 767.98px) {
+  .lang-dock {
+    position: sticky;
+    bottom: 1rem;
+    z-index: 30;
+    display: flex;
+    height: 0;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding-inline: 0.75rem;
+    pointer-events: none;
+  }
+  .lang-dock > * {
+    pointer-events: auto;
   }
 }
 

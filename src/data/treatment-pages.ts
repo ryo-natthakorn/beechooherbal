@@ -81,7 +81,11 @@
 // sourced for the homepage) — see TreatmentsSection's `showAwards` prop.
 
 import type { ImageMetadata } from "astro";
-import oilyScalpAboutImage from "../assets/images/treatments/oily-scalp-about.jpg";
+// Filename is legacy — this was wired as oily-scalp's About photo before it moved to the
+// shared Recognitions block. It is NOT a salon photo: it is the Entrepreneur of the Year
+// Award ceremony (Singapore, 27 Nov 2017, Guest of Honour Mr Lim Swee Say). The file is
+// left named as-is so the emitted asset hash doesn't churn.
+import awardCeremonyPhoto from "../assets/images/treatments/oily-scalp-about.jpg";
 import oilyScalpFaqCloggedPore from "../assets/images/treatments/oily-scalp-faq-clogged-pore.jpeg";
 import oilyScalpFaqScan from "../assets/images/treatments/oily-scalp-faq-scan.jpg";
 import greyHairBeforeImage from "../assets/images/treatments/grey-hair-before.png";
@@ -108,10 +112,15 @@ interface AboutContent {
   /** Paragraphs above the FAQ accordion / subsections. */
   intro: string[];
   /** A trust-building salon/founder photo the live page shows under the intro, before
-   *  the FAQ accordion. Per-page, not shared — oily-scalp's is sourced; grey-hair's
-   *  live source file (BCL-Shop-in-operations.jpeg) returns HTTP 200 with a 0-byte
-   *  body (confirmed via response headers, `Content-Length: 0`, cached since 2022) —
-   *  a bug on the legacy site itself, not something we can source. Left unset there. */
+   *  the FAQ accordion. Per-page, not shared — grey-hair's live source file
+   *  (BCL-Shop-in-operations.jpeg) returns HTTP 200 with a 0-byte body (confirmed via
+   *  response headers, `Content-Length: 0`, cached since 2022) — a bug on the legacy
+   *  site itself, not something we can source. Left unset there.
+   *
+   *  As of 2026-08-20 NO page sets this: oily-scalp's photo turned out to be an awards
+   *  ceremony rather than a salon, and moved to RECOGNITION_PHOTO. Not a content loss —
+   *  the same image now renders on all 7 pages instead of 1, with correct alt text. The
+   *  field stays because a future page may legitimately have a real salon photo. */
   image?: { src: ImageMetadata; alt: string };
   /** The live site renders "About" as an intro plus an Elementor FAQ-toggle widget
    *  (not <h2>/<h3> tags — that's why an earlier plain heading-tag scan of this page
@@ -178,15 +187,49 @@ interface TailContent {
 }
 
 /** The body sections a treatment page can render, in the order they appear. */
-export type SectionKey = "about" | "benefits" | "beforeAfter" | "reviews" | "crossSell" | "howItWorks" | "pricing";
+export type SectionKey =
+  | "about"
+  | "benefits"
+  | "beforeAfter"
+  | "reviews"
+  /** First half of the legacy cross-sell block: the brand paragraphs, the award
+   *  ceremony photo and the 12-badge marquee, under the legacy BEST-IN-BANGKOK
+   *  heading. Split out from `crossSell` so it can carry its own TOC anchor. */
+  | "recognitions"
+  | "crossSell"
+  | "howItWorks"
+  | "pricing";
+
+/** Every renderable section key. `sectionOrder` is a WHITELIST, so a key missing from a
+ *  page's order silently drops that section's copy — this is the set the validation loop
+ *  at the bottom of this file requires. Deliberately NOT LEGACY_SECTION_ORDER any more:
+ *  that constant documents the legacy pages' SOURCE order and shouldn't have to grow a
+ *  key just because the build needs a completeness check. Order here is irrelevant. */
+export const ALL_SECTIONS: SectionKey[] = [
+  "about",
+  "benefits",
+  "beforeAfter",
+  "reviews",
+  "howItWorks",
+  "pricing",
+  "recognitions",
+  "crossSell",
+];
 
 /** The legacy page order, reproduced faithfully. Kept as documentation of the source
- *  order and as the fallback for any page that has not opted into the standard below. */
+ *  order and as the fallback for any page that has not opted into the standard below.
+ *
+ *  `recognitions` and `crossSell` are the two halves of ONE legacy block (the
+ *  BEST-IN-BANGKOK heading + brand paragraphs + award marquee, then the treatments
+ *  grid). They are adjacent and in source order here, so a page falling back to this
+ *  order still renders every legacy word in its original sequence — the split adds an
+ *  anchor boundary and a header, nothing else. */
 export const LEGACY_SECTION_ORDER: SectionKey[] = [
   "about",
   "benefits",
   "beforeAfter",
   "reviews",
+  "recognitions",
   "crossSell",
   "howItWorks",
   "pricing",
@@ -218,20 +261,26 @@ export const STANDARD_SECTION_ORDER: SectionKey[] = [
   "howItWorks",
   "pricing",
   "reviews",
+  "recognitions",
   "crossSell",
 ];
 
 /** Trailing sections whose copy is shared across all 7 pages. TreatmentPage renders these
  *  inside `.closing-band` — same words, lower visual rank (see global.css). Nothing here
- *  is hidden; compressing is a type-scale and spacing change, not a content one. */
-export const CLOSING_SECTIONS: SectionKey[] = ["reviews", "crossSell"];
+ *  is hidden; compressing is a type-scale and spacing change, not a content one.
+ *
+ *  crossSell LEAVES this set: it is now just the treatments grid under its own
+ *  "Other Treatments" header, which is exit navigation rather than the byte-identical
+ *  boilerplate this band exists to de-rank — and that header is meant to be prominent.
+ *  recognitions takes its place: the brand paragraphs ARE that boilerplate. */
+export const CLOSING_SECTIONS: SectionKey[] = ["reviews", "recognitions"];
 
-/** Part 2 of every treatment page: the four sections whose copy is shared brand
- *  material ("about Bee Choo Herbal" — how the treatment works, pricing, reviews,
+/** Part 2 of every treatment page: the sections whose copy is shared brand material
+ *  ("about Bee Choo Herbal" — how the treatment works, pricing, reviews, recognitions,
  *  other treatments), rendered as one visually grouped band — see `.brand-band` in
  *  global.css. CLOSING_SECTIONS (a subset) additionally keeps its own lower type
  *  rank inside the band. Presentation only; every word stays rendered and crawlable. */
-export const BRAND_SECTIONS: SectionKey[] = ["howItWorks", "pricing", "reviews", "crossSell"];
+export const BRAND_SECTIONS: SectionKey[] = ["howItWorks", "pricing", "reviews", "recognitions", "crossSell"];
 
 export interface TreatmentPageContent {
   /** H1. Distinct from src/data/treatments.ts's homepage-card `title`. */
@@ -303,6 +352,27 @@ export interface TreatmentPageContent {
   /** Pages whose meta description isn't real live-site copy yet. */
   descriptionDraftPending?: Lang[];
 }
+
+/** The award-ceremony photo shown in every treatment page's Recognitions block, right
+ *  after the outlet-count paragraph. Shared, not per-page: it is brand material, like
+ *  the 12-badge marquee it sits above.
+ *
+ *  It previously rendered as oily-scalp's About photo with the alt "Bee Choo Herbal
+ *  salon" / "ร้านบีชู เฮอร์เบิล", which described the wrong subject entirely — the image
+ *  is an awards ceremony, not a salon. Moving it here fixes a factual alt-text bug and
+ *  puts it on all 7 pages instead of 1.
+ *
+ *  ⚠ ALT TEXT NEEDS CRISPIN'S SIGN-OFF. The Thai is newly composed from vocabulary
+ *  already on these pages (คุณเชีย บี ชู, ผู้ก่อตั้ง, บีชู ออริจิน, รางวัล, สิงคโปร์ all
+ *  appear in CROSS_SELL_FOUNDER.th) — NOT machine-translated. No visible caption: that
+ *  would be new on-page copy. */
+export const RECOGNITION_PHOTO: { src: ImageMetadata; alt: Record<Lang, string>; caption?: Record<Lang, string> } = {
+  src: awardCeremonyPhoto,
+  alt: {
+    en: "Bee Choo Origin founder Madam Cheah Bee Chew receiving the Entrepreneur of the Year Award in Singapore, 2017",
+    th: "คุณเชีย บี ชู ผู้ก่อตั้ง บีชู ออริจิน รับรางวัลผู้ประกอบการแห่งปีในสิงคโปร์ ปี 2017",
+  },
+};
 
 // The two Business Times articles the cross-sell paragraph links to, on every page.
 const BT_TESTIMONIES = "http://www.businesstimes.com.sg/hub/bt-salutes-enterprise-2016/power-of-testimonies-drives-business-growth";
@@ -448,7 +518,6 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     about: {
       en: {
         heading: "About Itchy Oily Scalp Hair Condition",
-        image: { src: oilyScalpAboutImage, alt: "Bee Choo Herbal salon" },
         intro: [
           "Do take a minute to watch the video above to see how our customer had recovered from his oily scalp condition. These are all REAL pictures and videos taken at our salon. Oily Scalp in both men and women can be treated effectively with Bee Choo Herbal Hair Treatment. Thousands of customers trust us with their hair.",
           "Our scalp naturally secretes oil via the sebaceous glands and this oil protects the hair and sustains its structure. However, due to several factors, the sebum production could go into overdrive, causing excessive oil on the scalp, a condition known as seborrheic dermatitis. Excessive oil not only causes you to feel uncomfortable and itchy and it could ultimately lead to hair loss if left untreated!",
@@ -480,7 +549,6 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
       },
       th: {
         heading: "ผมมันและอาการคันหนังศีรษะ",
-        image: { src: oilyScalpAboutImage, alt: "ร้านบีชู เฮอร์เบิล" },
         intro: [
           "เรามาดูวีดีโอในการรักษาหนังศีรษะมันและคันของลูกค้าของเรากันค่ะ รูปภาพทุกภาพเป็นภาพจริงที่ถ่ายในซาลอน/คลินิก ของเรานะคะ โดยปกติทั้งผู้ชายและผู้หญิงสามารถมีหนังศีรษะมันและคันได้ทั้งนั้น และสามารถรักษาได้อย่างมีประสิทธิภาพด้วย บีชู แฮร์ ทรีทเม้นท์ของเราค่ะ ลูกค้าจำนวนมากพึงพอใจในการรักษาเส้นผมกับเรา",
           "โดยปกติแล้วหนังศีรษะเรามีการผลิตน้ำมันผ่านทางต่อมไขมันของเรา และน้ำมันนี้เองจะช่วยปกป้องเส้นผมและคงสภาพโครงสร้างของเส้นผม แต่ทั้งนี้ทั้งนั้นก็ยังคงมีปัจจัยต่างๆที่ทำให้ต่อมไขมันผลิตน้ำมันออกมามากกว่าปกติ ทำให้ต่อมไขมันเกิดการอักเสบ น้ำมันที่มากเกิดไปนอกจากจะทำให้คุณรู้สึกไม่สบายและคันแล้วยังนำไปสู่ปัญหาผมร่วงถ้าไม่ได้รับการรักษา",
@@ -790,7 +858,7 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
 for (const [slug, page] of Object.entries(TREATMENT_PAGES)) {
   if (!page.sectionOrder) continue;
   const order = page.sectionOrder;
-  const missing = LEGACY_SECTION_ORDER.filter((key) => !order.includes(key));
+  const missing = ALL_SECTIONS.filter((key) => !order.includes(key));
   const duplicated = order.filter((key, i) => order.indexOf(key) !== i);
   if (missing.length > 0 || duplicated.length > 0) {
     throw new Error(

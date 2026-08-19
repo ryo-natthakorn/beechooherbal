@@ -26,24 +26,30 @@
 // the <ul>). Compact by necessity: `hours` strings are long, so they get their own
 // line and a smaller size rather than competing with the name/phone for width.
 //
-// `/locations/` (t.href) isn't built yet — until it exists, the "View all locations"
-// button and each outlet's "Directions" link point at a Google Maps search instead so
-// they're actually usable today. Swap MAPS_HREF back to t.href[lang] once the on-site
-// locations page ships.
+// `/locations/` now EXISTS (src/pages/locations.astro + its TH twin), so the "View all
+// locations" button points at the real on-site page again — the swap the previous note
+// here asked for. Each outlet's "Directions" link still goes to a Google Maps search,
+// which is correct: that is what a directions link should do.
 import { HOME, type Lang } from "../../data/home";
 import { UI } from "../../i18n/ui";
 import { OUTLETS } from "../../data/locations";
 
 interface Props {
   lang: Lang;
+  /** Set false on the locations page itself, where a "view all locations" button that
+   *  links to the page you are already on is nonsense. Defaults to shown (homepage). */
+  showViewAll?: boolean;
+  /** Show the outlet cards at EVERY width, not just mobile. The locations page is the
+   *  branch directory, so its whole job is surfacing names, phones and hours; the
+   *  homepage keeps the mobile-only list because md+ there has the map instead. */
+  fullList?: boolean;
 }
 
-const { lang } = Astro.props;
+const { lang, showViewAll = true, fullList = false } = Astro.props;
 const t = HOME.locations;
 const ui = UI[lang];
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
-const MAPS_HREF = "https://www.google.com/maps/search/?api=1&query=Bee+Choo+Origin+Bangkok";
 const outletMapsHref = (name: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`Bee Choo ${name} Thailand`)}`;
 ---
 
@@ -81,7 +87,17 @@ const outletMapsHref = (name: string) => `https://www.google.com/maps/search/?ap
     <!-- Outlet list — a compact 2-column grid so all 16 fit with less vertical scroll,
          especially now that the map above also takes mobile height. Shown wherever the
          map itself isn't the primary view (currently: mobile only, via md:hidden). -->
-    <ul class="mx-auto mt-6 grid max-w-2xl grid-cols-2 gap-3 text-left md:hidden">
+    <ul
+      class:list={[
+        "mx-auto mt-6 grid max-w-2xl grid-cols-2 gap-3 text-left",
+        // Homepage: mobile only, because md+ gets the full interactive map instead and
+        // the card list would just repeat it. On the locations PAGE the list is the
+        // point — "Find a Branch" exists to surface a phone number, and hiding it at
+        // md+ would leave desktop visitors with a map and no numbers.
+        !fullList && "md:hidden",
+        fullList && "md:max-w-5xl md:grid-cols-3",
+      ]}
+    >
       {OUTLETS.map((outlet) => (
         <li class="flex flex-col rounded-2xl border border-brand-earth bg-white p-3">
           <p class="text-sm font-bold leading-snug text-brand-green">{outlet.name}</p>
@@ -114,15 +130,17 @@ const outletMapsHref = (name: string) => `https://www.google.com/maps/search/?ap
       ))}
     </ul>
 
-    <div>
-      <a
-        href={MAPS_HREF}
-        target="_blank"
-        rel="noopener"
-        class="btn-tactile mt-8 inline-flex min-h-11 items-center rounded-full bg-brand-green px-7 font-bold text-white shadow-soft hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
-      >
-        {ui.misc.viewLocations} &rarr;
-      </a>
-    </div>
+    {
+      showViewAll && (
+        <div>
+          <a
+            href={HOME.locations.href[lang]}
+            class="btn-tactile mt-8 inline-flex min-h-11 items-center rounded-full bg-brand-green px-7 font-bold text-white shadow-soft hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+          >
+            {ui.misc.viewLocations} &rarr;
+          </a>
+        </div>
+      )
+    }
   </div>
 </section>

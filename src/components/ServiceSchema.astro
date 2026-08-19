@@ -29,7 +29,9 @@ const schema = {
   provider: {
     "@type": "HealthAndBeautyBusiness",
     name: "Bee Choo Herbal",
-    telephone: "+66 02 072 6698",
+    // E.164: the trunk "0" is dropped after the country code. This previously read
+    // "+66 02 072 6698", which is not a valid international number.
+    telephone: "+6620726698",
     url: "https://beechooherbal.com/",
     areaServed: { "@type": "Country", name: "Thailand" },
   },

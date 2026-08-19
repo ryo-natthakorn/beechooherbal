@@ -56,8 +56,18 @@ const fontClass = lang === "th" ? "font-thai" : "font-sans";
       {ui.misc.skipToContent}
     </a>
     <Header {lang} overlay={headerOverlay} />
-    <slot />
+    {/* The language pill is docked at the END of this wrapper, which stops where the page
+        content stops. Its sticky dock therefore parks at the footer's top edge instead of
+        floating over the footer's own bottom-right corner, where it covered the TikTok
+        link — see .lang-dock in global.css. It still comes after the page content in DOM
+        order, so it is never an early tab stop.
+        This wrapper MUST stay a bare <div>: any position, transform, filter, opacity < 1,
+        contain or overflow on it would create a stacking context or scrollport and break
+        both the treatment pages' fixed .page-tint (z-index: -1) and the sticky dock. */}
+    <div>
+      <slot />
+      <div class="lang-dock"><LanguageSwitcher {lang} /></div>
+    </div>
     <Footer {lang} />
-    <LanguageSwitcher {lang} />
   </body>
 </html>

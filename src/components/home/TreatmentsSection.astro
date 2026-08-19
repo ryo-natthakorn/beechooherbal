@@ -32,6 +32,7 @@
 // is expected, not a bug, and isn't worth capping the band height to avoid (that would
 // just reintroduce the crop).
 import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import LeafDivider from "../LeafDivider.astro";
 import AwardsMarquee from "../AwardsMarquee.astro";
 import { TREATMENTS } from "../../data/treatments";
@@ -59,9 +60,30 @@ interface Props {
    *  is where the legacy treatment pages carry it inside this same block. The homepage
    *  has its own AwardsSection and passes nothing. */
   showAwards?: boolean;
+  /** Which half of this block to render. Treatment pages split it into two separately
+   *  navigable sections — "Recognitions and Rewards" (heading + brand paragraphs + award
+   *  photo + marquee) and "Other Treatments" (its own header + the grid) — so both can
+   *  carry a TOC anchor. The DOM order of the words is unchanged; this only adds a
+   *  wrapper boundary and a header. "all" is the homepage's behaviour and the default,
+   *  so the homepage passes nothing and renders exactly as before. */
+  part?: "all" | "intro" | "grid";
+  /** Award-ceremony photo, rendered immediately after the FIRST brand paragraph (the
+   *  outlet-count one, present on every treatment page in both languages). Treatment
+   *  pages only — see RECOGNITION_PHOTO in src/data/treatment-pages.ts. */
+  photo?: { src: ImageMetadata; alt: string; caption?: string };
 }
 
-const { lang, heading, paragraphs = [], background, showTreatmentGrid = true, excludeSlug, showAwards = false } = Astro.props;
+const {
+  lang,
+  heading,
+  paragraphs = [],
+  background,
+  showTreatmentGrid = true,
+  excludeSlug,
+  showAwards = false,
+  part = "all",
+  photo,
+} = Astro.props;
 const treatments = excludeSlug ? TREATMENTS.filter((t) => t.slug !== excludeSlug) : TREATMENTS;
 // Same 12 badges the homepage's AwardsSection renders, per-language alt text.
 const awards = showAwards ? HOME.awards.items.map((item) => ({ img: item.img, alt: item.alt[lang] })) : [];
@@ -89,33 +111,54 @@ const bandWidths = (intrinsicWidth: number) =>
     </h2>
 
     {
-      paragraphs.length > 0 && (
-        <div class="mx-auto mb-10 flex max-w-prose flex-col gap-4 text-brand-origin">
-          {paragraphs.map((para) => (
-            <p class="leading-relaxed">
-              {para.map((seg) =>
-                typeof seg === "string" ? (
-                  seg
-                ) : (
-                  <a
-                    href={seg.href}
-                    target="_blank"
-                    rel="noopener"
-                    class="font-bold text-brand-green underline decoration-brand-yellow decoration-2 underline-offset-4 hover:decoration-brand-green"
-                  >
-                    {seg.text}
-                  </a>
-                ),
+      part !== "grid" && paragraphs.length > 0 && (
+        <div class="mx-auto mb-8 flex max-w-prose flex-col gap-4 text-brand-origin">
+          {paragraphs.map((para, i) => (
+            <>
+              <p class="leading-relaxed">
+                {para.map((seg) =>
+                  typeof seg === "string" ? (
+                    seg
+                  ) : (
+                    <a
+                      href={seg.href}
+                      target="_blank"
+                      rel="noopener"
+                      class="font-bold text-brand-green underline decoration-brand-yellow decoration-2 underline-offset-4 hover:decoration-brand-green"
+                    >
+                      {seg.text}
+                    </a>
+                  ),
+                )}
+              </p>
+              {photo && i === 0 && (
+                <figure class="my-1">
+                  {/* widths cap at the source's 800px intrinsic: astro:assets only applies
+                      sharp's withoutEnlargement when a `fit` is passed (it isn't), so
+                      asking for more silently upscales — the same trap bandWidths() guards
+                      below. Its previous rendering asked for 1024 from this 800px file. */}
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    widths={[400, 640, 800]}
+                    sizes="(min-width: 48rem) 34rem, 100vw"
+                    loading="lazy"
+                    class="w-full rounded-2xl shadow-soft"
+                  />
+                  {photo.caption && (
+                    <figcaption class="mt-2 text-center text-sm italic text-brand-origin">{photo.caption}</figcaption>
+                  )}
+                </figure>
               )}
-            </p>
+            </>
           ))}
         </div>
       )
     }
 
-    {showAwards && <div class="mb-10"><AwardsMarquee awards={awards} /></div>}
+    {part !== "grid" && showAwards && <div class="mb-8"><AwardsMarquee awards={awards} /></div>}
 
-    {showTreatmentGrid && (
+    {part !== "intro" && showTreatmentGrid && (
     <div
       class="treatments-md flex flex-col gap-3 md:grid md:grid-cols-[280px_1fr] md:items-stretch md:gap-6"
       style={`--treatment-count: ${treatments.length}`}
@@ -123,9 +166,15 @@ const bandWidths = (intrinsicWidth: number) =>
     >
       {treatments.map((treatment, i) => (
         <div class="treatment-row overflow-hidden rounded-2xl border border-brand-earth bg-white md:contents">
+          {/* No first/last corner rounding here: at md+ `md:contents` on .treatment-row
+              removes the row box, so `:first-child`/`:last-child` resolve against the
+              row's OWN children (label + panel), not the grid — `md:last:*` could never
+              match and `md:first:*` painted nothing without a background. The card
+              treatment for treatment pages lives in global.css under `.treatment-main`
+              so the signed-off homepage grid is untouched. */}
           <label
             for={`treatment-${i}`}
-            class="md-label flex cursor-pointer items-center gap-3 px-5 py-4 font-bold text-brand-origin transition-colors duration-200 hover:bg-brand-earth/20 has-checked:bg-brand-green/8 has-checked:text-brand-green md:border-b md:border-brand-earth md:first:rounded-t-2xl md:last:rounded-b-2xl md:last:border-b-0"
+            class="md-label flex cursor-pointer items-center gap-3 px-5 py-4 font-bold text-brand-origin transition-colors duration-200 hover:bg-brand-earth/20 has-checked:bg-brand-green/8 has-checked:text-brand-green md:border-b md:border-brand-earth"
           >
             <input
               type="radio"

@@ -38,11 +38,15 @@ export const HOME = {
       en: "BEST HAIR LOSS TREATMENT CLINIC IN BANGKOK, Thailand",
       th: "ซาลอน/คลินิกรักษาผมร่วง ผมบาง ที่ดีที่สุดในประเทศไทย",
     } as L,
-    // Hero CTA labels are the pages' historical strings (EN Facebook label differs from
-    // the footer's UI.cta.facebook — keep both verbatim).
-    ctaCall: { en: "Call Us Today", th: "Call Us Today" } as L,
-    ctaFacebook: { en: "Talk to us on Facebook!", th: "พูดคุยกับเราผ่านเฟสบุ๊ค" } as L,
-    ctaLine: { en: "Add us on LINE", th: "เพิ่มเพื่อนทาง LINE" } as L,
+    // Hero CTA labels. Shortened 2026-08-20 to match UI.cta site-wide — the long
+    // historical strings wrapped onto stacked full-width bars on a 375px phone. `ctaCall`
+    // also stopped being a dialer: it routes to the locations page, because the number it
+    // used to dial is the Udomsuk BRANCH line and the business has 16+ branches with
+    // their own numbers (src/data/locations.ts). It previously read "Call Us Today" in
+    // BOTH languages — English on the Thai homepage.
+    ctaCall: { en: "Find a Branch", th: "สาขาใกล้คุณ" } as L,
+    ctaFacebook: { en: "Facebook", th: "Facebook" } as L,
+    ctaLine: { en: "LINE", th: "LINE" } as L,
     videoId: "c8x_e1zPvMY",
     videoTitle: {
       en: "Bee Choo Herbal hair treatment introduction",

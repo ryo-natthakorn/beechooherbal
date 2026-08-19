@@ -35,6 +35,9 @@ export interface UiStrings {
   // chrome, not page copy — the section headings themselves carry the real (verbatim)
   // wording. `partConcern`/`partBrand` group the TOC into the page's two halves: the
   // visitor's own condition vs. the shared "about Bee Choo Herbal" material.
+  // `crossSell` is ALSO rendered as a visible <h2> above the treatments grid on
+  // treatment pages (there was no heading there before) — it is still chrome, so do not
+  // swap in a legacy heading string.
   // ⚠ TH values here are newly composed (not transcribed from the legacy site, since
   // this list never existed there) — human/Crispin sign-off needed before launch.
   toc: {
@@ -44,6 +47,7 @@ export interface UiStrings {
     howItWorks: string;
     pricing: string;
     reviews: string;
+    recognitions: string;
     crossSell: string;
     partConcern: string;
     partBrand: string;
@@ -52,13 +56,19 @@ export interface UiStrings {
 
 export const UI: Record<"en" | "th", UiStrings> = {
   en: {
+    // CTA labels are short by design: three full sentences wrapped onto three stacked
+    // bars on a 375px hero and swallowed the first screen. Brand names stay as brand
+    // names. `call` no longer dials — it routes to the locations page, because the
+    // number it used to dial (02-072-6698) is the Udomsuk BRANCH line, not a hotline,
+    // and the business has 16+ branches each with its own number (src/data/locations.ts).
+    // The label says "Find a Branch" so it doesn't promise a dialer it won't open.
     cta: {
-      call: "Call Us Today",
-      facebook: "Message us on Facebook",
-      line: "Add us on LINE",
+      call: "Find a Branch",
+      facebook: "Facebook",
+      line: "LINE",
     },
     footer: {
-      callLabel: "Call Us Today",
+      callLabel: "Find a Branch",
       socialFacebook: "Facebook",
       socialYoutube: "Youtube",
       socialTiktok: "Tiktok",
@@ -81,23 +91,27 @@ export const UI: Record<"en" | "th", UiStrings> = {
     toc: {
       about: "About the Condition",
       beforeAfter: "Before & After",
-      benefits: "Benefits",
+      benefits: "Benefits of Herbal Treatment",
       howItWorks: "How It Works",
       pricing: "Pricing",
       reviews: "Reviews",
+      recognitions: "Recognitions and Rewards",
       crossSell: "Other Treatments",
       partConcern: "This Treatment",
       partBrand: "About Bee Choo Herbal",
     },
   },
   th: {
+    // `call`/`callLabel` previously read "Call Us Today" — English, on the Thai site.
+    // Fixed here. Facebook and LINE stay in Latin script, which is how both brands are
+    // normally written in Thai interfaces and keeps the hero row on one line.
     cta: {
-      call: "Call Us Today",
-      facebook: "พูดคุยกับเราผ่านเฟสบุ๊ค",
-      line: "เพิ่มเพื่อนทาง LINE",
+      call: "สาขาใกล้คุณ",
+      facebook: "Facebook",
+      line: "LINE",
     },
     footer: {
-      callLabel: "Call Us Today",
+      callLabel: "สาขาใกล้คุณ",
       socialFacebook: "Facebook",
       socialYoutube: "Youtube",
       socialTiktok: "Tiktok",
@@ -110,7 +124,7 @@ export const UI: Record<"en" | "th", UiStrings> = {
       viewLocations: "ดูสาขาทั้งหมด",
       enableMapInteraction: "คลิกเพื่อใช้งานแผนที่",
       lockMap: "ล็อกแผนที่",
-      onThisPage: "สารบัญ",
+      onThisPage: "หัวข้อในหน้านี้",
     },
     outlet: {
       call: "โทร",
@@ -120,10 +134,14 @@ export const UI: Record<"en" | "th", UiStrings> = {
     toc: {
       about: "เกี่ยวกับอาการ",
       beforeAfter: "ผลก่อน-หลัง",
-      benefits: "ประโยชน์",
+      benefits: "ข้อดีของทรีทเม้นท์สมุนไพร",
       howItWorks: "ขั้นตอนทรีทเม้นท์",
       pricing: "ราคา",
       reviews: "รีวิว",
+      // "รางวัลการันตีคุณภาพ" — Ryo's wording. `การันตี` and `รางวัล` both already appear
+      // in CROSS_SELL_FOUNDER.th ("การันตีโดยรางวัลมากมายในสิงคโปร์"), so this is existing
+      // site vocabulary rather than newly invented phrasing.
+      recognitions: "รางวัลการันตีคุณภาพ",
       crossSell: "ทรีทเม้นท์อื่นๆ",
       partConcern: "ทรีทเม้นท์นี้",
       partBrand: "เกี่ยวกับ บีชู เฮอร์เบิล",

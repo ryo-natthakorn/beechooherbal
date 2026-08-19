@@ -1,0 +1,31 @@
+---
+// src/pages/locations.astro
+// English locations page — reached from Contact Us > Locations, and now from every
+// "Find a Branch" CTA site-wide (the old Call buttons dialled a single branch's line;
+// see the cta note in src/i18n/ui.ts).
+//
+// ⚠ PLACEHOLDER. This ships the real interactive map and all outlet cards by reusing
+// the homepage's LocationsSection, which is genuinely useful today — but the full
+// Phase-3 page still owes: the legacy page's own body copy, per-outlet street addresses,
+// and the locations map graphic noted in src/data/treatment-pages.ts's header
+// (Bee-Choo-Location-ENG-Ver_FINAL.jpg). Safe to ship thin for now: DNS still points at
+// WordPress, so nothing here is indexable yet. Complete before launch.
+//
+// Title is the live site's real one (inventory/pages.json). The live page has NO Yoast
+// meta description at all, so the one below is ours and needs Crispin's sign-off —
+// tracked in the handoff, not invented copy about treatments.
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LocationsSection from "../components/home/LocationsSection.astro";
+
+const lang = "en" as const;
+const title = "Locations - Bee Choo Herbal";
+const description =
+  "Find your nearest Bee Choo Herbal branch in Thailand. Opening hours, phone numbers and directions for every outlet.";
+---
+
+<BaseLayout {title} {description} {lang}>
+  <main id="main">
+    <LocationsSection {lang} showViewAll={false} fullList />
+  </main>
+</BaseLayout>
