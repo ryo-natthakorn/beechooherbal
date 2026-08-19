@@ -169,9 +169,10 @@ const bandWidths = (intrinsicWidth: number) =>
           {/* No first/last corner rounding here: at md+ `md:contents` on .treatment-row
               removes the row box, so `:first-child`/`:last-child` resolve against the
               row's OWN children (label + panel), not the grid — `md:last:*` could never
-              match and `md:first:*` painted nothing without a background. The card
-              treatment for treatment pages lives in global.css under `.treatment-main`
-              so the signed-off homepage grid is untouched. */}
+              match and `md:first:*` painted nothing without a background. The card /
+              chip presentation lives in global.css on `.treatment-row` / `.md-label` /
+              `.md-panel`, unscoped, so the homepage and the treatment pages look the
+              same (Ryo's brief). */}
           <label
             for={`treatment-${i}`}
             class="md-label flex cursor-pointer items-center gap-3 px-5 py-4 font-bold text-brand-origin transition-colors duration-200 hover:bg-brand-earth/20 has-checked:bg-brand-green/8 has-checked:text-brand-green md:border-b md:border-brand-earth"

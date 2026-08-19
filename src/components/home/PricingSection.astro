@@ -23,7 +23,7 @@ interface Props {
   closing?: string[];
   /** Tint override, used only by treatment pages that reorder their sections. */
   background?: "white" | "earth";
-  /** Adds Call/LINE buttons under the closing lines — this is the page's natural
+  /** Adds Facebook + LINE buttons under the closing lines — this is the page's natural
    *  conversion moment (price stated, decision made) but had no direct action
    *  before. Opt-in: the homepage relies on its own hero/header CTAs instead. */
   showCta?: boolean;
@@ -66,16 +66,33 @@ const imageAlt = `${t.heading[lang]}: ${t.tiers
     {
       // "Find a Branch" dropped: it's always on screen in the header now (a yellow
       // pill, every page, every scroll position), so repeating it at every conversion
-      // moment down the page was the same action over and over. LINE stays — it's a
-      // different action (message us), not a duplicate.
+      // moment down the page was the same action over and over. Facebook + LINE stay —
+      // they are two different ways to message us, not duplicates of the header, and
+      // this is the page's natural conversion moment (price stated, decision made).
+      // Same pair, same order, same yellow-primary/green-secondary split as the hero
+      // (TreatmentHero.astro), so the two conversion points read as one system.
       showCta && (
-        <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <div class="mt-8 flex flex-wrap justify-center gap-1.5">
+          <a
+            href="https://www.facebook.com/beechooherbal/"
+            target="_blank"
+            rel="noopener"
+            class="btn-tactile inline-flex min-h-11 items-center gap-1.5 rounded-full bg-brand-yellow px-4 font-bold text-brand-ink hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0">
+              <path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.51 1.49-3.89 3.77-3.89 1.09 0 2.24.19 2.24.19v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99A10 10 0 0 0 22 12z" />
+            </svg>
+            {ui.cta.facebook}
+          </a>
           <a
             href="https://lin.ee/ll3injb"
             target="_blank"
             rel="noopener"
-            class="btn-tactile flex min-h-11 items-center rounded-full bg-brand-green px-6 font-bold text-white hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+            class="btn-tactile inline-flex min-h-11 items-center gap-1.5 rounded-full bg-brand-green px-4 font-bold text-white hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
           >
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0">
+              <path d="M12 3C6.48 3 2 6.58 2 11c0 2.61 1.61 4.93 4.11 6.41-.18.94-.66 2.49-1.51 3.99a.4.4 0 0 0 .5.55c2.11-.76 3.66-1.7 4.51-2.29.76.14 1.55.21 2.39.21 5.52 0 10-3.58 10-8s-4.48-8-10-8z" />
+            </svg>
             {ui.cta.line}
           </a>
         </div>

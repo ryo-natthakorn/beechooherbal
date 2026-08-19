@@ -16,7 +16,9 @@
 //   shows "On this page" plus the section currently in view; tapping it drops the
 //   list as an overlay panel (see global.css). This is a native <details>/<summary>,
 //   so it's keyboard-operable with no extra JS.
-// - >=1536px: the existing fixed left-rail card, list always open.
+// - >=1536px: the fixed left-rail card, open by default. The same summary collapses it
+//   SIDEWAYS here — the card narrows to a 3rem strip against the left edge rather than
+//   folding away upward, which is how a rail is expected to shut (see global.css).
 import { UI } from "../../i18n/ui";
 
 interface Props {
@@ -37,13 +39,16 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
     <summary
       class="flex min-h-11 cursor-pointer list-none items-center gap-2 px-5 py-2 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green [&::-webkit-details-marker]:hidden"
     >
-      {/* Flex `order` (not DOM position) moves the chevron: `order-last` keeps it
-          trailing below 2xl, matching the sticky-bar/no-JS card's existing right-hand
-          disclosure convention, then `2xl:order-first` flips it to lead on the >=1536px
-          rail — a left-edge collapse control reads as "this panel"'s own toggle, the way
-          a sidebar's collapse control usually sits, rather than a dropdown affordance on
-          the right. Purely visual: the icon is aria-hidden, so DOM order (unchanged)
-          is what a screen reader sees, and that has no effect either way. */}
+      {/* Chevron sits on the RIGHT in every presentation (`order-last`). On the >=1536px
+          rail global.css rotates it to point sideways and, once collapsed, it becomes
+          the strip's only laid-out child — see the "SIDEWAYS collapse" block there.
+          Purely visual: the icon is aria-hidden, so DOM order (unchanged) is what a
+          screen reader sees.
+          `ml-auto` is what actually pins it to the RIGHT EDGE: the flex-1 spacer that
+          does that job below 2xl is the current-section label, which is 2xl:hidden, so
+          without this the chevron just trailed the title in the middle of the rail. It
+          is a no-op below 2xl (the spacer already eats the free space) and while
+          collapsed (the strip's content box is exactly one icon wide). */}
       <svg
         aria-hidden="true"
         viewBox="0 0 24 24"
@@ -51,11 +56,14 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
         stroke="currentColor"
         stroke-width="2"
         stroke-linecap="round"
-        class="order-last h-4 w-4 shrink-0 text-brand-green transition-transform duration-200 group-open/toc:rotate-180 2xl:order-first"
+        class="order-last ml-auto h-4 w-4 shrink-0 text-brand-green transition-transform duration-200 group-open/toc:rotate-180"
       >
         <path d="m6 9 6 6 6-6" />
       </svg>
-      <span class:list={[serif, "shrink-0 text-sm font-bold text-brand-green"]}>{ui.misc.onThisPage}</span>
+      {/* data-toc-title is the hook global.css uses to take this out of flow (sr-only,
+          NOT display:none) while the >=1536px rail is collapsed — it stays the
+          summary's accessible name there. */}
+      <span data-toc-title class:list={[serif, "shrink-0 text-sm font-bold text-brand-green"]}>{ui.misc.onThisPage}</span>
       <span data-toc-current class="min-w-0 flex-1 truncate text-right text-xs text-brand-origin 2xl:hidden"></span>
     </summary>
     <div class="toc-panel px-3 pt-1 pb-3">

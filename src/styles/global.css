@@ -14,6 +14,15 @@
   --color-brand-green: #2D6946;   /* Harmony Green — primary: headings, logo, nav, CTAs */
   --color-brand-green-deep: #1F4A31; /* darker SHADE of Harmony Green (not a new hue) — cinematic
                                         hero/scene gradient depth for the heavy-motion redesign */
+  --color-brand-green-mist: #CDE9D6;  /* lighter SHADE of Harmony Green (hue 139 vs 145 — not a new
+                                         hue), the Part 2 scroll wash. It is NOT `brand-green mixed
+                                         into white`: desaturating a dark green with white lands on
+                                         near-grey (18% mix = #d9e4de, chroma 11), which is why that
+                                         wash read as "barely visible". This holds the SAME contrast
+                                         as the value it replaces (brand-origin 4.55:1 vs 4.51:1,
+                                         brand-green headings 5.04:1) with 2.5x the chroma
+                                         (28), matching Part 1's mint endpoint (#c8e9e3, 4.55:1,
+                                         chroma 33) so the two halves read as equally coloured. */
   --color-brand-yellow: #FFC600;  /* Oriental Yellow — CTA accents, alerts */
   --color-brand-pink: #EFA693;    /* Gentle Pink — soft accents (not used on homepage by design) */
   --color-brand-earth: #DBCBC1;   /* section backgrounds, dividers */
@@ -176,8 +185,57 @@
     width: 16rem;
     max-height: 72vh;
     overflow-y: auto;
+    /* Paired with the collapse below: the card narrows toward its own left edge, so
+       anything sticking out horizontally mid-animation must be clipped, not scrolled. */
+    overflow-x: hidden;
     transform: translateY(-50%);
     z-index: 20;
+  }
+
+  /* SIDEWAYS collapse. The <details> still drives the state (no new JS, no second
+     control), but on the rail the card must slide shut toward the left edge like a
+     sidebar rather than folding away upward — vertical disclosure is the sticky-bar
+     presentation's idiom, not a fixed rail's. `left` is pinned at 1.25rem, so animating
+     `width` from 16rem down to a narrow strip collapses it leftwards.
+     That width is exact, not approximate: 1rem padding + the 16px chevron + 1rem
+     padding, PLUS the card's own two 1px borders (box-sizing is border-box), so the
+     chevron is the strip and lands dead centre of it. Drop the +2px and the borders eat
+     into the icon's box, which overflow-x: hidden then clips.
+     The title goes SR-ONLY rather than display:none — it is the summary's accessible
+     name, and removing it would leave the collapsed control unnamed for a screen
+     reader. Merely clipping it with the card's overflow is not enough: overflow clips
+     at the PADDING box, so the first glyph still showed in the strip's right padding.
+     Taking it out of flow with the standard 1px-clip pattern leaves the chevron as the
+     summary's only laid-out child, which is also what centres it. */
+  .toc:has(details:not([open])) {
+    width: calc(3rem + 2px);
+  }
+  .toc:has(details:not([open])) summary {
+    padding-inline: 1rem;
+  }
+  .toc:has(details:not([open])) [data-toc-title] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  /* The chevron points the way the control will MOVE the rail: left while open (click
+     = collapse leftwards), right while collapsed (click = expand back out). Set on the
+     `rotate` property, not `transform` — Tailwind v4's rotate-180 utility in the markup
+     is itself `rotate:`, and the two properties compose rather than override, so a
+     transform here would land the open state at 270deg. */
+  .toc summary svg {
+    rotate: 90deg;
+  }
+  .toc:has(details:not([open])) summary svg {
+    rotate: -90deg;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .toc {
+      transition: width 300ms var(--ease-spring);
+    }
   }
 }
 /* Active TOC entry: a solid brand-green pill (rounded-full on the <a>, in
@@ -336,16 +394,19 @@
      and below all content. With `z-index: 0` instead it would paint OVER the copy.
    - The base is green at 2% rather than pure #fff so Part 2 stays faintly distinct even
      with JS off (where --part2-progress is never published and the wash sits at
-     opacity 0). At opacity 1 the wash fully replaces the base, topping out at 18%.
-   CONTRAST. brand-origin body text on brand-green mixed into white: 15% -> 4.73:1,
-   16% -> 4.66:1, 18% -> 4.52:1, 20% -> 4.38:1 (FAILS AA). 18% is the darkest value that
-   still clears 4.5:1, chosen so the change actually reads while scrolling — 15% (round
-   1's value) plus a linear 0->1 fill over the whole of Part 2 measured as "barely
-   visible" in review: at the halfway point through Part 2 the wash was only ~half its
-   already-small swing. --part2-progress is now also SQRT-eased in TreatmentPage.astro's
-   script (front-loads the ramp: 50% scrolled -> ~71% opacity instead of 50%), so the
-   colour shift is obvious well before the visitor reaches the very end. brand-green
-   headings on the 18% ground: ~4.9:1. Text colour is untouched — see the .closing-band
+     opacity 0). At opacity 1 the wash fully replaces the base.
+   CONTRAST — and why the wash is a TOKEN, not a white mix. Body text is brand-origin,
+   and 4.5:1 caps how dark this ground can go: brand-green mixed into white measures
+   15% -> 4.75:1, 18% -> 4.51:1, 20% -> 4.38:1 (FAILS AA). So 18% was already the
+   darkest legal white-mix — yet it still reviewed as "barely visible", because the
+   problem was never lightness, it was CHROMA: desaturating a dark green with white
+   lands on a near-grey (#d9e4de, chroma 11) while Part 1's mint endpoint is #c8e9e3,
+   chroma 33. Same luminance, three times the colour. --color-brand-green-mist (#CDE9D6,
+   chroma 28) is the fix: brand-origin 4.55:1 and brand-green headings 5.04:1, i.e. a
+   hair MORE contrast than the 18% mix it replaces, and as coloured as Part 1.
+   --part2-progress is also SQRT-eased in TreatmentPage.astro's script (front-loads the
+   ramp: 50% scrolled -> ~71% opacity instead of 50%), so the shift reads well before
+   the visitor reaches the very end. Text colour is untouched — see the .closing-band
    note about the 3.79:1 failure that came from dimming type.
 
    Moving the wash from `.brand-band section` to the wrapper also lands the "About Bee
@@ -363,7 +424,7 @@
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  background-color: color-mix(in srgb, var(--color-brand-green) 18%, #fff);
+  background-color: var(--color-brand-green-mist);
   opacity: var(--part2-progress, 0);
   pointer-events: none;
 }
@@ -529,28 +590,33 @@
   }
 }
 
-/* "Other Treatments" accordion — treatment-page presentation only. The homepage's own
-   grid is signed off, so every rule here is scoped by .treatment-main.
+/* Treatments accordion presentation — ONE look everywhere. This block used to be scoped
+   by .treatment-main, i.e. treatment pages only, on the grounds that the homepage grid
+   was already signed off; Ryo has since asked for the homepage's "Hair Treatment in
+   Bangkok, Thailand (7 Types)" list to use this same styling, so the scope is gone. The
+   markup is literally the same component (TreatmentsSection.astro) in both places, so
+   dropping the ancestor selector is the whole change — nothing per-page is needed.
    md+ constraint: .treatment-row is display:contents there (Tailwind's md:contents in
    the markup), so the row BOX DOES NOT EXIST and cannot be styled — only .md-label and
    .md-panel can, and they are direct grid children. Below md the row box is real and
    carries the card. */
-.treatment-main .treatment-row {
+.treatment-row {
   border-color: color-mix(in srgb, var(--color-brand-earth) 70%, transparent);
   box-shadow: var(--shadow-soft);
   transition:
     box-shadow 250ms var(--ease-spring),
     border-color 250ms var(--ease-spring);
 }
-.treatment-main .treatment-row:has(.md-radio:checked) {
+.treatment-row:has(.md-radio:checked) {
   border-color: color-mix(in srgb, var(--color-brand-green) 35%, transparent);
   box-shadow: var(--shadow-soft-lg);
 }
 @media (min-width: 48rem) {
   /* Hairline list -> chip list. The active label becomes a white card floating on the
-     greening Part 2 ground, which is the only affordance the md+ layout can carry now
-     that the row box is gone. */
-  .treatment-main .md-label {
+     section ground (the greening Part 2 wash on treatment pages, brand-earth/25 on the
+     homepage), which is the only affordance the md+ layout can carry now that the row
+     box is gone. */
+  .md-label {
     border-bottom: 0;
     border-radius: 0.75rem;
     margin-bottom: 0.25rem;
@@ -558,19 +624,19 @@
       background-color 200ms var(--ease-spring),
       box-shadow 200ms var(--ease-spring);
   }
-  .treatment-main .md-label:has(.md-radio:checked) {
+  .md-label:has(.md-radio:checked) {
     background-color: #fff;
     box-shadow: var(--shadow-soft);
   }
-  .treatment-main .md-panel {
+  .md-panel {
     border: 1px solid color-mix(in srgb, var(--color-brand-earth) 60%, transparent);
     border-radius: 1.25rem;
     box-shadow: var(--shadow-soft-lg);
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .treatment-main .treatment-row,
-  .treatment-main .md-label {
+  .treatment-row,
+  .md-label {
     transition: none;
   }
 }
