@@ -34,15 +34,12 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
     <p class="mt-4 text-balance text-lg font-bold text-brand-yellow sm:text-xl md:mt-5 md:text-2xl">
       {t.tagline[lang]}
     </p>
+    {/* "Find a Branch" (previously the first, white button here) dropped: it's always on
+        screen in the header now (a yellow pill, every page, every scroll position), so
+        repeating it in the hero was the same action twice before the visitor had
+        scrolled at all. Facebook (already yellow) and LINE (already outlined) are
+        unchanged. */}
     <div class="mt-6 flex flex-wrap justify-center gap-3 md:mt-8">
-      <a href={HOME.locations.href[lang]} class="btn-tactile flex min-h-11 items-center gap-2 rounded-full bg-white px-7 font-bold text-brand-green shadow-soft-lg hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-        {/* Map pin, not a phone: this routes to the locations page rather than dialling
-            one branch's line — see the ctaCall note in src/data/home.ts. */}
-        <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0">
-          <path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" />
-        </svg>
-        {t.ctaCall[lang]}
-      </a>
       <a href="https://www.facebook.com/beechooherbal/" target="_blank" rel="noopener" class="btn-tactile flex min-h-11 items-center gap-2 rounded-full bg-brand-yellow px-7 font-bold text-brand-ink shadow-soft-lg hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
         <svg aria-hidden="true" viewBox="0 0 320 512" fill="currentColor" class="h-4 w-4 shrink-0">
           <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />

@@ -37,8 +37,13 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
     <summary
       class="flex min-h-11 cursor-pointer list-none items-center gap-2 px-5 py-2 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green [&::-webkit-details-marker]:hidden"
     >
-      <span class:list={[serif, "shrink-0 text-sm font-bold text-brand-green"]}>{ui.misc.onThisPage}</span>
-      <span data-toc-current class="min-w-0 flex-1 truncate text-right text-xs text-brand-origin 2xl:hidden"></span>
+      {/* Flex `order` (not DOM position) moves the chevron: `order-last` keeps it
+          trailing below 2xl, matching the sticky-bar/no-JS card's existing right-hand
+          disclosure convention, then `2xl:order-first` flips it to lead on the >=1536px
+          rail — a left-edge collapse control reads as "this panel"'s own toggle, the way
+          a sidebar's collapse control usually sits, rather than a dropdown affordance on
+          the right. Purely visual: the icon is aria-hidden, so DOM order (unchanged)
+          is what a screen reader sees, and that has no effect either way. */}
       <svg
         aria-hidden="true"
         viewBox="0 0 24 24"
@@ -46,10 +51,12 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
         stroke="currentColor"
         stroke-width="2"
         stroke-linecap="round"
-        class="h-4 w-4 shrink-0 text-brand-green transition-transform duration-200 group-open/toc:rotate-180"
+        class="order-last h-4 w-4 shrink-0 text-brand-green transition-transform duration-200 group-open/toc:rotate-180 2xl:order-first"
       >
         <path d="m6 9 6 6 6-6" />
       </svg>
+      <span class:list={[serif, "shrink-0 text-sm font-bold text-brand-green"]}>{ui.misc.onThisPage}</span>
+      <span data-toc-current class="min-w-0 flex-1 truncate text-right text-xs text-brand-origin 2xl:hidden"></span>
     </summary>
     <div class="toc-panel px-3 pt-1 pb-3">
       {
@@ -78,11 +85,12 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
                       <a
                         href={`#${item.id}`}
                         data-toc-link
-                        class="flex items-start gap-2 rounded-xl px-2.5 py-1.5 text-xs leading-snug text-brand-origin transition-colors duration-200 hover:bg-brand-green/8 hover:text-brand-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+                        class="flex items-center gap-2 rounded-full px-2.5 py-1.5 text-xs leading-snug text-brand-origin transition-colors duration-200 hover:bg-brand-green/8 hover:text-brand-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
                       >
-                        {/* items-start + mt-1.5 keeps the dot on the first line when a
-                            long label wraps to two. Turns brand-yellow when active. */}
-                        <span aria-hidden="true" class="toc-dot mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-green/40" />
+                        {/* items-center is safe now that no label wraps (see the width
+                            note on .toc in global.css) — every item is a single line at
+                            every breakpoint. Dot turns brand-yellow when active. */}
+                        <span aria-hidden="true" class="toc-dot h-1.5 w-1.5 shrink-0 rounded-full bg-brand-green/40" />
                         <span class="min-w-0">{item.label}</span>
                       </a>
                     </li>

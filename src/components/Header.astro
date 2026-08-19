@@ -10,6 +10,7 @@
 import { Image } from "astro:assets";
 import logoLeaf from "../assets/images/logo-leaf.jpg";
 import { UI, NAV, type NavGroup } from "../i18n/ui";
+import { HOME } from "../data/home";
 
 interface Props {
   lang: "en" | "th";
@@ -111,19 +112,23 @@ const desktopChildLinkClass = (current: boolean) =>
   </nav>
 
   <div class="flex items-center gap-2">
+    {/* The one CTA that's always on screen, so it's the single place "Find a Branch"
+        needs to live outside the footer — every other appearance (hero, pricing) was
+        redundant with this and has been removed. Yellow fill unconditionally: it used
+        to swap green/yellow with the homepage's transparent-at-top header state, but a
+        primary conversion action shouldn't change colour depending on scroll position,
+        and yellow reads on both the solid white bar and the transparent green overlay. */}
     <a
-      href="https://lin.ee/ll3injb"
-      target="_blank"
-      rel="noopener"
-      class="btn-tactile flex min-h-11 items-center gap-2 rounded-full bg-brand-green px-4 text-sm font-bold text-white hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green group-data-[at-top]:bg-brand-yellow group-data-[at-top]:text-brand-ink group-data-[at-top]:hover:bg-brand-yellow/90"
+      href={HOME.locations.href[lang]}
+      class="btn-tactile flex min-h-11 items-center gap-2 rounded-full bg-brand-yellow px-4 text-sm font-bold text-brand-ink hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
     >
       <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0">
-        <path d="M12 3C6.48 3 2 6.58 2 11c0 2.61 1.61 4.93 4.11 6.41-.18.94-.66 2.49-1.51 3.99a.4.4 0 0 0 .5.55c2.11-.76 3.66-1.7 4.51-2.29.76.14 1.55.21 2.39.21 5.52 0 10-3.58 10-8s-4.48-8-10-8z" />
+        <path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" />
       </svg>
-      {/* Short on phones: the full label pushed the wordmark into wrapping onto two
-          lines at 375px, and it duplicated the hero's own LINE button at full size. */}
-      <span class="md:hidden">LINE</span>
-      <span class="hidden md:inline">{ui.cta.line}</span>
+      {/* Short on phones: the full label risked pushing the wordmark into wrapping onto
+          two lines at 375px, same failure mode the old LINE pill had. */}
+      <span class="md:hidden">{ui.cta.callShort}</span>
+      <span class="hidden md:inline">{ui.cta.call}</span>
     </a>
 
     <details class="relative md:hidden">

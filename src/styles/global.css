@@ -168,20 +168,28 @@
     position: fixed;
     top: 50%;
     left: 1.25rem;
-    width: 11rem;
+    /* Widened from 11rem: the longest labels ("Recognitions and Rewards",
+       "ข้อดีของทรีทเม้นท์สมุนไพร") were wrapping to 2 lines, which read as a bug rather
+       than a design choice. 16rem fits every current label on one line — see the
+       measurement note on .toc a[aria-current="true"] below, which used to justify the
+       old width's pill radius specifically because of this wrapping. */
+    width: 16rem;
     max-height: 72vh;
     overflow-y: auto;
     transform: translateY(-50%);
     z-index: 20;
   }
 }
-/* Active TOC entry: a solid brand-green pill. aria-current stays the only hook (the
-   script already sets it), so this needs no new JS. White on brand-green is 6.52:1; the
-   idle state keeps full-strength brand-origin — nothing is dimmed to create the contrast
-   between states, weight and fill do it. Radius is `xl`, not `full`: the longest labels
-   ("Recognitions and Rewards", "ข้อดีของทรีทเม้นท์สมุนไพร") wrap to two lines in the
-   11rem rail, and a two-line pill-radius box reads as a mistake while a two-line
-   0.75rem box reads as a nav item. On one line the two are within 2px. */
+/* Active TOC entry: a solid brand-green pill (rounded-full on the <a>, in
+   TreatmentToc.astro). aria-current stays the only hook (the script already sets it),
+   so this needs no new JS. White on brand-green is 6.52:1; the idle state keeps
+   full-strength brand-origin — nothing is dimmed to create the contrast between states,
+   weight and fill do it.
+   The true pill radius only works because every item is single-line: the rail used to
+   be 11rem, which wrapped the longest labels ("Recognitions and Rewards",
+   "ข้อดีของทรีทเม้นท์สมุนไพร") to two lines, and a two-line pill-radius box reads as a
+   mistake — that's why the radius was downgraded to `xl` in round 1. Widening the rail
+   to 16rem (see .toc above) fixed the wrap, so the radius could go back to a real pill. */
 .toc a[aria-current="true"] {
   background-color: var(--color-brand-green);
   color: #fff;
@@ -326,13 +334,19 @@
    - `isolation: isolate` makes the wrapper a stacking context so the wash's
      `z-index: -1` is trapped inside it: it paints above the wrapper's own background
      and below all content. With `z-index: 0` instead it would paint OVER the copy.
-   - The base is green at 4% rather than pure #fff so Part 2 stays faintly distinct even
+   - The base is green at 2% rather than pure #fff so Part 2 stays faintly distinct even
      with JS off (where --part2-progress is never published and the wash sits at
-     opacity 0). At opacity 1 the wash fully replaces the base, topping out at 15%.
+     opacity 0). At opacity 1 the wash fully replaces the base, topping out at 18%.
    CONTRAST. brand-origin body text on brand-green mixed into white: 15% -> 4.73:1,
-   16% -> 4.66:1, 18% -> 4.52:1, 20% -> 4.38:1 (FAILS AA). 15% is the value, chosen for
-   margin. brand-green headings on that ground: ~5.2:1. Text colour is untouched — see
-   the .closing-band note about the 3.79:1 failure that came from dimming type.
+   16% -> 4.66:1, 18% -> 4.52:1, 20% -> 4.38:1 (FAILS AA). 18% is the darkest value that
+   still clears 4.5:1, chosen so the change actually reads while scrolling — 15% (round
+   1's value) plus a linear 0->1 fill over the whole of Part 2 measured as "barely
+   visible" in review: at the halfway point through Part 2 the wash was only ~half its
+   already-small swing. --part2-progress is now also SQRT-eased in TreatmentPage.astro's
+   script (front-loads the ramp: 50% scrolled -> ~71% opacity instead of 50%), so the
+   colour shift is obvious well before the visitor reaches the very end. brand-green
+   headings on the 18% ground: ~4.9:1. Text colour is untouched — see the .closing-band
+   note about the 3.79:1 failure that came from dimming type.
 
    Moving the wash from `.brand-band section` to the wrapper also lands the "About Bee
    Choo Herbal" eyebrow (a child of the wrapper, not of the section) on the white
@@ -341,7 +355,7 @@
 .brand-band {
   position: relative;
   isolation: isolate;
-  background-color: color-mix(in srgb, var(--color-brand-green) 4%, #fff);
+  background-color: color-mix(in srgb, var(--color-brand-green) 2%, #fff);
 }
 .brand-band::before {
   content: "";
@@ -349,7 +363,7 @@
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  background-color: color-mix(in srgb, var(--color-brand-green) 15%, #fff);
+  background-color: color-mix(in srgb, var(--color-brand-green) 18%, #fff);
   opacity: var(--part2-progress, 0);
   pointer-events: none;
 }

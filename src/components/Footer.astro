@@ -16,10 +16,10 @@ const { lang } = Astro.props;
 const ui = UI[lang];
 ---
 
-<footer class="relative overflow-hidden bg-brand-green px-4 pt-6 pb-5 text-white md:px-8 md:py-6">
+<footer class="relative overflow-hidden bg-brand-green px-4 pt-5 pb-4 text-white md:px-8 md:py-6">
   <HerbalStrokes draw class="pointer-events-none absolute inset-0 h-full w-full text-white opacity-10" />
   <div
-    class="relative mx-auto flex max-w-5xl flex-col items-center gap-4 text-center md:flex-row md:justify-between md:gap-8 md:text-left"
+    class="relative mx-auto flex max-w-5xl flex-col items-center gap-3 text-center md:flex-row md:justify-between md:gap-8 md:text-left"
   >
     <!-- Brand lockup. Logo and tagline sit SIDE BY SIDE so the larger logo costs no extra
          footer height: the tagline's own line box now lives inside the logo's height
@@ -34,18 +34,24 @@ const ui = UI[lang];
            the flat 160px Crispin once called "too big". width/height stay as the intrinsic
            hint for Astro's local-image aspect ratio (2480:3508), not the render size. -->
       <Image src={logoFull} alt="Bee Choo Origin" width={160} height={226} class="h-auto w-24 shrink-0 brightness-0 invert md:w-36" />
-      <!-- Slogan is serif italic per brand guide; brand-serenity is the only on-green brand
-           token that clears WCAG AA (4.55:1 — brand-earth fails at 4.14:1). -->
-      <p class="font-serif text-lg italic text-brand-serenity md:text-2xl">{ui.footer.tagline}</p>
+      <!-- Slogan is serif italic per brand guide, plain white per Ryo — highest possible
+           contrast on the green (way past the 4.55:1 brand-serenity used to clear). -->
+      <p class="font-serif text-lg text-white italic md:text-2xl">{ui.footer.tagline}</p>
     </div>
 
-    <div class="flex flex-col items-center gap-3 md:items-end">
-    <div class="flex flex-wrap justify-center gap-2 md:justify-end md:gap-3">
+    <div class="flex flex-col items-center gap-2 md:items-end">
+    {/* px-6 -> px-3.5, gap-2 -> gap-1.5: at px-6 these three wrapped to 2 rows from
+        375px down (386px needed against 343px available), which was the single biggest
+        lever on footer height — a whole extra 44px+gap row. This fits one line from
+        360px up (needs 322px against 328px available); min-h-11 still holds the 44px
+        tap target regardless of horizontal padding. 320px still wraps (flex-wrap
+        handles it) — same safety-net precedent as the treatment hero's own CTA row. */}
+    <div class="flex flex-wrap justify-center gap-1.5 md:justify-end md:gap-3">
       <!-- Routes to the locations page rather than dialling one branch's line — see the
            cta note in src/i18n/ui.ts. -->
       <a
         href={HOME.locations.href[lang]}
-        class="btn-tactile flex min-h-11 items-center gap-2 rounded-full bg-brand-yellow px-6 font-bold text-brand-ink hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        class="btn-tactile flex min-h-11 items-center gap-2 rounded-full bg-brand-yellow px-3.5 font-bold text-brand-ink hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0">
           <path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" />
@@ -56,7 +62,7 @@ const ui = UI[lang];
         href="https://www.facebook.com/beechooherbal/"
         target="_blank"
         rel="noopener"
-        class="btn-tactile flex min-h-11 items-center rounded-full bg-white px-6 font-bold text-brand-green hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        class="btn-tactile flex min-h-11 items-center rounded-full bg-white px-3.5 font-bold text-brand-green hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
         {ui.cta.facebook}
       </a>
@@ -64,7 +70,7 @@ const ui = UI[lang];
         href="https://lin.ee/ll3injb"
         target="_blank"
         rel="noopener"
-        class="btn-tactile flex min-h-11 items-center rounded-full bg-white px-6 font-bold text-brand-green hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        class="btn-tactile flex min-h-11 items-center rounded-full bg-white px-3.5 font-bold text-brand-green hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
         {ui.cta.line}
       </a>

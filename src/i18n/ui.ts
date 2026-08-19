@@ -5,6 +5,10 @@
 export interface UiStrings {
   cta: {
     call: string;
+    /** Compact mobile label for the header's Find-a-Branch pill — "Find a Branch" is
+     *  long enough on a phone to risk crowding the wordmark again (see the note on
+     *  Header.astro's wordmark whitespace-nowrap fix). Short root word only. */
+    callShort: string;
     facebook: string;
     line: string;
   };
@@ -64,6 +68,7 @@ export const UI: Record<"en" | "th", UiStrings> = {
     // The label says "Find a Branch" so it doesn't promise a dialer it won't open.
     cta: {
       call: "Find a Branch",
+      callShort: "Branch",
       facebook: "Facebook",
       line: "LINE",
     },
@@ -107,6 +112,9 @@ export const UI: Record<"en" | "th", UiStrings> = {
     // normally written in Thai interfaces and keeps the hero row on one line.
     cta: {
       call: "สาขาใกล้คุณ",
+      // Same short root word NAV already uses for the Locations menu item — not a new
+      // coinage.
+      callShort: "สาขา",
       facebook: "Facebook",
       line: "LINE",
     },

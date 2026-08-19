@@ -810,7 +810,14 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
           {
             src: greyHairAfterImage,
             alt: "White Hairs Gone Immediately After Treatment",
-            caption: "Immediately After Bee Choo Herbal Treatment",
+            // Was "Immediately After Bee Choo Herbal Treatment" — wrapped to 2 lines in
+            // the 280px card, unlike its "Before" pair. This caption is our own
+            // presentation choice (see BeforeAfterImage's doc comment — the legacy site
+            // has no caption here at all), so shortening it is a layout fix, not a copy
+            // change; the full "immediately after" claim still lives in `body` above and
+            // in `alt`. Same length as "Before Bee Choo Herbal Treatment" now, so the
+            // pair reads as a matched set.
+            caption: "After Bee Choo Herbal Treatment",
           },
         ],
       },

@@ -275,10 +275,13 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
           // color-mix() (see the warning in global.css; that pattern silently failed to
           // parse once already).
           root.style.setProperty("--part1-progress", clamp(scrollY / Math.max(1, seam)).toFixed(4));
-          root.style.setProperty(
-            "--part2-progress",
-            clamp((scrollY + viewport - seam) / Math.max(1, mainEnd - seam)).toFixed(4),
-          );
+          // sqrt-eased: a linear fill across the whole of Part 2 read as "barely visible"
+          // while scrolling, because at the halfway point through Part 2 the wash was
+          // only half of an already-small swing. Math.sqrt front-loads the ramp (50%
+          // scrolled -> ~71% opacity), so the colour shift is obvious well before the
+          // visitor reaches the end — see the CSS values/contrast note in global.css.
+          const part2Raw = clamp((scrollY + viewport - seam) / Math.max(1, mainEnd - seam));
+          root.style.setProperty("--part2-progress", Math.sqrt(part2Raw).toFixed(4));
         } else {
           // A page with no brand band (a future custom order) keeps the single-stage
           // tint rather than sitting frozen at white.
