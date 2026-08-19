@@ -24,13 +24,29 @@ export interface UiStrings {
     enableMapInteraction: string;
     lockMap: string;
     onThisPage: string;
-    readingProgress: string;
   };
   // Per-outlet card labels (LocationsSection's mobile list).
   outlet: {
     call: string;
     hours: string;
     directions: string;
+  };
+  // Short table-of-contents labels for treatment pages (TreatmentToc.astro). Navigation
+  // chrome, not page copy — the section headings themselves carry the real (verbatim)
+  // wording. `partConcern`/`partBrand` group the TOC into the page's two halves: the
+  // visitor's own condition vs. the shared "about Bee Choo Herbal" material.
+  // ⚠ TH values here are newly composed (not transcribed from the legacy site, since
+  // this list never existed there) — human/Crispin sign-off needed before launch.
+  toc: {
+    about: string;
+    beforeAfter: string;
+    benefits: string;
+    howItWorks: string;
+    pricing: string;
+    reviews: string;
+    crossSell: string;
+    partConcern: string;
+    partBrand: string;
   };
 }
 
@@ -56,12 +72,22 @@ export const UI: Record<"en" | "th", UiStrings> = {
       enableMapInteraction: "Click to interact with map",
       lockMap: "Lock map",
       onThisPage: "On this page",
-      readingProgress: "Reading progress",
     },
     outlet: {
       call: "Call",
       hours: "Hours",
       directions: "Directions",
+    },
+    toc: {
+      about: "About the Condition",
+      beforeAfter: "Before & After",
+      benefits: "Benefits",
+      howItWorks: "How It Works",
+      pricing: "Pricing",
+      reviews: "Reviews",
+      crossSell: "Other Treatments",
+      partConcern: "This Treatment",
+      partBrand: "About Bee Choo Herbal",
     },
   },
   th: {
@@ -85,12 +111,22 @@ export const UI: Record<"en" | "th", UiStrings> = {
       enableMapInteraction: "คลิกเพื่อใช้งานแผนที่",
       lockMap: "ล็อกแผนที่",
       onThisPage: "สารบัญ",
-      readingProgress: "ความคืบหน้าการอ่าน",
     },
     outlet: {
       call: "โทร",
       hours: "เวลาทำการ",
       directions: "นำทาง",
+    },
+    toc: {
+      about: "เกี่ยวกับอาการ",
+      beforeAfter: "ผลก่อน-หลัง",
+      benefits: "ประโยชน์",
+      howItWorks: "ขั้นตอนทรีทเม้นท์",
+      pricing: "ราคา",
+      reviews: "รีวิว",
+      crossSell: "ทรีทเม้นท์อื่นๆ",
+      partConcern: "ทรีทเม้นท์นี้",
+      partBrand: "เกี่ยวกับ บีชู เฮอร์เบิล",
     },
   },
 };

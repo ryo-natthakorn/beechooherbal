@@ -38,6 +38,14 @@
 //   "This is why: if you are prone...", which lowercases that sentence-initial "I". No
 //   words added or dropped.
 //
+// 2026-08-19: EN heading strings (H1s + H2s) below were retyped from the legacy
+// ALL-CAPS transcription to Title Case — same words, casing only. Google is
+// case-insensitive, so this carries no SEO risk; it is a presentation decision, not a
+// copy change, and does NOT violate the verbatim-copy rule above. "BEECHOO" (one word,
+// as in the source) becomes "Beechoo" — do not "fix" this to "Bee Choo", the word
+// itself must stay identical. TH headings are untouched (no TH heading contains
+// embedded ALL-CAPS Latin text). Do not restore the caps in a future pass.
+//
 // Previously tracked as blocked by sandbox network egress — RESOLVED. All 5 files were
 // unreachable from the build sandbox (proxy 403) but download fine from a normal
 // network; confirmed genuine images (magic-byte checked), sourced full-resolution
@@ -218,6 +226,13 @@ export const STANDARD_SECTION_ORDER: SectionKey[] = [
  *  is hidden; compressing is a type-scale and spacing change, not a content one. */
 export const CLOSING_SECTIONS: SectionKey[] = ["reviews", "crossSell"];
 
+/** Part 2 of every treatment page: the four sections whose copy is shared brand
+ *  material ("about Bee Choo Herbal" — how the treatment works, pricing, reviews,
+ *  other treatments), rendered as one visually grouped band — see `.brand-band` in
+ *  global.css. CLOSING_SECTIONS (a subset) additionally keeps its own lower type
+ *  rank inside the band. Presentation only; every word stays rendered and crawlable. */
+export const BRAND_SECTIONS: SectionKey[] = ["howItWorks", "pricing", "reviews", "crossSell"];
+
 export interface TreatmentPageContent {
   /** H1. Distinct from src/data/treatments.ts's homepage-card `title`. */
   heroTitle: Record<Lang, string>;
@@ -297,13 +312,13 @@ const BT_SINCERITY = "http://www.businesstimes.com.sg/hub-projects/ceo-conversat
 // treatment pages (verified on oily-scalp + grey-hair); the cross-sell block is NOT, so
 // it stays per-page below.
 const REVIEWS_HEADING: Record<Lang, string> = {
-  en: "REVIEWS ON BEECHOO HAIR TREATMENT",
+  en: "Reviews on Beechoo Hair Treatment",
   th: "รีวิว บีชู แฮร์ ทรีทเม้นท์",
 };
 
 const HOW_IT_WORKS: Record<Lang, TailContent["howItWorks"]> = {
   en: {
-    heading: "100% NATURAL HERBAL HAIR TREATMENT - HOW IT WORKS",
+    heading: "100% Natural Herbal Hair Treatment - How It Works",
     intro:
       "Consistently rated as the Best Natural Hair Loss Treatment Salon Clinic in Bangkok, our all natural, safe & highly effective herbal hair treatment gives your Unhealthy/Dry/Damaged/Oily scalp instant rejuvenation. The natural dye contained in the treatment also covers your white hair to the roots in the process!",
     stepsLead: "See how it works above in our simple 4 step treatment process:",
@@ -332,7 +347,7 @@ const HOW_IT_WORKS: Record<Lang, TailContent["howItWorks"]> = {
 
 const PRICING: Record<Lang, TailContent["pricing"]> = {
   en: {
-    heading: "AFFORDABLE HAIR TREATMENT IN Bangkok, Thailand",
+    heading: "Affordable Hair Treatment in Bangkok, Thailand",
     intro:
       "Our prices are based on your hair length between 800 Baht to 1200 Baht for à la carte herbal hair treatment. Strictly no hidden charges. You may choose to make upfront payment before treatment",
     closing: [
@@ -372,7 +387,7 @@ const CROSS_SELL_FOUNDER: Record<Lang, Inline[]> = {
 };
 
 const CROSS_SELL_HEADING: Record<Lang, string> = {
-  en: "BEST HAIR LOSS TREATMENT SALON CLINIC IN BANGKOK, Thailand",
+  en: "Best Hair Loss Treatment Salon Clinic in Bangkok, Thailand",
   th: "ทรีทเม้นท์รักษาผมร่วงที่เห็นผลมากที่สุดในประเทศไทย",
 };
 
@@ -408,7 +423,7 @@ const STANDARD_CHROME = {
 export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
   "oily-scalp": {
     heroTitle: {
-      en: "OILY ITCHY SCALP HAIR TREATMENT",
+      en: "Oily Itchy Scalp Hair Treatment",
       th: "ทรีทเม้นท์สำหรับผมมันและอาการคันหนังศีรษะ",
     },
     // Moved off the legacy order onto the shared standard. This page previously shipped
@@ -432,7 +447,7 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     videoId: "HhYhUh7qvLM",
     about: {
       en: {
-        heading: "ABOUT ITCHY OILY SCALP HAIR CONDITION",
+        heading: "About Itchy Oily Scalp Hair Condition",
         image: { src: oilyScalpAboutImage, alt: "Bee Choo Herbal salon" },
         intro: [
           "Do take a minute to watch the video above to see how our customer had recovered from his oily scalp condition. These are all REAL pictures and videos taken at our salon. Oily Scalp in both men and women can be treated effectively with Bee Choo Herbal Hair Treatment. Thousands of customers trust us with their hair.",
@@ -496,7 +511,7 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     },
     benefits: {
       en: {
-        heading: "BENEFITS OF 100% NATURAL HERBAL TREATMENT",
+        heading: "Benefits of 100% Natural Herbal Treatment",
         blocks: [
           {
             kind: "p",
@@ -518,7 +533,7 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     // on the live site it is its own section sitting under the before/after heading.
     beforeAfter: {
       en: {
-        heading: "SEE OUR CLIENT'S BEFORE AFTER RESULTS",
+        heading: "See Our Client's Before After Results",
         body: ["Get rid of the itch and excess oil today. With regular treatment, your scalp will be free of itch and excess oil."],
         images: [],
         giphyId: "t7752IVYRBN1YzOPaL",
@@ -547,7 +562,7 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
 
   "grey-hair": {
     heroTitle: {
-      en: "REVERSE PREMATURE GREY WHITE HAIR",
+      en: "Reverse Premature Grey White Hair",
       th: "ลดผมขาวและผมหงอกอย่างถาวร",
     },
     // This page piloted the revised IA; it now follows the shared standard instead of
@@ -595,7 +610,7 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     },
     about: {
       en: {
-        heading: "ABOUT PREMATURE GREY WHITE HAIR",
+        heading: "About Premature Grey White Hair",
         intro: [
           "Do take a minute to watch the video above to see how our the natural dye in our herbal paste works. These are all REAL pictures and videos taken at our salon.",
           "Premature white and grey hair can be annoying and it is irreversible.",
@@ -672,7 +687,7 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     },
     benefits: {
       en: {
-        heading: "BENEFITS OF NATURAL DYE",
+        heading: "Benefits of Natural Dye",
         blocks: [
           {
             kind: "p",
@@ -718,7 +733,7 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     },
     beforeAfter: {
       en: {
-        heading: "SEE OUR CLIENT'S BEFORE AFTER RESULTS",
+        heading: "See Our Client's Before After Results",
         body: ["Immediately after herbal treatment, white hair will be covered with a copper dye while leaving black hairs unchanged."],
         // Alt text is the live page's actual attribute, verbatim (a previous session's
         // tracking note in this file's header paraphrased it slightly — corrected here).
@@ -782,6 +797,16 @@ for (const [slug, page] of Object.entries(TREATMENT_PAGES)) {
       `treatment-pages: "${slug}" has an invalid sectionOrder` +
         (missing.length > 0 ? ` — missing section(s) whose copy would silently not render: ${missing.join(", ")}` : "") +
         (duplicated.length > 0 ? ` — duplicated section(s): ${duplicated.join(", ")}` : ""),
+    );
+  }
+  // .brand-band (Part 2 — "about Bee Choo Herbal") assumes the brand sections form one
+  // contiguous, trailing run so it can wrap them as a single visual band. Both orders
+  // defined above satisfy this; this guards any future custom order from silently
+  // breaking that assumption.
+  const firstBrand = order.findIndex((key) => BRAND_SECTIONS.includes(key));
+  if (firstBrand !== -1 && order.slice(firstBrand).some((key) => !BRAND_SECTIONS.includes(key))) {
+    throw new Error(
+      `treatment-pages: "${slug}" interleaves brand sections with concern sections — .brand-band renders BRAND_SECTIONS as one contiguous trailing run`,
     );
   }
 }

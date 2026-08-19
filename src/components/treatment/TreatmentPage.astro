@@ -16,7 +16,8 @@ import TreatmentsSection from "../home/TreatmentsSection.astro";
 import HowItWorksScene from "../home/HowItWorksScene.astro";
 import PricingSection from "../home/PricingSection.astro";
 import { TREATMENTS } from "../../data/treatments";
-import { TREATMENT_PAGES, LEGACY_SECTION_ORDER, CLOSING_SECTIONS, type SectionKey } from "../../data/treatment-pages";
+import { TREATMENT_PAGES, LEGACY_SECTION_ORDER, CLOSING_SECTIONS, BRAND_SECTIONS, type SectionKey } from "../../data/treatment-pages";
+import { UI } from "../../i18n/ui";
 
 interface Props {
   lang: "en" | "th";
@@ -24,6 +25,7 @@ interface Props {
 }
 
 const { lang, slug } = Astro.props;
+const ui = UI[lang];
 
 const treatment = TREATMENTS.find((t) => t.slug === slug);
 const page = TREATMENT_PAGES[slug];
@@ -52,28 +54,32 @@ const facebookVideo = page.facebookVideoHref
   ? { src: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(page.facebookVideoHref)}&show_text=false`, title: page.heroTitle[lang] }
   : undefined;
 
-// Table-of-contents entries reuse each section's own real heading — no invented labels.
-const SECTION_LABEL: Record<SectionKey, string> = {
-  about: about.heading,
-  beforeAfter: beforeAfter.heading,
-  benefits: benefits.heading,
-  reviews: tail.reviewsHeading,
-  crossSell: tail.crossSell.heading,
-  howItWorks: tail.howItWorks.heading,
-  pricing: tail.pricing.heading,
-};
+// Table-of-contents entries use short chrome labels (src/i18n/ui.ts's `toc` block),
+// not the sections' own full headings — the headings stay on the page as the real
+// copy; the TOC is navigation only. Grouped into the page's two parts: the visitor's
+// own condition, then the shared brand material (see BRAND_SECTIONS).
 const anchorId = (key: SectionKey) => `section-${key}`;
-const tocItems = sectionOrder.map((key) => ({ id: anchorId(key), label: SECTION_LABEL[key] }));
+const tocGroups = [
+  { label: ui.toc.partConcern, items: sectionOrder.filter((key) => !BRAND_SECTIONS.includes(key)) },
+  { label: ui.toc.partBrand, items: sectionOrder.filter((key) => BRAND_SECTIONS.includes(key)) },
+].map((group) => ({
+  label: group.label,
+  items: group.items.map((key) => ({ id: anchorId(key), label: ui.toc[key] })),
+}));
 
-// Closing band: the trailing sections whose copy is byte-identical on all 7 legacy pages.
-// They keep every word (still in the DOM, still crawlable) but render at a lower visual
-// rank than the sections about the visitor's own condition — see .closing-band in
-// global.css. The first one carries a hairline rule to mark where the page turns from
-// "your problem" to "our credentials"; with scrollTint on, section tints are transparent
-// and dividers are hidden, so without it the two zones would run together.
-const closingStart = sectionOrder.findIndex((key) => CLOSING_SECTIONS.includes(key));
-const closingClass = (index: number, key: SectionKey) =>
-  CLOSING_SECTIONS.includes(key) ? ["closing-band", index === closingStart && "closing-band-start"] : [];
+// Part 2 ("about Bee Choo Herbal"): the four sections whose copy is shared, byte-
+// identical, across all 7 legacy pages — see BRAND_SECTIONS in treatment-pages.ts.
+// They keep every word (still in the DOM, still crawlable) but render as one visually
+// grouped band, set off from Part 1 (the visitor's own condition) by a seam + label —
+// see .brand-band in global.css. CLOSING_SECTIONS, a subset, additionally keeps its
+// established lower visual rank inside the band (Reviews + cross-sell were already
+// de-emphasised before this change; that is unaffected).
+const brandStart = sectionOrder.findIndex((key) => BRAND_SECTIONS.includes(key));
+const bandClass = (index: number, key: SectionKey) => [
+  BRAND_SECTIONS.includes(key) && "brand-band",
+  index === brandStart && "brand-band-start",
+  CLOSING_SECTIONS.includes(key) && "closing-band",
+];
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://beechooherbal.com").href;
 // Schema.org still wants a representative image even where the page renders no hero
@@ -91,11 +97,21 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
   />
 
   {page.scrollTint && <div class="page-tint" aria-hidden="true" />}
-  {page.readingAids && <TreatmentToc lang={lang} items={tocItems} />}
+  {page.readingAids && <TreatmentToc lang={lang} groups={tocGroups} />}
 
   {
     sectionOrder.map((key, index) => (
-      <div id={anchorId(key)} data-section-anchor class:list={closingClass(index, key)}>
+      <div id={anchorId(key)} data-section-anchor class:list={bandClass(index, key)}>
+        {index === brandStart && (
+          <p
+            class:list={[
+              "pt-10 pb-0 text-center text-xs font-bold text-brand-green",
+              lang === "en" && "tracking-widest",
+            ]}
+          >
+            {ui.toc.partBrand}
+          </p>
+        )}
         {key === "about" && (
           <TreatmentAbout
             lang={lang}
@@ -178,16 +194,18 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
   (page.readingAids || page.scrollTint) && (
     <script>
       {/* Publishes scroll position as --scroll-progress (0-1) on <html>, driving both
-          the page tint and the progress strip in global.css, and marks the section the
-          visitor is currently reading in the table of contents. Replaces a CSS
-          scroll-timeline version that Safari ignores entirely. Passive listener, all
-          work batched into a single rAF, and it only writes a custom property + one
-          attribute, so it never forces a layout pass. */}
+          the page tint and the TOC's progress fill (global.css), and marks the section
+          the visitor is currently reading in the table of contents — both as
+          aria-current on its link and as plain text in the TOC's collapsed summary.
+          Replaces a CSS scroll-timeline version that Safari ignores entirely. Passive
+          listener, all work batched into a single rAF, and it only writes a custom
+          property + a couple of attributes, so it never forces a layout pass. */}
       const root = document.documentElement;
       const links = Array.from(document.querySelectorAll("[data-toc-link]"));
       const targets = links
         .map((link) => ({ link, el: document.getElementById(link.getAttribute("href").slice(1)) }))
         .filter((t) => t.el);
+      const currentLabel = document.querySelector("[data-toc-current]");
 
       let queued = false;
 
@@ -208,6 +226,7 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
           if (link === active) link.setAttribute("aria-current", "true");
           else link.removeAttribute("aria-current");
         }
+        if (currentLabel) currentLabel.textContent = active ? active.textContent.trim() : "";
       }
 
       function onScroll() {
@@ -220,6 +239,27 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
       window.addEventListener("scroll", onScroll, { passive: true });
       window.addEventListener("resize", onScroll, { passive: true });
       update();
+
+      {/* TOC enhancement: below 1536px the card becomes a sticky bar (see .toc in
+          global.css, gated on this attribute) that opens/closes on tap; at 1536px+ it
+          stays the fixed rail card, list always open. Marking data-toc-enhanced only
+          once JS has run means a no-JS visitor keeps today's plain inline open card —
+          never a bar pinned over content it can't dismiss. */}
+      const details = document.querySelector<HTMLDetailsElement>("[data-toc-details]");
+      if (details) {
+        root.setAttribute("data-toc-enhanced", "");
+        const rail = window.matchMedia("(min-width: 1536px)");
+        const syncOpenState = () => {
+          details.open = rail.matches;
+        };
+        syncOpenState();
+        rail.addEventListener("change", syncOpenState);
+        for (const { link } of targets) {
+          link.addEventListener("click", () => {
+            if (!rail.matches) details.open = false;
+          });
+        }
+      }
     </script>
   )
 }

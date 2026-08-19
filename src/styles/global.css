@@ -89,12 +89,12 @@
 }
 
 /* --scroll-progress (0 -> 1 down the document) is published on <html> by the small
-   script in TreatmentPage.astro and drives both the page tint and the reading-progress
-   bar below. It replaces an earlier CSS `animation-timeline: scroll()` version, which
-   Safari does not support — that shipped as a flat white page on iPhone, i.e. the
-   effect silently did nothing for a large share of this site's traffic. A passive
-   scroll listener batched into one rAF works everywhere and only touches a custom
-   property, so no layout is recalculated. */
+   script in TreatmentPage.astro and drives both the page tint and the TOC's progress
+   fill (see .toc-progress below). It replaces an earlier CSS `animation-timeline:
+   scroll()` version, which Safari does not support — that shipped as a flat white page
+   on iPhone, i.e. the effect silently did nothing for a large share of this site's
+   traffic. A passive scroll listener batched into one rAF works everywhere and only
+   touches a custom property, so no layout is recalculated. */
 
 /* Page tint: white easing to the brand mint as the visitor scrolls. Sections are
    forced transparent so ONE page-level tint shows through instead of each band
@@ -122,28 +122,41 @@
   background-color: transparent;
 }
 
-/* Reading progress: a fixed vertical strip at the left edge whose fill grows as the
-   page scrolls. Purely decorative (the TOC below carries the real navigation), so it
-   is aria-hidden and never focusable. */
-.reading-progress {
-  position: fixed;
-  inset-block: 0;
-  left: 0;
-  z-index: 30;
-  width: 0.25rem;
-  background-color: color-mix(in srgb, var(--color-brand-green) 12%, transparent);
-  pointer-events: none;
+/* Table of contents — one element, three presentations:
+   - No JS: an inline open card in the content flow (works on every screen, including
+     mobile) — the permanent fallback, so a no-JS phone is never stuck with a full
+     section list pinned over the content.
+   - JS, <1536px (html[data-toc-enhanced], set by TreatmentPage.astro's script): the
+     card becomes a slim bar that sticks below the header once scrolled to it. Tapping
+     its summary drops the section list as an overlay panel instead of growing the bar,
+     so opening it never shifts the page content underneath.
+   - >=1536px: there is enough gutter beside the 72rem content column to float the
+     card in the margin without overlapping the text; list stays open (synced by the
+     same script). */
+@media (max-width: 1535.98px) {
+  :root[data-toc-enhanced] .toc {
+    position: sticky;
+    top: calc(4.25rem + 1px); /* Header.astro: min-h-11 content + py-3 (0.75rem*2) + 1px border-b */
+    z-index: 20; /* under the header's z-30 */
+    margin: 0;
+    max-width: none;
+    border-radius: 0;
+    border-width: 0 0 1px;
+    background-color: rgb(255 255 255 / 0.92);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  :root[data-toc-enhanced] .toc-panel {
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    max-height: min(60vh, 24rem);
+    overflow-y: auto;
+    background-color: #fff;
+    border-bottom: 1px solid var(--color-brand-earth);
+    box-shadow: var(--shadow-soft-lg);
+  }
 }
-.reading-progress > span {
-  display: block;
-  width: 100%;
-  height: calc(var(--scroll-progress, 0) * 100%);
-  background-color: var(--color-brand-green);
-}
-
-/* Table of contents. Inline card by default (works on every screen, including
-   mobile); only at >=1536px is there enough gutter beside the 72rem content column
-   to float it in the margin without overlapping the text. */
 @media (min-width: 1536px) {
   .toc {
     position: fixed;
@@ -161,10 +174,61 @@
   font-weight: 700;
 }
 
-/* Anchor jumps must clear the sticky header, and should glide rather than teleport
-   unless the visitor asked for less motion. */
+/* Reading progress, now living inside the TOC card/bar instead of a separate
+   screen-edge strip. Purely decorative (the TOC's links carry the real navigation),
+   so it is aria-hidden and never focusable. Hidden until JS actually enhances the TOC
+   (data-toc-enhanced) — without JS, --scroll-progress is never published, so an
+   always-visible fill would just sit frozen at zero. Transform-based fill, so
+   scrolling never triggers layout. */
+.toc-progress {
+  display: none;
+  pointer-events: none;
+}
+:root[data-toc-enhanced] .toc-progress {
+  display: block;
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px; /* rides on the bar's bottom border */
+  height: 2px;
+  background-color: color-mix(in srgb, var(--color-brand-green) 12%, transparent);
+}
+.toc-progress > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-brand-green);
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left;
+}
+@media (min-width: 1536px) {
+  /* Vertical rail along the rail card's left inner edge instead of a bottom line. */
+  :root[data-toc-enhanced] .toc-progress {
+    inset-inline: auto;
+    left: 0;
+    top: 1rem;
+    bottom: 1rem;
+    height: auto;
+    width: 3px;
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+  .toc-progress > span {
+    transform: scaleY(var(--scroll-progress, 0));
+    transform-origin: top;
+  }
+}
+
+/* Anchor jumps must clear the sticky header (plus the sticky TOC bar below it, under
+   1536px), and should glide rather than teleport unless the visitor asked for less
+   motion. */
 [data-section-anchor] {
-  scroll-margin-top: 6rem;
+  scroll-margin-top: 8rem;
+}
+@media (min-width: 1536px) {
+  /* No sticky bar at rail widths — only the header needs clearing. */
+  [data-section-anchor] {
+    scroll-margin-top: 6rem;
+  }
 }
 @media (prefers-reduced-motion: no-preference) {
   html {
@@ -179,10 +243,11 @@
   display: none;
 }
 
-/* Closing band: the trailing Reviews + brand/awards sections on a treatment page.
-   Their copy is byte-identical across all 7 legacy pages (~14,000 characters, roughly
-   30% of each page, verified against inventory/rest-pages.json), so they are set at a
-   lower visual rank than the sections about the visitor's own condition. Every word
+/* Closing band: Reviews + cross-sell, the LAST two sections of the brand band below
+   (a subset of it — see BRAND_SECTIONS in treatment-pages.ts). Their copy is
+   byte-identical across all 7 legacy pages (~14,000 characters, roughly 30% of each
+   page, verified against inventory/rest-pages.json), so they are set at an even lower
+   visual rank than How-It-Works/Pricing, the other two brand-band sections. Every word
    still renders in the DOM and stays crawlable: this is type scale and spacing only,
    never display:none.
    Colour is deliberately untouched. Dimming shared copy is the obvious way to
@@ -204,12 +269,25 @@
   }
 }
 
+/* Brand band (Part 2 of a treatment page — "about Bee Choo Herbal"): How It Works,
+   Pricing, Reviews and cross-sell, grouped as one visually distinct part so the page
+   reads as two halves instead of one long scroll — see BRAND_SECTIONS in
+   treatment-pages.ts and the eyebrow label rendered by TreatmentPage.astro just above
+   this rule's target. A translucent white wash lifts the band off the page-wide scroll
+   tint (which stays visible around/through it, since section backgrounds are already
+   forced transparent by .scroll-tint above) without touching text colour, so contrast
+   only improves versus the plain tint, never regresses. Must be declared AFTER
+   .scroll-tint section above: equal specificity, source order decides, and this needs
+   to win. */
+.brand-band section {
+  background-color: rgb(255 255 255 / 0.55);
+}
 /* Marks where the page turns from "your condition" to "our credentials". A page using
    scrollTint has transparent sections and hidden dividers, so without a seam here the
-   two zones run together. */
-.closing-band-start {
-  margin-top: 1.5rem;
-  border-top: 1px solid color-mix(in srgb, var(--color-brand-green) 15%, transparent);
+   two zones would run together; the eyebrow label right after it names the part. */
+.brand-band-start {
+  margin-top: 3rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-brand-green) 20%, transparent);
 }
 
 /* Hero aura — layered radial glow in brand white (no off-brand hues; the yellow tint

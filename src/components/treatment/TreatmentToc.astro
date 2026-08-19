@@ -1,50 +1,81 @@
 ---
 // src/components/treatment/TreatmentToc.astro
-// Reading-progress strip + jump-to-section list for long treatment pages.
+// Jump-to-section list for treatment pages, grouped into the page's two parts (the
+// visitor's own condition, then the shared "about Bee Choo Herbal" material) and
+// carrying the reading-progress fill. Labels are short chrome strings from
+// src/i18n/ui.ts (`UI[lang].toc`), not the sections' own full headings — the headings
+// stay on the page as the real (verbatim) copy; this is navigation only.
 //
-// Labels are the sections' own real headings, not invented shorthand — nothing here
-// introduces copy that isn't already on the page (CLAUDE.md §8). Only the chrome
-// ("On this page") comes from src/i18n/ui.ts, like every other UI string.
-//
-// Layout: an inline card in the content flow by default, so it works on phones where
-// a floating rail has nowhere to live; from 1536px up (see `.toc` in global.css) it
-// floats in the left margin beside the 72rem content column. One element, two
-// placements — rendering it twice would put duplicate links in the a11y tree.
+// One <nav>, one set of links, three presentations, so the a11y tree never carries
+// duplicate links:
+// - No JS: an inline open card in the content flow — today's default, and the
+//   permanent fallback. Never sticky, so a no-JS phone is never stuck with a full
+//   section list pinned over the content.
+// - JS, <1536px (html[data-toc-enhanced], set by the script in TreatmentPage.astro):
+//   a slim bar sticks below the header once scrolled to it. Collapsed, its summary
+//   shows "On this page" plus the section currently in view; tapping it drops the
+//   list as an overlay panel (see global.css). This is a native <details>/<summary>,
+//   so it's keyboard-operable with no extra JS.
+// - >=1536px: the existing fixed left-rail card, list always open.
 import { UI } from "../../i18n/ui";
 
 interface Props {
   lang: "en" | "th";
-  items: { id: string; label: string }[];
+  groups: { label: string; items: { id: string; label: string }[] }[];
 }
 
-const { lang, items } = Astro.props;
+const { lang, groups } = Astro.props;
 const ui = UI[lang];
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 ---
 
-<div class="reading-progress" aria-hidden="true">
-  <span></span>
-</div>
-
 <nav
-  class="toc mx-auto mt-8 mb-4 max-w-prose rounded-2xl border border-brand-earth bg-white/80 px-5 py-4 2xl:mx-0 2xl:mt-0 2xl:mb-0 2xl:max-w-none"
+  class="toc relative mx-auto mt-8 mb-4 max-w-prose rounded-2xl border border-brand-earth bg-white/80 2xl:mx-0 2xl:my-0 2xl:max-w-none"
   aria-label={ui.misc.onThisPage}
 >
-  <p class:list={[serif, "mb-3 text-sm font-bold text-brand-green"]}>{ui.misc.onThisPage}</p>
-  <ol class="flex flex-col gap-2">
-    {
-      items.map((item) => (
-        <li>
-          <a
-            href={`#${item.id}`}
-            data-toc-link
-            title={item.label}
-            class="block rounded-lg py-1 text-xs leading-snug text-brand-origin transition-colors duration-200 hover:text-brand-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green 2xl:line-clamp-2"
-          >
-            {item.label}
-          </a>
-        </li>
-      ))
-    }
-  </ol>
+  <details class="group/toc" open data-toc-details>
+    <summary
+      class="flex min-h-11 cursor-pointer list-none items-center gap-2 px-5 py-2 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green [&::-webkit-details-marker]:hidden"
+    >
+      <span class:list={[serif, "shrink-0 text-sm font-bold text-brand-green"]}>{ui.misc.onThisPage}</span>
+      <span data-toc-current class="min-w-0 flex-1 truncate text-right text-xs text-brand-origin 2xl:hidden"></span>
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        class="h-4 w-4 shrink-0 text-brand-green transition-transform duration-200 group-open/toc:rotate-180"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </summary>
+    <div class="toc-panel px-5 pt-1 pb-4">
+      {
+        groups.map(
+          (group) =>
+            group.items.length > 0 && (
+              <>
+                <p class="mt-3 mb-1.5 text-2xs font-bold text-brand-origin/80 first:mt-0">{group.label}</p>
+                <ol class="flex flex-col gap-1">
+                  {group.items.map((item) => (
+                    <li>
+                      <a
+                        href={`#${item.id}`}
+                        data-toc-link
+                        class="block rounded-lg py-1 text-xs leading-snug text-brand-origin transition-colors duration-200 hover:text-brand-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </>
+            ),
+        )
+      }
+    </div>
+  </details>
+  <div class="toc-progress" aria-hidden="true"><span></span></div>
 </nav>
