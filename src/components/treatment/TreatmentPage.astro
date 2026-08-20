@@ -135,6 +135,8 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
             subsections={about.subsections}
             videoId={page.videoId}
             videoTitle={page.heroTitle[lang]}
+            secondaryVideoId={page.secondaryVideoId}
+            secondaryVideoTitle={page.secondaryVideoTitle?.[lang]}
             background={backgroundFor("about")}
           />
         )}

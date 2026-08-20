@@ -356,20 +356,35 @@ export interface TreatmentPageContent {
    *  site). The shared/trailing ids that also appear elsewhere on the legacy page
    *  belong to the reused homepage sections (Reviews, How-It-Works) and don't need
    *  wiring here.
-   *  OPTIONAL: damaged-hair's legacy page carries no condition video at all in either
-   *  language — its About block opens straight into the copy. Omit rather than
-   *  borrowing another page's video. */
+   *  CORRECTION 2026-08-20: this was briefly OPTIONAL on the theory that damaged-hair's
+   *  legacy page carries no condition video in either language. That was wrong — the
+   *  video exists (GQx47zHYaCY), it just isn't a plain <iframe> in the raw HTML like
+   *  every other page's; it's an Elementor `video` widget whose URL lives inside a
+   *  `data-settings` JSON attribute, which the extraction script's <iframe>-only regex
+   *  didn't match. Confirmed genuine via YouTube's own oEmbed (Bee Choo Thailand's
+   *  channel) before wiring it in. Left optional on the type in case a future page
+   *  genuinely has none, but every page built so far sets it. */
   videoId?: string;
   /** Some pages (grey-hair) also carry a second, Facebook-hosted video, rendered under
    *  the Benefits heading sized to match the hero video. Full permalink of the source
    *  video — the component builds the plugin URL. */
   facebookVideoHref?: string;
+  /** damaged-hair carries a SECOND YouTube video inside the About section — after the
+   *  intro paragraph, before the FAQ accordion — same widget type and same extraction
+   *  gap as `videoId` above (found at the same time, same fix). Not reused by any other
+   *  page, so it stays a one-off field rather than a general "n videos" list. Title is
+   *  per-language since it needs its own accessible name distinct from `heroTitle`
+   *  (which already names the FIRST video, via TreatmentPage.astro's
+   *  `videoTitle={page.heroTitle[lang]}`). */
+  secondaryVideoId?: string;
+  secondaryVideoTitle?: Record<Lang, string>;
   /** Per-page override for the shared "How It Works" video (src/data/home.ts's
    *  HOME.howItWorks.videoId is, per YouTube's own oEmbed title, "Bee Choo Branding
    *  2025" — a generic brand reel, not this section's process video). Scoped per-page
-   *  rather than fixed at the source: the homepage (Crispin-signed-off) and Oily Scalp
-   *  (shipped) still show the wrong one until that's a deliberate call, not a side
-   *  effect of another page's edit.
+   *  rather than fixed at the source: only the homepage (Crispin-signed-off) still
+   *  shows the brand reel there by deliberate choice; every treatment page now sets
+   *  this, including oily-scalp — its own omission (the pilot page, before this field
+   *  existed) was closed 2026-08-20.
    *  `id` is PER-LANGUAGE, not one string: dandruff embeds Uwty-ZDdPYc on EN and
    *  Fp3hdtA-pnE on TH, and bacterial-infection does the exact reverse. A single id
    *  would have silently shipped the wrong video on one language of each. */
@@ -594,6 +609,20 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
       },
     },
     videoId: "HhYhUh7qvLM",
+    // CORRECTION 2026-08-20: this was missing. Every other page overrides
+    // howItWorksVideo to the real process video, Uwty-ZDdPYc; oily-scalp fell through
+    // to HOME.howItWorks.videoId (the generic "Bee Choo Branding 2025" brand reel)
+    // simply because it was the pilot page and this override didn't exist yet when it
+    // shipped — flagged as a known gap in the field's own doc comment, now closed.
+    // Verified against the legacy page: same id, both languages, same position (right
+    // under the How-It-Works heading) as every other page.
+    howItWorksVideo: {
+      id: { en: "Uwty-ZDdPYc", th: "Uwty-ZDdPYc" },
+      title: {
+        en: "How Bee Choo herbal hair treatment works",
+        th: "ทรีตเมนต์สมุนไพรบีชูให้ผลอย่างไร",
+      },
+    },
     about: {
       en: {
         heading: "About Itchy Oily Scalp Hair Condition",
@@ -1166,10 +1195,22 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
         th: "น้ำยาย้อมผมตัวเด็ดของเรานั้น เป็นที่รู้กันดีว่าประกอบไปด้วยสมุนไพรจีนพื้นบ้านหลายชนิด ได้แก่ ชวนซง, โสม, ตังกุย, ห่อสิ่วโอว และเห็ดหลินจือ และในการทำทรีทเม้",
       },
     },
-    // No videoId: the legacy page embeds NO condition video in either language — its
-    // About block opens straight into the copy. The EN intro still says "watch the video
-    // above", which is a legacy inconsistency, not a missing transcription; reproduced
-    // verbatim per CLAUDE.md §8. Flag to Crispin.
+    // CORRECTION 2026-08-20: this page DOES have a condition video — see the note on
+    // `videoId` in the TreatmentPageContent interface above. The EN intro's "watch the
+    // video above" was the clue: it's literal, not a legacy inconsistency, once the
+    // video above it actually exists. Real oEmbed title (Bee Choo Thailand's own
+    // channel): "ผมสวย+หนังศีรษะสุขภาพดีในระยะยาวต้องที่บีชูเท่านั้น....." — used to
+    // build the descriptive title below, not copied verbatim (matches how every other
+    // page's videoTitle is a short description, not the raw YouTube title).
+    videoId: "GQx47zHYaCY",
+    // SECOND video, inside About after the intro paragraph — see `secondaryVideoId`'s
+    // doc comment. Real oEmbed title: "แก้ปัญหาผมแห้งเสียด้วยสมุนไพรจากธรรมชาติ
+    // ลองมาใช้บริการที่ บีชูขอเราสิคะ".
+    secondaryVideoId: "Qee9lcHF75s",
+    secondaryVideoTitle: {
+      en: "A client's chemically damaged hair recovering with Bee Choo herbal treatment",
+      th: "ผลลัพธ์การรักษาผมเสียจากสารเคมีด้วยทรีทเม้นท์สมุนไพรบีชู",
+    },
     howItWorksVideo: {
       id: { en: "Uwty-ZDdPYc", th: "Uwty-ZDdPYc" },
       title: {

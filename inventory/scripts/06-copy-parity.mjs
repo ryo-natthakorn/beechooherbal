@@ -19,6 +19,11 @@
 // the documented ALL-CAPS -> Title Case heading pass and curly/straight quote
 // differences don't register as content loss. Anything the build drops ON PURPOSE has to
 // be named in SKIP below, with a reason — that list is the audit trail.
+//
+// Also checks video/GIF EMBEDS separately (legacyVideoIds below) — carries no text, so
+// legacyFragments can't see it. Added after damaged-hair shipped with two videos
+// silently missing: they're Elementor `video` widgets (URL in a data-settings JSON
+// attribute), not plain <iframe> tags, which the original extraction never matched.
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
@@ -137,6 +142,36 @@ function legacyFragments(html) {
 const rest = (variant, fragment) =>
   REST.variants[variant].find((p) => decodeURIComponent(p.link || "").includes(fragment));
 
+/**
+ * Legacy YouTube/GIPHY video ids, from every embed SHAPE the legacy pages use.
+ *
+ * Added 2026-08-20 after damaged-hair shipped with two videos silently missing: its
+ * legacy page embeds them via Elementor's `video` widget, which stores the URL inside a
+ * `data-settings` JSON attribute rather than a plain `<iframe src>`. The original
+ * extraction pass only ever looked for `<iframe>` tags (see legacyFragments' history and
+ * the transcription notes in treatment-pages.ts), so that page's videos were never
+ * flagged as missing — this check exists specifically to catch that class of gap, since
+ * `legacyFragments` above only reasons about TEXT and a video carries none.
+ */
+function legacyVideoIds(html) {
+  const ids = new Set();
+  for (const m of html.matchAll(/(?:youtube(?:-nocookie)?\.com\/embed\/|youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{11})/g)) ids.add(m[1]);
+  for (const m of html.matchAll(/giphy\.com\/embed\/([A-Za-z0-9]+)/g)) ids.add(m[1]);
+  // Elementor `video` widgets: URL lives inside a JSON blob in `data-settings`, HTML- and
+  // backslash-escaped, so it never matches the plain-iframe patterns above.
+  for (const m of html.matchAll(/elementor-widget-video[\s\S]{0,600}?data-settings="([^"]+)"/g)) {
+    const decoded = m[1].replace(/&quot;/g, '"').replace(/&#038;/g, "&");
+    try {
+      const url = JSON.parse(decoded).youtube_url ?? "";
+      const idMatch = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+      if (idMatch) ids.add(idMatch[1]);
+    } catch {
+      /* malformed widget settings on the legacy page — nothing to extract */
+    }
+  }
+  return ids;
+}
+
 let checked = 0;
 let missingTotal = 0;
 const pending = [];
@@ -172,6 +207,16 @@ for (const [slug, enPath, thSlug] of PAGES) {
       missingTotal += missing.length;
       report.push(`\n  ${slug} ${lang.toUpperCase()} — ${missing.length} legacy fragment(s) not found in the build:`);
       for (const frag of missing) report.push(`    · ${frag.slice(0, 150)}${frag.length > 150 ? "…" : ""}`);
+    }
+
+    // Video/GIF ids are checked as plain substrings of the raw built HTML (not `built`,
+    // which is text-only and has the id's surrounding markup stripped) — the id itself
+    // is what has to survive, wherever it lands (iframe src, or the click-to-load
+    // facade's data-yt-id attribute).
+    const missingVideos = [...legacyVideoIds(legacy.content.rendered || legacy.content)].filter((id) => !html.includes(id));
+    if (missingVideos.length) {
+      missingTotal += missingVideos.length;
+      report.push(`\n  ${slug} ${lang.toUpperCase()} — ${missingVideos.length} legacy video/GIF id(s) not found in the build: ${missingVideos.join(", ")}`);
     }
   }
 }

@@ -22,17 +22,32 @@ interface Props {
   introList?: string[];
   faq: FaqItem[];
   subsections?: AboutSubsection[];
-  /** Omitted on pages whose legacy About block carries no condition video at all
-   *  (damaged-hair, both languages) — the section then opens straight into the copy
-   *  rather than borrowing another page's video. */
   videoId?: string;
   videoTitle: string;
+  /** A SECOND video, rendered after the intro (and any introList), before the photo —
+   *  damaged-hair only. See AboutContent.secondaryVideoId's doc comment for why this
+   *  page has two. */
+  secondaryVideoId?: string;
+  secondaryVideoTitle?: string;
   /** Tint override, used only by pages that reorder their sections (see
    *  TreatmentPage.astro). Omitted everywhere else, which keeps the default. */
   background?: "white" | "earth";
 }
 
-const { lang, heading, image, intro, introList = [], faq, subsections = [], videoId, videoTitle, background } = Astro.props;
+const {
+  lang,
+  heading,
+  image,
+  intro,
+  introList = [],
+  faq,
+  subsections = [],
+  videoId,
+  videoTitle,
+  secondaryVideoId,
+  secondaryVideoTitle,
+  background,
+} = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
 const bgClass = background === "earth" ? "bg-brand-earth/25" : "bg-white";
@@ -71,6 +86,13 @@ const accordionItems = [
         )
       }
     </div>
+
+    {/* Legacy order on damaged-hair: intro text, THEN this video, THEN the FAQ toggles,
+        THEN the photo. Presentation here keeps the photo in its usual slot (right after
+        intro, before the accordion — the same position on every other page) rather than
+        matching the legacy source order exactly, since that ordering is this component's
+        established, consistent choice site-wide, not a per-page content decision. */}
+    {secondaryVideoId && <YouTubeEmbed id={secondaryVideoId} title={secondaryVideoTitle ?? heading} />}
 
     {/* widths/sizes rather than a fixed width+height pair: the box renders at most 32rem
         (max-w-lg), and the two pages that set this photo have DIFFERENT source ratios
