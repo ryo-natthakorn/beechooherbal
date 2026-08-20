@@ -5,11 +5,16 @@
 // the live site; see that file's header for why the "(left)"/"(center)" captions were
 // dropped and the photos cropped down to one person each.
 //
-// The page is genuinely thin on the legacy site (2 bios, no other content), so it closes
-// with the site's own Find-a-Branch CTA rather than padding it with invented copy.
+// The page also carries a 4-photo hero carousel (missed on the first pass — it's a
+// Swiper widget with no prose the copy-parity text scan could see; see team.ts's
+// header). Rendered with the same zero-JS crossfade technique as the homepage's
+// ReviewsWall (`.team-fader`/`.team-fade-item` in global.css, reusing its keyframe).
+//
+// The bios section is genuinely thin on the legacy site (2 bios, no other content), so
+// it closes with the site's own Find-a-Branch CTA rather than padding it with invented copy.
 import { Image } from "astro:assets";
 import LeafDivider from "../LeafDivider.astro";
-import { TEAM, type Lang } from "../../data/team";
+import { TEAM, TEAM_CAROUSEL, type Lang } from "../../data/team";
 import { HOME } from "../../data/home";
 import { UI } from "../../i18n/ui";
 
@@ -27,7 +32,15 @@ const heading = lang === "en" ? "Our Team" : "ทีมของเรา";
   <section class="py-16 text-center md:py-24">
     <div class="mx-auto max-w-5xl px-4 md:px-8">
       <LeafDivider />
-      <h1 class={`mb-12 ${serif} text-3xl font-bold${balance} text-brand-green md:text-4xl`}>{heading}</h1>
+      <h1 class={`mb-8 ${serif} text-3xl font-bold${balance} text-brand-green md:text-4xl`}>{heading}</h1>
+
+      <div class="team-fader relative mx-auto mb-12 max-w-3xl overflow-hidden rounded-2xl shadow-soft-lg">
+        {TEAM_CAROUSEL.map((slide, i) => (
+          <div class="team-fade-item" style={`--i:${i}`}>
+            <Image src={slide.src} alt={slide.alt[lang]} width={800} height={450} class="h-full w-full object-cover" />
+          </div>
+        ))}
+      </div>
 
       <div class="grid gap-10 text-left md:grid-cols-2 md:gap-8">
         {TEAM.map((member) => (

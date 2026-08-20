@@ -34,7 +34,11 @@ export interface Outlet {
   phoneDisplay: string;
   phoneAltDisplay?: string;
   phoneHref: string;
-  hours: { en: string; th: string };
+  /** One line per day-range (1 line for "Everyday", 2 for a Weekdays/Weekends split).
+   *  Every line states its OWN last-walk-in time explicitly — never a bare "(last
+   *  walk-in)" — per Ryo's 2026-08-20 "should not be X, be consistent" feedback. Where
+   *  the legacy source gave no walk-in time distinct from closing time, walk-in = close. */
+  hours: { en: string[]; th: string[] };
   coords: { lat: number; lng: number };
   /** The `!2s` place name from the outlet's own map embed. Present on only 4 of 17 —
    *  the rest never had one on the legacy site either. */
@@ -63,8 +67,8 @@ export const OUTLETS: Outlet[] = [
     phoneDisplay: "02-121-4419",
     phoneHref: "+6621214419",
     hours: {
-      en: "Weekdays 9am–8pm, Weekends 9am–7pm (last walk-in)",
-      th: "วันจันทร์–ศุกร์ 9.00–20.00 น., เสาร์–อาทิตย์ 9.00–19.00 น. (รับลูกค้าคนสุดท้ายตามเวลาปิด)",
+      en: ["Weekdays: 9am–8pm (last walk-in 8pm)", "Weekends: 9am–7pm (last walk-in 7pm)"],
+      th: ["วันจันทร์ – วันศุกร์: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)", "วันเสาร์ – วันอาทิตย์: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"],
     },
     coords: { lat: 13.723194515651315, lng: 100.59925377984273 },
     mapsQuery: "Bee Choo Tawanna (Shop 1&2) - Hair Loss Treatment",
@@ -78,8 +82,8 @@ export const OUTLETS: Outlet[] = [
     phoneDisplay: "02-115-1300",
     phoneHref: "+6621151300",
     hours: {
-      en: "Everyday 10:30am–9:30pm (last walk-in 8pm)",
-      th: "ทุกวัน 10.30–21.30 น. (รับลูกค้าคนสุดท้าย 20.00 น.)",
+      en: ["Everyday: 10:30am–9:30pm (last walk-in 8pm)"],
+      th: ["ทุกวัน: 10.30 – 21.30 น. (รับลูกค้าคนสุดท้าย 20.00 น.)"],
     },
     coords: { lat: 13.67816145621077, lng: 100.5578651533341 },
     mapsQuery: "Bee Choo Siam Square One - Hair Loss Treatment",
@@ -93,8 +97,8 @@ export const OUTLETS: Outlet[] = [
     phoneDisplay: "06-1729-3434",
     phoneHref: "+66617293434",
     hours: {
-      en: "Everyday 9am–7pm (last walk-in 6:30pm)",
-      th: "ทุกวัน 9.00–19.00 น. (รับลูกค้าคนสุดท้าย 18.30 น.)",
+      en: ["Everyday: 9am–7pm (last walk-in 6:30pm)"],
+      th: ["ทุกวัน: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 18.30 น.)"],
     },
     coords: { lat: 13.770767790335112, lng: 100.56847791483071 },
     mapsQuery: "Bee Choo Ratchada - Hair Loss Treatment",
@@ -108,8 +112,8 @@ export const OUTLETS: Outlet[] = [
     phoneDisplay: "02-072-6698",
     phoneHref: "+6620726698",
     hours: {
-      en: "Weekdays 9am–8pm, Weekends 9am–7pm (last walk-in)",
-      th: "วันจันทร์–ศุกร์ 9.00–20.00 น., เสาร์–อาทิตย์ 9.00–19.00 น. (รับลูกค้าคนสุดท้ายตามเวลาปิด)",
+      en: ["Weekdays: 9am–8pm (last walk-in 8pm)", "Weekends: 9am–7pm (last walk-in 7pm)"],
+      th: ["วันจันทร์ – วันศุกร์: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)", "วันเสาร์ – วันอาทิตย์: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"],
     },
     coords: { lat: 13.677999290395206, lng: 100.62571691482964 },
     mapsQuery: "Bee Choo Udomsuk - Hair Loss Treatment",
@@ -124,8 +128,8 @@ export const OUTLETS: Outlet[] = [
     phoneAltDisplay: "093-138-5214",
     phoneHref: "+6621471459",
     hours: {
-      en: "Everyday 9am–8pm (last walk-in 7pm)",
-      th: "ทุกวัน 9.00–20.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)",
+      en: ["Everyday: 9am–8pm (last walk-in 7pm)"],
+      th: ["ทุกวัน: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"],
     },
     coords: { lat: 13.8930982, lng: 100.4495541 },
   },
@@ -137,7 +141,7 @@ export const OUTLETS: Outlet[] = [
     area: { en: "Bang Khun Thian, Bangkok", th: "บางขุนเทียน กรุงเทพฯ" },
     phoneDisplay: "090-221-7745",
     phoneHref: "+66902217745",
-    hours: { en: "Everyday 9am–8pm (last walk-in)", th: "ทุกวัน 9.00–20.00 น. (รับลูกค้าคนสุดท้าย)" },
+    hours: { en: ["Everyday: 9am–8pm (last walk-in 8pm)"], th: ["ทุกวัน: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)"] },
     coords: { lat: 13.7110402941577, lng: 100.45910132461015 },
   },
   {
@@ -150,7 +154,7 @@ export const OUTLETS: Outlet[] = [
     // Legacy tel: is malformed (tel:+%20+66969047964, an encoded literal space) — using
     // the corrected value.
     phoneHref: "+66969047964",
-    hours: { en: "Everyday 9am–8pm (last walk-in)", th: "ทุกวัน 9.00–20.00 น. (รับลูกค้าคนสุดท้าย)" },
+    hours: { en: ["Everyday: 9am–8pm (last walk-in 8pm)"], th: ["ทุกวัน: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)"] },
     coords: { lat: 13.3396377, lng: 100.9669745 },
   },
   {
@@ -163,8 +167,8 @@ export const OUTLETS: Outlet[] = [
     // Legacy tel: is malformed (tel:+%20+66955365556%20) — using the corrected value.
     phoneHref: "+66955365556",
     hours: {
-      en: "Everyday 10am–7pm (last walk-in)",
-      th: "ทุกวัน 10.00–19.00 น. (รับลูกค้าคนสุดท้าย)",
+      en: ["Everyday: 10am–7pm (last walk-in 7pm)"],
+      th: ["ทุกวัน: 10.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"],
     },
     coords: { lat: 13.811590995850063, lng: 100.6161469108795 },
   },
@@ -176,7 +180,7 @@ export const OUTLETS: Outlet[] = [
     area: { en: "Saphan Sung, Bangkok", th: "สะพานสูง กรุงเทพฯ" },
     phoneDisplay: "086-004-1122",
     phoneHref: "+66860041122",
-    hours: { en: "Everyday 9am–7pm (last walk-in)", th: "ทุกวัน 9.00–19.00 น. (รับลูกค้าคนสุดท้าย)" },
+    hours: { en: ["Everyday: 9am–7pm (last walk-in 7pm)"], th: ["ทุกวัน: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"] },
     coords: { lat: 13.772174396765358, lng: 100.67410061082713 },
   },
   {
@@ -188,8 +192,8 @@ export const OUTLETS: Outlet[] = [
     phoneDisplay: "083-445-0589",
     phoneHref: "+66834450589",
     hours: {
-      en: "Weekdays 9am–8pm, Weekends 9am–7pm (last walk-in)",
-      th: "วันจันทร์–ศุกร์ 9.00–20.00 น., เสาร์–อาทิตย์ 9.00–19.00 น. (รับลูกค้าคนสุดท้ายตามเวลาปิด)",
+      en: ["Weekdays: 9am–8pm (last walk-in 8pm)", "Weekends: 9am–7pm (last walk-in 7pm)"],
+      th: ["วันจันทร์ – วันศุกร์: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)", "วันเสาร์ – วันอาทิตย์: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"],
     },
     coords: { lat: 13.7033444, lng: 100.7064603 },
   },
@@ -201,7 +205,7 @@ export const OUTLETS: Outlet[] = [
     area: { en: "Lat Yao, Chatuchak, Bangkok", th: "ลาดยาว จตุจักร กรุงเทพฯ" },
     phoneDisplay: "080-274-1868",
     phoneHref: "+66802741868",
-    hours: { en: "Everyday 9am–7pm (last walk-in)", th: "ทุกวัน 9.00–19.00 น. (รับลูกค้าคนสุดท้าย)" },
+    hours: { en: ["Everyday: 9am–7pm (last walk-in 7pm)"], th: ["ทุกวัน: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"] },
     coords: { lat: 13.839663837717845, lng: 100.55273156587941 },
   },
   {
@@ -212,7 +216,7 @@ export const OUTLETS: Outlet[] = [
     area: { en: "Phra Pradaeng, Samut Prakan", th: "พระประแดง สมุทรปราการ" },
     phoneDisplay: "064-153-2662",
     phoneHref: "+66641532662",
-    hours: { en: "Everyday 9am–7pm (last walk-in)", th: "ทุกวัน 9.00–19.00 น. (รับลูกค้าคนสุดท้าย)" },
+    hours: { en: ["Everyday: 9am–7pm (last walk-in 7pm)"], th: ["ทุกวัน: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"] },
     coords: { lat: 13.6534558, lng: 100.5193583 },
   },
   {
@@ -224,8 +228,8 @@ export const OUTLETS: Outlet[] = [
     phoneDisplay: "081-741-0763",
     phoneHref: "+66817410763",
     hours: {
-      en: "Everyday 9am–8pm (last walk-in 7:30pm)",
-      th: "ทุกวัน 9.00–20.00 น. (รับลูกค้าคนสุดท้าย 19.30 น.)",
+      en: ["Everyday: 9am–8pm (last walk-in 7:30pm)"],
+      th: ["ทุกวัน: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 19.30 น.)"],
     },
     coords: { lat: 14.9839575, lng: 102.0635698 },
   },
@@ -238,8 +242,8 @@ export const OUTLETS: Outlet[] = [
     phoneDisplay: "064-380-8888",
     phoneHref: "+66643808888",
     hours: {
-      en: "Weekdays 9am–8pm, Weekends 9am–7pm (last walk-in)",
-      th: "วันจันทร์–ศุกร์ 9.00–20.00 น., เสาร์–อาทิตย์ 9.00–19.00 น. (รับลูกค้าคนสุดท้ายตามเวลาปิด)",
+      en: ["Weekdays: 9am–8pm (last walk-in 8pm)", "Weekends: 9am–7pm (last walk-in 7pm)"],
+      th: ["วันจันทร์ – วันศุกร์: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)", "วันเสาร์ – วันอาทิตย์: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"],
     },
     coords: { lat: 9.141184499999998, lng: 99.33985489999999 },
   },
@@ -251,7 +255,7 @@ export const OUTLETS: Outlet[] = [
     area: { en: "Hang Dong, Chiang Mai", th: "หางดง เชียงใหม่" },
     phoneDisplay: "082-123-4602",
     phoneHref: "+66821234602",
-    hours: { en: "Everyday 9am–8pm (last walk-in)", th: "ทุกวัน 9.00–20.00 น. (รับลูกค้าคนสุดท้าย)" },
+    hours: { en: ["Everyday: 9am–8pm (last walk-in 8pm)"], th: ["ทุกวัน: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)"] },
     coords: { lat: 18.72929095248222, lng: 98.94505282418133 },
   },
   {
@@ -263,8 +267,8 @@ export const OUTLETS: Outlet[] = [
     phoneDisplay: "083-090-3672",
     phoneHref: "+66830903672",
     hours: {
-      en: "Everyday 10am–8pm (last walk-in 7:30pm)",
-      th: "ทุกวัน 10.00–20.00 น. (รับลูกค้าคนสุดท้าย 19.30 น.)",
+      en: ["Everyday: 10am–8pm (last walk-in 7:30pm)"],
+      th: ["ทุกวัน: 10.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 19.30 น.)"],
     },
     coords: { lat: 13.7593365, lng: 100.3302113 },
   },
@@ -279,9 +283,11 @@ export const OUTLETS: Outlet[] = [
     area: { en: "Bang Sai, Phra Nakhon Si Ayutthaya", th: "บางไทร พระนครศรีอยุธยา" },
     phoneDisplay: "063-237-5413",
     phoneHref: "+66632375413",
-    // TH hours are now verbatim (the live TH page was updated to include this branch
-    // partway through this session — 2026-08-20T07:38 — see locations-parity's output).
-    hours: { en: "Everyday 9am–8pm (last walk-in)", th: "เวลาเปิดร้านทุกวัน: 09.00 น. – 20.00 น (ลูกค้าคนสุดท้าย 20.00 น.)" },
+    // TH hours facts are from the live page (added 2026-08-20T07:38 — see
+    // locations-parity's output), reformatted to the same "ทุกวัน:" template as every
+    // other outlet for visual consistency across the directory — same times, not
+    // composed from scratch.
+    hours: { en: ["Everyday: 9am–8pm (last walk-in 8pm)"], th: ["ทุกวัน: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)"] },
     coords: { lat: 14.234499931887632, lng: 100.52441566682144 },
   },
 ];

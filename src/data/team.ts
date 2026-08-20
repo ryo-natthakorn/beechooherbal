@@ -13,8 +13,11 @@
 // headshots. Flagged for Crispin: worth asking for actual individual headshots.
 // "(left)"/"(center)" would also be actively wrong once cropped to one person each.
 //
-// The trailing duplicate "OUR TEAM" string at the end of both legacy pages' content is a
-// stray artefact (not a second heading anyone would see) and is not reproduced.
+// The trailing "OUR TEAM" string at the end of both legacy pages' raw text turned out
+// NOT to be dead chrome — it's the caption on the first slide of a 4-photo Swiper
+// carousel at the top of the page (data-widget_type="slides.default", missed on first
+// pass since the carousel widget's own text scan found no prose). Already covered by
+// this page's own <h1>, so not repeated as an image overlay — see CAROUSEL below.
 //
 // TH role label uses "กรรมการผู้จัดการ" (Managing Director) rather than a fresh
 // translation of "Director" — that exact phrase already appears verbatim inside each
@@ -23,6 +26,10 @@
 import type { ImageMetadata } from "astro";
 import crispinPhoto from "../assets/images/team/crispin.jpg";
 import rickPhoto from "../assets/images/team/rick.png";
+import carousel1 from "../assets/images/team/carousel/team-carousel-287704_0.jpg";
+import carousel2 from "../assets/images/team/carousel/team-carousel-P1110545.jpg";
+import carousel3 from "../assets/images/team/carousel/team-carousel-P1110550.jpg";
+import carousel4 from "../assets/images/team/carousel/team-carousel-P1110549.jpg";
 
 export type Lang = "en" | "th";
 type L = Record<Lang, string>;
@@ -46,6 +53,16 @@ export const TEAM_SEO = {
     th: "รู้จักผู้ก่อตั้งบีชู ออริจิน ประเทศไทย ริค ลิม และ คริสปิน ฟรานซิส ผู้ร่วมก่อตั้ง อาร์ ซี บิซซิเนส กรุ๊ป",
   },
 };
+
+// The legacy page's hero carousel — 4 Ken-Burns-effect background photos from a staff
+// event (287704_0 carries the "OUR TEAM" caption on the live site; the other 3 are
+// bare photos, no per-slide text). Alt text is composed (the legacy slides have none).
+export const TEAM_CAROUSEL: { src: ImageMetadata; alt: L }[] = [
+  { src: carousel1, alt: { en: "Bee Choo team members at a company event", th: "ทีมงานบีชูในกิจกรรมของบริษัท" } },
+  { src: carousel2, alt: { en: "Bee Choo team members at a company event", th: "ทีมงานบีชูในกิจกรรมของบริษัท" } },
+  { src: carousel3, alt: { en: "Bee Choo team members at a company event", th: "ทีมงานบีชูในกิจกรรมของบริษัท" } },
+  { src: carousel4, alt: { en: "Bee Choo team members at a company event", th: "ทีมงานบีชูในกิจกรรมของบริษัท" } },
+];
 
 export const TEAM: TeamMember[] = [
   {

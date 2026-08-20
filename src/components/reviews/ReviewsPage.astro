@@ -110,6 +110,17 @@ const visibleReviews = REVIEWS.filter((r) => r.heading[lang]);
                 </div>
               )}
 
+              {review.introPhotos && review.introPhotos.length > 0 && (
+                <div class="mt-4 flex justify-center gap-4">
+                  {review.introPhotos.map((photo) => (
+                    <figure>
+                      <Image src={photo.src} alt={photo.caption[lang] ?? ""} width={225} height={300} class="h-auto w-32 rounded-lg object-cover shadow-soft md:w-40" />
+                      <figcaption class="mt-1.5 max-w-[10rem] text-center text-2xs text-brand-origin md:max-w-[10.5rem]">{photo.caption[lang]}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+              )}
+
               {review.quote[lang] && (
                 <blockquote class="mt-4 space-y-2 rounded-xl bg-brand-earth/25 p-4 text-sm leading-relaxed text-brand-origin italic">
                   {review.quote[lang]!.map((q) => <p>{q}</p>)}
@@ -125,6 +136,18 @@ const visibleReviews = REVIEWS.filter((r) => r.heading[lang]);
               {review.scanImage && (
                 <figure class="mt-4">
                   <Image src={review.scanImage.src} alt={review.scanImage.alt[lang] ?? ""} width={300} height={225} class="mx-auto h-auto w-full max-w-xs rounded-xl shadow-soft" />
+                </figure>
+              )}
+
+              {review.beforeAfterImage && (
+                <figure class="mt-4">
+                  <Image
+                    src={review.beforeAfterImage.src}
+                    alt={review.beforeAfterImage.alt[lang] ?? ""}
+                    width={700}
+                    height={467}
+                    class="mx-auto h-auto w-full max-w-lg rounded-xl shadow-soft"
+                  />
                 </figure>
               )}
 

@@ -155,7 +155,7 @@ async function main() {
     }
 
     const liveHours = block.hours.join(" ").replace(/\s+/g, " ");
-    const ourHours = (outlet.hours?.en ?? outlet.hours ?? "").replace(/\s+/g, " ");
+    const ourHours = [...(outlet.hours?.en ?? [])].join(" ").replace(/\s+/g, " ");
     if (liveHours && ourHours && !sameTimeTokens(liveHours, ourHours)) {
       console.log(`❌ [${key}] hours drift:\n     live: "${liveHours}"\n     ours: "${ourHours}"`);
       failures++;

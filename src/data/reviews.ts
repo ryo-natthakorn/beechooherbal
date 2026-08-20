@@ -31,6 +31,7 @@ import trixie2 from "../assets/images/reviews/trixie-2.jpeg";
 import trixie3 from "../assets/images/reviews/trixie-3.jpeg";
 import trixie4 from "../assets/images/reviews/trixie-4.jpeg";
 import trixieScan from "../assets/images/reviews/trixie-scan.jpg";
+import trixiePhoto2 from "../assets/images/reviews/trixie-photo2.jpeg";
 
 export type Lang = "en" | "th";
 type PL<T> = Partial<Record<Lang, T>>;
@@ -56,9 +57,19 @@ export interface Review {
   body: PL<string[]>;
   quote: PL<string[]>;
   videoId: PL<string>;
+  /** Multi-photo DATED progress strip (Karen, Trixie) — small thumbnails in a row. */
   gallery?: GalleryImage[];
+  /** A single before/after COMPOSITE image (Rachel, Alanna) — rendered large and
+   *  centered, not as a gallery thumbnail. Was previously overloaded onto `gallery`
+   *  with 1 item, which sized it like a tiny dated-strip thumbnail — that's what Ryo
+   *  flagged as "too small and not centered". */
+  beforeAfterImage?: { src: ImageMetadata; alt: PL<string> };
   /** A single non-dated supporting image (hair/scalp scan), shown apart from the dated progress gallery. */
   scanImage?: { src: ImageMetadata; alt: PL<string> };
+  /** "First visit" condition photos shown right after the intro paragraph (Trixie's
+   *  legacy source captions two DISTINCT images "Photo 1"/"Photo 2" — we were rendering
+   *  the captions as plain text with no image at all; each entry pairs one back up). */
+  introPhotos?: { src: ImageMetadata; caption: PL<string> }[];
 }
 
 export const REVIEWS: Review[] = [
@@ -276,7 +287,7 @@ export const REVIEWS: Review[] = [
       src: rachelScan,
       alt: { en: "Scan taken during consultation at Bee Choo Ladies on 17-Mar-2018", th: "ภาพสแกนหนังศีรษะของคุณราเชล วันที่ 17 มีนาคม 2561" },
     },
-    gallery: [{ src: rachelBeforeAfter, alt: { en: "Before and After photo of Rachel", th: "หนังศีรษะของคุณราเชล ก่อนและหลังทำทรีทเม้นท์สมุนไพรบีชู" } }],
+    beforeAfterImage: { src: rachelBeforeAfter, alt: { en: "Before and After photo of Rachel", th: "หนังศีรษะของคุณราเชล ก่อนและหลังทำทรีทเม้นท์สมุนไพรบีชู" } },
   },
   {
     slug: "alanna-tok",
@@ -314,7 +325,7 @@ export const REVIEWS: Review[] = [
       ],
     },
     videoId: { en: "M3cgqlWSJhg", th: "2R1AHlnr9GU" },
-    gallery: [{ src: alannaBeforeAfter, alt: { en: "Alanna Tok's hair, before and after Bee Choo herbal treatment", th: "ผมของคุณอัลแลนนา ต๊อก ก่อนและหลังทำทรีทเม้นท์สมุนไพรบีชู" } }],
+    beforeAfterImage: { src: alannaBeforeAfter, alt: { en: "Alanna Tok's hair, before and after Bee Choo herbal treatment", th: "ผมของคุณอัลแลนนา ต๊อก ก่อนและหลังทำทรีทเม้นท์สมุนไพรบีชู" } },
   },
   {
     slug: "trixie",
@@ -328,8 +339,6 @@ export const REVIEWS: Review[] = [
       en: [
         "Originally posted on www.beechooladies.com",
         "This young lady had been suffering from severe hair loss for a long time. She is not yet a teenager but below is the photo of her condition prior to starting treatment with Bee Choo Ladies.",
-        "Photo 1: Trixie when she first visited Bee Choo Ladies",
-        "Photo 2: Trixie when she first visited Bee Choo Ladies",
         "On closer inspection, we realise that her hair loss was due to a bacterial infection as the hair scan showed hair breakage. If you look closely at the hair scans, you will see black dots. These are actually fully grown hairs that have broken off near the roots! The bacterial attacks the hair and causes breakage. In serious cases, it can also infect the scalp causing inflammation, infection and extreme itchiness.",
         "Can you imagine the difficulties she faced while in school? It must have been a hard time for her in school. We were really heartbroken and we really wanted to do our best to help her. We recommended her to do herbal treatment once per week for the first two months and after that twice per month. We recorded her progress; these are the results:",
         "We are glad to say that we managed to help her recover from her condition in 7 months. We are grateful for her patience and trust in Bee Choo Ladies.",
@@ -338,8 +347,6 @@ export const REVIEWS: Review[] = [
       th: [
         "บทความจาก www.beechooladies.com",
         "เด็กสาวคนนี้เผชิญปัญหาผมร่วงรุนแรงมาเป็นเวลานาน อายุของเธอยังไม่ทันเข้าวัยรุ่นแต่สภาพหนังศีรษะของเธอก่อนเข้ารับการรักษากับ บีชู เลดี้ เป็นแบบรูปภาพด้านล่าง",
-        "รูปภาพที่ 1: คุณทริกซี่ตอนมาพบบีชู เลดี้ ครั้งแรก",
-        "รูปภาพที่ 2: คุณทริกซี่ตอนมาพบบีชู เลดี้ ครั้งแรก",
         "ถ้าเปลี่ยนมุมมองเป็นมุมขยายของผมเธอ เราจะพบว่าผมของเธอร่วงเพราะเป็นการติดเชื้อจากแบคทีเรียที่ทำให้เส้นผมของเธอขาด ถ้าคุณมองใกล้ๆคุณจะเห็นว่าหนังศีรษะของเธอมีจุดดำๆ อยู่เป็นจำนวนมาก จุดดำๆแหล่านี้คือเส้นผมของเธอที่ขึ้นตามปกติแต่ขาดช่วงรากเพราะเชื้อแบคทีเรีย ในบางรายที่มีอาการหนัก หนังศีรษะที่ติดเชื้อแบคทีเรียอาจเกิดอาการอักเสบและคันเป็นอย่างมาก",
         "คุณไม่รู้หรอกว่าชีวิตในโรงเรียนของเธอนั้นลำบากแค่ไหน เราใจสลายและอยากช่วยเธอให้ได้มากที่สุด เราแนะนำให้เธอทำทรีทเม้นท์สมุนไพรอาทิตย์ละครั้งในสองเดือนแรกและหลังจากนั้นเดือนละสองครั้ง เราได้ทำการบันทึกความคืบหน้าการรักษาของเธอ และภาพเหล่านี้คือผลการรักษา:",
         "เรายินดีที่จะพูดได้ว่าเรารักษาอาการเธอภาพใน 7 เดือน เราต้องขอบคุณเธอที่เธอให้ความไว้วางใจกับ บีชู เลดี้",
@@ -348,6 +355,10 @@ export const REVIEWS: Review[] = [
     },
     quote: {},
     videoId: {},
+    introPhotos: [
+      { src: trixie1, caption: { en: "Photo 1: Trixie when she first visited Bee Choo Ladies", th: "รูปภาพที่ 1: คุณทริกซี่ตอนมาพบบีชู เลดี้ ครั้งแรก" } },
+      { src: trixiePhoto2, caption: { en: "Photo 2: Trixie when she first visited Bee Choo Ladies", th: "รูปภาพที่ 2: คุณทริกซี่ตอนมาพบบีชู เลดี้ ครั้งแรก" } },
+    ],
     scanImage: {
       src: trixieScan,
       alt: { en: "Hair scan of Trixie showing broken hairs.", th: "ภาพแสกนหนังศีรษะของคุณทริกซี่ เผยให้เห็นถึงเส้นผมที่ขาดตรงราก" },

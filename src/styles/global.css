@@ -746,6 +746,31 @@
   }
 }
 
+/* Team page hero carousel — same zero-JS crossfade technique as the Reviews fader
+   above (reuses its reviews-fade-cycle keyframe), just a banner aspect ratio instead
+   of square, since these are landscape event photos, not portrait review screenshots.
+   Default/reduced-motion state is a plain stacked list of all 4 photos (nothing
+   hidden); only prefers-reduced-motion:no-preference crossfades them. */
+.team-fade-item {
+  margin-top: 1rem;
+}
+.team-fade-item:first-child {
+  margin-top: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .team-fader {
+    aspect-ratio: 16 / 9;
+  }
+  .team-fade-item {
+    position: absolute;
+    inset: 0;
+    margin-top: 0;
+    opacity: 0;
+    animation: reviews-fade-cycle 16s infinite;
+    animation-delay: calc(var(--i) * -4s);
+  }
+}
+
 /* Count-up stat numerals — tabular digits so the ticker doesn't wobble; the
    final integer is server-rendered, JS only animates 0 → N. */
 .stat-num {
