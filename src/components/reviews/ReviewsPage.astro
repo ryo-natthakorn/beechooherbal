@@ -1,0 +1,179 @@
+---
+// src/components/reviews/ReviewsPage.astro
+// The Reviews page body. Thin route shells set lang/title/description and render this.
+// Content is src/data/reviews.ts, transcribed verbatim from the live site; see that
+// file's header for why EN/TH are NOT a translation pair here (TH carries 4 testimonials
+// EN doesn't) and why body/quote/videoId are all per-language and Partial.
+//
+// UX per Ryo's 2026-08-20 brief: flat card grid (not grouped sections — simpler to scan
+// than the legacy page's un-navigable 69-80KB wall of content), a concern badge on every
+// card (concern is already stated in each legacy heading, not invented), plus a
+// CSS-only filter row (same :has() technique as the treatments accordion — see
+// global.css's "Reviews page — concern filter" block). Every card ships in the DOM
+// regardless of the active filter — nothing content-bearing is ever hidden from a
+// crawler or a browser without :has() support.
+//
+// Progress galleries (Karen, Trixie) render as a horizontal DATED strip — each
+// thumbnail labelled with its date so the progression reads left-to-right at a glance,
+// per Ryo's "organize them to make it neat and easy to understand". Wrapped in
+// <details> once a card has more than 4 images so the grid stays neat.
+import { Image } from "astro:assets";
+import LeafDivider from "../LeafDivider.astro";
+import YouTubeEmbed from "../YouTubeEmbed.astro";
+import { REVIEWS, REVIEWS_INTRO, REVIEWS_CLOSING, type Lang, type Concern } from "../../data/reviews";
+import { TREATMENTS } from "../../data/treatments";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+const filterAllLabel = lang === "en" ? "All" : "ทั้งหมด";
+
+// Only offer filter chips for concerns at least one review actually carries.
+const usedConcerns = [...new Set(REVIEWS.flatMap((r) => r.concerns))] as Concern[];
+const concernMeta = new Map(TREATMENTS.map((t) => [t.slug, t]));
+
+const dateFormatter = new Intl.DateTimeFormat(lang === "th" ? "th-TH-u-ca-buddhist" : "en-GB", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+function formatDate(iso: string) {
+  return dateFormatter.format(new Date(iso));
+}
+
+// Only render a card for a review that actually has content in THIS language.
+const visibleReviews = REVIEWS.filter((r) => r.heading[lang]);
+---
+
+<main id="main">
+  <section class="py-16 text-center md:py-24">
+    <div class="mx-auto max-w-3xl px-4 md:px-8">
+      <LeafDivider />
+      <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} text-brand-green md:text-4xl`}>{REVIEWS_INTRO.heading[lang]}</h1>
+      <p class="text-sm leading-relaxed text-brand-origin">{REVIEWS_INTRO.intro[lang]}</p>
+
+      {REVIEWS_INTRO.subHeading[lang] && (
+        <>
+          <h2 class={`mt-10 mb-3 ${serif} text-xl font-bold text-brand-green`}>{REVIEWS_INTRO.subHeading[lang]}</h2>
+          <p class="text-sm leading-relaxed text-brand-origin">{REVIEWS_INTRO.subParagraph[lang]}</p>
+        </>
+      )}
+
+      {REVIEWS_INTRO.videoId[lang] && (
+        <div class="mt-6">
+          <YouTubeEmbed id={REVIEWS_INTRO.videoId[lang]!} title={REVIEWS_INTRO.heading[lang]!} />
+        </div>
+      )}
+    </div>
+
+    <div class="mx-auto mt-14 max-w-6xl px-4 md:px-8">
+      <div class="reviews-filter">
+        <!-- Filter radios: real form controls, visually hidden, driving CSS via :has(). -->
+        <input type="radio" name="concern-filter" id="concern-all" class="sr-only" checked />
+        {usedConcerns.map((slug) => (
+          <input type="radio" name="concern-filter" id={`concern-${slug}`} class="sr-only" />
+        ))}
+
+        <div class="mb-10 flex flex-wrap justify-center gap-2">
+          <label for="concern-all" class="concern-chip btn-tactile cursor-pointer rounded-full border border-brand-earth bg-white px-4 py-2 text-sm font-bold text-brand-green">
+            {filterAllLabel}
+          </label>
+          {usedConcerns.map((slug) => (
+            <label for={`concern-${slug}`} class="concern-chip btn-tactile cursor-pointer rounded-full border border-brand-earth bg-white px-4 py-2 text-sm font-bold text-brand-green">
+              {concernMeta.get(slug)?.title[lang]}
+            </label>
+          ))}
+        </div>
+
+        <ul class="grid grid-cols-1 items-start gap-6 text-left md:grid-cols-2">
+          {visibleReviews.map((review) => (
+            <li class="review-card flex flex-col rounded-2xl border border-brand-earth bg-white p-6 shadow-soft" data-concerns={review.concerns.join(" ")}>
+              <div class="mb-3 flex flex-wrap gap-1.5">
+                {review.concerns.map((slug) => (
+                  <a
+                    href={concernMeta.get(slug)?.href[lang]}
+                    class="rounded-full bg-brand-green-mist px-2.5 py-1 text-2xs font-bold text-brand-green-deep hover:bg-brand-green hover:text-white"
+                  >
+                    {concernMeta.get(slug)?.title[lang]}
+                  </a>
+                ))}
+              </div>
+
+              <h2 class={`mb-3 ${serif} text-lg font-bold text-brand-green`}>{review.heading[lang]}</h2>
+
+              {review.body[lang] && (
+                <div class="space-y-3 text-sm leading-relaxed text-brand-origin">
+                  {review.body[lang]!.map((p) => <p>{p}</p>)}
+                </div>
+              )}
+
+              {review.quote[lang] && (
+                <blockquote class="mt-4 space-y-2 rounded-xl bg-brand-earth/25 p-4 text-sm leading-relaxed text-brand-origin italic">
+                  {review.quote[lang]!.map((q) => <p>{q}</p>)}
+                </blockquote>
+              )}
+
+              {review.videoId[lang] && (
+                <div class="mt-4">
+                  <YouTubeEmbed id={review.videoId[lang]!} title={review.heading[lang]!} />
+                </div>
+              )}
+
+              {review.scanImage && (
+                <figure class="mt-4">
+                  <Image src={review.scanImage.src} alt={review.scanImage.alt[lang] ?? ""} width={300} height={225} class="mx-auto h-auto w-full max-w-xs rounded-xl shadow-soft" />
+                </figure>
+              )}
+
+              {review.gallery && review.gallery.length > 0 && (
+                review.gallery.length > 4 ? (
+                  <details class="group mt-4 overflow-hidden rounded-xl border border-brand-earth open:shadow-soft">
+                    <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-bold text-brand-green marker:content-none">
+                      {lang === "en" ? `See progress photos (${review.gallery.length})` : `ดูภาพความคืบหน้า (${review.gallery.length} ภาพ)`}
+                      <span aria-hidden="true" class="shrink-0 text-lg leading-none transition-transform duration-200 group-open:rotate-45">+</span>
+                    </summary>
+                    <div class="flex gap-3 overflow-x-auto px-4 pb-4">
+                      {review.gallery.map((img) => (
+                        <figure class="shrink-0">
+                          <Image src={img.src} alt={img.alt[lang] ?? ""} width={120} height={120} class="h-24 w-24 rounded-lg object-cover shadow-soft" />
+                          {img.date && <figcaption class="mt-1 text-center text-2xs text-brand-origin">{formatDate(img.date)}</figcaption>}
+                        </figure>
+                      ))}
+                    </div>
+                  </details>
+                ) : (
+                  <div class="mt-4 flex gap-3 overflow-x-auto">
+                    {review.gallery.map((img) => (
+                      <figure class="shrink-0">
+                        <Image src={img.src} alt={img.alt[lang] ?? ""} width={140} height={140} class="h-28 w-28 rounded-lg object-cover shadow-soft" />
+                        {img.date && <figcaption class="mt-1 text-center text-2xs text-brand-origin">{formatDate(img.date)}</figcaption>}
+                      </figure>
+                    ))}
+                  </div>
+                )
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    {REVIEWS_CLOSING.heading[lang] && (
+      <div class="mx-auto mt-16 max-w-3xl px-4 md:px-8">
+        <LeafDivider />
+        <h2 class={`mb-4 ${serif} text-xl font-bold text-brand-green`}>{REVIEWS_CLOSING.heading[lang]}</h2>
+        <div class="space-y-3 text-sm leading-relaxed text-brand-origin">
+          {REVIEWS_CLOSING.body[lang]!.map((p) => <p>{p}</p>)}
+        </div>
+        {REVIEWS_CLOSING.videoId[lang] && (
+          <div class="mt-6">
+            <YouTubeEmbed id={REVIEWS_CLOSING.videoId[lang]!} title={REVIEWS_CLOSING.heading[lang]!} />
+          </div>
+        )}
+      </div>
+    )}
+  </section>
+</main>

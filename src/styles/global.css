@@ -751,3 +751,35 @@
 .stat-num {
   font-variant-numeric: tabular-nums;
 }
+
+/* Reviews page — concern filter, CSS-only via :has(), same technique as the
+   treatments accordion (see the "Treatments" block above). One radio per concern +
+   "All", living inside `.reviews-filter` alongside the card grid; `:has()` on that
+   shared ancestor reads which radio is checked and (un)hides descendant cards by
+   their `data-concerns` attribute — no sibling-combinator DOM-order requirement.
+   No :has() support -> every card stays visible (the @supports gate below is the
+   ONLY place display:none is ever applied), so a crawler or older browser always
+   sees every review regardless of filter state — nothing content-bearing ships
+   hidden by default. */
+@supports selector(:has(a)) {
+  .reviews-filter:has(#concern-hair-loss:checked) .review-card:not([data-concerns~="hair-loss"]),
+  .reviews-filter:has(#concern-grey-hair:checked) .review-card:not([data-concerns~="grey-hair"]),
+  .reviews-filter:has(#concern-oily-scalp:checked) .review-card:not([data-concerns~="oily-scalp"]),
+  .reviews-filter:has(#concern-dandruff:checked) .review-card:not([data-concerns~="dandruff"]),
+  .reviews-filter:has(#concern-damaged-hair:checked) .review-card:not([data-concerns~="damaged-hair"]),
+  .reviews-filter:has(#concern-bacterial-infection:checked) .review-card:not([data-concerns~="bacterial-infection"]),
+  .reviews-filter:has(#concern-postpartum:checked) .review-card:not([data-concerns~="postpartum"]) {
+    display: none;
+  }
+}
+.concern-chip {
+  transition:
+    background-color 150ms var(--ease-spring),
+    color 150ms var(--ease-spring),
+    border-color 150ms var(--ease-spring);
+}
+.concern-chip:has(input:checked) {
+  background-color: var(--color-brand-green);
+  border-color: var(--color-brand-green);
+  color: #fff;
+}

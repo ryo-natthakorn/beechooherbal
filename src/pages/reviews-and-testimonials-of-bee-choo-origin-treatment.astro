@@ -1,0 +1,18 @@
+---
+// src/pages/reviews-and-testimonials-of-bee-choo-origin-treatment.astro
+// English Reviews page — reached from the top nav "Reviews" item and the homepage's
+// reviews section "read more" link. Thin route shell.
+// Content is src/data/reviews.ts, transcribed verbatim from the live site
+// (wp-json/wp/v2/pages/169, fetched live during this batch).
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ReviewsPage from "../components/reviews/ReviewsPage.astro";
+import { REVIEWS_SEO } from "../data/reviews";
+
+const lang = "en" as const;
+const { title, description } = REVIEWS_SEO;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} {lang}>
+  <ReviewsPage {lang} />
+</BaseLayout>

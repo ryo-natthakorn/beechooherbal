@@ -44,6 +44,7 @@ const PAGES = [
   // since this script keys off slug/URL, not the treatment content model.
   ["about", "/about/", "เกี่ยวกับบีชู"],
   ["team", "/team/", "ทีม"],
+  ["reviews", "/reviews-and-testimonials-of-bee-choo-origin-treatment/", "รีวิวทรีทเม้นท์ที่ดี"],
 ];
 
 /**
@@ -75,6 +76,15 @@ const SKIP = [
   // --- Team page: "(left)"/"(center)" dropped, see src/data/team.ts's header ---
   [/^mr\. rick, lim ting feng \(left\) director$/i, "positional caption for a group photo that turned out to be two unrelated photos, not one — see team.ts header"],
   [/^mr\. crispin w\. francis \(center\) director$/i, "positional caption for a group photo that turned out to be two unrelated photos, not one — see team.ts header"],
+  // --- Reviews page: legacy typos/artefacts, and deliberate gallery curation ---
+  [/^trixie - recovering from a bacterial infection.$/i, "legacy heading carries a trailing zero-width space (WordPress editing artefact); dropped, not real content"],
+  [/^คุณพิศมัย - ผมร่วงและผมบางลดลง.$/, "legacy heading carries a trailing zero-width space (WordPress editing artefact); dropped, not real content"],
+  [/^2017-05-23 \(top\) photo 2: trixie when she first visited bee choo ladies$/i, "adjacent-image lightbox-title + alt text concatenated with no separator in source; both pieces are transcribed separately in reviews.ts"],
+  [/^2018-10-13 side3 hair scan of trixie showing broken hairs\.$/i, "adjacent-image lightbox-title + alt text concatenated with no separator in source; both pieces are transcribed separately in reviews.ts"],
+  [
+    /^2017-05-23 \(top\) 2017-07-08 \(top\) 2017-07-08 2017-08-19 \(1\) 2017-12-23 2017-05-31 2017-07-22 2017-09-15$/i,
+    "legacy EN gallery has 8 photos; ours shows the same 4 dated milestones TH uses (deliberate curation, not a content drop — flagged as an open item to expand if Crispin wants full EN parity)",
+  ],
 ];
 
 const decode = (s) =>
@@ -136,9 +146,13 @@ function legacyFragments(html) {
   // with their prose, and the build re-renders that as an accordion whose summary and
   // body are separated by a "+" glyph. A chunk spanning a heading boundary therefore
   // never appears contiguously in the build even when every word of it is present.
+  // Also split on bare <div>...</div> paragraphs (the Reviews page mixes a real <p> for
+  // one line with a plain <div> for the next, inside the same widget-container) — without
+  // this, the two get concatenated into one fragment that never appears contiguously in
+  // the build even though both halves are individually transcribed.
   const editors = html.matchAll(/<div class="elementor-widget-container">([\s\S]*?)<\/div>\s*<\/div>/g);
   for (const e of editors) {
-    for (const chunk of e[1].split(/<br\s*\/?>|<\/p>|<h[1-6][^>]*>|<\/h[1-6]>|\n\s*\n/)) {
+    for (const chunk of e[1].split(/<br\s*\/?>|<\/p>|<h[1-6][^>]*>|<\/h[1-6]>|<div[^>]*>|<\/div>|\n\s*\n/)) {
       const text = norm(chunk.replace(/<[^>]+>/g, " "));
       if (text.split(" ").length > 6) out.push(text);
     }
