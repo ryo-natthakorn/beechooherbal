@@ -43,6 +43,7 @@ const PAGES = [
   // Not a treatment page, but the same verbatim-copy risk applies — generalizes cleanly
   // since this script keys off slug/URL, not the treatment content model.
   ["about", "/about/", "เกี่ยวกับบีชู"],
+  ["team", "/team/", "ทีม"],
 ];
 
 /**
@@ -71,6 +72,9 @@ const SKIP = [
   // presentation choice — the legacy claim itself still renders, in `body` and in the
   // images' `alt`. dandruff, which had no such instruction, keeps its legacy captions.
   [/^white hairs? (before|covered|gone)/i, "grey-hair captions shortened on request; claim still in body + alt"],
+  // --- Team page: "(left)"/"(center)" dropped, see src/data/team.ts's header ---
+  [/^mr\. rick, lim ting feng \(left\) director$/i, "positional caption for a group photo that turned out to be two unrelated photos, not one — see team.ts header"],
+  [/^mr\. crispin w\. francis \(center\) director$/i, "positional caption for a group photo that turned out to be two unrelated photos, not one — see team.ts header"],
 ];
 
 const decode = (s) =>

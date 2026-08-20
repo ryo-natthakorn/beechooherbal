@@ -1,0 +1,18 @@
+---
+// src/pages/th/ทีม.astro
+// Thai Our Team page — the twin of src/pages/team.astro. Reached from ติดต่อเรา >
+// ทีมของเรา. Thin route shell — see the EN twin's header for the full rationale.
+// Content is src/data/team.ts, transcribed verbatim from the live site
+// (wp-json/wp/v2/pages/601, fetched live during this batch).
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TeamPage from "../../components/team/TeamPage.astro";
+import { TEAM_SEO } from "../../data/team";
+
+const lang = "th" as const;
+const { title, description } = TEAM_SEO;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} {lang}>
+  <TeamPage {lang} />
+</BaseLayout>

@@ -1,0 +1,65 @@
+---
+// src/components/team/TeamPage.astro
+// The Team page body. Thin route shells set lang/title/description and render this —
+// same shape as AboutPage.astro. Content is src/data/team.ts, transcribed verbatim from
+// the live site; see that file's header for why the "(left)"/"(center)" captions were
+// dropped and the photos cropped down to one person each.
+//
+// The page is genuinely thin on the legacy site (2 bios, no other content), so it closes
+// with the site's own Find-a-Branch CTA rather than padding it with invented copy.
+import { Image } from "astro:assets";
+import LeafDivider from "../LeafDivider.astro";
+import { TEAM, TEAM_SEO, type Lang } from "../../data/team";
+import { HOME } from "../../data/home";
+import { UI } from "../../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const ui = UI[lang];
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+const heading = lang === "en" ? "Our Team" : "ทีมของเรา";
+---
+
+<main id="main">
+  <section class="py-16 text-center md:py-24">
+    <div class="mx-auto max-w-5xl px-4 md:px-8">
+      <LeafDivider />
+      <h1 class={`mb-12 ${serif} text-3xl font-bold${balance} text-brand-green md:text-4xl`}>{heading}</h1>
+
+      <div class="grid gap-10 text-left md:grid-cols-2 md:gap-8">
+        {TEAM.map((member) => (
+          <div class="rounded-2xl border border-brand-earth bg-white p-6 shadow-soft md:p-8">
+            <div class="mb-5 flex items-center gap-4">
+              <Image
+                src={member.photo}
+                alt={member.name}
+                width={112}
+                height={112}
+                class="h-24 w-24 shrink-0 rounded-full object-cover shadow-soft md:h-28 md:w-28"
+              />
+              <div>
+                <h2 class={`${serif} text-lg font-bold text-brand-green md:text-xl`}>{member.name}</h2>
+                <p class="text-sm font-bold text-brand-origin">{member.role[lang]}</p>
+              </div>
+            </div>
+            <div class="space-y-3 text-sm leading-relaxed text-brand-origin">
+              {member.bio.map((p) => <p>{p[lang]}</p>)}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-14">
+        <a
+          href={HOME.locations.href[lang]}
+          class="btn-tactile inline-flex min-h-11 items-center rounded-full bg-brand-green px-7 font-bold text-white shadow-soft hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+        >
+          {ui.misc.viewLocations} &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+</main>

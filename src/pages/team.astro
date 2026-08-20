@@ -1,0 +1,17 @@
+---
+// src/pages/team.astro
+// English Our Team page — reached from Contact Us > Our Team. Thin route shell.
+// Content is src/data/team.ts, transcribed verbatim from the live site
+// (wp-json/wp/v2/pages/195, fetched live during this batch).
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import TeamPage from "../components/team/TeamPage.astro";
+import { TEAM_SEO } from "../data/team";
+
+const lang = "en" as const;
+const { title, description } = TEAM_SEO;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} {lang}>
+  <TeamPage {lang} />
+</BaseLayout>
