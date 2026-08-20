@@ -156,7 +156,7 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
             heading={beforeAfter.heading}
             body={beforeAfter.body}
             images={beforeAfter.images}
-            giphyId={beforeAfter.giphyId}
+            embeds={beforeAfter.embeds}
             background={backgroundFor("beforeAfter")}
           />
         )}
@@ -195,7 +195,7 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
             lang={lang}
             copy={tail.howItWorks}
             background={backgroundFor("howItWorks")}
-            video={page.howItWorksVideo && { id: page.howItWorksVideo.id, title: page.howItWorksVideo.title[lang] }}
+            video={page.howItWorksVideo && { id: page.howItWorksVideo.id[lang], title: page.howItWorksVideo.title[lang] }}
           />
         )}
 

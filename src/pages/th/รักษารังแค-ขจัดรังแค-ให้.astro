@@ -1,0 +1,19 @@
+---
+// src/pages/th/รักษารังแค-ขจัดรังแค-ให้.astro
+// Thai dandruff treatment page — filename IS the URL slug (Astro file-based routing),
+// matching the live site's real translated slug, trailing "-ให้" and all. Thin shell
+// mirroring the EN twin; body in TreatmentPage.astro.
+// Spec: specs/2026-08-12-treatment-pages-plan.md (Batch 4).
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TreatmentPage from "../../components/treatment/TreatmentPage.astro";
+import { TREATMENT_PAGES } from "../../data/treatment-pages";
+
+const lang = "th" as const;
+const slug = "dandruff";
+const page = TREATMENT_PAGES[slug];
+const { title, description } = page.seo;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} lang={lang}>
+  <TreatmentPage lang={lang} slug={slug} />
+</BaseLayout>

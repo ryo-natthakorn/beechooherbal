@@ -6,25 +6,34 @@
 // downloaded from this sandbox yet (see src/data/treatment-pages.ts header). An earlier
 // version guarded the whole <section> on `images.length`, which silently dropped the
 // heading and its paragraph too.
-// Where the before/after visual is an animation rather than photos (oily-scalp), the
-// original embeds a GIPHY clip — reproduced via `giphyId`.
+// Where the before/after visual is a third-party embed rather than photos, `embeds`
+// reproduces it: a GIPHY clip on oily-scalp, TWO GIPHY clips on damaged-hair, TWO
+// YouTube case videos on bacterial-infection. It is a list precisely because of those
+// pairs — a single-embed prop could only ever have rendered half of that evidence.
 import { Image } from "astro:assets";
 import LeafDivider from "../LeafDivider.astro";
-import type { BeforeAfterImage } from "../../data/treatment-pages";
+import type { BeforeAfterContent, BeforeAfterImage } from "../../data/treatment-pages";
 
 interface Props {
   lang: "en" | "th";
   heading: string;
   body: string[];
   images: BeforeAfterImage[];
-  giphyId?: string;
+  embeds?: BeforeAfterContent["embeds"];
   /** Tint override, used only by pages that reorder their sections. */
   background?: "white" | "earth";
 }
 
-const { lang, heading, body, images, giphyId, background } = Astro.props;
+const { lang, heading, body, images, embeds = [], background } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const bgClass = background === "earth" ? "bg-brand-earth/25" : "bg-white";
+
+// GIPHY clips are square on the legacy site; YouTube case videos are 16:9. Mixing the
+// two ratios in one row would letterbox one of them, and no legacy page mixes kinds, so
+// the row takes its ratio from the first embed.
+const embedSquare = embeds[0]?.kind === "giphy";
+const embedSrc = (e: NonNullable<Props["embeds"]>[number]) =>
+  e.kind === "giphy" ? `https://giphy.com/embed/${e.id}` : `https://www.youtube-nocookie.com/embed/${e.id}`;
 
 // The before/after source photos have different aspect ratios (0.897 vs 0.983), so at
 // their intrinsic heights the pair renders visibly mismatched. A shared aspect-ratio
@@ -65,18 +74,28 @@ const bgClass = background === "earth" ? "bg-brand-earth/25" : "bg-white";
     }
 
     {
-      giphyId && (
-        <div class="mx-auto mt-8 max-w-md">
-          <div class="relative aspect-square overflow-hidden rounded-xl shadow-soft">
-            <iframe
-              class="absolute inset-0 h-full w-full border-0"
-              src={`https://giphy.com/embed/${giphyId}`}
-              title={heading}
-              loading="lazy"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
-            />
-          </div>
+      embeds.length > 0 && (
+        <div
+          class:list={[
+            "mx-auto mt-8 grid gap-6",
+            /* One embed keeps the original centred single-column box. Two go side by
+               side from md up — they are a matched before/after pair on every page that
+               has them, so stacking would break the comparison the section exists for. */
+            embeds.length > 1 ? "max-w-3xl md:grid-cols-2" : "max-w-md",
+          ]}
+        >
+          {embeds.map((embed) => (
+            <div class:list={["relative overflow-hidden rounded-xl shadow-soft", embedSquare ? "aspect-square" : "aspect-video"]}>
+              <iframe
+                class="absolute inset-0 h-full w-full border-0"
+                src={embedSrc(embed)}
+                title={embed.title ?? heading}
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              />
+            </div>
+          ))}
         </div>
       )
     }

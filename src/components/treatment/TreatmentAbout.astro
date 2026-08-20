@@ -19,7 +19,10 @@ interface Props {
   intro: string[];
   faq: FaqItem[];
   subsections?: AboutSubsection[];
-  videoId: string;
+  /** Omitted on pages whose legacy About block carries no condition video at all
+   *  (damaged-hair, both languages) — the section then opens straight into the copy
+   *  rather than borrowing another page's video. */
+  videoId?: string;
   videoTitle: string;
   /** Tint override, used only by pages that reorder their sections (see
    *  TreatmentPage.astro). Omitted everywhere else, which keeps the default. */
@@ -48,7 +51,7 @@ const accordionItems = [
       {heading}
     </h2>
 
-    <YouTubeEmbed id={videoId} title={videoTitle} />
+    {videoId && <YouTubeEmbed id={videoId} title={videoTitle} />}
 
     {/* max-w-prose (65ch) keeps prose in the comfortable 60-75 character band. The
         container stays wider so media (video, photos) isn't shrunk with the text —
@@ -57,9 +60,22 @@ const accordionItems = [
       {intro.map((p) => <p class="leading-relaxed">{p}</p>)}
     </div>
 
+    {/* widths/sizes rather than a fixed width+height pair: the box renders at most 32rem
+        (max-w-lg), and the two pages that set this photo have DIFFERENT source ratios
+        (dandruff 800x600, damaged-hair 800x534). The old hardcoded 1024x682 was both an
+        upscale past those 800px sources and the wrong ratio for either, so it would have
+        stretched them. Letting Astro derive the ratio keeps each photo undistorted; 800
+        caps the request at the intrinsic width. */}
     {
       image && (
-        <Image src={image.src} alt={image.alt} width={1024} height={682} class="mx-auto mt-8 w-full max-w-lg rounded-xl shadow-soft" />
+        <Image
+          src={image.src}
+          alt={image.alt}
+          widths={[400, 640, 800]}
+          sizes="(min-width: 32rem) 32rem, 100vw"
+          loading="lazy"
+          class="mx-auto mt-8 w-full max-w-lg rounded-xl shadow-soft"
+        />
       )
     }
 

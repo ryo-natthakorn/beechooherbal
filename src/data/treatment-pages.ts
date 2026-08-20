@@ -87,9 +87,16 @@ import type { ImageMetadata } from "astro";
 // left named as-is so the emitted asset hash doesn't churn.
 import awardCeremonyPhoto from "../assets/images/treatments/oily-scalp-about.jpg";
 import oilyScalpFaqCloggedPore from "../assets/images/treatments/oily-scalp-faq-clogged-pore.jpeg";
+// Legacy 180125-R-side.jpg. Serves TWO pages on the live site: oily-scalp's second FAQ
+// photo and dandruff's "before" hair scan. Verified byte-identical (same md5) at both
+// URLs, so it is imported twice under two names rather than stored twice.
 import oilyScalpFaqScan from "../assets/images/treatments/oily-scalp-faq-scan.jpg";
+import dandruffScanBefore from "../assets/images/treatments/oily-scalp-faq-scan.jpg";
 import greyHairBeforeImage from "../assets/images/treatments/grey-hair-before.png";
 import greyHairAfterImage from "../assets/images/treatments/grey-hair-after.png";
+import dandruffAboutPhoto from "../assets/images/treatments/dandruff-about.jpg";
+import dandruffScanAfter from "../assets/images/treatments/dandruff-after.jpg";
+import damagedHairAboutPhoto from "../assets/images/treatments/damaged-hair-about.jpg";
 
 export type Lang = "en" | "th";
 
@@ -159,14 +166,19 @@ export interface BeforeAfterImage {
 /** The legacy "SEE OUR CLIENT'S BEFORE AFTER RESULTS" band. Heading and body render
  *  even when `images` is empty — on the live site the heading is always present, and
  *  for oily-scalp the visual is a GIPHY embed rather than photos. */
-interface BeforeAfterContent {
+export interface BeforeAfterContent {
   heading: string;
   /** Paragraph(s) under the heading. */
   body: string[];
   /** Legacy photos. Empty where they can't be sourced yet — see the file header. */
   images: BeforeAfterImage[];
-  /** giphy.com embed id, where the before/after visual is an animation (oily-scalp). */
-  giphyId?: string;
+  /** Third-party embeds the legacy band carries instead of (or as well as) photos.
+   *  A LIST, not a single id: damaged-hair shows TWO GIPHY animations side by side and
+   *  bacterial-infection shows TWO YouTube videos, so the earlier single `giphyId`
+   *  could only have rendered half of either page's before/after evidence. `title` is
+   *  the iframe's accessible name; GIPHY embeds on the legacy site carry none, so it is
+   *  optional and BeforeAfterGallery falls back to the section heading. */
+  embeds?: { kind: "giphy" | "youtube"; id: string; title?: string }[];
 }
 
 /** Text the legacy treatment pages carry in the four shared tail sections. The HOMEPAGE
@@ -322,8 +334,11 @@ export interface TreatmentPageContent {
   /** Per-condition YouTube id (same id embeds on both EN and TH pages on the live
    *  site). The shared/trailing ids that also appear elsewhere on the legacy page
    *  belong to the reused homepage sections (Reviews, How-It-Works) and don't need
-   *  wiring here. */
-  videoId: string;
+   *  wiring here.
+   *  OPTIONAL: damaged-hair's legacy page carries no condition video at all in either
+   *  language — its About block opens straight into the copy. Omit rather than
+   *  borrowing another page's video. */
+  videoId?: string;
   /** Some pages (grey-hair) also carry a second, Facebook-hosted video, rendered under
    *  the Benefits heading sized to match the hero video. Full permalink of the source
    *  video — the component builds the plugin URL. */
@@ -333,8 +348,11 @@ export interface TreatmentPageContent {
    *  2025" — a generic brand reel, not this section's process video). Scoped per-page
    *  rather than fixed at the source: the homepage (Crispin-signed-off) and Oily Scalp
    *  (shipped) still show the wrong one until that's a deliberate call, not a side
-   *  effect of another page's edit. */
-  howItWorksVideo?: { id: string; title: Record<Lang, string> };
+   *  effect of another page's edit.
+   *  `id` is PER-LANGUAGE, not one string: dandruff embeds Uwty-ZDdPYc on EN and
+   *  Fp3hdtA-pnE on TH, and bacterial-infection does the exact reverse. A single id
+   *  would have silently shipped the wrong video on one language of each. */
+  howItWorksVideo?: { id: Record<Lang, string>; title: Record<Lang, string> };
   /** "plain" drops the hero photo band and the green banner behind it, so the H1,
    *  strapline and CTAs sit on the page background with room above — see
    *  TreatmentHero.astro's `variant` prop. Omit for the standard photo hero. */
@@ -364,13 +382,26 @@ export interface TreatmentPageContent {
  *
  *  ⚠ ALT TEXT NEEDS CRISPIN'S SIGN-OFF. The Thai is newly composed from vocabulary
  *  already on these pages (คุณเชีย บี ชู, ผู้ก่อตั้ง, บีชู ออริจิน, รางวัล, สิงคโปร์ all
- *  appear in CROSS_SELL_FOUNDER.th) — NOT machine-translated. No visible caption: that
- *  would be new on-page copy. */
-export const RECOGNITION_PHOTO: { src: ImageMetadata; alt: Record<Lang, string>; caption?: Record<Lang, string> } = {
+ *  appear in CROSS_SELL_FOUNDER.th) — NOT machine-translated.
+ *
+ *  The EN caption IS legacy copy: the live oily-scalp page captions this photo "Mdm Bee
+ *  Choo Receiving Award Presented by Minister Lim Swee Say", which
+ *  inventory/scripts/06-copy-parity.mjs flagged as dropped. It also independently
+ *  confirms the subject the alt text describes. No Thai caption exists on any legacy
+ *  page, so `caption` is Partial and TH renders none rather than getting an invented
+ *  translation (CLAUDE.md §8). */
+export const RECOGNITION_PHOTO: {
+  src: ImageMetadata;
+  alt: Record<Lang, string>;
+  caption?: Partial<Record<Lang, string>>;
+} = {
   src: awardCeremonyPhoto,
   alt: {
     en: "Bee Choo Origin founder Madam Cheah Bee Chew receiving the Entrepreneur of the Year Award in Singapore, 2017",
     th: "คุณเชีย บี ชู ผู้ก่อตั้ง บีชู ออริจิน รับรางวัลผู้ประกอบการแห่งปีในสิงคโปร์ ปี 2017",
+  },
+  caption: {
+    en: "Mdm Bee Choo Receiving Award Presented by Minister Lim Swee Say",
   },
 };
 
@@ -461,16 +492,38 @@ const CROSS_SELL_HEADING: Record<Lang, string> = {
   th: "ทรีทเม้นท์รักษาผมร่วงที่เห็นผลมากที่สุดในประเทศไทย",
 };
 
-/** Assembles a page's `tail` from the four shared constants above. Only the cross-sell
- *  paragraphs are genuinely per-page (the Thai one names a different condition on each
- *  treatment, and oily-scalp carries an extra flagship-salon line), so they are the one
- *  argument. Everything else is word-for-word identical across all 7 legacy pages.
- *  Exists so the five remaining pages can't drift by hand-copying 12 lines of wiring. */
-const sharedTail = (lang: Lang, crossSellParagraphs: Inline[][]): TailContent => ({
-  reviewsHeading: REVIEWS_HEADING[lang],
-  crossSell: { heading: CROSS_SELL_HEADING[lang], paragraphs: crossSellParagraphs },
-  howItWorks: HOW_IT_WORKS[lang],
-  pricing: PRICING[lang],
+/** Assembles a page's `tail` from the four shared constants above, plus whatever that
+ *  page words differently.
+ *
+ *  ⚠ CORRECTION (2026-08-20). This file used to assert the tail was "word-for-word
+ *  identical across all 7 treatment pages (verified on oily-scalp + grey-hair)". It is
+ *  not — that claim was extrapolated from the only two pages built at the time. All 14
+ *  legacy pages were diffed line-by-line against grey-hair; the real deviations are:
+ *    EN  hair-loss, postpartum  — different pricing heading, intro AND closing lines
+ *    EN  hair-loss, postpartum  — step 4 reads "Rinse Off" (no hyphen)
+ *    EN  damaged, bacterial     — step 4 reads "Rinse-Off" (capital O)
+ *    EN  dandruff               — step 3 reads "Steam for 45 minutes"
+ *    EN  damaged                — How-It-Works intro has an extra chemical-dye clause
+ *    TH  dandruff, damaged      — How-It-Works heading uses "100เปอร์เซ็นต์"
+ *    TH  dandruff, damaged      — NO founder paragraph and no Business Times links
+ *    TH  postpartum             — the whole tail is the "ทรีตเมนต์" spelling variant
+ *  Copying one page's tail onto another would therefore silently rewrite indexed copy.
+ *  The constants above stay as the MAJORITY text; each page states its own deviations
+ *  here, so a deviation is visible at the page rather than hidden in a constant. */
+const sharedTail = (
+  lang: Lang,
+  crossSellParagraphs: Inline[][],
+  overrides: {
+    reviewsHeading?: string;
+    crossSellHeading?: string;
+    howItWorks?: Partial<TailContent["howItWorks"]>;
+    pricing?: Partial<TailContent["pricing"]>;
+  } = {},
+): TailContent => ({
+  reviewsHeading: overrides.reviewsHeading ?? REVIEWS_HEADING[lang],
+  crossSell: { heading: overrides.crossSellHeading ?? CROSS_SELL_HEADING[lang], paragraphs: crossSellParagraphs },
+  howItWorks: { ...HOW_IT_WORKS[lang], ...overrides.howItWorks },
+  pricing: { ...PRICING[lang], ...overrides.pricing },
 });
 
 /** The chrome every treatment page shares, so a new page opts in with one spread rather
@@ -604,13 +657,13 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
         heading: "See Our Client's Before After Results",
         body: ["Get rid of the itch and excess oil today. With regular treatment, your scalp will be free of itch and excess oil."],
         images: [],
-        giphyId: "t7752IVYRBN1YzOPaL",
+        embeds: [{ kind: "giphy", id: "t7752IVYRBN1YzOPaL" }],
       },
       th: {
         heading: "มาดูผล ก่อน - หลัง ของลูกค้าของเรา",
         body: ["มาลดความมันและความคันของหนังศีรษะกันค่ะ ด้วยทรีทเม้นท์ของพวกเรา คุณจะรู้สึกสบายมากขึ้นเมื่อไม่มีน้ำมันและอาการคันมากวนใจ"],
         images: [],
-        giphyId: "t7752IVYRBN1YzOPaL",
+        embeds: [{ kind: "giphy", id: "t7752IVYRBN1YzOPaL" }],
       },
     },
     tail: {
@@ -670,7 +723,7 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
     // ("Bee Choo Branding 2025") — see the field's doc comment above. This ID is what
     // the legacy site itself actually embeds in this exact section on both languages.
     howItWorksVideo: {
-      id: "Uwty-ZDdPYc",
+      id: { en: "Uwty-ZDdPYc", th: "Uwty-ZDdPYc" },
       title: {
         en: "How Bee Choo herbal hair treatment works",
         th: "ทรีตเมนต์สมุนไพรบีชูให้ผลอย่างไร",
@@ -852,6 +905,410 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
         ["บีชู ออริจิน เป็นทรีทเม้นท์ซาลอนและคลินิกที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง รังแค หนังศีรษะเป็นเชื้อรา และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา ในมาเลเซียจำนวน 68 สาขา และมากกว่า 160 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ ประเทศไทย พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมาก"],
         CROSS_SELL_FOUNDER.th,
       ]),
+    },
+    descriptionDraftPending: ["en"],
+  },
+
+  dandruff: {
+    heroTitle: {
+      en: "Herbal Treatment to Cure Dandruff Hair",
+      th: "ทรีทเมนต์สมุนไพรรักษาปัญหารังแค",
+    },
+    ...STANDARD_CHROME,
+    seo: {
+      title: {
+        en: "Cure Dandruff Hair with Herbal Treatment - Bee Choo Herbal",
+        th: "วิธีขจัดรังแคและความคันอย่างเร่งด่วน - บีชู เฮอร์เบิล",
+      },
+      description: {
+        // No real Yoast description on the live EN page — condensed from this page's own
+        // Benefits copy below, not invented. Needs Crispin's sign-off.
+        en: "Ling Zhi and Chuan Xiong in Bee Choo's herbal paste settle a dry, flaking scalp and restore healthy circulation. Even persistent dandruff clears in a few sessions.",
+        // Real live-site Yoast description, verbatim (Yoast's own 154-char cut, not ours).
+        th: "น้ำยาทรีทเม้นท์ของ บีชู มีส่วนประกอบของเห็ดหลินจือที่จะช่วยปรับสภาพของหนังศีรษะให้อยู่ในสภาพที่เป็นปกติ โกฐหัวบัวจะช่วยในการไหลเวียนโลหิตซึ่งจะทำให้การทำงาน",
+      },
+    },
+    videoId: "9-fX3NojpSs",
+    // Per-language ids: the legacy EN and TH pages embed DIFFERENT videos in this same
+    // section. Verified against both pages' raw HTML — not a transcription slip.
+    howItWorksVideo: {
+      id: { en: "Uwty-ZDdPYc", th: "Fp3hdtA-pnE" },
+      title: {
+        en: "How Bee Choo herbal hair treatment works",
+        th: "ทรีตเมนต์สมุนไพรบีชูให้ผลอย่างไร",
+      },
+    },
+    about: {
+      en: {
+        heading: "About Dandruff Hair",
+        intro: [
+          "Do take a minute to watch the video above to understand how the herbal treatment is able to unclog choked hair pores and remove dandruff. Many of our customers stop experiencing dandruff once they start regular treatment with us. As the health of their scalp improves, the chance of recurrence of dandruff falls drastically.",
+          "Many customers are able to eradicate their dandruff issues completely in just a few sessions.",
+          "Some common causes of Dandruff are: Long-term use of unsuitable hair products, poor & unhealthy diet or drastic change in climate.",
+        ],
+        // First page to use AboutContent.image since oily-scalp's photo turned out to be
+        // an awards ceremony and moved to RECOGNITION_PHOTO. This one really is a salon
+        // photo (legacy P1010006.jpg); the live page carries no alt, so this is a plain
+        // factual description written to meet CLAUDE.md §7.
+        // alt is the legacy page's own caption on this photo, verbatim — real copy beats
+        // a description we would otherwise have had to write.
+        image: { src: dandruffAboutPhoto, alt: "Hair & Scalp Analysis done at Bee Choo Origin" },
+        faq: [
+          {
+            question: "What is Dandruff?",
+            answer:
+              "Dandruff (scientific term – Pityriasis Capitis) are the white skin flakes found in your hair. Sometimes on your shirt when it is excessive. Just brush your hair with your hands, if you see white flakes falling all over the place, you have dandruff. Dandruff is a common condition, which causes itchiness and it can be embarrassing when others notice your dandruff problems.",
+          },
+          {
+            question: "Who is affected by Dandruff?",
+            answer:
+              "Both men and women suffer from dandruff. It can be triggered by a sudden change in weather or environment. It can also be triggered when you change shampoo to one that is not suitable for your scalp type. You cannot get rid of Dandruff just by the normal washing of hair. Even if you wash your hair frequently, you will notice flakes appearing not long after showering. If you have a dry scalp, dandruff appears to be fine and powdery. For dandruff caused by oily scalp, it will appear yellowish or translucent with a greasy texture and these flakes are slightly larger than flakes caused by dry scalp.",
+          },
+          {
+            // The legacy answer runs to four paragraphs — the cause, an attribution line,
+            // the quoted study summary and the citation. Joined into one string, the way
+            // every other FaqItem.answer in this file is; no words added or dropped.
+            question: "What causes Dandruff?",
+            answer:
+              "Dandruff is triggered the fungus, Malassezia globosa. The micro-organism is a cousin of the yeast and feeds on sebum. When the globosa grows too quickly, the natural renewal of cells will be disrupted. According to a report in ACS’ Journal of Medicinal Chemistry: Claudiu T. Supuran and colleagues explain that dandruff involves an excessive shedding of dead skin cells from the scalp. In people without dandruff, it takes about 30 days for a crop of new skin cells to mature, die and shed. In people with dandruff, it may take only 2-7 days. Irritation by the scalp-dwelling fungus Malassezia globosa (M. globosa). Reference: Kirsty S. Hewitson, Daniela Vullo, Andrea Scozzafava, Antonio Mastrolorenzo, Claudiu T. Supuran. Molecular Cloning, Characterization, and Inhibition Studies of a β-Carbonic Anhydrase fromMalassezia globosa, a Potential Antidandruff Target. Journal of Medicinal Chemistry, 2012; 55 (7): 3513 DOI: 10.1021/jm300203r",
+          },
+          {
+            question: "Are there any complications from Dandruff?",
+            answer:
+              "If you have been experiencing chronic dandruff with irritation, redness and unbearable itchiness on your scalp, you could have an underlying condition that is more serious than normal dandruff. You could have a fungal infection or psoriasis. It is important that you seek treatment early before your scalp condition gets worse as it may even lead to hair loss. Dandruff is known to cause psychological damage due to the embarrassment and lost in self-esteem is can cause to the sufferer. Do not feel embarrassed by dandruff, it is a very common condition and it can be solved with the right treatment, hair product and upkeep.",
+          },
+        ],
+      },
+      th: {
+        heading: "ปัญหารังแค",
+        intro: [
+          "มาดูวีดูโอการรักษารังแคโดยใช้ทรีทเม้นท์สมุนไพรของเรากันค่ะ จะเห็นว่าทรีทเม้นท์สมุนไพรของเราจะช่วยปลดล็อครูขุมขนที่อุดตันและล้างรังแคออกมา ลูกค้าหลายท่านของเราหยุดการทดลองผลิตภัณฑ์ต่างๆเพื่อรักษารังแค และมารักษาด้วยการทำทรีทเม้นท์กับเรา พบว่าสุขภาพของหนังศีรษะดีขึ้น การเกิดรังแคนั้นน้อยลงจนคุณลูกค้าสังเกตได้",
+          "สาเหตุทั่วไปในการเกิดรังแคนั้นคือการเลือกใช้แชมพูที่ไม่เหมาะกับสภาพเส้นผม อาหารที่ไม่ดีต่สุขภาพ และอากาศที่เปลี่ยนแปลง",
+        ],
+        image: { src: dandruffAboutPhoto, alt: "การทาน้ำยาสมุนไพรบีชูลงบนหนังศีรษะของลูกค้าที่ร้าน" },
+        // Same shape as TH grey-hair: no toggle widget on the live TH page, just
+        // always-visible <h3> sub-sections inside one text blob. THREE here where EN has
+        // four — the Thai page folds "who is affected" and "what causes" into one.
+        faq: [],
+        subsections: [
+          {
+            heading: "รังแคคืออะไร",
+            paragraphs: [
+              "รังแค (ชื่อทางภาษาอังกฤษ – Pityriasis Capitis) คือสะเก็ดผิวสีขาวซึ่งสามารถเจอได้ในเส้นผม ตามเสื้อผ้า เมื่อใช้มือสางก็จะพบว่ามีสะเก็ดของรังแคร่วงอยู่ทั่วๆไป ปัญหารังแคเป็นปัญหาทั่วไปที่นำไปสู่อาการคัน และทำให้เกิดความอับอายเมื่อคนอื่นสามารถมองเห็นรังแคคุณได้",
+            ],
+          },
+          {
+            heading: "ใครจะมีรังแคบ้าง",
+            paragraphs: [
+              "ทั้งผู้ชายและผู้หญิงสามารถมีรังแคได้ทั้งนั้น เนื่องจากอากาศที่เปลี่ยนแปลงหรือเปลี่ยนแชมพู โดยเฉพาะเมื่อใช้แชมพูที่ไม่เหมาะกับสภาพของหนังศีรษะ",
+              "คุณไม่สามารถลดจำนวนของรังแคลงได้จากการสระผมธรรมดา ถึงแม้ว่าจะสระผมบ่อยแค่ไหน คุณก็จะสังเกตเห็นรังแคได้เมื่อสระผมไปไม่นาน ถ้าคุณมีหนังศีรษะแห้ง รังแคจะมีลักษณะเหมือนแป้งธรรมดาๆ แต่สำหรับหนังศีรษะมันรังแคจะมีลักษณะเป็นสีเหลือง มีความเหนียวและมีขนาดใหญ่มากกว่ารังแคที่เกิดจากหนังศีรษะแห้ง",
+              "รังแค มีสาเหตุมาจากเชื้อรา เชื้อเกลื้อน สิ่งมีชีวิตเล็กๆเหล่านี้อยู่ในเครือเดียวกันกับยีสต์ และกินไขผิวหนังเป็นอาหาร เมื่อเชื้อได้เติบโตไวมากเกินไป การสร้างเซลล์ใหม่นั้นจะถูกทำลาย",
+              "อ้างอิงจาก รายงาน ACS’ Journal of Medicinal Chemistry: Claudiu T. Supuran และคณะ กล่าวว่าการมีรังแคนั้นมีความขึ้นอยู่กับการผลัดเซลล์ที่ตายแล้วของหนังศีรษะ สำหรับผู้ที่ไม่มีรังแคหนังศีรษะจะใช้เวลาในการผลัดเซลล์ที่ตายแล้วประมาณ 30 วัน จากนั้นก็จะมีเซลล์เกิดใหม่ตามขึ้นมา แต่สำหรับผู้ที่มีรังแคแล้วจะใช้เวลาแค่ 2 – 7 วัน เท่านั้น",
+              "แหล่งข้อมูลจาก Reference: Kirsty S. Hewitson, Daniela Vullo, Andrea Scozzafava, Antonio Mastrolorenzo, Claudiu T. Supuran. Molecular Cloning, Characterization, and Inhibition Studies of a β-Carbonic Anhydrase fromMalassezia globosa, a Potential Antidandruff Target. Journal of Medicinal Chemistry, 2012; 55 (7): 3513 DOI: 10.1021/jm300203r",
+            ],
+          },
+          {
+            heading: "มีโรคแทรกซ้อนจากรังแคมั้ย?",
+            paragraphs: [
+              "ถ้าคุณเคยพบกับปัญหาที่มีต้นเหตุมาจากรังแคเรื้อรัง เช่น หนังศีรษะแดง หรือมีอาการคันแทบจะทนไม่ได้ คุณอาจจะเจอปัญหาที่หนักกว่ารังแคธรรมดา นั่นก็คือการติดเชื้อจากเชื้อรา หรือโรคสะเก็ดเงิน เป็นเรื่องสำคัญที่คุณต้องเข้ารับการรักษาอย่างรวดเร็วก่อนที่จะสายเกินไป หนังศีรษะของคุณอาจจะมีสภาพที่เลวร้ายมากยิ่งขึ้น และนำไปสู่ปัญหาผมหลุดร่วง",
+              "รังแคก่อให้เกิดความอับอายและสูญเสียความมั่นใจ แต่อย่าได้กังวลมากเกินไป เนื่องจากเป็นปัญหาที่ธรรมดามากของหนังศีรษะ ปัญหานี้สามารถแก้ไขด้วยการรักษาและการใช้ผลิตภัณฑ์ที่ถูกต้อง",
+            ],
+          },
+        ],
+      },
+    },
+    benefits: {
+      en: {
+        heading: "Benefits of 100% Natural Herbal Treatment",
+        blocks: [
+          {
+            kind: "p",
+            text: "Bee Choo’s herbal paste contains Ling Zhi, the dual-modulating adaptogen that would help to regulate your dry and dandruff scalp and help to regain its healthy state. Chuan Xiong found in our herbal paste is also known to help improve blood circulation which helps the sebaceous glands to function healthily.",
+          },
+          {
+            kind: "p",
+            text: "Very often, dryness or dandruff is caused by the wrong choice of shampoo. Bee Choo’s Purity Repair Shampoo, Purity Remove Shampoo and Purity Repair Conditioner is specially designed for our customers who have damaged hair and dandruff. In addition, Bee Choo has tonics catering specifically to dry & dandruff hair. Used in conjunction with our special herbal hair treatment, even the most persistent of dandruff problems can be treated in no time! Do not let dandruff embarrass you anymore, get rid of it today.",
+          },
+        ],
+      },
+      th: {
+        heading: "ประโยชน์ของ ทรีทเม้นท์สมุนไพร 100เปอร์เซ็น",
+        blocks: [
+          {
+            kind: "p",
+            text: "ครีมทรีทเม้นท์ของ บีชู มีส่วนประกอบของเห็ดหลินจือที่จะช่วยปรับสภาพของหนังศีรษะให้อยู่ในสภาพที่เป็นปกติ โกฐหัวบัวจะช่วยในการไหลเวียนโลหิตซึ่งจะทำให้การทำงานของต่อมไขมันเป็นไปอย่างสุขภาพดี",
+          },
+          {
+            kind: "p",
+            text: "ในหลายๆครั้งที่ความแห้ง และรังแคมีสาเหตุมาจากการเลือกใช้แชมพูที่ไม่เหมาะสม บีชู เพียวริตี้ รีแพร์ แชมพู, เพียวริตี้ รีมูฟ แชมพู และ ครีมนวด เพียวริตี้ รีแพร์ ผลิตภัณฑ์ของเรานั้นได้ถูกคิดค้นมาเพื่อลูกค้า ผู้ที่มีผมเสียและมีรังแค และยิ่งไปกว่านั้น บีชู ยังมีโทนิคสำหรับหนังศีรษะแห้งและมีรังแคโดยเฉพาะ เมื่อใช้ควบคู่กับการทำทรีทเม้นท์สมุนไพรของเราแล้ว ปัญหารังแคของคุณจะได้รับการรักษาทันที! อย่าให้ปัญหารังแคมาสร้างความอับอายให้แก่คุณอีกเลย มาแก้ไขปัญหาด้วยกันวันนี้.",
+          },
+        ],
+      },
+    },
+    beforeAfter: {
+      en: {
+        heading: "See Our Client's Before After Results",
+        body: ["Below shows the before and after hair scan of a customer after 4 sessions of herbal treatment. Dandruff has been removed completely and inflammation of the scalp has been reduced greatly."],
+        // Unlike grey-hair, this page DOES caption its before/after pair, so both the alt
+        // (the live <img> attribute, "Hebral" typo and all) and the caption are legacy
+        // copy here rather than anything we composed.
+        images: [
+          { src: dandruffScanBefore, alt: "dandruff scalp hair scan", caption: "Hair Scan of Dandruff Scalp" },
+          {
+            src: dandruffScanAfter,
+            alt: "Hair Scan After Bee Choo Hebral Treatment Recovered from Dandruff",
+            caption: "Hair Scan After 4 Sessions - No more dandruff!",
+          },
+        ],
+      },
+      th: {
+        heading: "เรามาดูผล ก่อน - หลัง ของลูกค้าของเรากันนะคะ",
+        // "สมุนไรพ" is a live-site typo for "สมุนไพร" — kept verbatim per CLAUDE.md §8,
+        // same handling as the ปรัฐสภาพผม typo in this file's header. Flag to Crispin.
+        body: ["รูปภาพด้านล่างโชว์ผลแสกนทั้งก่อนและหลังหลังจากทำทรีทเม้นท์สมุนไรพ 4 ครั้ง จะเห็นว่ารังแคถูกขจัดออกไปหมดเลยนะคะ และหนังศีรษะที่อักเสบก็ดูดีขึ้นมากด้วยค่ะ"],
+        // The live TH <img> tags carry no alt at all; these are plain factual
+        // descriptions, and the captions reuse vocabulary already on this page.
+        images: [
+          { src: dandruffScanBefore, alt: "ผลแสกนหนังศีรษะที่มีรังแคก่อนทำทรีทเม้นท์", caption: "ก่อนทำทรีทเม้นท์ บีชู เฮอร์เบิล" },
+          { src: dandruffScanAfter, alt: "ผลแสกนหนังศีรษะหลังทำทรีทเม้นท์ รังแคถูกขจัดออกไป", caption: "หลังทำทรีทเม้นท์ บีชู เฮอร์เบิล" },
+        ],
+      },
+    },
+    tail: {
+      en: sharedTail(
+        "en",
+        [
+          ["Bee Choo Origin is the largest scalp/hair loss treatment salon/clinic specialising in the treatment of hair loss, dandruff, oily scalp and other hair issues. There are 21 outlets in Singapore, 68 outlets in Malaysia with more than 160 outlets across Asia Pacific. The Group has expanded into Bangkok, Thailand and sees Thailand as a potential market to grow the brand. Annually we serve millions of happy customers with effective and proven results."],
+          CROSS_SELL_FOUNDER.en,
+        ],
+        {
+          // Step 3 is the short form on this page only ("Steam for 45 minutes", not
+          // "Steam Treatment of your Hair for 45 minutes"). Verbatim per page.
+          howItWorks: {
+            steps: [
+              "Step 1: Apply Hair Tonic on your Scalp",
+              "Step 2: Apply Herbal Paste to your Scalp",
+              "Step 3: Steam for 45 minutes",
+              "Step 4: Rinse-off the Herbal Paste, Scalp Massage and Conditioning of your Hair",
+            ],
+          },
+        },
+      ),
+      th: sharedTail(
+        "th",
+        [
+          // ONE paragraph, not two: the live TH page carries no founder paragraph and no
+          // Business Times links at all — unlike EN, and unlike TH grey-hair. It also
+          // says "20 สาขา" in Singapore where every other page says 21. Verbatim.
+          ["บีชู ออริจิน เป็นทรีทเม้นท์ซาลอนและคลินิกที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง รังแค หนังศีรษะ และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 20 สาขา ในมาเลเซียจำนวน 68 สาขา และมากกว่า 160 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ ประเทศไทย พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมาก"],
+        ],
+        {
+          howItWorks: {
+            // "100เปอร์เซ็นต์" with the final ต์ on this page and damaged-hair; every
+            // other TH page writes "100เปอร์เซ็น".
+            heading: "ทรีทเม้นท์สมุนไพร 100เปอร์เซ็นต์ ให้ผลยังไงมาดูกัน!",
+            // The intro names the thinning-hair clinic too ("คลินิกรักษาผมบางที่ดีที่สุด")
+            // where grey-hair/oily-scalp just say "รักษาผมร่วงที่ดีที่สุด". Caught by
+            // inventory/scripts/06-copy-parity.mjs, not by eye.
+            intro:
+              "ด้วยชื่อเสียงที่มีเสมอมาของซาลอน/คลินิกรักษาผมร่วง คลินิกรักษาผมบางที่ดีที่สุด ผลิตภัณฑ์ของเราทั้งหมดมีส่วนผสมจากธรรมชาติและมีความปลอดภัย ให้ผลลัพธ์ที่มีประสิทธิภาพสูง ทำให้เส้นผมที่สุขภาพไม่ดี แห้ง มัน และถูกทำร้ายจะถูกฟื้นฟูอย่างรวดเร็ว สีย้อมผมจากธรรมชาติในทรีทเม้นท์ของเราจะช่วยปกปิดผมขาวจนไปถึงโคนของเส้นผม",
+          },
+        },
+      ),
+    },
+    descriptionDraftPending: ["en"],
+  },
+
+  "damaged-hair": {
+    heroTitle: {
+      en: "Repair Chemically Damaged Dry Hair",
+      th: "ซ่อมแซมผมเสียจากการทำสีด้วยสารเคมี",
+    },
+    ...STANDARD_CHROME,
+    seo: {
+      title: {
+        en: "Repair Chemically Damaged Dry Hair with Herbal Treatment - Bee Choo Herbal",
+        th: "แก้ปัญหาผมเสียจากสารเคมีเร่งด่วนด้วยสมุนไพร - Bee Choo (บีชู เฮอร์เบิล)",
+      },
+      description: {
+        // No real Yoast description on the live EN page — condensed from this page's own
+        // Benefits copy below, not invented. Needs Crispin's sign-off.
+        en: "Chuan Xiong, Ginseng, Dang Gui, He Shou Wu and Ling Zhi coat every strand with a protective layer, repairing chemically damaged hair and covering white hair without dye.",
+        // Real live-site Yoast description, verbatim (Yoast's own cut, not ours). Note it
+        // opens "น้ำยาย้อมผม" where the on-page Benefits paragraph says "ครีมปกปิดผมขาว" —
+        // Yoast's stored text differs slightly from the body copy; kept as Yoast has it.
+        th: "น้ำยาย้อมผมตัวเด็ดของเรานั้น เป็นที่รู้กันดีว่าประกอบไปด้วยสมุนไพรจีนพื้นบ้านหลายชนิด ได้แก่ ชวนซง, โสม, ตังกุย, ห่อสิ่วโอว และเห็ดหลินจือ และในการทำทรีทเม้",
+      },
+    },
+    // No videoId: the legacy page embeds NO condition video in either language — its
+    // About block opens straight into the copy. The EN intro still says "watch the video
+    // above", which is a legacy inconsistency, not a missing transcription; reproduced
+    // verbatim per CLAUDE.md §8. Flag to Crispin.
+    howItWorksVideo: {
+      id: { en: "Uwty-ZDdPYc", th: "Uwty-ZDdPYc" },
+      title: {
+        en: "How Bee Choo herbal hair treatment works",
+        th: "ทรีตเมนต์สมุนไพรบีชูให้ผลอย่างไร",
+      },
+    },
+    about: {
+      en: {
+        heading: "About Chemically Damaged Dry Hair",
+        intro: [
+          "Do take a minute to watch the video above to see how our customer overcame her damaged hair and split-ends. These are all REAL pictures and videos taken at our salon. Frequent usage of chemicals in either styling or treatments is widely known to be damaging to our hair. However, what many are unaware of is that incorrect usage of these products may also lead to damaged hair and its associated problems. Chemically damaged hair can be treated effectively, but it takes time and patience. Thousands of customers trust us with their hair.",
+        ],
+        image: { src: damagedHairAboutPhoto, alt: "Client's hair after Bee Choo herbal treatment for chemically damaged, dry ends" },
+        faq: [
+          {
+            question: "What is Chemically Damaged Hair?",
+            answer:
+              "Our hair is made up of dead skin cells which is why during a haircut, you do not feel any pain. However, that doesn’t mean you can do as you please with your hair; it still can be damaged. Overdrying or frequent exposure to harsh chemical substances can ruin one’s hair, causing it to become frizzy or ‘wiry’. This happens when the outer structure of a hair strand, the cuticle, gets damaged or eroded, leaving the cortex exposed, causing more hair breakages, split ends and causing visibly unhealthy hair.",
+          },
+          {
+            question: "What causes Hair Damage?",
+            answer:
+              "Chemical hair dyes contain lots of harmful chemicals including peroxide and ammonia. These chemicals damages and weakens your hair. If these chemicals get in contact with your scalp, it can cause chemical burns, itchiness and sensitivity. Using third-grade chemical dyes without proper licensing can lead to disastrous results. In the process of changing your hair colour, the dye has to break through your hair’s natural protection, the cuticle, to get into the hair shaft. The ammonia contained in the dye raises the cuticle, allowing the peroxide to bleach out your natural hair colour. Finally, the colouring component comes in and does its job. Post colouring, the hair structure is no longer what it used to be and the cuticle is almost always damaged permanently in the process. In addition, overheating from styling tools such as the hair iron, curlers or blow dryers can cause damage to your hair resulting in split-ends and brittle hair.",
+          },
+          {
+            // The legacy answer here is a three-item bullet list, not prose. FaqItem.answer
+            // is a single string, so the items are joined into one paragraph — same words,
+            // same order. Worth revisiting if a page ever needs a real list inside an FAQ.
+            question: "How Do I know If My Hair / Scalp Have Been Damaged?",
+            answer:
+              "If you ever bleached your hair, it probably is damaged permanently. You experience frizzy and dry hair ends. You have to use a flat iron or blow dryer every morning to style your hair, without this routine, your hair would be a mess. You have bumps and itchiness on your scalp after doing a chemical treatment.",
+          },
+          {
+            // "the scalp.Less serious" — missing space after the full stop on the live
+            // page. Kept verbatim; flag to Crispin.
+            question: "What are the complications of Chemical Damage?",
+            answer:
+              "Hair ends that have been damaged are frizzy, dry and have split-ends. There are no severe complications from this other than the aesthetics aspect. It is not easy to repair such damaged hair, you will have to abstain from the daily routine of ironing/blow drying your hair before heading out and cut down on chemical treatments. You might suffer in the short-run but continue natural herbal treatment with us and trust that it would be better in the long-run. More serious complications arise when chemical burns affect the scalp.Less serious chemical allergies can lead to reddish bumps and sensitive scalp that causes itchiness and pain. More serious chemical burns can even damage the hair follicles severely causing hair to fall out in clumps.",
+          },
+        ],
+      },
+      th: {
+        heading: "เกี่ยวกับผมแห้งเสียเนื่องจากสารเคมี",
+        // "ประมาณงนะคะ" is incomplete on the live page (a word appears to be missing
+        // after "ประมาณ"). Kept verbatim per CLAUDE.md §8; flag to Crispin.
+        intro: [
+          "เรามาดูวีดีโอด้านบนกันค่ะ จะเห็นว่าคุณลูกค้าท่านนี้มีผมเสียและแตกปลาย รูปภาพนี้เป็นภาพจริงนะคะ ถ่ายที่ซาลอน/คลินิก ของเราเลยค่ะ การใช้ผลิตภัณฑ์จัดแต่งทรงผมที่เต็มไปด้วยสารเคมีเป็นที่รู้กันดีว่าทำให้ผมเสียเป็นอย่างมาก และยังคงนำไปสู่ปัญหาผมต่างๆตามมาเช่นกัน ผมเสียจากสารเคมีสามารถรักษาได้อย่างมีประสิทธิภาพ ขั้นตอนในการรักษานั้นก็จะต้องใช้ระยะเวลาประมาณงนะคะ ลูกค้าเป็นจำนวนมากมีความเชื่อมั่นให้พวกเราดูแลเส้นผมค่ะ",
+        ],
+        image: { src: damagedHairAboutPhoto, alt: "เส้นผมของลูกค้าหลังทำทรีทเม้นท์สมุนไพรบีชูสำหรับผมแห้งเสียจากสารเคมี" },
+        faq: [],
+        subsections: [
+          {
+            heading: "ผมเสียจากสารเคมีคืออะไร",
+            paragraphs: [
+              "เส้นผมของเรานั้นเกิดจากเซลล์ผิวที่ตายแล้ว นี่เป็นเหตุผลว่าทำไมเมื่อเราตัดผมเราจึงไม่รู้สีกเจ็บ แต่เพียงแค่การตัดผมนั้นก็ไม่สามารถทำให้พวกเราพอใจได้ การไดร์ผมบ่อยๆ และให้ผมสัมผัสกับสารเคมีนั้นเป็นการทำร้ายผมเป็นอย่างมาก ผมจึงมีสภาพแห้งกรอบ หงิกงอ เส้นผมลักษณะนี้แสดงให้เห็นว่าเกลียวผมได้ถูกทำลาย และเปลือกนอกของเส้นผมได้ถูกเปิดออก ยิ่งผมแตกหักและแห้งแตกปลายมากเท่าไหร่ก็จะแสดงถึงผมที่สุขภาพไม่ดีมากเท่านั้น",
+            ],
+          },
+          {
+            heading: "อะไรที่ทำให้ผมเสีย",
+            paragraphs: [
+              "สีย้อมผมนั้นประกอบด้วยสารเคมีที่เป็นอันตรายมากมายเช่น เปอร์ออกไซด์ และ แอมโมเนีย สารเคมีเหล่านี้จะทำให้ผมอ่อนแอลง และถ้าสารเหล่านี้ได้สัมผัสกับหนังศีรษะนั้นจะสามารถทำให้เกิดการไหม้จากสารเคมี ความคันและทำให้หนังศีรษะบอบบางได้ และยิ่งไปกว่านั้นการใช้ผลิตภัณฑ์ที่ไม่ได้มาตรฐาน ไม่ได้มีใบอนุญาตจะยิ่งก่อให้เกิดผลที่เลวร้ายมากยิ่งขึ้น",
+              "ขั้นตอนในการย้อมสีผมนั้น สีย้อมผมจะเข้าไปทำลายผมชั้นนอกที่เป็นตัวปกป้องเส้นผมโดยธรรมชาติเพื่อที่จะได้ซึมเข้าสู่ก้านผม เมื่อแอมโมเนียเข้าถึงผิวชั้นนอก เปอร์ออกไซด์ก็จะทำให้สีผมธรรมชาตินั้นจางลง และเมื่อสีผมได้ถูกเปลี่ยนขั้นตอนก็จะเสร็จสิ้น",
+              "และยิ่งไปกว่านั้น การใช้เครื่องมือในการจัดแต่งทรงผม เช่นที่รีดผมไฟฟ้า ที่ม้วนผม หรือไดร์เป่าผมสามารถทำให้ผมแตกปลายและขาดเปราะได้ง่าย",
+            ],
+          },
+          {
+            heading: "จะรู้ได้ยังไงว่าผมเสีย",
+            paragraphs: [
+              "การกัดสีผมนั้นเป็นการทำร้ายผมอย่างถาวร คุณจะรู้สึกถึงความแห้งกรอบได้ที่ปลายผม และถ้าคุณใช้ที่รีดผมไฟฟ้าหรือไดร์เป่าผมเพื่อจัดแต่งทรงทุกวันในตอนเช้า เมื่อทำเป็นประจำอย่างต่อเนื่องคุณก็จะได้ผลกระทบนั่นก็คืออาการคันที่หนังศีรษะหลังจากผ่านการทำผมโดยใช้สารเคมี",
+            ],
+          },
+          {
+            heading: "โรคแทรกซ้อนอะไรที่เกิดจากความเสียหายจากสารเคมี",
+            paragraphs: [
+              "ไม่มีโรคแทรกซ้อนใดๆที่เกิดจากการมีผมแห้งเสียแตกปลาย นอกเสียจากความไม่สวยงามที่สามารถมองเห็นได้ ในการรักษาผมเสียนั้นไม่ได้ทำกันง่ายๆนัก เนื่องจากต้องงดการจัดแต่งทรงผมโดยใช้อุปรณ์ไฟฟ้าต่างๆหรือการย้อมสี คุณอาจจะต้องทนกับการทำทรีทเม้นท์สมุนไพรในระยะสั้นๆกับพวกเรา แต่เชื่อเถอะค่ะว่ามันจะดีต่อสุขภาพของเส้นผมในระยะยาวแน่นอน",
+              "สำหรับปัญหาที่น่ากลัวมากกว่าโรคแทรกซ้อนนั่นก็คือ หนังศรีษะที่ไหม้จากสารเคมี และการแพ้สารเคมีในผลิตภัณฑ์ที่อาจจะทำให้หนังศีรษะมีตุ่มสีแดงๆ มีความบอบบาง ซึ่งก่อให้เกิดอาการคันและเจ็บแสบ และยิ่งกว่าปัญหาที่กล่าวมานี้ คือเมื่อสารเคมีได้เข้าไปทำลายรูขุมขนเส้นผมหลายๆครั้งก็จำสามารถทำให้เกิดปัญหาผมร่วงเป็นกระจุกได้",
+            ],
+          },
+        ],
+      },
+    },
+    benefits: {
+      en: {
+        heading: "Benefits of 100% Natural Herbal Treatment",
+        blocks: [
+          {
+            kind: "p",
+            text: "Bee Choo’s signature Herbal Paste is specially blended with several Chinese herbs including Chuan Xiong, Ginseng, Dang Gui, He Shou Wu and Ling Zhi. After each of our treatment session, every strand of your hair would be coated with a protective layer. This helps reduce damage to hair and also repairs damaged hair by acting as a replacement for the damaged cuticle. Furthermore, the treatment covers all white hair in the process, meaning to say, you no longer need to chemically dye your hair with this special herbal treatment!",
+          },
+        ],
+      },
+      th: {
+        heading: "ประโยชน์ของทรีทเม้นท์สมุนไพร 100เปอร์เซ็น",
+        blocks: [
+          {
+            kind: "p",
+            text: "ครีมปกปิดผมขาวตัวเด็ดของเรานั้น เป็นที่รู้กันดีว่าประกอบไปด้วยสมุนไพรจีนพื้นบ้านหลายชนิด ได้แก่ ชวนซง, โสม, ตังกุย, ห่อสิ่วโอว และเห็ดหลินจือ และในการทำทรีทเม้นท์ทุกครั้ง เกลียวของเส้นผมจะได้รับการปกป้อง ซึ่งจะช่วยให้เส้นผมถูกทำร้ายได้ยากขึ้นและรักษาผมเสียโดยการเคลือบผมประหนึ่งเกราะชั้นนอก",
+          },
+        ],
+      },
+    },
+    beforeAfter: {
+      en: {
+        heading: "See Our Client's Before After Results",
+        body: ["Shortly within 3 months of hair treatment with Bee Choo Origin, this client achieved this effective results below:"],
+        images: [],
+        // TWO GIPHY clips, side by side, exactly as the legacy page shows them — this is
+        // the page that forced `embeds` to be a list rather than one `giphyId`.
+        embeds: [
+          { kind: "giphy", id: "ywk5yj8EPv7Vzu2K4F" },
+          { kind: "giphy", id: "LVOdW9t7VMge0jk0Vz" },
+        ],
+      },
+      th: {
+        heading: "มาดูผล ก่อน - หลัง จากการทำทรีทเม้นท์ของลูกค้ากันค่ะ",
+        body: ["เพียงในระยะเวลาแค่ 3 เดือน เท่านั้น! กับการทำทรีทเม้นท์กับ บีชู ออริจิน ลูกค้าได้ผลลัพธ์ที่มีประสิทธิภาพตามรูปด้านล่างนี้"],
+        images: [],
+        embeds: [
+          { kind: "giphy", id: "ywk5yj8EPv7Vzu2K4F" },
+          { kind: "giphy", id: "LVOdW9t7VMge0jk0Vz" },
+        ],
+      },
+    },
+    tail: {
+      en: sharedTail(
+        "en",
+        [
+          ["Bee Choo Origin is the largest scalp/hair loss treatment salon/clinic specialising in the treatment of hair loss, dandruff, oily scalp and other hair issues. There are 21 outlets in Singapore, 68 outlets in Malaysia with more than 160 outlets across Asia Pacific. The Group has expanded into Bangkok, Thailand and sees Thailand as a potential market to grow the brand. Annually we serve millions of happy customers with effective and proven results."],
+          CROSS_SELL_FOUNDER.en,
+        ],
+        {
+          howItWorks: {
+            // This page's intro carries an extra closing clause about no longer needing
+            // chemical dye that no other EN page has, and step 4 capitalises the "Off".
+            intro:
+              "Consistently rated as the Best Natural Hair Loss Treatment Salon Clinic in Bangkok, our all natural, safe & highly effective herbal hair treatment gives your Unhealthy/Dry/Damaged/Oily scalp instant rejuvenation. The natural dye contained in the treatment also covers your white hair to the roots in the process, this means you no longer have to dye your hair with chemicals, avoiding damage done by such colouring.",
+            steps: [
+              "Step 1: Apply Hair Tonic on your Scalp",
+              "Step 2: Apply Herbal Paste to your Scalp",
+              "Step 3: Steam Treatment of your Hair for 45 minutes",
+              "Step 4: Rinse-Off the Herbal Paste, Scalp Massage and Conditioning of your Hair",
+            ],
+          },
+        },
+      ),
+      th: sharedTail(
+        "th",
+        [
+          // ONE paragraph again — no founder paragraph, no Business Times links, and
+          // "20 สาขา". Byte-identical to dandruff TH's, but kept per page rather than
+          // hoisted: these two pages agreeing is a fact about the legacy site, not a
+          // rule, and the other five TH pages all word this differently.
+          ["บีชู ออริจิน เป็นทรีทเม้นท์ซาลอนและคลินิกที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง รังแค หนังศีรษะ และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 20 สาขา ในมาเลเซียจำนวน 68 สาขา และมากกว่า 160 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ ประเทศไทย พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมาก"],
+        ],
+        // Same two How-It-Works deviations as dandruff TH: the "100เปอร์เซ็นต์" heading,
+        // and an intro that also names the thinning-hair clinic.
+        {
+          howItWorks: {
+            heading: "ทรีทเม้นท์สมุนไพร 100เปอร์เซ็นต์ ให้ผลยังไงมาดูกัน!",
+            intro:
+              "ด้วยชื่อเสียงที่มีเสมอมาของซาลอน/คลินิกรักษาผมร่วง คลินิกรักษาผมบางที่ดีที่สุด ผลิตภัณฑ์ของเราทั้งหมดมีส่วนผสมจากธรรมชาติและมีความปลอดภัย ให้ผลลัพธ์ที่มีประสิทธิภาพสูง ทำให้เส้นผมที่สุขภาพไม่ดี แห้ง มัน และถูกทำร้ายจะถูกฟื้นฟูอย่างรวดเร็ว สีย้อมผมจากธรรมชาติในทรีทเม้นท์ของเราจะช่วยปกปิดผมขาวจนไปถึงโคนของเส้นผม",
+          },
+        },
+      ),
     },
     descriptionDraftPending: ["en"],
   },
