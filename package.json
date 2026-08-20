@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "copy-parity": "node inventory/scripts/06-copy-parity.mjs"
+    "copy-parity": "node inventory/scripts/06-copy-parity.mjs",
+    "locations-parity": "node inventory/scripts/07-locations-parity.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",

@@ -2,7 +2,7 @@
 // src/components/home/LocationsSection.astro
 // Crispin's feedback (round 2): add the interactive map on mobile too, and use a
 // 2-column card grid there to cut vertical scrolling. Was: map on desktop only, a
-// full-width single-column 16-card list on mobile with no map — that design assumed
+// full-width single-column card list on mobile with no map — that design assumed
 // the map would scroll-trap mobile touch scrolling, but the existing CSS-only gate
 // below (`pointer-events-none` until tapped) already prevents that: pointer-events:
 // none removes the iframe from hit-testing for ALL pointer input including touch, so
@@ -12,45 +12,27 @@
 //
 // The map, at every width: the business's own Google My Maps embed — same map ID the
 // live WordPress site already embeds (verified: 200 OK, real "Bee Choo" outlet pins).
-// Re-using it means the pins are accurate and business-maintained; we're not
-// hand-geocoding 16 addresses ourselves. The CSS-only (:checked, no JS) gate stays: a
-// visitor scrolling with their cursor/finger over the map doesn't get hijacked by the
-// map's own scroll-zoom until they deliberately tap the pill to arm it. Because that
-// gate is otherwise one-way (no way to disarm once tapped, which matters more on
-// mobile where the map sits inline in the scroll flow), a second "Lock map" label
-// appears once armed so it can be turned back off.
 //
-// Below the map: all 16 outlets (name, phone, hours, directions) from
-// src/data/locations.ts, in a 2-column grid at every width the list is shown
-// (currently just mobile, since md+ has the full map instead — see the `md:hidden` on
-// the <ul>). Compact by necessity: `hours` strings are long, so they get their own
-// line and a smaller size rather than competing with the name/phone for width.
-//
-// `/locations/` now EXISTS (src/pages/locations.astro + its TH twin), so the "View all
-// locations" button points at the real on-site page again — the swap the previous note
-// here asked for. Each outlet's "Directions" link still goes to a Google Maps search,
-// which is correct: that is what a directions link should do.
+// Below the map: all 17 outlets (name, phone, hours, directions) from
+// src/data/locations.ts, mobile-only 2-column grid (md+ has the full map instead — see
+// the `md:hidden` on the <ul>). This component stays deliberately compact — the full,
+// region-grouped directory with area hints lives on the Locations PAGE itself
+// (src/components/locations/LocationsDirectory.astro), which is the one that needs to
+// carry the full weight of 17 outlets.
 import { HOME, type Lang } from "../../data/home";
 import { UI } from "../../i18n/ui";
 import { OUTLETS } from "../../data/locations";
 
 interface Props {
   lang: Lang;
-  /** Set false on the locations page itself, where a "view all locations" button that
-   *  links to the page you are already on is nonsense. Defaults to shown (homepage). */
-  showViewAll?: boolean;
-  /** Show the outlet cards at EVERY width, not just mobile. The locations page is the
-   *  branch directory, so its whole job is surfacing names, phones and hours; the
-   *  homepage keeps the mobile-only list because md+ there has the map instead. */
-  fullList?: boolean;
 }
 
-const { lang, showViewAll = true, fullList = false } = Astro.props;
+const { lang } = Astro.props;
 const t = HOME.locations;
 const ui = UI[lang];
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
-const outletMapsHref = (name: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`Bee Choo ${name} Thailand`)}`;
+const directionsHref = (o: (typeof OUTLETS)[number]) => `https://www.google.com/maps/search/?api=1&query=${o.coords.lat},${o.coords.lng}`;
 ---
 
 <section class="py-16 text-center md:py-24">
@@ -84,26 +66,16 @@ const outletMapsHref = (name: string) => `https://www.google.com/maps/search/?ap
       </label>
     </div>
 
-    <!-- Outlet list — a compact 2-column grid so all 16 fit with less vertical scroll,
-         especially now that the map above also takes mobile height. Shown wherever the
-         map itself isn't the primary view (currently: mobile only, via md:hidden). -->
-    <ul
-      class:list={[
-        "mx-auto mt-6 grid max-w-2xl grid-cols-2 gap-3 text-left",
-        // Homepage: mobile only, because md+ gets the full interactive map instead and
-        // the card list would just repeat it. On the locations PAGE the list is the
-        // point — "Find a Branch" exists to surface a phone number, and hiding it at
-        // md+ would leave desktop visitors with a map and no numbers.
-        !fullList && "md:hidden",
-        fullList && "md:max-w-5xl md:grid-cols-3",
-      ]}
-    >
+    <!-- Outlet list — a compact 2-column grid so all 17 fit with less vertical scroll,
+         especially now that the map above also takes mobile height. Mobile only —
+         md+ gets the full interactive map instead and the card list would just repeat it. -->
+    <ul class="mx-auto mt-6 grid max-w-2xl grid-cols-2 gap-3 text-left md:hidden">
       {OUTLETS.map((outlet) => (
         <li class="flex flex-col rounded-2xl border border-brand-earth bg-white p-3">
-          <p class="text-sm font-bold leading-snug text-brand-green">{outlet.name}</p>
+          <p class="text-sm font-bold leading-snug text-brand-green">{lang === "th" ? outlet.nameTh : outlet.name}</p>
           <p class="mt-0.5 text-[11px] font-bold tabular-nums text-brand-origin">{outlet.phoneDisplay}</p>
           <p class="mt-1 flex-1 text-[11px] leading-snug text-brand-origin">
-            <span class="sr-only">{ui.outlet.hours}: </span>{outlet.hours}
+            <span class="sr-only">{ui.outlet.hours}: </span>{outlet.hours[lang]}
           </p>
           <div class="mt-2 flex flex-wrap gap-1.5">
             <a
@@ -117,7 +89,7 @@ const outletMapsHref = (name: string) => `https://www.google.com/maps/search/?ap
               {ui.outlet.call}
             </a>
             <a
-              href={outletMapsHref(outlet.name)}
+              href={directionsHref(outlet)}
               target="_blank"
               rel="noopener"
               aria-label={`${ui.outlet.directions} — ${outlet.name}`}
@@ -130,17 +102,13 @@ const outletMapsHref = (name: string) => `https://www.google.com/maps/search/?ap
       ))}
     </ul>
 
-    {
-      showViewAll && (
-        <div>
-          <a
-            href={HOME.locations.href[lang]}
-            class="btn-tactile mt-8 inline-flex min-h-11 items-center rounded-full bg-brand-green px-7 font-bold text-white shadow-soft hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
-          >
-            {ui.misc.viewLocations} &rarr;
-          </a>
-        </div>
-      )
-    }
+    <div>
+      <a
+        href={HOME.locations.href[lang]}
+        class="btn-tactile mt-8 inline-flex min-h-11 items-center rounded-full bg-brand-green px-7 font-bold text-white shadow-soft hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+      >
+        {ui.misc.viewLocations} &rarr;
+      </a>
+    </div>
   </div>
 </section>

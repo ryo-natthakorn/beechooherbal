@@ -3,23 +3,23 @@
 // Thai locations page — the twin of src/pages/locations.astro. Reached from ติดต่อเรา >
 // สาขา, and from every "สาขาใกล้คุณ" CTA site-wide.
 //
-// ⚠ PLACEHOLDER — same gaps as the EN twin; see its header comment.
-//
-// Title and description are the live site's real ones, transcribed verbatim from
-// inventory/pages.json (the TH page, unlike the EN one, does carry a real Yoast
-// description). Not machine-translated — CLAUDE.md §8.
+// Title is the live site's real one (inventory/pages.json). The live Yoast description
+// is NOT reused here — it still opens with "ตะวันนา ... 02-108-3938" (Tawanna), a stale
+// branch identity that doesn't match the current body content (see the ⚠ note on
+// sai-mai in src/data/locations.ts). Repeating a factually wrong phone number in our own
+// meta description would be worse than writing a fresh one — the description below is
+// ours and needs Crispin's sign-off, same status as the EN twin's.
 // hreflang is automatic — this path already exists in src/i18n/pairs.ts.
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import LocationsSection from "../../components/home/LocationsSection.astro";
+import LocationsDirectory from "../../components/locations/LocationsDirectory.astro";
 
 const lang = "th" as const;
 const title = "สถานที่ตั้งของร้านค้า - บีชู ไทยแลนด์";
-const description =
-  "สาขาทั้งหมดของบีชู ตะวันนา ตะวันนาเบอร์ติดต่อ: 02-108-3938 สยามสแควร์​ สยามสแควร์เบอร์ติดต่อ 02-115-1300 รัชดา​ รัชดาเบอร์ติดต่อ 06-1729-3434";
+const description = "ค้นหาสาขาบีชู เฮอร์บัล ที่ใกล้คุณที่สุดทั่วประเทศไทย พร้อมเวลาทำการ เบอร์โทรศัพท์ และเส้นทางการเดินทางของทุกสาขา";
 ---
 
 <BaseLayout {title} {description} {lang}>
   <main id="main">
-    <LocationsSection {lang} showViewAll={false} fullList />
+    <LocationsDirectory {lang} />
   </main>
 </BaseLayout>

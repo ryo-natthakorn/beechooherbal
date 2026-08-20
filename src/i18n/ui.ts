@@ -35,6 +35,15 @@ export interface UiStrings {
     hours: string;
     directions: string;
   };
+  // Locations DIRECTORY page only (src/components/locations/LocationsDirectory.astro) —
+  // not used by the compact homepage LocationsSection. `areaPending` covers the one
+  // outlet (Sai Mai) whose own map pin is unresolved — see src/data/locations.ts.
+  // ⚠ Newly composed, not transcribed — sign-off needed before launch.
+  locationsPage: {
+    regionBangkok: string;
+    regionUpcountry: string;
+    areaPending: string;
+  };
   // Short table-of-contents labels for treatment pages (TreatmentToc.astro). Navigation
   // chrome, not page copy — the section headings themselves carry the real (verbatim)
   // wording. `partConcern`/`partBrand` group the TOC into the page's two halves: the
@@ -93,6 +102,11 @@ export const UI: Record<"en" | "th", UiStrings> = {
       hours: "Hours",
       directions: "Directions",
     },
+    locationsPage: {
+      regionBangkok: "Bangkok & Vicinity",
+      regionUpcountry: "Other Provinces",
+      areaPending: "Address to be confirmed",
+    },
     toc: {
       about: "About the Condition",
       beforeAfter: "Before & After",
@@ -138,6 +152,11 @@ export const UI: Record<"en" | "th", UiStrings> = {
       call: "โทร",
       hours: "เวลาทำการ",
       directions: "นำทาง",
+    },
+    locationsPage: {
+      regionBangkok: "กรุงเทพฯ และปริมณฑล",
+      regionUpcountry: "ต่างจังหวัด",
+      areaPending: "ที่อยู่รอการยืนยัน",
     },
     toc: {
       about: "เกี่ยวกับอาการ",
