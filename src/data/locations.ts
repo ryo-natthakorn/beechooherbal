@@ -269,9 +269,9 @@ export const OUTLETS: Outlet[] = [
     coords: { lat: 13.7593365, lng: 100.3302113 },
   },
   {
-    // ⚠ Added to the live site 2026-08-20 (this same day) — the Thai locations page has
-    // not been updated to include it yet, so nameTh/area.th below are composed, not
-    // transcribed. Flag for native-speaker + Crispin sign-off before launch.
+    // Added to the live EN page 2026-08-20T04:54; the TH page caught up mid-session at
+    // 2026-08-20T07:38, so nameTh/hours.th below are now transcribed verbatim (not
+    // composed — the file previously flagged them as a placeholder pending that update).
     slug: "ayutthaya",
     name: "Ayutthaya",
     nameTh: "สาขาอยุธยา",
@@ -279,7 +279,9 @@ export const OUTLETS: Outlet[] = [
     area: { en: "Bang Sai, Phra Nakhon Si Ayutthaya", th: "บางไทร พระนครศรีอยุธยา" },
     phoneDisplay: "063-237-5413",
     phoneHref: "+66632375413",
-    hours: { en: "Everyday 9am–8pm (last walk-in)", th: "ทุกวัน 9.00–20.00 น. (รับลูกค้าคนสุดท้าย)" },
+    // TH hours are now verbatim (the live TH page was updated to include this branch
+    // partway through this session — 2026-08-20T07:38 — see locations-parity's output).
+    hours: { en: "Everyday 9am–8pm (last walk-in)", th: "เวลาเปิดร้านทุกวัน: 09.00 น. – 20.00 น (ลูกค้าคนสุดท้าย 20.00 น.)" },
     coords: { lat: 14.234499931887632, lng: 100.52441566682144 },
   },
 ];
