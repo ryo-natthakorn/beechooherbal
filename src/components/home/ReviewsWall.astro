@@ -9,6 +9,7 @@
 // (see .reviews-fade-item rules in global.css) — nothing content-bearing ships hidden.
 import { Image } from "astro:assets";
 import LeafDivider from "../LeafDivider.astro";
+import YouTubeEmbed from "../YouTubeEmbed.astro";
 import { HOME, type Lang } from "../../data/home";
 
 // `heading` is an optional override for the TREATMENT pages, whose legacy Thai copy
@@ -18,9 +19,17 @@ interface Props {
   heading?: string;
   /** Tint override, used only by treatment pages that reorder their sections. */
   background?: "white" | "earth";
+  /** The legacy "HEAR FROM OUR CLIENTS" block — a heading plus one testimonial video.
+   *  Only two legacy pages carry it (hair-loss and postpartum, English only), where it
+   *  sits at the very foot of the page. It lands here rather than as its own section
+   *  because it is testimonial content and Reviews is already the last-but-one section
+   *  in STANDARD_SECTION_ORDER — near its legacy position, and without spending a TOC
+   *  anchor on a block that exists on 2 of 14 pages. Rendered as an <h3> under the
+   *  section's own <h2>, so the heading outline stays correct. */
+  clientVideo?: { heading: string; id: string };
 }
 
-const { lang, heading, background } = Astro.props;
+const { lang, heading, background, clientVideo } = Astro.props;
 const t = HOME.reviews;
 const sectionHeading = heading ?? t.heading[lang];
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
@@ -44,5 +53,14 @@ const bgClass = background === "white" ? "bg-white" : "bg-brand-earth/25";
     <a href={t.readMoreHref[lang]} class="btn-tactile mt-6 inline-flex min-h-11 items-center px-3 text-brand-green underline hover:text-brand-green/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
       {t.readMoreLabel[lang]} &rarr;
     </a>
+
+    {
+      clientVideo && (
+        <div class="mx-auto mt-12 max-w-3xl">
+          <h3 class:list={[serif, "mb-6 text-xl font-bold text-brand-green md:text-2xl"]}>{clientVideo.heading}</h3>
+          <YouTubeEmbed id={clientVideo.id} title={clientVideo.heading} />
+        </div>
+      )
+    }
   </div>
 </section>

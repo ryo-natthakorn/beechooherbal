@@ -17,6 +17,9 @@ interface Props {
   /** Trust-building salon/founder photo the legacy page shows under the intro. */
   image?: { src: ImageMetadata; alt: string };
   intro: string[];
+  /** A real bullet list in the intro (bacterial-infection's four named diseases) — see
+   *  AboutContent.introList for why it isn't folded into a paragraph. */
+  introList?: string[];
   faq: FaqItem[];
   subsections?: AboutSubsection[];
   /** Omitted on pages whose legacy About block carries no condition video at all
@@ -29,7 +32,7 @@ interface Props {
   background?: "white" | "earth";
 }
 
-const { lang, heading, image, intro, faq, subsections = [], videoId, videoTitle, background } = Astro.props;
+const { lang, heading, image, intro, introList = [], faq, subsections = [], videoId, videoTitle, background } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
 const bgClass = background === "earth" ? "bg-brand-earth/25" : "bg-white";
@@ -58,6 +61,15 @@ const accordionItems = [
         wide media, narrow copy. */}
     <div class="mx-auto mt-8 flex max-w-prose flex-col gap-4 text-brand-origin">
       {intro.map((p) => <p class="leading-relaxed">{p}</p>)}
+      {
+        introList.length > 0 && (
+          <ul class="ml-5 flex list-disc flex-col gap-2 leading-relaxed marker:text-brand-green">
+            {introList.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        )
+      }
     </div>
 
     {/* widths/sizes rather than a fixed width+height pair: the box renders at most 32rem

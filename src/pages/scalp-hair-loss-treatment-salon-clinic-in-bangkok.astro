@@ -1,0 +1,22 @@
+---
+// src/pages/scalp-hair-loss-treatment-salon-clinic-in-bangkok.astro
+// English hair loss page. Thin shell: body lives in
+// src/components/treatment/TreatmentPage.astro (shared with the TH twin at
+// src/pages/th/ซาลอน-คลินิกรักษาผมร่วง.astro), copy in src/data/treatment-pages.ts.
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+// Spec: specs/2026-08-12-treatment-pages-plan.md (Batch 1, unblocked 2026-08-20 —
+// see the ⚠ note on TREATMENT_PAGES["hair-loss"].about.th; the Thai twin ships the
+// legacy site's own mis-pasted copy on purpose, this English page is unaffected).
+import BaseLayout from "../layouts/BaseLayout.astro";
+import TreatmentPage from "../components/treatment/TreatmentPage.astro";
+import { TREATMENT_PAGES } from "../data/treatment-pages";
+
+const lang = "en" as const;
+const slug = "hair-loss";
+const page = TREATMENT_PAGES[slug];
+const { title, description } = page.seo;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} lang={lang}>
+  <TreatmentPage lang={lang} slug={slug} />
+</BaseLayout>

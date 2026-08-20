@@ -482,3 +482,57 @@ complete map of any given page's real structure; re-check each page's raw HTML f
    flag it as a known gap and ship English-only for that page's About/Benefits until
    real Thai copy exists (not machine-translate the English — CLAUDE.md §8). Blocks
    the Hair Loss batch specifically, not the other 6.
+
+---
+
+## Batches 1, 4-7 complete (2026-08-20) — all 7 treatment pages now build
+
+Dandruff, Damaged Hair, Bacterial Infection, Postpartum and Hair Loss shipped in two
+commits, on the grey-hair template (`STANDARD_CHROME` + `STANDARD_SECTION_ORDER`). The
+build now emits 18 pages; all 14 treatment pages (7 × EN/TH) pass a new copy-parity
+check against `inventory/rest-pages.json`.
+
+**Correction to this spec's central assumption.** `treatment-pages.ts` asserted the
+How-It-Works and Pricing copy was "word-for-word identical across all 7 treatment pages
+(verified on oily-scalp + grey-hair)". That was extrapolated from the only two pages
+built at the time and is **wrong**. A line-by-line diff of all 14 legacy pages found:
+
+| Deviation | Pages |
+|---|---|
+| Pricing heading, intro AND closing lines all differ | EN hair-loss, EN postpartum |
+| Step 4 reads "Rinse Off" (no hyphen) | EN hair-loss, EN postpartum |
+| Step 4 reads "Rinse-Off" (capital O) | EN damaged-hair, EN bacterial |
+| Step 3 reads "Steam for 45 minutes" | EN dandruff |
+| How-It-Works intro has an extra chemical-dye clause | EN damaged-hair |
+| How-It-Works heading uses "100เปอร์เซ็นต์" | TH dandruff, TH damaged-hair |
+| How-It-Works intro also names the thinning-hair clinic | TH dandruff, TH damaged-hair, TH postpartum |
+| **No founder paragraph and no Business Times links at all** | TH dandruff, TH damaged-hair |
+| Cross-sell paragraph carries the flagship-salon line | TH hair-loss, TH oily-scalp, TH bacterial |
+| Whole tail is the "ทรีตเมนต์" spelling variant, with different outlet numbers | TH postpartum |
+
+`sharedTail()` now takes per-page overrides so each deviation is stated at the page.
+**Do not re-hoist these into constants.**
+
+**Answers to this spec's open questions 2 and 5.** (2) The EN hair-loss "from Singapore"
+meta description is reproduced verbatim, still pending Crispin. (5) Ryo chose a third
+option not listed here: reproduce the mis-pasted Thai hair-loss copy **verbatim** and
+flag it loudly, on the grounds that it is what Google indexes today (zero SEO change)
+and that dropping it would delete ~2,700 characters of indexed Thai text. See the ⚠
+block on `TREATMENT_PAGES["hair-loss"].about.th`. Crispin's real Thai copy is still owed.
+
+**New: `inventory/scripts/06-copy-parity.mjs`** (`npm run copy-parity`). Reduces every
+legacy page to text fragments and asserts each one appears in the built page, with a
+reasoned allow-list for what is dropped on purpose. It found, among other things, three
+legacy figure captions the build was silently dropping — and one of those exposed a
+factually wrong alt text I had written for bacterial-infection's About photo, which is
+an award ceremony rather than the scalp I had described. Run it after any copy change.
+
+**Still owed / not done here**
+- Real Thai hair-loss copy (open question 5).
+- Three EN meta descriptions still `descriptionDraftPending` (dandruff, damaged-hair,
+  bacterial) plus grey-hair's and oily-scalp's from earlier batches.
+- `try-1.png` (bacterial's alopecia hair scan) is hosted only on beechooladies.com.sg,
+  which answers 200 with HTML rather than the file — the Cloudflare trap CLAUDE.md §7
+  documents. Needs the original from Crispin.
+- The trailing locations map graphic (`Bee-Choo-Location-ENG/THA-Ver_FINAL.jpg`) is on
+  all 7 legacy pages and is now confirmed reachable, but was scoped out of this pass.

@@ -130,6 +130,7 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
             heading={about.heading}
             image={about.image}
             intro={about.intro}
+            introList={about.introList}
             faq={about.faq}
             subsections={about.subsections}
             videoId={page.videoId}
@@ -161,7 +162,14 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
           />
         )}
 
-        {key === "reviews" && <ReviewsWall lang={lang} heading={tail.reviewsHeading} background={backgroundFor("reviews")} />}
+        {key === "reviews" && (
+          <ReviewsWall
+            lang={lang}
+            heading={tail.reviewsHeading}
+            background={backgroundFor("reviews")}
+            clientVideo={page.clientVideo?.[lang]}
+          />
+        )}
 
         {/* The legacy cross-sell block, split into two anchored halves so each can carry
             its own TOC entry. Same words, same DOM order — recognitions keeps the legacy

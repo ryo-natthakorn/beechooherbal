@@ -97,6 +97,21 @@ import greyHairAfterImage from "../assets/images/treatments/grey-hair-after.png"
 import dandruffAboutPhoto from "../assets/images/treatments/dandruff-about.jpg";
 import dandruffScanAfter from "../assets/images/treatments/dandruff-after.jpg";
 import damagedHairAboutPhoto from "../assets/images/treatments/damaged-hair-about.jpg";
+import bacterialBlackDots from "../assets/images/treatments/bacterial-black-dots.jpeg";
+import bacterialAboutPhoto from "../assets/images/treatments/bacterial-about.jpg";
+import postpartumAboutPhoto from "../assets/images/treatments/postpartum-about.jpg";
+import postpartumBefore1 from "../assets/images/treatments/postpartum-before-1.webp";
+import postpartumAfter1 from "../assets/images/treatments/postpartum-after-1.jpg";
+import postpartumBefore2 from "../assets/images/treatments/postpartum-before-2.webp";
+import postpartumAfter2 from "../assets/images/treatments/postpartum-after-2.webp";
+import hairLossAboutPhoto from "../assets/images/treatments/hair-loss-about.jpeg";
+import hairLossResult1 from "../assets/images/treatments/hair-loss-result-1.jpeg";
+import hairLossResult2 from "../assets/images/treatments/hair-loss-result-2.jpeg";
+import hairLossResult3 from "../assets/images/treatments/hair-loss-result-3.jpeg";
+// Legacy Picture2.png — a labelled oily-scalp before/after comparison. It is on the TH
+// hair-loss page only, because that page carries oily-scalp's body by mistake; see the
+// warning on TREATMENT_PAGES["hair-loss"].about.th.
+import hairLossThBanner from "../assets/images/treatments/hair-loss-banner.png";
 
 export type Lang = "en" | "th";
 
@@ -118,6 +133,12 @@ interface AboutContent {
   heading: string;
   /** Paragraphs above the FAQ accordion / subsections. */
   intro: string[];
+  /** A real bullet list in the intro, rendered as a <ul> after the paragraphs.
+   *  Only bacterial-infection has one (its four named diseases). It is a separate field
+   *  rather than another `intro` paragraph because the items carry no end punctuation of
+   *  their own — folding them into prose means inventing separators, which is a copy
+   *  change. inventory/scripts/06-copy-parity.mjs caught exactly that. */
+  introList?: string[];
   /** A trust-building salon/founder photo the live page shows under the intro, before
    *  the FAQ accordion. Per-page, not shared — grey-hair's live source file
    *  (BCL-Shop-in-operations.jpeg) returns HTTP 200 with a 0-byte body (confirmed via
@@ -363,6 +384,11 @@ export interface TreatmentPageContent {
   /** Adds Call/LINE buttons to the Pricing section — see PricingSection.astro's
    *  `showCta` prop doc comment. */
   pricingCta?: boolean;
+  /** The legacy "HEAR FROM OUR CLIENTS" block (heading + one testimonial video), carried
+   *  by hair-loss and postpartum in ENGLISH ONLY — neither Thai twin has it. Partial, so
+   *  a language without it renders nothing rather than getting an invented translation
+   *  (CLAUDE.md §8). Rendered inside the Reviews section — see ReviewsWall's prop. */
+  clientVideo?: Partial<Record<Lang, { heading: string; id: string }>>;
   about: Record<Lang, AboutContent>;
   benefits: Record<Lang, BenefitsContent>;
   beforeAfter: Record<Lang, BeforeAfterContent>;
@@ -1311,6 +1337,666 @@ export const TREATMENT_PAGES: Record<string, TreatmentPageContent> = {
       ),
     },
     descriptionDraftPending: ["en"],
+  },
+
+  "bacterial-infection": {
+    heroTitle: {
+      en: "Bacterial Infection, Alopecia Areata and Other Hair Diseases",
+      th: "การติดเชื้อจากแบคทีเรีย อาการผมร่วงเป็นหย่อม และปัญหาผมอื่นๆ",
+    },
+    ...STANDARD_CHROME,
+    seo: {
+      title: {
+        en: "Herbal Treatment Cure for Bacteria Infection, Alopecia Areata and other hair diseases - Bee Choo Herbal",
+        th: "ทรีทเม้นท์สมุนไพรรักษาเชื้อแบคทีเรีย ผมร่วงเป็นหย่อม และปัญหาผมอื่นๆ",
+      },
+      description: {
+        // No real Yoast description on the live EN page — condensed from this page's own
+        // Benefits copy below, not invented. Needs Crispin's sign-off.
+        en: "An anti-bacterial spray used alongside the herbal paste's Ling Zhi and Dang Gui helps eradicate scalp infections. Ringworm, folliculitis and alopecia areata can be treated.",
+        // Real live-site Yoast description, verbatim (Yoast's own cut, not ours).
+        th: "สำหรับลูกค้าที่เผชิญหน้ากับการติดเชื้อจากแบคทีเรียและเชื้อรา พวกเรามีเสปรย์ป้องกันแบคทีเรียซึ่งใช้ควบคู่กับการทำทรีทเม้นท์สมุนไพรจะช่วยกำจัดการติดเชื้ออย่าง",
+      },
+    },
+    videoId: "7BdHMXcLJoY",
+    // Per-language ids, and the exact reverse of dandruff's pairing.
+    howItWorksVideo: {
+      id: { en: "Fp3hdtA-pnE", th: "Uwty-ZDdPYc" },
+      title: {
+        en: "How Bee Choo herbal hair treatment works",
+        th: "ทรีตเมนต์สมุนไพรบีชูให้ผลอย่างไร",
+      },
+    },
+    about: {
+      en: {
+        heading: "About Bacterial / Fungal Infection or Alopecia Areata",
+        intro: [
+          "Do take a minute to watch the video above to see how our customer had recovered from her bacterial infection. These are all REAL pictures and videos taken at our salon. Bacterial / Fungal Infections or Alopecia Areata can be treated with our herbal treatment. Thousands of customers trust us with their hair. Hair is an integral part of a person’s image. Individuals suffering from hair loss can lose confidence, be depressed and not wanting to go out to socialize. Start treatment early. Give us a call today.",
+          "Certain diseases as a result of bacterial and/or fungal infection could cause severe hair loss. Some of the common problems that people suffer from are:",
+        ],
+        introList: [
+          "Ringworm – Tinea Capitis (Fungal)",
+          "Alopecia Areata (Autoimmune Disease)",
+          "Thyroid (Disease)",
+          "Folliculitis (Bacterial Infection)",
+        ],
+        // ⚠ This is NOT a scalp photo. I opened it: it is an award ceremony — the legacy
+        // page's own caption reads "Mdm Bee Choo Presented Award by Minister Teo Chee
+        // Hean", used verbatim as the alt. A different award and a different minister
+        // from RECOGNITION_PHOTO's ("Lim Swee Say", on oily-scalp), so the two are not
+        // the same photo. An earlier draft of this entry described it as a recovering
+        // scalp; inventory/scripts/06-copy-parity.mjs caught the missing caption, which
+        // is what exposed the wrong alt.
+        image: { src: bacterialAboutPhoto, alt: "Mdm Bee Choo Presented Award by Minister Teo Chee Hean" },
+        faq: [
+          {
+            question: "What is the Difference Bacterial Infection and Alopecia Areata",
+            answer:
+              "Bacterial infection is rarely seen in adults. It is more commonly found in children and especially boys. Hair loss stemming from bacterial infection results in a patchy hair loss pattern. There is a subtle difference between hair loss stemming from alopecia areata. When bacterial infection occurs, the hair in the infected area breaks at the roots, thus, you still can see the roots of the hair. Just look at the photo below, you can clearly see several ‘black dots’, this is actually broken hair! On the other hand, hair loss from alopecia areata does not cause the hair to break, on the contrary, the entire hair including the hair roots, falls off. Furthermore, the affected hair follicles reduce in size. The affected area, usually the size of a coin, becomes smooth and shiny. This is clearly shown in the two images below.",
+            // The legacy answer shows TWO photos here. Only the first is reproducible: the
+            // second (try-1.png, the alopecia hair scan) exists solely on
+            // beechooladies.com.sg, which answers 200 with the site's HTML instead of the
+            // file — the Cloudflare trap CLAUDE.md §7 documents, and the same failure
+            // already logged for oily-scalp TH. Needs the original from Crispin.
+            image: {
+              src: bacterialBlackDots,
+              alt: "Treatments for Bacterial Infection and more",
+              caption: "Broken hair at the roots — the ‘black dots’ of a bacterial infection",
+            },
+          },
+          {
+            question: "How does one get Alopecia Areata?",
+            answer:
+              "There truth is that there is still no known cause. It is random and can even be recurring for certain people. People with auto-immune diseases from a young age are more likely to get alopecia areata. Genetic factors are said to play a role, Almost 40% of people below the age 30 with Ring-shaped Hair Loss have at least one family member who has been diagnosed with the same hair problem.",
+          },
+          {
+            question: "What causes Alopecia Areata?",
+            answer:
+              "Alopecia areata develops when the immune system mistakes healthy cells for foreign substances causing your own immune system to attack your hair follicles, eventually, the follicles reduce in size and stop producing hair. Till today, there is no known trigger for this auto-immune disease. Alopecia areata is easy to recognize as the hair loss pattern is distinctively circular. A small circular bald patch will suddenly appear with the skin on the bald patch being smooth and shiny. The good news is that 70% of people suffering from this condition will recover on their own within 3-6 months. However, some do not recover and their condition may even worsen. More patches may appear as seen in the picture below. If left untreated, it could lead to permanent balding. This condition often strikes before the age of 30, and about 30% of sufferers find themselves with bald patches appearing every now and then turning into a cycle of hair loss and regrowth.",
+          },
+          {
+            question: "How does one get Bacterial / Fungal Infection",
+            answer:
+              "Bacterial / Fungal infection usually occur in kids. Most of the time they contract these bacterial / fungal infection when playing outdoors at grassy area. These bacterials / fungals can be found in the soil and also in pets. It is important to seek treatment early as well as disposing all hair equipment, towels, etc to prevent the spread of the bacterial to other family members and also to reduce the chance of recurrence.",
+          },
+        ],
+      },
+      th: {
+        heading: "เกี่ยวกับการติดเชื้อจากแบคทีเรีย เชื้อรา หรืออาการผมร่วงเป็นหย่อม",
+        intro: [
+          "เรามาดูวีดีโอกันซักนิดค่ะ ว่าลูกค้าของเราหายจากการติดเชื้อจากแบคทีเรียได้ยังไง รูปภาพทั้งหมดเป็นภาพจริงนะคะ ถ่ายที่ซาลอน/คลินิก ของเราเลยค่ะ การติดเชื้อจากแบคทีเรีย เชื้อรา หรืออาการผมร่วงเป็นหย่อมนั้นสามารถรักษาได้ด้วยทรีทเม้นท์สมุนไพรของเรา ลูกค้าหลายท่านได้มาปรึกษาปัญหาเส้นผมกับเรา เนื่องจากเส้นผมเป็นหนึ่งในจุดเด่นของร่างกาย การเผชิญปัญหาผมหลุดร่วงนั้นทำให้สูญเสียความมั่นใจ และไม่อยากออกไปพบปะผู้คน แต่ปัญหาทั้งหมดทั้งมวลสามารถแก้ไขได้โดยโทรหาเราตอนนี้!",
+          "โรคที่เกิดจากการติดเชื้อจากแบคทีเรีย เชื้อรา ที่นำไปสู่ปัญหาผมร่วง และปัญหาทั่วไปที่ผู้คนมักจะพบเจอมีดังนี้",
+        ],
+        introList: [
+          "กลาก – ขี้กลากหนังหัว (ติดจากเชื้อรา)",
+          "อาการผมร่วงเป็นหย่อม (เกิดจากภูมิคุ้มกันต้านตัวเอง)",
+          "โรคไทรอยด์",
+          "การอักเสบที่รากผม (เกิดจากการติดเชื้อจากแบคทีเรีย)",
+        ],
+        // The award-ceremony photo again (see the EN note). The live TH page carries no
+        // caption for it, so this describes the same subject in Thai rather than leaving
+        // a Thai reader's screen reader with an English sentence.
+        image: { src: bacterialAboutPhoto, alt: "คุณเชีย บี ชู รับรางวัลจากรัฐมนตรี เตียว ชี เฮียน" },
+        faq: [
+          {
+            question: "อะไรคือความแตกต่างระหว่างการติดเชื้อจากแบคทีเรียและการมีผมร่วงเป็นหย่อม",
+            answer:
+              "การติดเชื้อจากแบคทีเรียนั้นพบในผู้หญิงไม่บ่อย แต่มักจะเจอในเด็กโดยเฉพาะในเด็กผู้ชาย เส้นผมจะสูญเสียส่วนของก้านเนื่องจากการติดเชื้อจากแบคทีเรีย ทำให้ผมหายไปเป็นหย่อมๆ การที่ผมสุญเสียก้านเนื่องจากการติดเชื้อจากแบคทีเรียนั้นแตกต่างจากอาการผมร่วงเป็นหย่อมๆ เมื่อมีการติดเชื้อจากแบคทีเรีย แบคทีเรียจะเข้าไปทำลายรากของเส้นผมแต่ถึงอย่างนั้นก็ยังคงเห็นรากของเส้นผมได้อยู่ โดยดูจากรูปภาพด้านล่างนี้ คุณจะเห็นจุดสีดำๆ ซึ่งก็คือผมที่ไม่สมบูรณ์ ในทางกลับกัน อาการผมร่วงเป็นหย่อมๆนั้นไม่ได้ทำให้ก้านผมแตกหัก แต่ผมที่ร่วงนั้นคือร่วงออกมาทั้งรากของผม และยิ่งไปกว่านั้นการติดเชื้อจะทำให้รูขุมขนเส้นผมมีขนาดที่เล็กลง โดยบริเวณที่ติดเชื้อส่วนใหญ่จะมีขนาดเท่าเหรียญบาท มีลักษณะที่เรียบลื่นและมีความใส ซึ่งปรากฏในภาพต่อไปนี้",
+            image: {
+              src: bacterialBlackDots,
+              alt: "จุดสีดำๆ ของเส้นผมที่หักที่รากจากการติดเชื้อแบคทีเรีย",
+              caption: "จุดสีดำๆ คือผมที่หักที่ราก จากการติดเชื้อแบคทีเรีย",
+            },
+          },
+          {
+            question: "ทำไมบางคนถึงผมร่วงเป็นหย่อม?",
+            answer:
+              "ในความเป็นจริงคือไม่มีสาเหตุที่แน่ชัดของอาการผมร่วงเป็นหย่อม ไม่ว่าจะเกิดในเพศไหนหรืออายุเท่าไหร่ ซึ่งอาการนั้นขึ้นอยู่กับว่าบุคคลนั้นจะมีโรคภูมิคุ้มกันทำลายตัวเองหรือไม่ โดยผู้ที่อายุน้อยมักจะมีอาการผมร่วงเป็นหย่อมมากกว่า ปัจจัยทางด้านกรรมพันธุ์ 40เปอร์เซ็นของคนที่อายุต่ำกว่า 30 ปี นั้นมีปัญหาผมร่วงเป็นลักษณะของวงแหวนเนื่องจากคนในครอบครัวมีปัญหานี้เช่นเดียวกัน",
+          },
+          {
+            question: "อะไรที่เป็นสาเหตุของผมร่วงเป็นหย่อม",
+            answer:
+              "ผมร่วงเป็นหย่อมเกิดขึ้นเมื่อระบบภูมิคุ้มกันเข้าใจผิดว่าเซลล์ที่ดีต่อสุขภาพของตัวเองเป็นสสารที่มาจากภายนอก ทำให้ภูมิคุ้มกันโจมตีรูขุมขนเส้นผมของตนเอง จนในที่สุดรูขุมขนของเส้นผมจะลดขนาดเล็กลงและหยุดสร้างเส้นผม แต่ในท้ายที่สุดแล้วก็ยังไม่มีสาเหตุที่แน่ชัดของโรคภูมิคุ้มกันต้านตัวเอง อาการผมร่วงเป็นหย่อมนั้นเป็นที่รู้ดีกันว่าผมจะร่วงอย่างเห็นได้ชัดเจน โดยจะร่วงเป็นวงกลม ผิวที่ปรากฏหลังจากผมร่วงจะมีลักษณะลื่นและมีความใส แต่ข่าวดีก็คือ 70เปอร์เซ็นของผู้ที่ประสบกับสภาพนี้จะสามารถหายเองได้ภายใน 3-6 เดือน แต่ถึงอย่างไรก็ตามก็มีบางคนที่ไม่สามารถหายเองได้และประสบกับอาการที่แย่ไปกว่านี้ คือจะมีผมล้านเป็นหย่อมโดยปรากฏอยู่ในภาพต่อไปนี้ และเมื่อปล่อยไว้โดยที่ไม่ได้รับการรักษาแล้ว จะนำไปสู่ปัญหาศีรษะล้านอย่างถาวร ซึ่งในลักษณะดังกล่าวนี้จะเกิดขึ้นก่อนอายุ 30 ปี และประมาณ 30เปอร์เซ็น จะต้องเผชิญกับการมีหนังศีรษะล้านเป็นหย่อมและเข้าสู่วงจรของผมหลุดร่วงและผมงอกใหม่",
+          },
+          {
+            question: "คนเราติดเชื้อจากแบคทีเรีย เชื้อราได้ยังไง?",
+            answer:
+              "การติดเชื้อจากแบคทีเรียและเชื้อรานั้นมักจะเกิดขึ้นในเด็ก เพราะว่าเด็กๆส่วนใหญ่นั้นจะออกไปเล่นข้างนอกบ้านและในบริเวณสนามหญ้า ซึ่งอาจจะทำให้เด็กๆติดเชื้อโรคได้ เชื้อแบคทีเรียและเชื้อราเหล่านี้สามารถพบได้ในดิน และยังพบในสัตว์เลี้ยงอีกด้วย เป็นเรื่องสำคัญมากที่ต้องการแนวทางในการรักษาอย่างรวดเร็ว และกำจัดอุปกรณ์ที่สกปรกเกี่ยวกับเส้นผมออกไป อย่างเช่น ผ้าเช็ดตัว เป็นต้น เพื่อเป็นการป้องกันการแพร่เชื้อแบคทีเรียไปสู่สมาชิกครอบครัวคนอื่นๆ และเป็นการลดโอกาสในการติดเชื้อซ้ำ",
+          },
+        ],
+      },
+    },
+    benefits: {
+      en: {
+        heading: "Benefits of 100% Natural Herbal Treatment",
+        blocks: [
+          {
+            kind: "p",
+            text: "For customers suffering from bacterial or fungal infection, we have an anti- bacterial spray that when used together with the herbal treatment, helps to eradicate infection(s). In addition, the Ling Zhi and Dang Gui components in our herbal paste have anti-bacterial properties and healing abilities to combat against these irksome invaders.",
+          },
+          {
+            kind: "p",
+            text: "Although you cannot prevent hair problems as a result of genetic disorders, you can still reduce the chance of it happening. Getting a treatment at Bee Choo once per month is recommended. Our natural herbal treatments will ensure that your scalp is supplied with sufficient nutrients and vitamins that will keep your defence system up against such issues.",
+          },
+          { kind: "p", text: "Bee Choo Origin is successful because our herbal treatment is:" },
+          {
+            kind: "list",
+            items: [
+              "Safe and non-invasive",
+              "Pain free, natural and effective",
+              "No elaborate course purchase required, you can do one treatment at a time",
+              "Price Transparent; and",
+              "Even covers white hair with a natural reddish/brownish colour",
+            ],
+          },
+          {
+            kind: "p",
+            text: "However, because our treatment relies only on traditional Chinese herbs, the choice of colouring is also limited.",
+          },
+        ],
+      },
+      th: {
+        heading: "ประโยชน์ของทรีทเม้นท์สมุนไพร 100เปอร์เซ็น",
+        blocks: [
+          {
+            kind: "p",
+            text: "สำหรับลูกค้าที่เผชิญหน้ากับการติดเชื้อจากแบคทีเรียและเชื้อรา พวกเรามีเสปรย์ป้องกันแบคทีเรียซึ่งใช้ควบคู่กับการทำทรีทเม้นท์สมุนไพรจะช่วยกำจัดการติดเชื้ออย่างถอนรากถอนโคน ยิ่งไปกว่านั้น เห็ดหลินจือ และ ตังกุย ซึ่งเป็นส่วนผสมในครีมทรีทเม้นท์ของเรานั้นมีส่วนในการรักษาหนังศีรษะและช่วยปกป้องแบคทีเรียและอาการอื่นๆที่น่ารำคาญต่างๆได้",
+          },
+          {
+            kind: "p",
+            text: "ถึงแม้ว่าคุณจะไม่สามารถป้องกันปัญหาเส้นผมต่างๆที่เกิดจากกรรมพันธุ์ได้ แต่คุณก็ยังสามารถลดโอกาสของปัญหาเส้นผมที่จะเกิดขึ้นโดยการทำทรีทเม้นท์ที่ บีชู ซาลอน/คลินิก เพียงเดือนละครั้ง ทรีทเม้นท์สมุนไพรธรรมชาติของเราจะช่วยบำรุงให้หนังศีรษะแข็งแรง มีสุขภาพดีและห่างไกลจากปัญหาเส้นผมต่างๆเหล่านั้น",
+          },
+          { kind: "p", text: "ทรีทเม้นท์ บีชู ออริจิน ประสบความสำเร็จ เพราะ…" },
+          {
+            kind: "list",
+            items: [
+              "ปลอดภัย ไม่มีผลข้างเคียง",
+              "ไม่แสบ เนื่องจากมีส่วนผสมจากธรรมชาติ และให้ผลอย่างมีประสิทธิภาพ",
+              "ไม่มีการคิดราคาเกินจริงจากที่ตกลงกันไว้ คุณสามารถทำทรีทเม้นท์ได้ในราคาที่โปร่งใส",
+              "ทรีทเม้นท์สามารถปกปิดผมขาวได้ด้วยสีน้ำตาลธรรมชาติ",
+            ],
+          },
+        ],
+      },
+    },
+    beforeAfter: {
+      en: {
+        heading: "See Our Client's Before After Results",
+        body: ["Bacterial / Fungal infection and Alopecia Areata can look scary, but it can be treated! Do not be embarrassed. We can help. See some videos of astonishing recoveries."],
+        images: [],
+        // TWO YouTube case videos rather than photos — the other page (with damaged-hair's
+        // two GIPHYs) that makes `embeds` a list.
+        embeds: [
+          { kind: "youtube", id: "5RAAX5-v1TU", title: "Client recovery from bacterial infection" },
+          { kind: "youtube", id: "hvu5Eh2IO1A", title: "Client recovery from alopecia areata" },
+        ],
+      },
+      th: {
+        heading: "มาดูผลการทำทรีทเม้นท์ ก่อน - หลัง ของลูกค้ากันนะคะ",
+        body: ["การติดเชื้อจากแบคทีเรีย เชื้อรา ผมร่วงเป็นหย่อมอาจจะดูน่ากลัว แต่สามารถรักษาได้! รับชมวีดีโอการรักษาได้แล้วข้างล่างนี้"],
+        images: [],
+        embeds: [
+          { kind: "youtube", id: "5RAAX5-v1TU", title: "ผลการรักษาการติดเชื้อจากแบคทีเรียของลูกค้า" },
+          { kind: "youtube", id: "hvu5Eh2IO1A", title: "ผลการรักษาอาการผมร่วงเป็นหย่อมของลูกค้า" },
+        ],
+      },
+    },
+    tail: {
+      en: sharedTail("en", [
+        ["Bee Choo Origin is the largest scalp/hair loss treatment salon/clinic specialising in the treatment of hair loss, dandruff, oily scalp and other hair issues. There are 21 outlets in Singapore, 68 outlets in Malaysia with more than 160 outlets across Asia Pacific. The Group has expanded into Bangkok, Thailand and sees Thailand as a potential market to grow the brand. Annually we serve millions of happy customers with effective and proven results."],
+        CROSS_SELL_FOUNDER.en,
+      ], {
+        // "Rinse-Off" with a capital O here and on damaged-hair; grey-hair/oily-scalp/
+        // dandruff write "Rinse-off" and hair-loss/postpartum "Rinse Off".
+        howItWorks: {
+          steps: [
+            "Step 1: Apply Hair Tonic on your Scalp",
+            "Step 2: Apply Herbal Paste to your Scalp",
+            "Step 3: Steam Treatment of your Hair for 45 minutes",
+            "Step 4: Rinse-Off the Herbal Paste, Scalp Massage and Conditioning of your Hair",
+          ],
+        },
+      }),
+      th: sharedTail("th", [
+        // Carries the flagship-salon line, like hair-loss and oily-scalp but unlike
+        // grey-hair, dandruff and damaged-hair. Names "หนังศีรษะเป็นเชื้อรา" (fungal
+        // scalp) where hair-loss/oily-scalp say "หนังศีรษะมันและคัน" — per page.
+        [
+          "บีชู ออริจิน เป็นทรีทเม้นท์ซาลอนและคลินิกที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง รังแค หนังศีรษะเป็นเชื้อรา และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา ในมาเลเซียจำนวน 68 สาขา และมากกว่า 160 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ ประเทศไทย พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมาก",
+        ],
+        ["ซาลอนสาขาใหญ่ของเราตั้งอยู่เขตตะวันนา บางกะปิ"],
+        CROSS_SELL_FOUNDER.th,
+      ]),
+    },
+    descriptionDraftPending: ["en"],
+  },
+
+  postpartum: {
+    heroTitle: {
+      en: "Post-partum hair loss treatment",
+      th: "ทรีตเมนต์แก้ปัญหาผมร่วงสำหรับคุณแม่หลังคลอด",
+    },
+    ...STANDARD_CHROME,
+    seo: {
+      title: {
+        en: "Postpartum Hair Loss Treatment in Thailand - Bee Choo Herbal",
+        th: "ทรีตเมนต์แก้ปัญหาผมร่วงสำหรับคุณแม่หลังคลอด​ในประเทศไทย - Bee Choo Herbal",
+      },
+      // Both languages have a real live-site Yoast description — nothing draft here.
+      description: {
+        en: "Postpartum hair loss is the condition where mothers experience hair loss 2-4 months after birth. Find out how you can solve this with...",
+        th: "ปัญหาภาวะผมร่วงเฉียบพลันที่คุณแม่หลังคลอด ต้องประสบพบเจอในช่วงระยะเวลา 2-4 เดือนหลังคลอดบุตร.ลองมาดูว่าเราจะสามารถแก้ปัญหาเหล่านี้ด้วยวิธี...",
+      },
+    },
+    videoId: "qG_5mPtD8xg",
+    howItWorksVideo: {
+      id: { en: "lMZ1aIwWga4", th: "lMZ1aIwWga4" },
+      title: {
+        en: "How Bee Choo herbal hair treatment works",
+        th: "ทรีตเมนต์สมุนไพรบีชูให้ผลอย่างไร",
+      },
+    },
+    // EN only — the Thai twin has no such block.
+    clientVideo: {
+      en: { heading: "Hear From Our Clients", id: "WCJrb2D9PNE" },
+    },
+    about: {
+      en: {
+        heading: "About post-partum hair loss",
+        intro: [
+          "Many women experience an increased hair fall 2-4 months after giving birth, this is because the stress of giving birth takes a toll on the mother and causes her hair cycle to enter the telogen phase prematurely. This condition is known as telogen effluvium.",
+        ],
+        image: { src: postpartumAboutPhoto, alt: "New mother having her scalp treated at a Bee Choo salon" },
+        faq: [
+          {
+            question: "Does post-partum hair loss affect all mothers?",
+            answer:
+              "It affects all moms but the extent of the hair loss differs between individuals. Some mothers see substantial loss in hair volume whilst some not as much. This is because giving birth place a lot of stress on the body, causing up to 60% of hair to enter into the telogen stage pre-mature. In the telogen phase, hair starts to come loose and falls off after 2-4 months.",
+          },
+          {
+            // "possiblity", "migh", "neccessary" are live-site typos, kept verbatim.
+            question: "How much hair can I lose?",
+            answer:
+              "Women drops, on average, 100 hairs per day, but during post-partum hair loss, you could lose as much as 300 hairs per day. This would normally last for 2-3 months before hair loss reverting back to normal. In most cases, around 70% of women recover on their own. However, there’s a possiblity that thinning hair volume continue even years after giving birth. This is because the mother migh not have the neccessary vitamins and supplements for normal recover.",
+          },
+          {
+            // "granparents", "contians" likewise.
+            question: "How do I ensure I recover quickly from Post-Partum hair loss?",
+            answer:
+              "Ensure that you keep your body and scalp healthy, i.e. proper diet, sleep, exercise. This may be difficult to achieve especially if you’re a new mom juggling the kids without much help from domestic helpers or granparents. Nevertheless, we encourage you to avoid oily, fried food. Get at least 6-8 hours of sleep when possible, and treat your scalp to safe natural treatment. Bee Choo herbal treatment is safe for mothers as it contians no chemicals, hence breastfeeding wouldn’t be affected. The treatment nourishes the scalp and encourage recover from post-partum hair loss quickly. Many of our customers start doing the treatment even before giving birth to minimize their post-partum hair loss and to ensure they recover as quickly as possible.",
+          },
+        ],
+      },
+      th: {
+        heading: "ข้อควรรู้เกี่ยวกับปัญหาผมร่วงสำหรับคุณแม่หลังคลอด",
+        intro: [
+          "ผู้หญิงหลายคนประสบการณ์ผมขาดหลุดร่วงมากขึ้นภายหลัง 2-4 เดือนหลังคลอดบุตร เป็นเพราะความเหนื่อยล้าหลังจากคลอดบุตรสร้างความเสียหายให้กับร่างกายของคุณแม่ จึงทำให้วงจรผมของคุณแม่เข้าสู่ระยะสุดท้ายก่อนเวลาอันสมควร. ภาวะ/อาการนี้เป็นที่รู้จักในชื่อ อาการ Telogen effluvium.",
+        ],
+        image: { src: postpartumAboutPhoto, alt: "คุณแม่หลังคลอดกำลังรับการดูแลหนังศีรษะที่ร้านบีชู" },
+        faq: [
+          {
+            question: "ภาวะผมร่วงหลังคลอดเกิดขึ้นกับคุณแม่ทุกคนหรือไม่",
+            answer:
+              "ภาวะ/อาการนี้จะเกิดขึ้นกับคุณแม่ทุกคน แต่อาการผมร่วงจะเกิดขึ้นต่างกันแล้วแต่บุคคล.คุณแม่บางคนอาจจะผมร่วงมากกว่าปกติจนสังเกตได้หรือบางคนอาจจะมีอาการผมร่วงแต่ไม่มากจึงอาจจะไม่ได้สังเกต.นั่นเป็นเพราะการคลอดลูก/คลอดบุตรสร้างความเสียหายอย่างมากกับร่างกายของคุณแม่, คิดเป็นร้อยละ 60 ของผมทำให้เข้าสู่ระยะสุดท้ายก่อนเวลาอันสมควร.ในระยะสุดท้ายผมจะเริ่มหลุดและร่วงอย่างหนักหลังจาก 2-4 เดือน.",
+          },
+          {
+            question: "ผมคนเราสามารถร่วงได้กี่เส้น",
+            answer:
+              "ผู้หญิงผมร่วงคิดเฉลี่ยแล้ว 100 เส้นต่อวัน, แต่หากอยู่ในภาวะผมร่วงหลังคลอด ผมของคุณแม่สามารถร่วงได้ถึง 300 เส้นต่อวัน.เป็นเรื่องปกติสำหรับ 2-3 เดือนก่อนที่จะกลับมาร่วงตามปกติ. ในหลายเคส ประมาณร้อยละ 70 ของผู้หญิงจะฟื้นตัวได้ด้วยตัวเอง. แต่อย่างไรก็ตาม มีความเป็นไปที่ความบางของเส้นผมจะบางและหลุดร่วงอย่างต่อเนื่องแม้จะผ่านไปเป็นปีหลังคลอดบุตรก็ตาม. นี่เป็นเพราะคุณแม่อาจจะไม่ได้รับสารอาหารที่จำเป็นหรือวิตามิน ที่เพียงพอต่อการฟื้นฟูร่างกาย",
+          },
+          {
+            question: "จะแน่ใจได้อย่างไรว่าจะสามารถฟื้นฟูโดยเร็วจากภาวะผมร่วงหลังคลอด",
+            answer:
+              "มั่นใจได้เลยว่าคุณดูแลร่างกายและหนังศีรษะให้แข็งแรง เช่น การรับประทานอาหาร การนอนหลับ การออกกำลังกายที่เหมาะสม สิ่งนี้อาจทำได้ยากโดยเฉพาะอย่างยิ่งหากคุณเป็นคุณแม่มือใหม่ที่เล่นกับลูกๆ โดยไม่ได้รับความช่วยเหลือจากคนรับใช้ในบ้านหรือปู่ย่าตายาย อย่างไรก็ตาม เราขอแนะนำให้คุณหลีกเลี่ยงอาหารมันๆ ทอดๆ นอนหลับพักผ่อนอย่างน้อย 6-8 ชั่วโมงเมื่อเป็นไปได้ และรักษาหนังศีรษะของคุณด้วยวิธีธรรมชาติที่ปลอดภัย ทรีตเมนต์สมุนไพรของ บี ชู ปลอดภัยไร้สารเคมี เพราะฉะนั้นจึงปลอดภัยสำหรับคุณแม่มี่กำลังให้นมบุตร. ทรีตเมนต์จะช่วยหล่อเลี้ยงและฟื้นฟูหนังศีรษะและเส้นผมของคุณแม่จากภาวะผมร่วงหลังคลอดได้เร็วยิ่งขึ้น. คุณแม่หลายท่านที่มาทำทรีตเมนต์กับเราเริ่มทำทรีตเมนต์ตั้งแต่ก่อนคลอดบุตร จึงทำให้อาการผมร่วงหลังคลอดของพวกเขาลดน้อยลง จึงมั่นใจได้ว่าทรีตเมนต์ของเราสามารถฟื้นฟูอาการเหล่านี้ได้อย่างแน่นอน.",
+          },
+        ],
+      },
+    },
+    benefits: {
+      en: {
+        heading: "Benefits of 100% Natural Herbal Treatment",
+        blocks: [
+          {
+            kind: "p",
+            text: "There are many types of hair treatment in the market claiming to be able to help reverse hair loss. Some of these treatments involve injections to the scalp, some even have side effects and many of them are not price-transparent. Some of these exotic treatments can be quite costly and there is usually no remedial compensation if you do not see results.",
+          },
+          { kind: "p", text: "Bee Choo Origin is successful because our herbal treatment is:" },
+          {
+            kind: "list",
+            items: [
+              "Safe and non-invasive",
+              "Pain free, natural and effective",
+              "No elaborate course purchase required, you can do one treatment at a time",
+              "Price Transparent; and",
+              "Even covers white hair with a natural reddish/brownish colour",
+            ],
+          },
+          {
+            kind: "p",
+            text: "However, because our treatment relies only on traditional Chinese herbs, the choice of colouring is also limited.",
+          },
+        ],
+      },
+      th: {
+        // The TH page runs its five benefits together as prose rather than a list, so
+        // this is three paragraphs and no `list` block — matching the source, not EN.
+        heading: "ประโยชน์ของทรีตเมนต์สมุนไพรจากธรรมชาติ 100%",
+        blocks: [
+          {
+            kind: "p",
+            text: "ปัจจุบันมีทรีตเมนต์แก้ปัญหาผมร่วงมากมายในท้องตลาดที่อ้างว่าสามารถทำให้ผมร่วงลดน้อยลงได้ และบางทรีตเมนต์ยังรวมไปถึงการฉีดยาเข้าไปยังหนังศีรษะอีกด้วย บางทรีตเมนต์ส่งผลข้างเคียงต่างๆ และมีราคาที่ไม่โปร่งใส บางทรีตเมนต์มีความแปลกและน่าดึงดูดซึ่งมักจะมีราคาสูง และก็มักจะมีทรีตเมนต์ที่ไม่ได้ช่วยในการรักษาใด ๆ เลยเมื่อคุณไม่เห็นถึงผลลัพธ์",
+          },
+          { kind: "p", text: "ทรีตเมนต์แก้ปัญหาผมร่วงของ บีชู ออริจิน ที่คลินิกผมร่วงและคลินิกรักษาผมบางของเราประสบความสำเร็จเพราะ" },
+          {
+            kind: "p",
+            text: "สามารถรักษาผมร่วง รักษาผมบางได้อย่างเห็นผลปลอดภัยและไม่มีผลข้างเคียงไม่เจ็บและให้ผลจากธรรมชาติไม่ต้องยุ่งยากและซับซ้อนในการจ่ายเงิน คุณสามารถทำทรีตเมนต์ที่คลินิกผมร่วงและคลินิกผมบางของเราได้ในราคาที่โปร่งใส และทรีตเมนต์ของเราสามารถปกปิดผมขาวด้วยสีน้ำตาลได้อย่างเป็นธรรมชาติ",
+          },
+          {
+            kind: "p",
+            text: "แต่ถึงอย่างไรก็ตามเนื่องจากทรีตเมนต์ของเรามีส่วนผสมของสมุนไพรจีนพื้นบ้าน ในการย้อมสีที่คลินิกผมบางนั้นอาจจะไม่มีสีตามที่ต้องการทุกสี",
+          },
+        ],
+      },
+    },
+    beforeAfter: {
+      en: {
+        heading: "See Our Client's Before After Results",
+        body: ["Shortly within 3 months of hair treatment with Bee Choo Origin, this client achieved this effective results below:"],
+        // Two before/after PAIRS, four photos. alt is the live page's own attribute
+        // ("Before" / "After 3 months"), which is also all the caption the legacy page
+        // shows, so caption is left to fall back to alt.
+        images: [
+          { src: postpartumBefore1, alt: "Before" },
+          { src: postpartumAfter1, alt: "After 3 months" },
+          { src: postpartumBefore2, alt: "Before" },
+          { src: postpartumAfter2, alt: "After 3 months" },
+        ],
+      },
+      th: {
+        heading: "ผลลัพธ์ก่อนและหลังทำของลูกค้าของบีชู",
+        body: ["ช่วงเวลาสั้น ๆ เพียง 3 เดือนเท่านั้น! กับการทำทรีตเมนต์กับ บีชู ของเรา ผลลัพธ์ก่อนและหลังตามภาพด้านล่างนี้ :"],
+        images: [
+          { src: postpartumBefore1, alt: "ก่อน" },
+          { src: postpartumAfter1, alt: "หลังจาก 3 เดือน" },
+          { src: postpartumBefore2, alt: "ก่อน" },
+          { src: postpartumAfter2, alt: "หลังจาก 3 เดือน" },
+        ],
+      },
+    },
+    tail: {
+      en: sharedTail("en", [
+        ["Bee Choo Origin is the largest scalp/hair loss treatment salon/clinic specialising in the treatment of hair loss, dandruff, oily scalp and other hair issues. There are 21 outlets in Singapore, 68 outlets in Malaysia with more than 160 outlets across Asia Pacific. The Group has expanded into Bangkok, Thailand and sees Thailand as a potential market to grow the brand. Annually we serve millions of happy customers with effective and proven results."],
+        CROSS_SELL_FOUNDER.en,
+      ], {
+        howItWorks: {
+          steps: [
+            "Step 1: Apply Hair Tonic on your Scalp",
+            "Step 2: Apply Herbal Paste to your Scalp",
+            "Step 3: Steam Treatment of your Hair for 45 minutes",
+            "Step 4: Rinse Off the Herbal Paste, Scalp Massage and Conditioning of your Hair",
+          ],
+        },
+        // The "Bangkok" pricing variant, shared only with hair-loss: different heading,
+        // a lowercase-baht intro that ends in an emoji, and a completely different first
+        // closing line with no "Voted as the best hair loss clinic" line at the end.
+        pricing: {
+          heading: "Affordable Hair Treatment in Bangkok",
+          intro:
+            "Our prices are based on your hair length between 800 baht  to 1,200 baht for à la carte herbal hair treatment. Strictly no hidden charges. You may choose to make upfront payment before treatment 🙂",
+          closing: [
+            "Trust us with your hair and scalp. Thousands do.",
+            "Best Hair Loss Treatment Salon Clinic in Bangkok – affordable, reasonable for your budget",
+            "Try it out and reserve your first appointment now (limited seats during peak hours)!",
+          ],
+        },
+      }),
+      // ⚠ The ONLY page whose whole Thai tail is a separate variant: every ทรีทเม้นท์ is
+      // spelled ทรีตเมนต์ (the homepage's spelling), all four headings differ, and the
+      // cross-sell paragraph quotes different numbers — 170 outlets across Asia Pacific
+      // and 8 Bangkok branches, where the other six TH pages say 160 and none. Verbatim.
+      th: sharedTail(
+        "th",
+        [
+          [
+            "บีชู ออริจิน เป็นทรีตเมนต์ซาลอนและคลินิกรักษาผมร่วงที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง รักษาผมบาง รังแค หนังศีรษะมัน และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา ในมาเลเซียจำนวน 68 สาขา และมากกว่า 170 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ ประเทศไทย และมีทั้งหมด 8 สาขา พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมากที่สุด",
+          ],
+          CROSS_SELL_FOUNDER.th,
+        ],
+        {
+          reviewsHeading: "รีวิว บีชู แฮร์ ทรีตเมนต์",
+          crossSellHeading: "รักษาผมร่วงที่เห็นผลมากที่สุดในประเทศไทย",
+          howItWorks: {
+            heading: "ทรีตเมนต์สมุนไพร 100เปอร์เซ็นต์ ให้ผลลัพธ์ยังไงมาดูกัน!",
+            intro:
+              "ด้วยชื่อเสียงที่มีเสมอมาของซาลอน/คลินิกรักษาผมร่วง คลินิกรักษาผมบางที่ดีที่สุด ผลิตภัณฑ์ของเราทั้งหมดมีส่วนผสมจากธรรมชาติและมีความปลอดภัย ให้ผลลัพธ์ที่มีประสิทธิภาพสูง ทำให้เส้นผมที่สุขภาพไม่ดี แห้ง มัน และถูกทำร้ายจะถูกฟื้นฟูอย่างรวดเร็ว สีย้อมผมจากธรรมชาติในทรีตเมนต์ของเราจะช่วยปกปิดผมขาวจนไปถึงโคนของเส้นผม",
+            stepsLead: "มาดู 4 สเต็ปง่ายๆในการทำทรีตเมนต์ของเรา :",
+            outro: "คุณสามารถชมวีดีโอการทำทรีตเมนต์ของเราจนจบขั้นตอนได้ตามนี้!",
+          },
+          pricing: {
+            heading: "ทรีตเมนต์ผมราคาจับต้องได้ในประเทศไทย",
+            intro:
+              "ราคาในการให้บริการของเรานั้นขึ้นอยู่กับความยาวของเส้นผม โดยเริ่มต้นที่ 800 บาท ไปจนถึง 1,200 บาท ในการทำ à la carte ทรีตเมนต์สมุนไพร ซึ่งทางเราไม่มีการคิดเงินเกินจากที่กำหนดไว้แน่นอน ลูกค้าสามารถตกลงราคาก่อนที่จะทำทรีตเมนต์ได้",
+            closing: [
+              "ให้เราได้ดูแลเส้นผมของคุณ!",
+              "ซาลอน/คลินิก รักษาผมร่วงที่ดีที่สุดในกรุงเทพฯ – ราคาเป็นมิตร เข้าถึงได้",
+              "มาลองทำทรีตเมนต์กับเราได้โดยการสำรองที่นั่งตอนนี้! (ที่นั่งมีจำนวนจำกัดนะคะ)",
+            ],
+          },
+        },
+      ),
+    },
+  },
+
+  "hair-loss": {
+    heroTitle: {
+      en: "Hair Loss Recovery",
+      th: "ทรีทเมนต์สำหรับผมร่วง",
+    },
+    ...STANDARD_CHROME,
+    seo: {
+      title: {
+        en: "Scalp Hair Loss Treatment Salon Clinic in Bangkok - Bee Choo Herbal",
+        th: "ซาลอน/ คลินิกรักษาผมร่วง คลินิกรักษาผมบาง ในกรุงเทพ - Bee Choo Herbal",
+      },
+      // Both languages have a real live-site Yoast description.
+      // ⚠ The EN one says "from Singapore" — flagged for Crispin as spec open question 2
+      // (correct it, or reproduce verbatim?). Reproduced verbatim until he decides.
+      description: {
+        en: "Looking for scalp treatment? See our transparent 4 step herbal treatment process from Singapore. Affordable prices yet effective. Hear from our clients too.",
+        th: "คลินิกรักษาผมร่วงที่มี ทรีทเม้นท์แก้ปัญหาผมร่วง รักษาผมบาง จากสมุนไพรธรรมชาติ 100 เปอร์เซ็นต์ ราคาเป็นมิตรและเข้าถึงได้ง่าย",
+      },
+    },
+    videoId: "LJI-zrPWXhk",
+    howItWorksVideo: {
+      id: { en: "Uwty-ZDdPYc", th: "Uwty-ZDdPYc" },
+      title: {
+        en: "How Bee Choo herbal hair treatment works",
+        th: "ทรีตเมนต์สมุนไพรบีชูให้ผลอย่างไร",
+      },
+    },
+    clientVideo: {
+      en: { heading: "Hear From Our Clients", id: "WCJrb2D9PNE" },
+    },
+    about: {
+      en: {
+        heading: "About Hair Loss",
+        intro: [
+          "Do take a minute to watch the video above to see the Hair Loss condition our customer had and her amazing recovery journey. These are all REAL pictures and videos taken at our salons. Hair Loss can be treated effectively. Thousands of customers trust us with their hair. Hair is an integral part of a person’s image. Individuals suffering from hair loss can lose confidence, get depressed and avoid social activities. Start treatment early. Trust us with your hair today.",
+        ],
+        image: { src: hairLossAboutPhoto, alt: "Bee Choo herbal hair loss treatment in progress at the salon" },
+        faq: [
+          {
+            question: "Why Men or Women suffer from Hair Loss and can it be treated?",
+            answer:
+              "Many people feel surprised and betrayed by their bodies when they experience Hair Loss. The good news is, hair loss can be treated. Genetic female hair loss is also identified as androgenetic alopecia. Genetic Female Hair Loss is not the same as Genetic Male Hair Loss. Women would commonly experience diffused hair thinning with thinning at the center of the scalp being the most prominent. Male would normally experience a receding hair line followed by hair thinning at the crown. Men who exercise vigorously to keep fit usually have higher levels of testosterones which leads to higher levels of Dihydrotestosterone (DHT) and DHT causes hair loss. Once thinning worsen, the scalp becomes increasingly obvious and is no longer concealable with a simple change in hairstyle. If you are experiencing patchy hair loss rather than diffused hair loss, you may be suffering from a bacteria infection or alopecia areata (a form of auto-immune disease). Nevertheless, they are can be treated as well.",
+          },
+          {
+            question: "At what age does Hair Loss occurs?",
+            answer:
+              "Research indicates that on average, female hair loss starts at around age 30 to 40 for Thai people (Asian) Hair types. In more rare cases, hair loss could even begin in teenage years! Hair loss starts to become increasingly noticeable around the age of 40 and aggravated by menopause. For some men, hair loss starts in their early 20s and many more experience serious hair fall/loss in their mid 30s. Male suffering from genetic hair loss can go bald while women suffering from genetic hair loss seldom go bald but instead experience severe thinning and loss of hair volume instead.",
+          },
+          {
+            // The legacy answer is a five-item bullet list; joined into one string, the
+            // way FaqItem.answer is used throughout this file. Same words, same order.
+            question: "What are some factors that leads to Hair Loss?",
+            answer:
+              "Genetics – This is a major one, especially for men: 98% of men with hair loss issues are in this category. Thankfully, only 7% of men have advance balding pattern. On the other hand, 50% of women with hair loss issues are in this category. Internal Conditions – Hormonal influences, such as thyroid diseases and anaemia. For women, pregnancy is a big cause of hormonal changes as well. This leads to a hair loss condition known as telogen effluvium which causes severe hair loss 2 to 4 months after a traumatic event. Autoimmune diseases – Known as alopecia areata, the body’s immune system attacks its own hair follicles causing patchy hair loss. External factors – Lifestyle and other habits such as daily bunning of hair, tight braiding, prolonged wearing of headgear, excessive use of hair wax/gel/spray and dyeing/rebonding/perming of hair. Medication – Anabolic steroids, birth control pills, antidepressants and sleeping pills can cause hair loss.",
+          },
+        ],
+      },
+      /* ⚠⚠ KNOWN LEGACY CMS BUG — REPRODUCED DELIBERATELY. DO NOT "FIX". ⚠⚠
+       *
+       * The live Thai hair-loss page (/th/ซาลอน-คลินิกรักษาผมร่วง/) serves OILY SCALP's
+       * About and Benefits copy under a hair-loss title. Its About heading is literally
+       * "ผมมันและอาการคันหนังศีรษะ" and all four of its toggles are about oily, itchy
+       * scalp — none of them mention hair loss. Verified against all 7 Thai pages: the
+       * mismatch is isolated to this one, the other six are internally consistent. It is
+       * a content error on the legacy site, not a lookup error here.
+       *
+       * Ryo's call (2026-08-20), taking the third of the options in
+       * specs/2026-08-12-treatment-pages-plan.md open question 5: reproduce what is live,
+       * verbatim, and flag it loudly. Reasoning: this is exactly what Google has indexed
+       * for this URL today, so reproducing it is the zero-SEO-risk option, and dropping
+       * the block would delete ~2,700 characters of indexed Thai text from a page the
+       * business ranks on. Machine-translating the English is not an option (CLAUDE.md §8).
+       *
+       * ⚠ CRISPIN MUST SUPPLY THE REAL THAI HAIR-LOSS COPY BEFORE LAUNCH. Until then this
+       * page shows Thai readers the wrong subject. When that copy arrives, replace this
+       * whole `th` block — do not try to reconcile it with the English.
+       */
+      th: {
+        heading: "ผมมันและอาการคันหนังศีรษะ",
+        intro: [
+          "เรามาดูวีดีโอในการรักษาหนังศีรษะมันและคันของลูกค้าของเรากันค่ะ รูปภาพทุกภาพเป็นภาพจริงที่ถ่ายในซาลอน/คลินิก ของเรานะคะ โดยปกติทั้งผู้ชายและผู้หญิงสามารถมีหนังศีรษะมันและคันได้ทั้งนั้น และสามารถรักษาได้อย่างมีประสิทธิภาพด้วย บีชู แฮร์ ทรีทเม้นท์ของเราค่ะ ลูกค้าจำนวนมากพึงพอใจในการรักษาเส้นผมกับเรา",
+          "โดยปกติแล้วหนังศีรษะเรามีการผลิตน้ำมันผ่านทางต่อมไขมันของเรา และน้ำมันนี้เองจะช่วยปกป้องเส้นผมและคงสภาพโครงสร้างของเส้นผม แต่ทั้งนี้ทั้งนั้นก็ยังคงมีปัจจัยต่างๆที่ทำให้ต่อมไขมันผลิตน้ำมันออกมามากกว่าปกติ ทำให้ต่อมไขมันเกิดการอักเสบ น้ำมันที่มากเกิดไปนอกจากจะทำให้คุณรู้สึกไม่สบายและคันแล้วยังนำไปสู่ปัญหาผมร่วงถ้าไม่ได้รับการรักษา",
+        ],
+        /* The TH page carries TWO images. This one (legacy Picture2.png) is the labelled
+         * oily-scalp before/after comparison that sits at the top of the page — real
+         * content, with visible text, so it is reproduced. The other (IMG_2850-1) is NOT
+         * dropped: it is byte-identical to the award-ceremony photo that RECOGNITION_PHOTO
+         * already renders further down THIS page, so carrying it here too would only
+         * duplicate it. */
+        image: {
+          src: hairLossThBanner,
+          alt: "เปรียบเทียบหนังศีรษะมันก่อนทำทรีทเม้นท์ และหลังทำทรีทเม้นท์สมุนไพรบีชู",
+        },
+        faq: [
+          {
+            question: "หนังศีรษะมันและคันเป็นอย่างไร?",
+            answer:
+              "เนื่องจากอากาศที่ร้อนอบอ้าวในประเทศไทย อาหารที่ไม่ดีต่อสุขภาพ ความเครียด การเลือกใช้แชมพูที่ไม่ถูกต้อง สาเหตุต่างๆเหล่านี้ก่อให้เกิดการผลิตน้ำมันที่มากเกินไปบนหนังศีรษะทางนั้น รวมไปถึงการสวมหมวกกันน็อคที่ไม่สะอาดที่อาจจะทำให้เกิดการระคายเคืองและทำให้หนังศีรษะผลิตน้ำมันที่มากเกินไป น้ำมันที่มากจนเกินไปนั้นอาจจะทำให้รูขุมขนเส้นผมอุดตันได้ด้วยเช่นกันและจะเกิดอาการคันหนังศีรษะเนื่องจากหนังศีรษะมันมากว่าปกติ",
+          },
+          {
+            question: "ทำไมถึงมีหนังศีรษะมันและคัน?",
+            answer:
+              "การมีหนังศีรษะมันเป็นเรื่องปกติมากโดยเฉพาะกับเมืองที่มีอากาศร้อนอบอ้าวอย่างกรุงเทพฯ ประเทศไทย จากการสำรวจของเราในปี 2017 พบว่าลูกค้าจำนวน 30เปอร์เซ็น ได้มาที่ซาลอน/คลินิก เนื่องจากมีปัญหาในเรื่องหนังศีรษะมันและคันหนังศีรษะ สาเหตุของการมีหนังศีรษะมันและคันนั้นเนื่องจากการเลือกใช้แชมพูที่ไม่ถูกต้อง และการทานอาหารที่ไม่ดีต่อสุขภาพ เช่น อาหารทอด และอาหารที่ผ่านกระบวนการมากเกินไป",
+          },
+          {
+            question: "อะไรคือสาเหตุที่ก่อให้เกิดหนังศีรษะมันและคัน",
+            answer:
+              "ในทางวิทยาศาสตร์สภาพที่ต่อมไขมันผลิตน้ำมันมากเกินไปเป็นที่รู้จักในชื่อ “ต่อมไขมันอักเสบ” ซึ่งจะทำให้หนังศีรษะผลิตน้ำมันออกมามาก การเติบโตของยีสต์ก็มีมากด้วยเช่นกัน รูขุมขนเส้นผมนั้นสามารถติดเชื้อจากแบคทีเรียและยีสต์ได้ ซึ่งนำไปสู่อาการคันหนังศีรษะ การรักษาความสะอาดที่ไม่ถูกต้องนั้นเป็นอีกหนึ่งสาเหตุที่ทำให้หนังศีรษะผลิตน้ำมันที่มากเกินไป และเมื่อสระผมด้วยแชมพูที่ไม่เหมาะสมอย่างต่อเนื่อง น้ำมันจะสมสมอยู่ที่หนังศีรษะ ซึ่งจะทำให้เกิดรังแคตามมา รังแค่สีเหลืองและเป็นเกล็ดนั้นจะเกิดขึ้นกับหนังศีรษะมันมากกว่าผู้ที่มีหนังศีรษะแห้ง",
+          },
+          {
+            question: "หนังศีรษะมันและคันสามารถนำไปสู่ปัญหาผมหลุดร่วงได้ไหม",
+            answer:
+              "ในระยะเวลาสั้นๆนั้นอาจจะยังไม่เห็นผล แต่เมื่อหนังศีรษะมันและคันเป็นระยะเวลาที่ยาวนานนั้นสามารถนำไปสู่ปัญหาผมร่วงได้ เนื่องจากเมื่อคุณเกาหนังศีรษะ ในการเกานั้นก็จะทำให้แบคทีเรียและเชื้อราเข้าไปยังหนังศีรษะได้ และเป็นการทำร้ายรูขุมขนเส้นผมอีกด้วย ดังนั้นการมีหนังศีรษะที่มันและคันจะส่งผลให้เกิดปัญหาผมร่วงในทางอ้อม แต่เรื่องยังไม่จบแค่นั้น ถ้าคุณเป็นคนชอบเกาหนังศีรษะจะทำให้รูขุมขนเส้นผมก็จะเกิดการอุดตันได้ และเมื่อเกิดการอุดตันเป็นเวลานานจะทำให้เส้นผมไม่ได้รับสารบำรุงต่างๆ เมื่อเส้นผมงอกออกมานั้นก็จะกลายเป็นผมที่สุขภาพไม่ดี ลีบแบน และไม่มีวอลลุม",
+          },
+        ],
+      },
+    },
+    benefits: {
+      en: {
+        heading: "Benefits of 100% Natural Herbal Treatment",
+        blocks: [
+          {
+            kind: "p",
+            text: "There are many types of hair treatment in the market claiming to be able to help reverse hair loss. Some of these treatments involve injections to the scalp, some even have side effects and many of them are not price-transparent. Some of these exotic treatments can be quite costly and there is usually no remedial compensation if you do not see results.",
+          },
+          { kind: "p", text: "Bee Choo Origin is successful because our herbal treatment is:" },
+          {
+            kind: "list",
+            items: [
+              "Safe and non-invasive",
+              "Pain free, natural and effective",
+              "No elaborate course purchase required, you can do one treatment at a time",
+              "Price Transparent; and",
+              "Even covers white hair with a natural reddish/brownish colour",
+            ],
+          },
+          {
+            kind: "p",
+            text: "However, because our treatment relies only on traditional Chinese herbs, the choice of colouring is also limited.",
+          },
+        ],
+      },
+      // ⚠ Also oily-scalp's copy — see the warning on about.th above. "ปรัฐสภาพผม" is a
+      // live-site typo for "ปรับสภาพผม", already noted in this file's header.
+      th: {
+        heading: "ประโยชน์ของการทำทรีทเม้นท์ สมุนไพรธรรมชาติ 100เปอร์เซ็น",
+        blocks: [
+          {
+            kind: "p",
+            text: "ปัญหาหนังศีรษะมันเป็นปัญหาธรรมดาที่สามารถรักษาได้ด้วย บีชู เฮอร์เบิล ทรีทเม้นท์ ที่ซาลอน/คลินิก บีชู ของเรา น้ำยาทรีทเม้นท์นั้นทำจาก เห็ดหลินจือ ซึ่งรู้กันดีว่าเป็นสมุนไพรพื้นบ้านของจีน เห็ดหลินจือจะช่วยปรัฐสภาพผมไม่ว่าคุณจะมีหนังศีรษะที่มันหรือแห้งเกินไป ก็จะกลับมาสู่สภาพปกติและมีสุขภาพดีหลังจากการทำทรีทเม้นท์ในแต่ละครั้ง เลิกอยู่กับความคันแล้วมาสัมผัสความสบายและสะอาดของหนังศีรษะกันได้แล้ววันนี้!",
+          },
+        ],
+      },
+    },
+    beforeAfter: {
+      en: {
+        heading: "See Our Client's Before After Results",
+        body: ["Shortly within 3 months of hair treatment with Bee Choo Origin, this client achieved this effective results below:"],
+        // Three photos, not a pair. The live alt attributes are the raw filenames
+        // ("Hair-loss-1st.jpeg"), which are useless to a screen reader and would be a
+        // real accessibility fault to reproduce — so these are plain factual
+        // descriptions instead. No caption on the legacy page, and none invented.
+        images: [
+          { src: hairLossResult1, alt: "Client's scalp before Bee Choo herbal hair loss treatment" },
+          { src: hairLossResult2, alt: "The same client's scalp part way through the course of treatment" },
+          { src: hairLossResult3, alt: "The same client's scalp after three months of Bee Choo herbal treatment" },
+        ],
+      },
+      // ⚠ Also oily-scalp's copy — see the warning on about.th above.
+      th: {
+        heading: "มาดูผล ก่อน - หลัง ของลูกค้าของเรา",
+        body: ["มาลดความมันและความคันของหนังศีรษะกันค่ะ ด้วยทรีทเม้นท์ของพวกเรา คุณจะรู้สึกสบายมากขึ้นเมื่อไม่มีน้ำมันและอาการคันมากวนใจ"],
+        images: [],
+        embeds: [{ kind: "giphy", id: "t7752IVYRBN1YzOPaL" }],
+      },
+    },
+    tail: {
+      en: sharedTail("en", [
+        ["Bee Choo Origin is the largest scalp/hair loss treatment salon/clinic specialising in the treatment of hair loss, dandruff, oily scalp and other hair issues. There are 21 outlets in Singapore, 68 outlets in Malaysia with more than 160 outlets across Asia Pacific. The Group has expanded into Bangkok, Thailand and sees Thailand as a potential market to grow the brand. Annually we serve millions of happy customers with effective and proven results."],
+        CROSS_SELL_FOUNDER.en,
+      ], {
+        howItWorks: {
+          steps: [
+            "Step 1: Apply Hair Tonic on your Scalp",
+            "Step 2: Apply Herbal Paste to your Scalp",
+            "Step 3: Steam Treatment of your Hair for 45 minutes",
+            "Step 4: Rinse Off the Herbal Paste, Scalp Massage and Conditioning of your Hair",
+          ],
+        },
+        // The "Bangkok" pricing variant, shared with postpartum only.
+        pricing: {
+          heading: "Affordable Hair Treatment in Bangkok",
+          intro:
+            "Our prices are based on your hair length between 800 baht  to 1,200 baht for à la carte herbal hair treatment. Strictly no hidden charges. You may choose to make upfront payment before treatment 🙂",
+          closing: [
+            "Trust us with your hair and scalp. Thousands do.",
+            "Best Hair Loss Treatment Salon Clinic in Bangkok – affordable, reasonable for your budget",
+            "Try it out and reserve your first appointment now (limited seats during peak hours)!",
+          ],
+        },
+      }),
+      th: sharedTail("th", [
+        // Carries the flagship-salon line, like oily-scalp and bacterial-infection.
+        [
+          "บีชู ออริจิน เป็นทรีทเม้นท์ซาลอนและคลินิกที่ใหญ่ที่สุด พวกเรามีความเชี่ยวชาญด้านการรักษาผมร่วง รังแค หนังศีรษะมันและคัน และปัญหาอื่นๆเกี่ยวกับเส้นผม พวกเรามีสาขาในสิงคโปร์จำนวน 21 สาขา ในมาเลเซียจำนวน 68 สาขา และมากกว่า 160 สาขาในภูมิภาคเอเชียแปซิฟิก ซึ่งตอนนี้พวกเราได้ขยายสาขามายังกรุงเทพฯ ประเทศไทย พวกเรามีความภาคภูมิใจที่ได้ทำให้ลูกค้าพึงพอใจในผลลัพธ์เป็นอย่างมาก",
+        ],
+        ["ซาลอนสาขาใหญ่ของเราตั้งอยู่เขตตะวันนา บางกะปิ"],
+        CROSS_SELL_FOUNDER.th,
+      ]),
+    },
   },
 };
 
