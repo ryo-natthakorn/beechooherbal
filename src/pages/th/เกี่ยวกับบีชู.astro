@@ -1,0 +1,18 @@
+---
+// src/pages/th/เกี่ยวกับบีชู.astro
+// Thai About Us page — the twin of src/pages/about.astro. Reached from ติดต่อเรา >
+// เกี่ยวกับเรา. Thin route shell — see the EN twin's header for the full rationale.
+// Content is src/data/about.ts, transcribed verbatim from the live site
+// (wp-json/wp/v2/pages/574, fetched live during this batch).
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import AboutPage from "../../components/about/AboutPage.astro";
+import { ABOUT } from "../../data/about";
+
+const lang = "th" as const;
+const { title, description } = ABOUT.seo;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} {lang}>
+  <AboutPage {lang} />
+</BaseLayout>

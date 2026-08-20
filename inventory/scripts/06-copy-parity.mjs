@@ -40,6 +40,9 @@ const PAGES = [
   ["damaged-hair", "/repair-chemically-damaged-dry-hair-with-herbal-treatment/", "แก้ผมเสียเร่งด่วน"],
   ["bacterial-infection", "/herbal-treatment-cure-for-bacteria-infection-alopecia-areata-and-other-hair-diseases/", "หนังศีรษะติดเชื้อ"],
   ["postpartum", "/postpartum-hair-loss-treatment-in-thailand/", "ภาวะผมร่วงเฉียบพลันของ"],
+  // Not a treatment page, but the same verbatim-copy risk applies — generalizes cleanly
+  // since this script keys off slug/URL, not the treatment content model.
+  ["about", "/about/", "เกี่ยวกับบีชู"],
 ];
 
 /**
@@ -221,7 +224,7 @@ for (const [slug, enPath, thSlug] of PAGES) {
   }
 }
 
-console.log(`copy parity: ${checked} built treatment page(s) checked against inventory/rest-pages.json`);
+console.log(`copy parity: ${checked} built page(s) checked against inventory/rest-pages.json`);
 if (pending.length) console.log(`not built yet (not a failure): ${pending.join(", ")}`);
 if (report.length) console.log(report.join("\n"));
 if (missingTotal === 0) {

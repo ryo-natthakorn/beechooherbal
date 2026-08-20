@@ -11,17 +11,23 @@ import type { ImageMetadata } from "astro";
 import introThumb from "../assets/images/video-thumbs/c8x_e1zPvMY.jpg";
 import howItWorksThumb from "../assets/images/video-thumbs/QOgcSx7_C7w.jpg";
 import processThumb from "../assets/images/video-thumbs/Uwty-ZDdPYc.jpg";
+import aboutCustomerThumb from "../assets/images/video-thumbs/37MCsANIJ-k.jpg";
 
 interface Props {
   id: string;
   title: string;
+  /** Start offset in seconds — the legacy About page's customer video carries a
+   *  per-language start time (EN opens at 51s, TH at 68s, a different cut of the
+   *  interview). Omit for videos that should start at 0. */
+  start?: number;
 }
-const { id, title } = Astro.props;
+const { id, title, start } = Astro.props;
 
 const THUMBS: Record<string, ImageMetadata> = {
   c8x_e1zPvMY: introThumb,
   QOgcSx7_C7w: howItWorksThumb,
   "Uwty-ZDdPYc": processThumb,
+  "37MCsANIJ-k": aboutCustomerThumb,
 };
 const thumb = THUMBS[id];
 ---
@@ -32,6 +38,7 @@ const thumb = THUMBS[id];
       class="yt-facade relative mx-auto aspect-video w-full max-w-3xl overflow-hidden rounded-xl bg-brand-green shadow-soft"
       data-yt-id={id}
       data-yt-title={title}
+      data-yt-start={start ?? undefined}
     >
       <Image
         src={thumb}
@@ -61,7 +68,7 @@ const thumb = THUMBS[id];
     <div class="relative mx-auto aspect-video w-full max-w-3xl overflow-hidden rounded-xl shadow-soft">
       <iframe
         class="absolute inset-0 h-full w-full border-0"
-        src={`https://www.youtube-nocookie.com/embed/${id}`}
+        src={`https://www.youtube-nocookie.com/embed/${id}${start ? `?start=${start}` : ""}`}
         title={title}
         loading="lazy"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -78,7 +85,8 @@ const thumb = THUMBS[id];
       const facade = btn.closest<HTMLElement>(".yt-facade");
       if (!facade || !facade.dataset.ytId) return;
       const iframe = document.createElement("iframe");
-      iframe.src = `https://www.youtube-nocookie.com/embed/${facade.dataset.ytId}?autoplay=1`;
+      const start = facade.dataset.ytStart ? `&start=${facade.dataset.ytStart}` : "";
+      iframe.src = `https://www.youtube-nocookie.com/embed/${facade.dataset.ytId}?autoplay=1${start}`;
       iframe.title = facade.dataset.ytTitle ?? "";
       iframe.allow =
         "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";

@@ -1,0 +1,18 @@
+---
+// src/pages/about.astro
+// English About Us page — reached from Contact Us > About Us. Thin route shell: sets
+// lang/title/description, renders the shared body (src/components/about/AboutPage.astro).
+// Content is src/data/about.ts, transcribed verbatim from the live site
+// (wp-json/wp/v2/pages/193, fetched live during this batch — not the Phase-1 snapshot).
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AboutPage from "../components/about/AboutPage.astro";
+import { ABOUT } from "../data/about";
+
+const lang = "en" as const;
+const { title, description } = ABOUT.seo;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} {lang}>
+  <AboutPage {lang} />
+</BaseLayout>
