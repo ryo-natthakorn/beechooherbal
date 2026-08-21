@@ -136,7 +136,7 @@ export const ABOUT: AboutContent = {
   },
   video: {
     heading: {
-      en: "Hear what our customers in bangkok, thailand have to say about the herbal hair treatment",
+      en: "Hear what our customers in bangkok, Thailand have to say about the herbal hair treatment",
       th: "มาดูกันค่ะว่าลูกค้าของเราจะมีความคิดยังไงบ้างกับทรีทเม้นท์ของเรานะคะ",
     },
     id: "37MCsANIJ-k",

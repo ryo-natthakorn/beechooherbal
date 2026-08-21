@@ -30,7 +30,6 @@ import trixie1 from "../assets/images/reviews/trixie-1.jpeg";
 import trixie2 from "../assets/images/reviews/trixie-2.jpeg";
 import trixie3 from "../assets/images/reviews/trixie-3.jpeg";
 import trixie4 from "../assets/images/reviews/trixie-4.jpeg";
-import trixieScan from "../assets/images/reviews/trixie-scan.jpg";
 import trixiePhoto2 from "../assets/images/reviews/trixie-photo2.jpeg";
 
 export type Lang = "en" | "th";
@@ -359,10 +358,6 @@ export const REVIEWS: Review[] = [
       { src: trixie1, caption: { en: "Photo 1: Trixie when she first visited Bee Choo Ladies", th: "รูปภาพที่ 1: คุณทริกซี่ตอนมาพบบีชู เลดี้ ครั้งแรก" } },
       { src: trixiePhoto2, caption: { en: "Photo 2: Trixie when she first visited Bee Choo Ladies", th: "รูปภาพที่ 2: คุณทริกซี่ตอนมาพบบีชู เลดี้ ครั้งแรก" } },
     ],
-    scanImage: {
-      src: trixieScan,
-      alt: { en: "Hair scan of Trixie showing broken hairs.", th: "ภาพแสกนหนังศีรษะของคุณทริกซี่ เผยให้เห็นถึงเส้นผมที่ขาดตรงราก" },
-    },
     gallery: [
       { src: trixie1, alt: { en: "Trixie's scalp progress photo, 23 May 2017", th: "ภาพถ่ายเมื่อ 23 พฤษภาคม 2560" }, date: "2017-05-23" },
       { src: trixie2, alt: { en: "Trixie's scalp progress photo, 8 July 2017", th: "ภาพถ่ายเมื่อ 8 กรกฎาคม 2560" }, date: "2017-07-08" },

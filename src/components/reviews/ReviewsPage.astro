@@ -15,8 +15,9 @@
 //
 // Progress galleries (Karen, Trixie) render as a horizontal DATED strip — each
 // thumbnail labelled with its date so the progression reads left-to-right at a glance,
-// per Ryo's "organize them to make it neat and easy to understand". Wrapped in
-// <details> once a card has more than 4 images so the grid stays neat.
+// per Ryo's "organize them to make it neat and easy to understand". Always shown in
+// full (no accordion) per Ryo's 2026-08-21 feedback — progress should be visible
+// without a click.
 import { Image } from "astro:assets";
 import LeafDivider from "../LeafDivider.astro";
 import YouTubeEmbed from "../YouTubeEmbed.astro";
@@ -152,31 +153,14 @@ const visibleReviews = REVIEWS.filter((r) => r.heading[lang]);
               )}
 
               {review.gallery && review.gallery.length > 0 && (
-                review.gallery.length > 4 ? (
-                  <details class="group mt-4 overflow-hidden rounded-xl border border-brand-earth open:shadow-soft">
-                    <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-bold text-brand-green marker:content-none">
-                      {lang === "en" ? `See progress photos (${review.gallery.length})` : `ดูภาพความคืบหน้า (${review.gallery.length} ภาพ)`}
-                      <span aria-hidden="true" class="shrink-0 text-lg leading-none transition-transform duration-200 group-open:rotate-45">+</span>
-                    </summary>
-                    <div class="flex gap-3 overflow-x-auto px-4 pb-4">
-                      {review.gallery.map((img) => (
-                        <figure class="shrink-0">
-                          <Image src={img.src} alt={img.alt[lang] ?? ""} width={120} height={120} class="h-24 w-24 rounded-lg object-cover shadow-soft" />
-                          {img.date && <figcaption class="mt-1 text-center text-2xs text-brand-origin">{formatDate(img.date)}</figcaption>}
-                        </figure>
-                      ))}
-                    </div>
-                  </details>
-                ) : (
-                  <div class="mt-4 flex gap-3 overflow-x-auto">
-                    {review.gallery.map((img) => (
-                      <figure class="shrink-0">
-                        <Image src={img.src} alt={img.alt[lang] ?? ""} width={140} height={140} class="h-28 w-28 rounded-lg object-cover shadow-soft" />
-                        {img.date && <figcaption class="mt-1 text-center text-2xs text-brand-origin">{formatDate(img.date)}</figcaption>}
-                      </figure>
-                    ))}
-                  </div>
-                )
+                <div class="mt-4 flex gap-3 overflow-x-auto">
+                  {review.gallery.map((img) => (
+                    <figure class="shrink-0">
+                      <Image src={img.src} alt={img.alt[lang] ?? ""} width={140} height={140} class="h-28 w-28 rounded-lg object-cover shadow-soft" />
+                      {img.date && <figcaption class="mt-1 text-center text-2xs text-brand-origin">{formatDate(img.date)}</figcaption>}
+                    </figure>
+                  ))}
+                </div>
               )}
             </li>
           ))}
