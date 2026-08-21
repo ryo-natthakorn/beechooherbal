@@ -1,0 +1,91 @@
+---
+// src/components/faq/FaqPage.astro
+// The FAQ page body. Thin route shells set lang/title/description and render this.
+// Content is src/data/faq.ts, transcribed verbatim from the live site; see that
+// file's header for the two content fixes (Q9 junk image dropped, Q10 broken
+// cross-domain link dropped) and the accordion-vs-flat-list design decision.
+import { Image } from "astro:assets";
+import LeafDivider from "../LeafDivider.astro";
+import HerbalStrokes from "../HerbalStrokes.astro";
+import YouTubeEmbed from "../YouTubeEmbed.astro";
+import FaqSchema from "../FaqSchema.astro";
+import LocationsBand from "../LocationsBand.astro";
+import { FAQ_ITEMS, FAQ_HERO, FAQ_VIDEO, type Lang } from "../../data/faq";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+
+// Flatten to plain {question, answer} pairs for FAQPage JSON-LD — same strings
+// rendered visibly below, including the caution text where present (Q7), so the
+// schema always matches the DOM.
+const schemaItems = FAQ_ITEMS.map((item) => {
+  const answerParts = [...item.paragraphs[lang]];
+  if (item.caution) answerParts.push(item.caution.heading[lang], item.caution.text[lang]);
+  return { question: item.question[lang], answer: answerParts.join(" ") };
+});
+---
+
+<main id="main">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-brand-green py-16 text-center text-white md:py-20">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+    <div class="relative mx-auto max-w-3xl px-4 md:px-8">
+      <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} md:text-5xl`}>{FAQ_HERO.heading[lang]}</h1>
+      <p class="text-sm leading-relaxed text-white/90 md:text-base">{FAQ_HERO.intro[lang]}</p>
+    </div>
+  </section>
+
+  <!-- Video -->
+  <section class="bg-white py-16 md:py-24">
+    <div class="mx-auto max-w-3xl px-4 md:px-8">
+      <LeafDivider />
+      <YouTubeEmbed id={FAQ_VIDEO.id} title={FAQ_HERO.heading[lang]} />
+    </div>
+  </section>
+
+  <!-- FAQ accordion -->
+  <section class="bg-brand-earth/25 py-16 md:py-24">
+    <div class="mx-auto max-w-3xl px-4 md:px-8">
+      <LeafDivider />
+      <div class="flex flex-col gap-3">
+        {FAQ_ITEMS.map((item) => (
+          <details class="group overflow-hidden rounded-2xl border border-brand-earth bg-white open:shadow-soft">
+            <summary
+              class:list={[
+                serif,
+                "flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 font-bold text-brand-green marker:content-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green",
+              ]}
+            >
+              {item.question[lang]}
+              <span aria-hidden="true" class="shrink-0 text-xl leading-none transition-transform duration-200 group-open:rotate-45">+</span>
+            </summary>
+            <div class="flex flex-col gap-3 border-t border-brand-earth px-5 py-4">
+              {item.paragraphs[lang].map((p) => <p class="text-sm leading-relaxed text-brand-origin">{p}</p>)}
+
+              {item.image && (
+                <figure class="mx-auto mt-1 max-w-xs">
+                  <Image src={item.image.src} alt={item.image.alt[lang]} width={300} height={225} class="w-full rounded-lg shadow-soft" />
+                </figure>
+              )}
+
+              {item.caution && (
+                <div class="rounded-xl border border-brand-yellow/40 bg-brand-yellow/10 p-4">
+                  <p class="mb-1.5 text-sm font-bold text-brand-ink">{item.caution.heading[lang]}</p>
+                  <p class="text-sm leading-relaxed text-brand-origin">{item.caution.text[lang]}</p>
+                </div>
+              )}
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <FaqSchema {lang} items={schemaItems} />
+    </div>
+  </section>
+
+  <LocationsBand {lang} />
+</main>

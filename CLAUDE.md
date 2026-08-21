@@ -331,7 +331,9 @@ const description = "150 characters max. Specific to this page.";
 - [ ] Home
 - [ ] 7 treatment pages (hair loss, grey/white, oily, dandruff, damaged/dry, bacterial, postpartum)
 - [ ] About, Team, Locations, Privacy Policy
-- [ ] Testimonials, FAQ (+ "Herbal vs Hair Transplant"), Events & News
+- [ ] Testimonials, Events & News
+- [x] FAQ (+ "Herbal vs Hair Transplant")
+- [x] Treatment Cost in Thailand
 - [x] Products
 
 ### Phase 4 — Migration & SEO

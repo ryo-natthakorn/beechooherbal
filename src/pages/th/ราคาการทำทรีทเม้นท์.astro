@@ -1,0 +1,17 @@
+---
+// src/pages/th/ราคาการทำทรีทเม้นท์.astro
+// Thai Treatment Cost page — the twin of
+// src/pages/hair-loss-treatment-cost-in-thailand-prices-revealed.astro. Thin route
+// shell — see the EN twin's header for the full rationale.
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TreatmentCostPage from "../../components/treatment-cost/TreatmentCostPage.astro";
+import { COST_SEO } from "../../data/treatment-cost";
+
+const lang = "th" as const;
+const { title, description } = COST_SEO;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} {lang}>
+  <TreatmentCostPage {lang} />
+</BaseLayout>

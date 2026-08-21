@@ -1,0 +1,181 @@
+---
+// src/components/herbal-vs-transplant/HerbalVsTransplantPage.astro
+// The "Herbal Treatment vs Hair Transplant" page body. Thin route shells set
+// lang/title/description and render this. Content is
+// src/data/herbal-vs-transplant.ts, transcribed verbatim — see that file's header
+// for the confirmed content decision (2 negative competitor paragraphs dropped from
+// EN, matching what TH already ships).
+//
+// Long-form article, AboutPage.astro's section rhythm throughout. Sub-questions
+// render as static H3 + paragraph, NOT an accordion — deliberate contrast with the
+// FAQ page: this is a comparison article meant to be read straight through, not a
+// set of discrete, mutually-independent questions.
+import { Image } from "astro:assets";
+import LeafDivider from "../LeafDivider.astro";
+import HerbalStrokes from "../HerbalStrokes.astro";
+import YouTubeEmbed from "../YouTubeEmbed.astro";
+import LocationsBand from "../LocationsBand.astro";
+import {
+  TRANSPLANT_HERO,
+  TRANSPLANT_INTRO,
+  COMPARISON_SECTIONS,
+  CLINICS_WARNING,
+  NATURAL_ALTERNATIVE,
+  TRANSPLANT_VIDEO,
+  type Lang,
+} from "../../data/herbal-vs-transplant";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+---
+
+<main id="main">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-brand-green py-16 text-center text-white md:py-20">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+    <div class="relative mx-auto max-w-3xl px-4 md:px-8">
+      <h1 class={`${serif} text-3xl font-bold${balance} md:text-5xl`}>{TRANSPLANT_HERO.heading[lang]}</h1>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="bg-white py-16 md:py-24">
+    <div class="mx-auto max-w-3xl space-y-4 px-4 md:px-8">
+      <LeafDivider />
+      {TRANSPLANT_INTRO.paragraphs1[lang].map((p) => <p class="text-sm leading-relaxed text-brand-origin md:text-base">{p}</p>)}
+      <h2 class={`pt-4 ${serif} text-xl font-bold text-brand-green`}>{TRANSPLANT_INTRO.subheading[lang]}</h2>
+      {TRANSPLANT_INTRO.paragraphs2[lang].map((p) => <p class="text-sm leading-relaxed text-brand-origin md:text-base">{p}</p>)}
+      <h2 class={`pt-4 ${serif} text-xl font-bold text-brand-green`}>{TRANSPLANT_INTRO.closingHeading[lang]}</h2>
+    </div>
+  </section>
+
+  <!-- 4 comparison sections -->
+  {COMPARISON_SECTIONS.map((section, i) => (
+    <section class={`py-16 md:py-24 ${i % 2 === 0 ? "bg-brand-earth/25" : "bg-white"}`}>
+      <div class="mx-auto max-w-4xl px-4 md:px-8">
+        <LeafDivider />
+        <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+          {section.heading[lang]}
+        </h2>
+        {section.topImage && (
+          <Image
+            src={section.topImage.src}
+            alt={section.topImage.alt}
+            width={700}
+            height={394}
+            class="mx-auto mb-10 h-auto w-full max-w-lg rounded-xl shadow-soft"
+          />
+        )}
+        <div class="space-y-10">
+          {section.blocks.map((block) => (
+            <div>
+              <h3 class={`mb-3 ${serif} text-lg font-bold text-brand-green`}>{block.heading[lang]}</h3>
+              {block.image && (
+                <Image
+                  src={lang === "th" && block.image.srcTh ? block.image.srcTh : block.image.src}
+                  alt={block.image.alt}
+                  width={500}
+                  height={333}
+                  class="mx-auto mb-4 h-auto w-full max-w-sm rounded-xl shadow-soft"
+                />
+              )}
+              <div class="space-y-3 text-sm leading-relaxed text-brand-origin md:text-base">
+                {block.paragraphs[lang].map((p) => <p>{p}</p>)}
+              </div>
+              {block.list && block.list[lang].length > 0 && (
+                <ul class="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-brand-origin md:text-base">
+                  {block.list[lang].map((item) => <li>{item}</li>)}
+                </ul>
+              )}
+              {block.paragraphsAfterList && block.paragraphsAfterList[lang].length > 0 && (
+                <div class="mt-3 space-y-3 text-sm leading-relaxed text-brand-origin md:text-base">
+                  {block.paragraphsAfterList[lang].map((p) => <p>{p}</p>)}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- Clinics warning -->
+  <section class="bg-brand-earth/25 py-16 md:py-24">
+    <div class="mx-auto max-w-3xl px-4 md:px-8">
+      <LeafDivider />
+      <h2 data-mask-reveal class={`mb-6 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+        {CLINICS_WARNING.heading[lang]}
+      </h2>
+      {CLINICS_WARNING.paragraphs[lang].map((p) => <p class="text-sm leading-relaxed text-brand-origin md:text-base">{p}</p>)}
+    </div>
+  </section>
+
+  <!-- Natural Alternative -->
+  <section class="bg-white py-16 md:py-24">
+    <div class="mx-auto max-w-3xl px-4 md:px-8">
+      <LeafDivider />
+      <h2 data-mask-reveal class={`mb-6 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+        {NATURAL_ALTERNATIVE.heading[lang]}
+      </h2>
+      <div class="space-y-4 text-sm leading-relaxed text-brand-origin md:text-base">
+        {NATURAL_ALTERNATIVE.intro[lang].map((p) => <p>{p}</p>)}
+        {NATURAL_ALTERNATIVE.reputationLine[lang].map((p) => <p>{p}</p>)}
+      </div>
+
+      <Image
+        src={lang === "th" ? NATURAL_ALTERNATIVE.processImage.srcTh : NATURAL_ALTERNATIVE.processImage.srcEn}
+        alt={NATURAL_ALTERNATIVE.processImage.alt[lang]}
+        width={800}
+        height={450}
+        class="mx-auto my-8 h-auto w-full max-w-2xl rounded-xl shadow-soft"
+      />
+
+      <div class="space-y-4 text-sm leading-relaxed text-brand-origin md:text-base">
+        {NATURAL_ALTERNATIVE.closingIntro[lang].map((p) => <p>{p}</p>)}
+        {NATURAL_ALTERNATIVE.closingOutro[lang].map((p) => <p>{p}</p>)}
+      </div>
+
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        <div class="rounded-2xl border border-brand-earth bg-white p-6 text-left shadow-soft">
+          <h3 class={`mb-4 ${serif} text-lg font-bold text-brand-green`}>{NATURAL_ALTERNATIVE.benefitsHeading[lang]}</h3>
+          <ul class="space-y-2.5 text-sm leading-relaxed text-brand-origin">
+            {NATURAL_ALTERNATIVE.benefits[lang].map((item) => (
+              <li class="flex gap-2">
+                <span aria-hidden="true" class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-green" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="rounded-2xl border border-brand-earth bg-brand-earth/25 p-6 text-left shadow-soft">
+          <h3 class={`mb-4 ${serif} text-lg font-bold text-brand-green`}>{NATURAL_ALTERNATIVE.hardTruthsHeading[lang]}</h3>
+          <ul class="space-y-2.5 text-sm leading-relaxed text-brand-origin">
+            {NATURAL_ALTERNATIVE.hardTruths[lang].map((item) => (
+              <li class="flex gap-2">
+                <span aria-hidden="true" class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-green" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video -->
+  <section class="bg-brand-earth/25 py-16 text-center md:py-24">
+    <div class="mx-auto max-w-3xl px-4 md:px-8">
+      <LeafDivider />
+      <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+        {NATURAL_ALTERNATIVE.videoHeading[lang]}
+      </h2>
+      <YouTubeEmbed id={TRANSPLANT_VIDEO.id} title={NATURAL_ALTERNATIVE.videoHeading[lang]} />
+    </div>
+  </section>
+
+  <LocationsBand {lang} />
+</main>

@@ -1,0 +1,40 @@
+---
+// src/components/LocationsBand.astro
+// Shared closing "find a branch" band — banner image + button — extracted from
+// ProductsPage.astro's closing section so it isn't retyped on every new page. Reuses
+// the ALREADY-DOWNLOADED locations banner asset (products/ folder — all 3 legacy
+// pages this component now serves showed the exact same sitewide graphic). Replaces
+// each legacy page's own stale hardcoded outlet/phone list — same "stale contact
+// info -> one maintained CTA" fix already applied sitewide (Header.astro's
+// Call -> Find a Branch). ProductsPage.astro itself is left untouched (unrelated diff
+// on an already-shipped page).
+import { Image } from "astro:assets";
+import LeafDivider from "./LeafDivider.astro";
+import { HOME, type Lang } from "../data/home";
+import { UI } from "../i18n/ui";
+import locationsBannerEn from "../assets/images/products/locations-banner-en.jpg";
+import locationsBannerTh from "../assets/images/products/locations-banner-th.jpg";
+
+interface Props {
+  lang: Lang;
+  background?: "white" | "earth";
+}
+const { lang, background = "white" } = Astro.props;
+const ui = UI[lang];
+const bgClass = background === "earth" ? "bg-brand-earth/25" : "bg-white";
+const image = lang === "th" ? locationsBannerTh : locationsBannerEn;
+const alt = lang === "th" ? "แผนที่สาขา Bee Choo Herbal ทั่วประเทศไทย" : "Map of Bee Choo Herbal branches across Thailand";
+---
+
+<section class={`${bgClass} py-16 text-center md:py-24`}>
+  <div class="mx-auto max-w-2xl px-4 md:px-8">
+    <LeafDivider />
+    <Image src={image} alt={alt} width={800} height={566} class="mx-auto h-auto w-full rounded-2xl shadow-soft-lg" />
+    <a
+      href={HOME.locations.href[lang]}
+      class="btn-tactile mt-8 inline-flex min-h-11 items-center rounded-full bg-brand-green px-6 text-sm font-bold text-white hover:bg-brand-green-deep"
+    >
+      {ui.misc.viewLocations}
+    </a>
+  </div>
+</section>

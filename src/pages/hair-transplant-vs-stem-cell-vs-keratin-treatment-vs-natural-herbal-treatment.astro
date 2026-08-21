@@ -1,0 +1,18 @@
+---
+// src/pages/hair-transplant-vs-stem-cell-vs-keratin-treatment-vs-natural-herbal-treatment.astro
+// English "Herbal Treatment vs Hair Transplant" page — reached from the top nav
+// "FAQs" dropdown. Thin route shell. Content is src/data/herbal-vs-transplant.ts —
+// see that file's header for the confirmed content decision (2 negative competitor
+// paragraphs dropped, matching what the TH page already ships).
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HerbalVsTransplantPage from "../components/herbal-vs-transplant/HerbalVsTransplantPage.astro";
+import { TRANSPLANT_SEO } from "../data/herbal-vs-transplant";
+
+const lang = "en" as const;
+const { title, description } = TRANSPLANT_SEO;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} {lang}>
+  <HerbalVsTransplantPage {lang} />
+</BaseLayout>

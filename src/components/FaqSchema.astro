@@ -1,0 +1,29 @@
+---
+// src/components/FaqSchema.astro
+// FAQPage JSON-LD, following ServiceSchema.astro's exact pattern. Only the FAQ page
+// uses this — CLAUDE.md §7 scopes FAQPage schema singular; the Herbal-vs-Transplant
+// and Treatment-Cost pages are long-form articles, not genuine FAQs, and get no new
+// schema type (same conservative "don't invent schema CLAUDE.md doesn't ask for"
+// stance ServiceSchema.astro's own header documents).
+// `items` must carry the SAME strings rendered visibly on the page — Google requires
+// the schema text to match the visible text.
+interface Props {
+  lang: "en" | "th";
+  items: { question: string; answer: string }[];
+}
+
+const { lang, items } = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  inLanguage: lang,
+  mainEntity: items.map(({ question, answer }) => ({
+    "@type": "Question",
+    name: question,
+    acceptedAnswer: { "@type": "Answer", text: answer },
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

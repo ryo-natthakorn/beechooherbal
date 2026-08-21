@@ -1,0 +1,96 @@
+---
+// src/components/treatment-cost/TreatmentCostPage.astro
+// The Treatment Cost page body. Thin route shells set lang/title/description and
+// render this. See src/data/treatment-cost.ts's header for why this page is
+// substantially reworked rather than ported (dropped named-competitor price
+// comparison, replaced with Bee Choo's own current pricing).
+//
+// Pricing section reuses <PricingSection showCta> (the same image-only pricing
+// presentation used sitewide) AND additionally renders HOME.pricing.tiers as real,
+// crawlable text below it — this page's whole purpose is pricing clarity/search
+// visibility for "hair loss treatment cost" queries, unlike the teaser context
+// PricingSection was originally simplified for (see that component's own header:
+// Crispin chose image-only there, "keep it simple"). ⚠ Flagged for Crispin —
+// confirm this real-text addition, or revert to image-only to match that precedent.
+import LeafDivider from "../LeafDivider.astro";
+import HerbalStrokes from "../HerbalStrokes.astro";
+import YouTubeEmbed from "../YouTubeEmbed.astro";
+import LocationsBand from "../LocationsBand.astro";
+import PricingSection from "../home/PricingSection.astro";
+import { COST_HERO, COST_INTRO, MARKET_CONTEXT, HOW_IT_WORKS, COST_VIDEO, type Lang } from "../../data/treatment-cost";
+import { HOME } from "../../data/home";
+import { UI } from "../../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+const ui = UI[lang];
+const pricing = HOME.pricing;
+---
+
+<main id="main">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-brand-green py-16 text-center text-white md:py-20">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+    <div class="relative mx-auto max-w-3xl px-4 md:px-8">
+      <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} md:text-4xl`}>{COST_HERO.heading[lang]}</h1>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="bg-white py-16 md:py-24">
+    <div class="mx-auto max-w-2xl space-y-4 px-4 md:px-8">
+      <LeafDivider />
+      <p class="text-sm leading-relaxed text-brand-origin md:text-base">{COST_INTRO.hook[lang]}</p>
+      <p class="text-sm leading-relaxed text-brand-origin md:text-base">{COST_INTRO.transition[lang]}</p>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <PricingSection lang={lang} heading={ui.toc.pricing} background="earth" showCta />
+  <section class="bg-brand-earth/25 pb-16 md:pb-24">
+    <div class="mx-auto max-w-2xl px-4 md:px-8">
+      <ul class="grid gap-3 sm:grid-cols-2">
+        {pricing.tiers.map((tier) => (
+          <li class="flex items-center justify-between rounded-xl border border-brand-earth bg-white px-4 py-3 text-sm">
+            <span class="text-brand-origin">
+              {tier.lengthName[lang]}
+              {tier.cmRange[lang] && <span class="text-brand-origin/70"> ({tier.cmRange[lang]})</span>}
+            </span>
+            <span class="font-bold text-brand-green">
+              {tier.price} {pricing.currency[lang]}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Market context -->
+  <section class="bg-white py-16 md:py-24">
+    <div class="mx-auto max-w-2xl px-4 md:px-8">
+      <LeafDivider />
+      <h2 data-mask-reveal class={`mb-6 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+        {MARKET_CONTEXT.heading[lang]}
+      </h2>
+      <p class="text-sm leading-relaxed text-brand-origin md:text-base">{MARKET_CONTEXT.paragraph[lang]}</p>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="bg-brand-earth/25 py-16 text-center md:py-24">
+    <div class="mx-auto max-w-3xl px-4 md:px-8">
+      <LeafDivider />
+      <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>{ui.toc.howItWorks}</h2>
+      <div class="mb-8 space-y-4 text-left text-sm leading-relaxed text-brand-origin md:text-base">
+        {HOW_IT_WORKS.paragraphs[lang].map((p) => <p>{p}</p>)}
+      </div>
+      <YouTubeEmbed id={COST_VIDEO.id} title={ui.toc.howItWorks} />
+    </div>
+  </section>
+
+  <LocationsBand {lang} />
+</main>

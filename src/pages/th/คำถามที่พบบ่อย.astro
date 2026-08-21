@@ -1,0 +1,18 @@
+---
+// src/pages/th/คำถามที่พบบ่อย.astro
+// Thai FAQ page — the twin of src/pages/frequently-asked-questions.astro. Thin route
+// shell — see the EN twin's header for the full rationale.
+// Content is src/data/faq.ts, transcribed verbatim from the live site
+// (wp-json/wp/v2/pages/576, fetched live during this batch).
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import FaqPage from "../../components/faq/FaqPage.astro";
+import { FAQ_SEO } from "../../data/faq";
+
+const lang = "th" as const;
+const { title, description } = FAQ_SEO;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} {lang}>
+  <FaqPage {lang} />
+</BaseLayout>

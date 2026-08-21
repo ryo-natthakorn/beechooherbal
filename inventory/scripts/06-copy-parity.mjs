@@ -46,6 +46,9 @@ const PAGES = [
   ["team", "/team/", "ทีม"],
   ["reviews", "/reviews-and-testimonials-of-bee-choo-origin-treatment/", "รีวิวทรีทเม้นท์ที่ดี"],
   ["products", "/bee-choo-hair-care-products/", "แชมพูบีชูป้องกันผมร่วง"],
+  ["faq", "/frequently-asked-questions/", "คำถามที่พบบ่อย"],
+  ["herbal-vs-transplant", "/hair-transplant-vs-stem-cell-vs-keratin-treatment-vs-natural-herbal-treatment/", "สมุนไพร-vs-การปลูกผม"],
+  ["treatment-cost", "/hair-loss-treatment-cost-in-thailand-prices-revealed/", "ราคาการทำทรีทเม้นท์"],
 ];
 
 /**
@@ -89,7 +92,105 @@ const SKIP = [
   // Ryo asked (2026-08-21) to remove Trixie's zoomed hair-follicle scan photo entirely
   // (the "2018-10-13 side3" image referenced above) — its alt text is gone with it.
   [/^hair scan of trixie showing broken hairs\.$/i, "scan photo removed from the page on request; not a content drop"],
+
+  // --- FAQ page ---
+  // Both headings carry a trailing zero-width space (WordPress editing artefact),
+  // same class of issue as the Reviews page precedent above.
+  [/^does bee choo thailand provide hair cutting services\?/i, "legacy heading carries a trailing zero-width space (WordPress editing artefact); dropped, not real content"],
+  [/^what ingredients are in the herbal treatment\?/i, "legacy heading carries a trailing zero-width space (WordPress editing artefact); dropped, not real content"],
+  // Intro adapted: stale one-branch phone number (02-108-3938) replaced with the
+  // sitewide Find-a-Branch/Facebook/LINE CTA routing — see faq.ts header.
+  [/^in this section, we have listed down the most frequently asked questions/i, "adapted — stale phone number replaced with sitewide CTA routing, see faq.ts header"],
+  [/^ในส่วนนี้เราได้ตอบคำถามที่พบบ่อยจากลูกค้าของเรา/, "adapted — stale phone number replaced with sitewide CTA routing, see faq.ts header"],
+  // Q10: dropped trailing sentence linking to beechooladies.com.sg (Singapore sister
+  // site) — broken/off-brand cross-domain link, see faq.ts header.
+  [/^this will depend on your scalp condition/i, "trailing broken cross-domain link sentence dropped, see faq.ts header"],
+
+  // --- Herbal vs Hair Transplant page ---
+  // Confirmed content decision (2026-08-21): drop the 2 negative named-competitor
+  // paragraphs from EN so it matches what the TH page already ships. See
+  // herbal-vs-transplant.ts header.
+  [/^one of the clinics in thailand offering hair transplant treatments is the hh clinic/i, "negative named-competitor paragraph dropped per confirmed decision, matches what TH already ships"],
+  [/^another popular doctor for hair transplants is dr\. kongkiat laorwong/i, "negative named-competitor paragraph dropped per confirmed decision, matches what TH already ships"],
+  // Flat outlet name/phone lists (mid-page and closing) superseded by the shared
+  // <LocationsBand> component — same "stale hardcoded contact info -> one
+  // maintained CTA" fix already applied sitewide (Header.astro's Call -> Find a
+  // Branch). One regex covers every bare name, name+phone line, and the
+  // editor-sweep's concatenated blob variants, since all start with "Bee Choo <name>".
+  [
+    /^bee choo (udomsuk|ratchada|siam square|kallapaphruk|chaiyaphruek|saimai|chonburi|the crystal park ekamai raindra|sammakorn|prawet|chatuchak \(prachachuen\)|suksawat|korat|surat thani|chiang mai|phutthamonthon)/i,
+    "flat outlet name/phone list superseded by shared <LocationsBand> component",
+  ],
+  [/^currently, we have outlets at:$/i, "outlet list intro chrome, superseded by <LocationsBand>"],
+  [/^see all our locations here\s*!/i, "outlet list intro chrome, superseded by <LocationsBand>"],
+  [/^visit us at any of our outlets:$/i, "outlet list intro chrome, superseded by <LocationsBand>"],
+  [/^see them in detail here\s*!/i, "outlet list intro chrome, superseded by <LocationsBand>"],
+  [/^สถานที่ตั้งของแต่ละสาขาของ บีชู ในประเทศไทย$/, "TH-only closing heading for the outlet list, superseded by <LocationsBand>"],
+
+  // --- Treatment Cost page ---
+  // Confirmed content decision (2026-08-21): drop the entire named-competitor price
+  // comparison (stale 2006-2018 forum research, self-contradicted on Bee Choo's own
+  // price) — replaced with Bee Choo's own current pricing + a generic, de-identified
+  // market-context paragraph. See treatment-cost.ts header.
+  [/^do you find it common that many hair loss treatment salons\/clinics/i, "kept only the real hook sentence; the trailing 'who are the main providers' question set up the now-dropped comparison"],
+  [/^to save our readers time, effort and money/i, "stale 2018 forum-research methodology dropped, see treatment-cost.ts header"],
+  [/^to be reliable, we have attached proof from forums/i, "stale 2018 forum-research methodology dropped, see treatment-cost.ts header"],
+  [/^note: this page is only detailing prices and nothing else\.$/i, "chrome for the dropped comparison table"],
+  [/^6 most known hair loss treatment providers in thailand with costs revealed$/i, "heading for the dropped competitor comparison"],
+  [/^(svenson|harley st\. hair center|thai hair center|trisla|mamaherb|bee choo)\s*[-–]\s*[\d,]+\s*thb/i, "named-competitor price-list line, dropped per confirmed decision"],
+  [/^(svenson|harley st\. hair center|ไทยแฮร์เซ็นเตอร์|ตรีสลา|มะมาเฮิร์บ|bee choo บีชู)\s*[-–]\s*[\d,]+\s*บาท/i, "named-competitor price-list line, dropped per confirmed decision"],
+  [/^data collected from thai forums$/i, "caption on the dropped competitor price-comparison chart image"],
+  [/^\d\.\s*(mamma herb|harley st\. hair center|thai hair center clinic|bee choo herbal)$/i, "named-competitor section heading, dropped per confirmed decision"],
+  [/^chantamon poonnin, the owner started a new brand/i, "named-competitor (Mamma Herb) profile paragraph, dropped"],
+  [/^retrieved from (http|https):\/\/(www\.)?(mammaherb|trislathaiherbs|thaihaircenter)/i, "named-competitor citation link, dropped"],
+  [/^retrieved from https?:\/\/pantip\.com/i, "named-competitor forum-citation link, dropped"],
+  [/^retrieved from https?:\/\/topicstock\.pantip\.com/i, "named-competitor forum-citation link, dropped"],
+  [/^retrieved from https:\/\/www\.harleyhaircentre\.com/i, "named-competitor citation link, dropped"],
+  [/^retrieved from https:\/\/beechooherbal\.com\/th\/$/i, "old self-listing citation, dropped along with the stale competitor comparison"],
+  [/^hair loss treatment price estimated/i, "named-competitor estimated price line, dropped per confirmed decision"],
+  [/^hair fall, hair loss, gray hair, baldness, scalp dandruff/i, "named-competitor (Trisla) profile paragraph, dropped"],
+  [/^svenson hair used to have many outlets in thailand/i, "named-competitor (Svenson) profile paragraph, dropped"],
+  [/^for 30 years, harley st\. hair centre/i, "named-competitor (Harley St.) profile paragraph, dropped"],
+  [/^thai hair center is a hair loss, hair thinning clinic/i, "named-competitor (Thai Hair Center) profile paragraph, dropped"],
+  [/^hair loss treatment price: 940 thb per month/i, "named-competitor price line, dropped"],
+  [/^a recognised household brand name, established since 2000/i, "old Bee Choo self-listing paragraph inside the dropped competitor comparison, superseded by the page's own current pricing"],
+  [/^bee choo origin is the largest scalp\/hair loss treatment clinic/i, "old Bee Choo self-listing paragraph inside the dropped competitor comparison, superseded by the page's own current pricing"],
+  [/^hair loss treatment price: 600 - 1,100 thb/i, "old, self-contradicting Bee Choo price line, superseded by the page's own current HOME.pricing table"],
+  [/^ดูแลฟื้นฟู ผมร่วง ผมบาง ผมขาว ศีรษะล้าน/, "named-competitor (Trisla) profile paragraph, dropped"],
+  [/^สเวนสัน แฮร์ เซ็นเตอร์ เคยมีสาขาจำนวนมาก/, "named-competitor (Svenson) profile paragraph, dropped"],
+  [/^ฮาร์ลีย์ เอสที แฮร์ เซ็นเตอร์/, "named-competitor (Harley St.) profile paragraph, dropped"],
+  [/^ไทยแฮร์เซ็นเตอร์เป็นศูนย์รักษาเรื่องผมร่วงผมบาง/, "named-competitor (Thai Hair Center) profile paragraph, dropped"],
+  [/^ราคาค่ารักษา: 940 บาทต่อเดือน/, "named-competitor price line, dropped"],
+  [/^อ\.ฉันทมน พูลนิล/, "named-competitor (Mamma Herb) profile paragraph, dropped"],
+  [/^ราคาการทำทรีทเม้นท์โดยประมาณ/, "named-competitor estimated price line, dropped per confirmed decision"],
+  [/^บีชู ได้ก่อตั้งเมื่อปี 2000/, "old Bee Choo self-listing paragraph inside the dropped competitor comparison, superseded by the page's own current pricing"],
+  [/^บีชู ออริจิน เป็นทรีทเม้นท์ซาลอนและคลินิกรักษาผมร่วงที่ใหญ่ที่สุด/, "old Bee Choo self-listing paragraph inside the dropped competitor comparison, superseded by the page's own current pricing"],
+  [/^ราคาการทำทรีทเม้นท์\s*:\s*800\s*-1,200 บาท/, "old TH price line — the page's own current HOME.pricing table is used instead so the two can never drift apart"],
+  [/^คุณเคยสังเกตไหมว่าคุณไม่สามารถหาราคาการทำทรีทเม้นท์.*และวีธีเดียวที่คุณสามารถทราบ/, "kept only the real hook sentence, verbatim, as COST_INTRO.hook; the following stale-methodology sentences were dropped"],
+  [/^เพื่อช่วยให้ทุกท่านทั้งหลายไม่เสียดายเวลา/, "stale 2018 forum-research methodology dropped, see treatment-cost.ts header"],
+  [/^ราคาดังกล่าวคือราคาที่เราค้นเจอเมื่อวันที่ 25 กันยายน 2561/, "stale 2018 forum-research methodology dropped, see treatment-cost.ts header"],
+  // Heading swapped for the existing UI.toc.howItWorks string per the plan's
+  // decision to minimize new composed chrome (content itself is verbatim).
+  [/^how bee choo herbal's treatment works$/i, "heading reuses existing UI.toc.howItWorks string instead of a new composed heading; body copy is verbatim"],
+  [/^ทรีทเม้นท์ของบีชู เฮอร์เบิล ทำงานอย่างไร\?$/, "heading reuses existing UI.toc.howItWorks string instead of a new composed heading; body copy is verbatim"],
+  [/^watch our transparent treatment process$/i, "video section chrome, superseded by the generic YouTubeEmbed section heading"],
+  [/^bee choo thailand locations$/i, "outlet/phone chrome, superseded by <LocationsBand>"],
+  [/^(tawanna, bangkapi outlet|siam square one \(floor 6\)|ratchada soi 7 lane 4|the master @ bts udomsuk)$/i, "individual outlet name, superseded by <LocationsBand>"],
+  [/^tel: /i, "outlet phone number, superseded by <LocationsBand>"],
 ];
+
+/**
+ * Legacy video/GIF ids the build drops deliberately (same audit-trail rule as SKIP
+ * above, extended to the id-only check below since embeds carry no text).
+ */
+const SKIP_VIDEO_IDS = new Set([
+  // Two decorative GIPHY reaction GIFs embedded inside Treatment Cost's dropped
+  // stale-methodology/competitor-comparison section — same "GIPHY chrome, not page
+  // copy" reasoning as the `via giphy` SKIP entry above, just applied to the embed
+  // itself rather than its attribution text.
+  "37sogIrvhmVY6fdWVH",
+  "Zyv6MOrU1FOTlkgllN",
+]);
 
 const decode = (s) =>
   s
@@ -238,7 +339,9 @@ for (const [slug, enPath, thSlug] of PAGES) {
     // which is text-only and has the id's surrounding markup stripped) — the id itself
     // is what has to survive, wherever it lands (iframe src, or the click-to-load
     // facade's data-yt-id attribute).
-    const missingVideos = [...legacyVideoIds(legacy.content.rendered || legacy.content)].filter((id) => !html.includes(id));
+    const missingVideos = [...legacyVideoIds(legacy.content.rendered || legacy.content)].filter(
+      (id) => !html.includes(id) && !SKIP_VIDEO_IDS.has(id),
+    );
     if (missingVideos.length) {
       missingTotal += missingVideos.length;
       report.push(`\n  ${slug} ${lang.toUpperCase()} — ${missingVideos.length} legacy video/GIF id(s) not found in the build: ${missingVideos.join(", ")}`);

@@ -1,0 +1,17 @@
+---
+// src/pages/th/สมุนไพร-vs-การปลูกผม.astro
+// Thai "Herbal Treatment vs Hair Transplant" page — the twin of
+// src/pages/hair-transplant-vs-stem-cell-vs-keratin-treatment-vs-natural-herbal-treatment.astro.
+// Thin route shell — see the EN twin's header for the full rationale.
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import HerbalVsTransplantPage from "../../components/herbal-vs-transplant/HerbalVsTransplantPage.astro";
+import { TRANSPLANT_SEO } from "../../data/herbal-vs-transplant";
+
+const lang = "th" as const;
+const { title, description } = TRANSPLANT_SEO;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} {lang}>
+  <HerbalVsTransplantPage {lang} />
+</BaseLayout>

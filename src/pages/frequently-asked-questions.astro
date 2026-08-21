@@ -1,0 +1,17 @@
+---
+// src/pages/frequently-asked-questions.astro
+// English FAQ page — reached from the top nav "FAQs" dropdown. Thin route shell.
+// Content is src/data/faq.ts, transcribed verbatim from the live site
+// (wp-json/wp/v2/pages/181, fetched live during this batch).
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FaqPage from "../components/faq/FaqPage.astro";
+import { FAQ_SEO } from "../data/faq";
+
+const lang = "en" as const;
+const { title, description } = FAQ_SEO;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} {lang}>
+  <FaqPage {lang} />
+</BaseLayout>
