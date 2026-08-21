@@ -1,0 +1,56 @@
+---
+lang: 'en'
+slug: 'bee-choo-siam-grand-opening'
+title: 'Bee Choo Siam Grand Opening'
+excerpt: 'Bee Choo Siam Square held its grand opening ceremony on 12 August 2018 which was also Mother’s day in Thailand. This was indeed a very special day with numerous friends,'
+pubDate: '2018-08-12T11:30:43'
+modDate: '2019-04-11T07:42:57'
+hero: '../../../assets/images/events/siam-grand-opening/01-bee-choo-siam-grand-opening-12-aug-2018-pic22.jpg'
+heroAlt: 'Bee Choo Siam Grand Opening'
+gallery:
+  - src: '../../../assets/images/events/siam-grand-opening/02-bee-choo-siam-grand-opening-12-aug-2018-pic12.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 1'
+  - src: '../../../assets/images/events/siam-grand-opening/03-bee-choo-siam-grand-opening-12-aug-2018-pic11.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 2'
+  - src: '../../../assets/images/events/siam-grand-opening/04-bee-choo-siam-grand-opening-12-aug-2018-pic10.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 3'
+  - src: '../../../assets/images/events/siam-grand-opening/05-bee-choo-siam-grand-opening-12-aug-2018-pic9.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 4'
+  - src: '../../../assets/images/events/siam-grand-opening/06-bee-choo-siam-grand-opening-12-aug-2018-pic3.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 5'
+  - src: '../../../assets/images/events/siam-grand-opening/07-bee-choo-siam-grand-opening-12-aug-2018-pic4.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 6'
+  - src: '../../../assets/images/events/siam-grand-opening/08-bee-choo-siam-grand-opening-12-aug-2018-pic2.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 7'
+  - src: '../../../assets/images/events/siam-grand-opening/09-bee-choo-siam-grand-opening-12-aug-2018-pic5.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 8'
+  - src: '../../../assets/images/events/siam-grand-opening/10-bee-choo-siam-grand-opening-12-aug-2018-pic6.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 9'
+  - src: '../../../assets/images/events/siam-grand-opening/11-bee-choo-siam-grand-opening-12-aug-2018-pic7.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 10'
+  - src: '../../../assets/images/events/siam-grand-opening/12-bee-choo-siam-grand-opening-12-aug-2018-pic8.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 11'
+  - src: '../../../assets/images/events/siam-grand-opening/13-bee-choo-siam-grand-opening-12-aug-2018-pic1.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 12'
+  - src: '../../../assets/images/events/siam-grand-opening/14-bee-choo-siam-grand-opening-12-aug-2018-pic13.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 13'
+  - src: '../../../assets/images/events/siam-grand-opening/15-bee-choo-siam-grand-opening-12-aug-2018-pic14.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 14'
+  - src: '../../../assets/images/events/siam-grand-opening/16-bee-choo-siam-grand-opening-12-aug-2018-pic15.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 15'
+  - src: '../../../assets/images/events/siam-grand-opening/17-bee-choo-siam-grand-opening-12-aug-2018-pic16.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 16'
+  - src: '../../../assets/images/events/siam-grand-opening/18-bee-choo-siam-grand-opening-12-aug-2018-pic17.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 17'
+  - src: '../../../assets/images/events/siam-grand-opening/19-bee-choo-siam-grand-opening-12-aug-2018-pic18.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 18'
+  - src: '../../../assets/images/events/siam-grand-opening/20-bee-choo-siam-grand-opening-12-aug-2018-pic19.jpg'
+    alt: 'Bee Choo Siam Grand Opening — photo 19'
+wpId: 2109
+wpCategories:
+  - 16
+---
+
+Bee Choo Siam Square held its grand opening ceremony on 12 August 2018 which was also Mother’s day in Thailand. This was indeed a very special day with numerous friends, family and customers joining us in celebrating this special day for Team JNJ.
+
+Here are some of the pictures for that eventful day!:
