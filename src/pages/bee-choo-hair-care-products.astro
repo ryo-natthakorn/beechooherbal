@@ -1,0 +1,17 @@
+---
+// src/pages/bee-choo-hair-care-products.astro
+// English Products page — reached from the top nav "Products" item. Thin route shell.
+// Content is src/data/products.ts, transcribed verbatim from the live site
+// (wp-json/wp/v2/pages/327, fetched live during this batch).
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProductsPage from "../components/products/ProductsPage.astro";
+import { PRODUCTS_SEO } from "../data/products";
+
+const lang = "en" as const;
+const { title, description } = PRODUCTS_SEO;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} {lang}>
+  <ProductsPage {lang} />
+</BaseLayout>

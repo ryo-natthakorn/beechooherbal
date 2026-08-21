@@ -808,3 +808,16 @@
   border-color: var(--color-brand-green);
   color: #fff;
 }
+
+/* Products page — sticky category subnav. top offset is the header's own height
+   (min-h-11 content + py-3 (0.75rem*2) + 1px border-b), same value the treatment
+   pages' sticky TOC bar already computes below the header — see the note there. */
+.products-nav {
+  top: calc(4.25rem + 1px);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+/* Anchor jumps must clear BOTH the sticky header and the sticky chip bar beneath it. */
+.products-section {
+  scroll-margin-top: calc(4.25rem + 1px + 3.5rem);
+}

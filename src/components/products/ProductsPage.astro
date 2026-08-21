@@ -1,0 +1,275 @@
+---
+// src/components/products/ProductsPage.astro
+// The Products page body. Thin route shells (src/pages/bee-choo-hair-care-products.astro
+// + its TH twin) set only lang/title/description and render this. Content lives in
+// src/data/products.ts, transcribed verbatim from the live site — see that file's
+// header for the deliberate presentation-only changes (Ginger Lime reorder, Title
+// Case on one heading, signature/tagline extraction) kept separate from content.
+//
+// Layout per Ryo's "Categorised and restyle, make this page more interesting, neat
+// and organized" brief: the 4 legacy category headings become 4 real sections (not a
+// filter — 18 products split 7/2/6/3 would hide 16 of 18 behind a click for no
+// reason) with a sticky anchor-chip subnav for quick jumps. Chips are plain anchors
+// so nothing is ever hidden from a crawler or a browser without CSS support.
+//
+// The legacy page repeats its Facebook CTA 3x (top, after Conditioners, after Hair
+// Tonics); reproduced as hero + mid band (after Conditioners) + closing band (moved
+// to the very end, after Spas, so the page closes on a conversion action). No
+// separate LINE button here — Footer.astro already carries Call/Facebook/LINE on
+// every page (CLAUDE.md §2); a second LINE control would be redundant chrome, the
+// same call treatment-pages.ts makes for the legacy LINE "Add Friend" badge.
+import { Image } from "astro:assets";
+import LeafDivider from "../LeafDivider.astro";
+import HerbalStrokes from "../HerbalStrokes.astro";
+import { CATEGORIES, PRODUCTS, PRODUCTS_INTRO, PRODUCTS_CTA, LOCATIONS_BANNER, PRODUCTS_SEO, type Lang, type CategoryId } from "../../data/products";
+import { UI } from "../../i18n/ui";
+import { HOME } from "../../data/home";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+const ui = UI[lang];
+
+const byCategory = (id: CategoryId) => PRODUCTS.filter((p) => p.category === id && p.family !== "amino");
+const aminoTrio = PRODUCTS.filter((p) => p.family === "amino");
+const shampoos = CATEGORIES[0];
+const conditioners = CATEGORIES[1];
+const tonics = CATEGORIES[2];
+const spas = CATEGORIES[3];
+
+// "*Signature Product*" / "*ผลิตภัณฑ์ตัวเด่นของร้าน*" -> "Signature Product" for the badge.
+const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
+---
+
+<main id="main">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-brand-green py-16 text-center text-white md:py-20">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+    <div class="relative mx-auto max-w-3xl px-4 md:px-8">
+      <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} md:text-5xl`}>{PRODUCTS_SEO.title[lang]?.split(" - ")[0]}</h1>
+      <div class="space-y-3 text-sm leading-relaxed text-white/90 md:text-base">
+        {PRODUCTS_INTRO.paragraphs[lang]!.map((p) => <p>{p}</p>)}
+      </div>
+      <a
+        href={PRODUCTS_CTA.href}
+        target="_blank"
+        rel="noopener"
+        class="btn-tactile mt-8 inline-flex min-h-11 items-center rounded-full bg-brand-yellow px-6 text-sm font-bold text-brand-ink hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+      >
+        {PRODUCTS_CTA.label[lang]}
+      </a>
+    </div>
+  </section>
+
+  <!-- Sticky category subnav -->
+  <nav aria-label={ui.misc.onThisPage} class="products-nav sticky z-20 border-b border-brand-earth bg-white/95">
+    <div class="mx-auto flex max-w-6xl gap-2 overflow-x-auto px-4 py-3 md:px-8">
+      {CATEGORIES.map((c) => (
+        <a
+          href={`#${c.id}`}
+          class="btn-tactile shrink-0 rounded-full border border-brand-earth px-4 py-2 text-sm font-bold whitespace-nowrap text-brand-green hover:bg-brand-green-mist/50"
+        >
+          {c.chipLabel}
+        </a>
+      ))}
+    </div>
+  </nav>
+
+  <!-- Bee Choo Shampoos -->
+  <section id={shampoos.id} class="products-section bg-white py-16 md:py-24">
+    <div class="mx-auto max-w-6xl px-4 md:px-8">
+      <LeafDivider />
+      <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>{shampoos.heading}</h2>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {byCategory(shampoos.id).map((product) => (
+          <article class="reveal flex flex-col overflow-hidden rounded-2xl border border-brand-earth bg-white shadow-soft">
+            <div class="flex h-48 items-center justify-center bg-brand-earth/20 p-4">
+              <Image src={product.image} alt={product.alt[lang]} width={300} height={300} class="max-h-40 w-auto object-contain" />
+            </div>
+            <div class="flex flex-1 flex-col p-5">
+              <h3 class={`mb-2 ${serif} text-base font-bold text-brand-green`}>{product.name[lang]}</h3>
+              <div class="flex-1 space-y-2 text-xs leading-relaxed text-brand-origin">
+                {product.paragraphs[lang]?.map((p) => <p>{p}</p>)}
+              </div>
+              {product.note?.[lang] && <p class="mt-3 text-2xs text-brand-origin/80 italic">{product.note[lang]}</p>}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- Amino trio — matched family, own row -->
+      <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {aminoTrio.map((product) => (
+          <article class="reveal flex flex-col overflow-hidden rounded-2xl border border-brand-earth bg-white shadow-soft">
+            <div class="flex h-48 items-center justify-center bg-brand-green-mist/30 p-4">
+              <Image src={product.image} alt={product.alt[lang]} width={300} height={300} class="max-h-40 w-auto object-contain" />
+            </div>
+            <div class="flex flex-1 flex-col p-5">
+              <h3 class={`mb-2 ${serif} text-base font-bold text-brand-green`}>{product.name[lang]}</h3>
+              <div class="space-y-1 text-xs leading-relaxed text-brand-origin">
+                {product.paragraphs[lang]?.map((p) => <p>{p}</p>)}
+              </div>
+              {product.taglines?.[lang] && (
+                <div class="mt-auto flex flex-wrap gap-1.5 pt-3">
+                  {product.taglines[lang]!.map((tag) => (
+                    <span class="rounded-full bg-brand-green-mist px-2.5 py-1 text-2xs font-bold text-brand-green-deep">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Bee Choo Conditioners -->
+  <section id={conditioners.id} class="products-section bg-brand-earth/25 py-16 md:py-24">
+    <div class="mx-auto max-w-6xl px-4 md:px-8">
+      <LeafDivider />
+      <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>{conditioners.heading}</h2>
+      <div class="mx-auto grid max-w-3xl gap-6 sm:grid-cols-2">
+        {byCategory(conditioners.id).map((product) => (
+          <article class="reveal flex flex-col overflow-hidden rounded-2xl border border-brand-earth bg-white shadow-soft">
+            <div class="flex h-56 items-center justify-center bg-brand-earth/20 p-6">
+              <Image src={product.image} alt={product.alt[lang]} width={400} height={400} class="max-h-48 w-auto object-contain" />
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <h3 class={`mb-3 ${serif} text-lg font-bold text-brand-green`}>{product.name[lang]}</h3>
+              <div class="flex-1 space-y-3 text-sm leading-relaxed text-brand-origin">
+                {product.paragraphs[lang]?.map((p) => <p>{p}</p>)}
+              </div>
+              {product.note?.[lang] && <p class="mt-3 text-2xs text-brand-origin/80 italic">{product.note[lang]}</p>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Mid CTA band (legacy position: after Conditioners) -->
+  <section class="relative overflow-hidden bg-brand-green py-12 text-center text-white">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+    <div class="relative mx-auto max-w-2xl px-4 md:px-8">
+      <a
+        href={PRODUCTS_CTA.href}
+        target="_blank"
+        rel="noopener"
+        class="btn-tactile inline-flex min-h-11 items-center rounded-full bg-brand-yellow px-6 text-sm font-bold text-brand-ink hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+      >
+        {PRODUCTS_CTA.label[lang]}
+      </a>
+    </div>
+  </section>
+
+  <!-- Bee Choo Hair Tonics -->
+  <section id={tonics.id} class="products-section bg-white py-16 md:py-24">
+    <div class="mx-auto max-w-6xl px-4 md:px-8">
+      <LeafDivider />
+      <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>{tonics.heading}</h2>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {byCategory(tonics.id).map((product) => (
+          <article
+            class:list={[
+              "reveal flex flex-col overflow-hidden rounded-2xl border bg-white shadow-soft",
+              product.signatureLine ? "border-brand-yellow/70 shadow-soft-lg ring-1 ring-brand-yellow/40" : "border-brand-earth",
+            ]}
+          >
+            <div class="flex h-56 items-center justify-center bg-brand-earth/20 p-6">
+              <Image src={product.image} alt={product.alt[lang]} width={400} height={400} class="max-h-48 w-auto object-contain" />
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              {product.signatureLine?.[lang] && (
+                <span class="mb-3 inline-flex w-fit items-center rounded-full bg-brand-yellow px-2.5 py-1 text-2xs font-bold text-brand-ink">
+                  {stripAsterisks(product.signatureLine[lang]!)}
+                </span>
+              )}
+              <h3 class={`mb-3 ${serif} text-lg font-bold text-brand-green`}>{product.name[lang]}</h3>
+              {product.taglines?.[lang] && (
+                <div class="mb-3 flex flex-wrap gap-1.5">
+                  {product.taglines[lang]!.map((tag) => (
+                    <span class="rounded-full bg-brand-green-mist px-2.5 py-1 text-2xs font-bold text-brand-green-deep">{tag}</span>
+                  ))}
+                </div>
+              )}
+              <div class="flex-1 space-y-3 text-sm leading-relaxed text-brand-origin">
+                {product.paragraphs[lang]?.map((p) => <p>{p}</p>)}
+              </div>
+              {product.note?.[lang] && <p class="mt-3 text-2xs text-brand-origin/80 italic">{product.note[lang]}</p>}
+              {product.booster?.line[lang] && (
+                <a
+                  href={product.booster.href[lang]}
+                  class="btn-tactile mt-4 block rounded-xl bg-brand-green-mist/50 p-3 text-xs leading-relaxed text-brand-green-deep hover:bg-brand-green-mist"
+                >
+                  {product.booster.line[lang]}
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Bee Choo Spas, Serum and Cremes -->
+  <section id={spas.id} class="products-section bg-brand-earth/25 py-16 md:py-24">
+    <div class="mx-auto max-w-6xl px-4 md:px-8">
+      <LeafDivider />
+      <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>{spas.heading}</h2>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {byCategory(spas.id).map((product) => (
+          <article class="reveal flex flex-col overflow-hidden rounded-2xl border border-brand-earth bg-white shadow-soft">
+            <div class="flex h-56 items-center justify-center bg-brand-earth/20 p-6">
+              <Image src={product.image} alt={product.alt[lang]} width={400} height={400} class="max-h-48 w-auto object-contain" />
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <h3 class={`mb-3 ${serif} text-lg font-bold text-brand-green`}>{product.name[lang]}</h3>
+              <div class="flex-1 space-y-3 text-sm leading-relaxed text-brand-origin">
+                {product.paragraphs[lang]?.map((p) => <p>{p}</p>)}
+              </div>
+              {product.taglines?.[lang] && (
+                <div class="mt-3 flex flex-wrap gap-1.5">
+                  {product.taglines[lang]!.map((tag) => (
+                    <span class="rounded-full bg-brand-green-mist px-2.5 py-1 text-2xs font-bold text-brand-green-deep">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing CTA band (legacy 3rd CTA, moved to page end so it closes on conversion) -->
+  <section class="relative overflow-hidden bg-brand-green py-16 text-center text-white md:py-20">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+    <div class="relative mx-auto max-w-2xl px-4 md:px-8">
+      <a
+        href={PRODUCTS_CTA.href}
+        target="_blank"
+        rel="noopener"
+        class="btn-tactile inline-flex min-h-11 items-center rounded-full bg-brand-yellow px-6 text-sm font-bold text-brand-ink hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+      >
+        {PRODUCTS_CTA.label[lang]}
+      </a>
+    </div>
+  </section>
+
+  <!-- Locations band -->
+  <section class="bg-white py-16 text-center md:py-24">
+    <div class="mx-auto max-w-2xl px-4 md:px-8">
+      <LeafDivider />
+      <Image src={LOCATIONS_BANNER.image[lang]} alt={LOCATIONS_BANNER.alt[lang]} width={800} height={566} class="mx-auto h-auto w-full rounded-2xl shadow-soft-lg" />
+      <a
+        href={HOME.locations.href[lang]}
+        class="btn-tactile mt-8 inline-flex min-h-11 items-center rounded-full bg-brand-green px-6 text-sm font-bold text-white hover:bg-brand-green-deep"
+      >
+        {ui.misc.viewLocations}
+      </a>
+    </div>
+  </section>
+</main>

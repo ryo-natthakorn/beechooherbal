@@ -45,6 +45,7 @@ const PAGES = [
   ["about", "/about/", "เกี่ยวกับบีชู"],
   ["team", "/team/", "ทีม"],
   ["reviews", "/reviews-and-testimonials-of-bee-choo-origin-treatment/", "รีวิวทรีทเม้นท์ที่ดี"],
+  ["products", "/bee-choo-hair-care-products/", "แชมพูบีชูป้องกันผมร่วง"],
 ];
 
 /**
@@ -85,6 +86,9 @@ const SKIP = [
     /^2017-05-23 \(top\) 2017-07-08 \(top\) 2017-07-08 2017-08-19 \(1\) 2017-12-23 2017-05-31 2017-07-22 2017-09-15$/i,
     "legacy EN gallery has 8 photos; ours shows the same 4 dated milestones TH uses (deliberate curation, not a content drop — flagged as an open item to expand if Crispin wants full EN parity)",
   ],
+  // Ryo asked (2026-08-21) to remove Trixie's zoomed hair-follicle scan photo entirely
+  // (the "2018-10-13 side3" image referenced above) — its alt text is gone with it.
+  [/^hair scan of trixie showing broken hairs\.$/i, "scan photo removed from the page on request; not a content drop"],
 ];
 
 const decode = (s) =>
