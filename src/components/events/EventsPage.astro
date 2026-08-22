@@ -2,16 +2,29 @@
 // src/components/events/EventsPage.astro
 // The Events & News index body. Thin route shells set lang/title/description.
 //
+// Presented as a centre-rail alternating TIMELINE, not a grid — these 18 EN / 15 TH
+// posts are dated milestones, and read in sequence they tell one story (Bee Choo going
+// from its first Siam Square shop in Aug 2018 to OUTLETS.length branches today). The
+// grid version told you "some news items happened"; this makes the growth itself the
+// message. Chosen by Ryo over a left-rail variant, with the mobile-collapse trade-off
+// (see .events-timeline in global.css) already accepted.
+//
 // Shows EVERY post, grouped by year. The legacy page renders only six of its eighteen
 // — an Elementor `posts.cards` default, not an editorial choice — which left twelve
 // English events reachable only through /category/events-news/. See src/data/events.ts
 // for that and for the category fix this batch exists to make.
 //
+// EventCard.astro is used completely unmodified here — see its own file. That is
+// deliberate: its click-overlay contract, its full-DOM (copy-parity-anchored) excerpt,
+// and its `mt-auto` flex pin all survive by construction, so this redesign cannot
+// regress anything copy-parity already checks.
+//
 // Year grouping instead of pagination or a filter: eighteen items across seven years
 // is small enough that hiding any of them would cost crawlability for no real gain.
-// Everything stays in the DOM, and there is no JavaScript.
+// Everything stays in the DOM, and there is no JavaScript — the rail is pure CSS
+// (.events-timeline in global.css), never a scroll-driven fill (see that file's note
+// on why animation-timeline: scroll() was removed once already).
 import { getCollection } from "astro:content";
-import LeafDivider from "../LeafDivider.astro";
 import HerbalStrokes from "../HerbalStrokes.astro";
 import LocationsBand from "../LocationsBand.astro";
 import EventCard from "./EventCard.astro";
@@ -84,6 +97,35 @@ for (const post of posts) {
 }
 
 const locationsHref = lang === "th" ? "/th/สถานที่ตั้งของร้านค้า/" : "/locations/";
+
+// Bare digits pulled from the SAME formatter the year markers use, so the summary
+// sentence can never drift from them — and stays Buddhist-era in Thai (2561, not
+// "พ.ศ. 2561" mid-sentence, which yearFormatter.format() would produce).
+const yearDigits = (d: Date) => yearFormatter.formatToParts(d).find((p) => p.type === "year")?.value ?? String(d.getFullYear());
+
+// `posts` is sorted newest-first, so the LAST entry is the oldest — the year the
+// story starts. OUTLETS.length is the one branch count in the codebase that
+// `npm run locations-parity` keeps honest against the live site.
+const oldest = posts.at(-1);
+const summary = oldest ? EVENTS_HERO.summary[lang](OUTLETS.length, yearDigits(oldest.data.pubDate)) : "";
+
+// Timeline placement, resolved here rather than with :nth-child() in CSS.
+//   row  — 1-based index WITHIN this year's <ol>, emitted inline as --r. Every entry
+//          owning its own grid row is what stops a long Thai title on one side from
+//          pushing the card opposite it (see .tl-row in global.css), and it is also
+//          what guarantees visual order == DOM order for accessibility.
+//   side — alternates GLOBALLY across year boundaries, not per <ol>. :nth-child()
+//          restarts at each year group and would put two consecutive cards on the
+//          same side at every seam.
+let seq = 0;
+const timeline = groups.map((group) => ({
+  ...group,
+  rows: group.posts.map((post, j) => ({
+    post,
+    row: j + 1,
+    side: seq++ % 2 === 0 ? "tl-left" : "tl-right",
+  })),
+}));
 ---
 
 <main id="main">
@@ -93,13 +135,16 @@ const locationsHref = lang === "th" ? "/th/สถานที่ตั้งข�
     <div class="relative mx-auto max-w-3xl px-4 md:px-8">
       <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} md:text-5xl`}>{EVENTS_HERO.heading[lang]}</h1>
       <p class="text-sm leading-relaxed text-white/90 md:text-base">{EVENTS_HERO.intro[lang]}</p>
+      {summary && <p class={`mt-3 text-sm leading-relaxed font-bold text-brand-yellow${balance} md:text-base`}>{summary}</p>}
     </div>
   </section>
 
-  <!-- Year jump chips -->
+  <!-- Year jump chips. `.events-nav` shares the real header-height offset with
+       `.products-nav` (see global.css) — the previous `top-16` (4rem) was
+       0.25rem + 1px short, so a jump tucked the year pill under the header. -->
   {
     groups.length > 1 && (
-      <nav aria-label={ui.misc.onThisPage} class="sticky top-16 z-20 border-b border-brand-earth bg-white/95 backdrop-blur">
+      <nav aria-label={ui.misc.onThisPage} class="events-nav sticky z-20 border-b border-brand-earth bg-white/95 backdrop-blur">
         <div class="mx-auto flex max-w-6xl flex-wrap justify-center gap-2 px-4 py-3 md:px-8">
           {groups.map((g) => (
             <a
@@ -114,38 +159,61 @@ const locationsHref = lang === "th" ? "/th/สถานที่ตั้งข�
     )
   }
 
-  <!-- Posts, newest year first -->
-  {
-    groups.map((group, i) => (
-      <section id={`year-${group.id}`} class={`${i % 2 === 0 ? "bg-white" : "bg-brand-earth/25"} scroll-mt-28 py-14 md:py-20`}>
-        <div class="mx-auto max-w-6xl px-4 md:px-8">
-          <LeafDivider />
-          <h2 class={`mb-8 text-center ${serif} text-2xl font-bold text-brand-green md:text-3xl`} data-mask-reveal>
-            {group.label}
-          </h2>
-          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {group.posts.map((post) => {
-              const outlet = post.data.outlet ? outletBySlug.get(post.data.outlet) : undefined;
-              return (
-                <EventCard
-                  {lang}
-                  href={`/${post.data.slug}/`}
-                  title={post.data.title}
-                  excerpt={post.data.excerpt}
-                  dateLabel={dateFormatter.format(post.data.pubDate)}
-                  isoDate={post.data.pubDate.toISOString()}
-                  hero={post.data.hero}
-                  heroAlt={post.data.heroAlt}
-                  branch={outlet ? (lang === "th" ? outlet.nameTh : outlet.name) : undefined}
-                  branchHref={outlet ? locationsHref : undefined}
-                />
-              );
-            })}
-          </div>
-        </div>
-      </section>
-    ))
-  }
+  <!-- The timeline. One section, one background — the rail (.events-timeline::before
+       in global.css) is a single continuous line and cannot cross full-bleed
+       alternating bands, so the per-year alternation and LeafDivider both go. -->
+  <section class="bg-brand-earth/25 py-14 md:py-20">
+    <div class="mx-auto max-w-5xl px-4 md:px-8">
+      {/* No horizontal padding on .events-timeline itself: `left: 50%` in CSS is only
+          the true centre when the containing block's padding box equals its content
+          box, so the page gutter has to live on this wrapper, not on the rail's own
+          container. */}
+      <div class="events-timeline">
+        {
+          timeline.map((group) => (
+            <Fragment>
+              <h2 id={`year-${group.id}`} class={`tl-year reveal ${serif} text-xl font-bold text-brand-green md:text-2xl`}>
+                {group.label}
+              </h2>
+              {/* role="list": Tailwind's Preflight sets list-style:none on every <ol>,
+                  which drops list semantics in Safari/VoiceOver. <ol>, not <ul>,
+                  because the sequence IS the content — strict reverse-chronological
+                  order, and visual order can never diverge from it (see .tl-row). */}
+              <ol role="list" class="tl-list">
+                {
+                  group.rows.map(({ post, row, side }) => {
+                    const outlet = post.data.outlet ? outletBySlug.get(post.data.outlet) : undefined;
+                    return (
+                      <li class={`tl-row ${side}`} style={`--r:${row}`}>
+                        {/* The node lives OUTSIDE <article>, in the <li> — so
+                            EventCard's after:inset-0 click overlay (containing block =
+                            the relative <article>) cannot swallow it, and the card's
+                            own overflow-hidden cannot clip it. Purely decorative, so
+                            not being a link/focusable costs nothing. */}
+                        <span aria-hidden="true" class="tl-node" />
+                        <EventCard
+                          {lang}
+                          href={`/${post.data.slug}/`}
+                          title={post.data.title}
+                          excerpt={post.data.excerpt}
+                          dateLabel={dateFormatter.format(post.data.pubDate)}
+                          isoDate={post.data.pubDate.toISOString()}
+                          hero={post.data.hero}
+                          heroAlt={post.data.heroAlt}
+                          branch={outlet ? (lang === "th" ? outlet.nameTh : outlet.name) : undefined}
+                          branchHref={outlet ? locationsHref : undefined}
+                        />
+                      </li>
+                    );
+                  })
+                }
+              </ol>
+            </Fragment>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
-  <LocationsBand {lang} background={groups.length % 2 === 0 ? "white" : "earth"} />
+  <LocationsBand {lang} background="white" />
 </main>

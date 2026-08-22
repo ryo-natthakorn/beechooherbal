@@ -62,8 +62,13 @@ export const EVENTS_SEO = {
     en: "Events, News Release & Promotions - Bee Choo Herbal",
     th: "เหตุการณ์และข่าว - Bee Choo Herbal",
   },
+  // ⚠ EN previously hardcoded "16 branches nationwide" here. OUTLETS.length is 17
+  // (Ayutthaya was added 2026-08-20) and the timeline below now shows a derived,
+  // locations-parity-checked count on the page itself — a second, stale number in
+  // the meta description would contradict it. Dropped rather than updated to a
+  // literal, since the same drift would just recur at the next outlet opening.
   description: {
-    en: "Grand openings, new outlets and news from Bee Choo Herbal Thailand — 16 branches nationwide offering herbal scalp and hair-loss treatment.",
+    en: "Grand openings, new outlets and news from Bee Choo Herbal Thailand — herbal scalp and hair-loss treatment, nationwide.",
     th: "ข่าวสารการเปิดสาขาใหม่และกิจกรรมของ Bee Choo Herbal ประเทศไทย ทรีทเม้นท์สมุนไพรดูแลหนังศีรษะและปัญหาผมร่วง",
   },
 } as const;
@@ -82,6 +87,24 @@ export const EVENTS_HERO = {
   intro: {
     en: "News from Bee Choo Herbal Thailand — grand openings, new outlets, and the moments we've shared with our customers along the way.",
     th: "ข่าวสารจาก Bee Choo Herbal ประเทศไทย ทั้งการเปิดสาขาใหม่ และช่วงเวลาดี ๆ ที่เราได้ร่วมแบ่งปันกับลูกค้าของเรา",
+  },
+  /** ⚠ COMPOSED — one line under `intro` framing the timeline below as a growth
+   *  story rather than a bare list of dates. Needs sign-off, same as `intro` above.
+   *
+   *  Nothing here is a literal. Three sources currently disagree about the branch
+   *  count — locations.ts has 17 (Ayutthaya, added 2026-08-20), the newest event
+   *  post's own body says "our 16th outlet", CLAUDE.md §2 says 16 — so the only
+   *  number that cannot go stale or overclaim is one derived from OUTLETS.length,
+   *  which `npm run locations-parity` re-verifies against the live site on every
+   *  run. `sinceYear` likewise comes from the OLDEST post's own pubDate (2018 in
+   *  both languages), not a literal. See EventsPage.astro for how both are computed
+   *  and passed in — `sinceYear` arrives as bare digits (2018 / 2561 Buddhist era),
+   *  matching the years the Thai post titles themselves quote. */
+  summary: {
+    en: (outlets: number, sinceYear: string) =>
+      `From ${sinceYear} to today — the openings, milestones and moments behind Bee Choo Herbal's ${outlets} branches across Thailand.`,
+    th: (outlets: number, sinceYear: string) =>
+      `ตั้งแต่ปี ${sinceYear} จนถึงวันนี้ เรื่องราวการเปิดสาขาและช่วงเวลาสำคัญ กว่าจะเป็น Bee Choo Herbal ${outlets} สาขาทั่วประเทศไทย`,
   },
 } as const;
 
