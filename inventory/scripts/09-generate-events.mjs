@@ -27,10 +27,16 @@ const POSTS = JSON.parse(readFileSync(invPath('rest-posts.json'), 'utf8'));
 const IMAGES = JSON.parse(readFileSync(invPath('events-images.json'), 'utf8'));
 
 // --- outlet linkage -------------------------------------------------------
-// Maps a pair key to a slug in OUTLETS (src/data/locations.ts) so the post can show
-// the branch's live address/hours instead of duplicating them. Only the branches that
-// still exist as outlets are mapped; the older openings (Siam, Udomsuk, Ratchada…) are
-// left unmapped rather than guessed at.  ⚠ verify against locations.ts before relying on it.
+// Maps a pair key to a slug in OUTLETS (src/data/locations.ts) so a post announcing a
+// branch can show that branch's CURRENT address/hours instead of freezing the 2018
+// details into the post body. Every value below was checked against the real slug list
+// in locations.ts, which locations-parity keeps in sync with the live site.
+//
+// Deliberately unmapped:
+//   naan-charity, essence-shampoo   — not branch openings
+//   saimai-krungthepkreetha         — announces TWO branches (Sai Mai AND Krungthep
+//                                     Kreetha); Krungthep Kreetha is not in OUTLETS, so
+//                                     linking only Sai Mai would misrepresent the post
 const OUTLET_BY_KEY = {
   phutthamonthon: 'phutthamonthon',
   'chiang-mai': 'chiang-mai',
@@ -42,6 +48,11 @@ const OUTLET_BY_KEY = {
   sammakorn: 'sammakorn',
   chonburi: 'chonburi',
   kallapaphruk: 'kallapaphruk',
+  'thecrystalparkekamai-ramindra': 'the-crystal',
+  'siam-grand-opening': 'siam-square',
+  'siam-square-make-merit': 'siam-square',
+  udomsuk: 'udomsuk',
+  ratchada: 'ratchada',
 };
 
 // --- HTML -> text ---------------------------------------------------------
@@ -54,14 +65,18 @@ const stripTags = (s) => s.replace(/<[^>]+>/g, '');
 // fragment. Emoji are left strictly alone: they are page copy here (💚🌿 📍) and
 // dropping them would fail parity.
 function text(html) {
-  return decodeEntities(stripTags(html))
+  return decodeEntities(stripTags(html.replace(/<br\s*\/?>/gi, ' ')))
     .replace(/ /g, ' ')
     .replace(/[ \t]+/g, ' ')
     .trim();
 }
 
-// Escape only what would change meaning at the START of a Markdown line.
-const mdEscape = (s) => s.replace(/^(\s*)([#>\-+*]|\d+\.)(\s)/gm, '$1\\$2$3');
+// Escape what would change meaning at the START of a Markdown line.
+// `\d+\)` matters as much as `\d+\.`: the Naan post opens a paragraph with
+// "1) Bee Choo Udomsuk", and GFM treats `1)` as an ordered-list delimiter, so the
+// literal "1)" was being consumed into list markup and the copy silently lost.
+// copy-parity caught it — exactly the class of drop it exists to catch.
+const mdEscape = (s) => s.replace(/^(\s*)([#>\-+*]|\d+[.)])(\s)/gm, "$1\\$2$3");
 
 // Walk the post body in document order, emitting paragraphs and image references as
 // they appear. Order matters: a caption is the paragraph that FOLLOWS its image.
@@ -76,11 +91,27 @@ function pushImg(out, tag) {
   if (src) out.push({ type: 'img', src: src.split('?')[0] });
 }
 
+// YouTube ids from <iframe> embeds. These posts are mostly photo galleries, but two
+// of them (the Siam Square merit ceremony, EN and TH) embed a video, and dropping it
+// lost real content — copy-parity's separate embed-id check caught it.
+const YT_RE = /(?:youtube(?:-nocookie)?\.com\/embed\/|youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{11})/;
+
+// Splits on BOTH <img> and <iframe>. Media is routinely nested inside the text
+// container on these posts (`<p><img ...></p>`, `<p><iframe ...></iframe></p>`), and the
+// paragraph regex matches the wrapper first, so anything not split out here is stripped
+// to nothing and silently lost. That cost the 2018 galleries their photos and the Siam
+// Square merit post its video before copy-parity caught both.
 function emitInner(out, inner, tag) {
-  const parts = inner.split(/(<img[^>]*>)/i);
+  const parts = inner.split(/(<img[^>]*>|<iframe[^>]*>(?:<\/iframe>)?)/i);
   for (const part of parts) {
+    if (!part) continue;
     if (/^<img/i.test(part)) {
       pushImg(out, part);
+      continue;
+    }
+    if (/^<iframe/i.test(part)) {
+      const id = part.match(YT_RE)?.[1];
+      if (id) out.push({ type: 'video', id });
       continue;
     }
     const t = text(part);
@@ -90,11 +121,19 @@ function emitInner(out, inner, tag) {
 
 function blocks(html) {
   const out = [];
-  const re = /<img[^>]*>|<(p|h[1-6]|li)\b[^>]*>([\s\S]*?)<\/\1>/gi;
+  // `figcaption` is in this list because that is where WordPress puts real image
+  // captions ("Special Promotion Available at Bee Choo Sammakorn"). Omitting it
+  // dropped seven captions across the batch.
+  const re = /<img[^>]*>|<iframe[^>]*>(?:<\/iframe>)?|<(p|h[1-6]|li|figcaption)\b[^>]*>([\s\S]*?)<\/\1>/gi;
   let m;
   while ((m = re.exec(html))) {
-    if (m[0].startsWith('<img')) {
+    if (/^<img/i.test(m[0])) {
       pushImg(out, m[0]);
+      continue;
+    }
+    if (/^<iframe/i.test(m[0])) {
+      const id = m[0].match(YT_RE)?.[1];
+      if (id) out.push({ type: 'video', id });
       continue;
     }
     emitInner(out, m[2], m[1].toLowerCase());
@@ -204,9 +243,14 @@ function build(post, variant) {
   // must not be dropped — copy-parity would flag it).
   const prose = [];
   const gallery = [];
+  const videos = [];
   let heroCaption;
   for (let i = 0; i < body.length; i++) {
     const b = body[i];
+    if (b.type === 'video') {
+      if (!videos.includes(b.id)) videos.push(b.id);
+      continue;
+    }
     if (b.type !== 'img') {
       prose.push(b);
       continue;
@@ -214,8 +258,13 @@ function build(post, variant) {
     const local = localFor(b.src, pairKey);
     if (!local) continue;
 
+    // A <figcaption> always belongs to its image, however long. A plain paragraph is
+    // only treated as a caption when it is short enough to plausibly be one — the
+    // legacy posts caption photos both ways.
     const next = body[i + 1];
-    const caption = next && next.type === 'text' && next.text.length < 120 ? next.text : undefined;
+    const isCaption =
+      next && next.type === 'text' && (next.tag === 'figcaption' || next.text.length < 120);
+    const caption = isCaption ? next.text : undefined;
     if (caption) i++; // consume it — it belongs to this image, not to the prose
 
     if (heroPath && local === heroPath) {
@@ -237,6 +286,7 @@ function build(post, variant) {
     // in the sense that the legacy alt attribute was empty.
     heroAlt: heroPath ? heroCaption ?? title : undefined,
     gallery,
+    videos,
     outlet: OUTLET_BY_KEY[pairKey],
     wpId: post.id,
     wpCategories: post.categories || [],

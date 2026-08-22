@@ -9,9 +9,11 @@ hero: '../../../assets/images/events/saimai-krungthepkreetha/01-423602.jpg'
 heroAlt: 'Opening of Bee Choo Sai mai & Bee Choo Krungthep Kreetha'
 gallery:
   - src: '../../../assets/images/events/saimai-krungthepkreetha/02-422535.jpg'
-    alt: 'New Outlets! Bee Choo Sai Mai and Krungthep Kreetha! — photo 1'
+    alt: 'Bee Choo Krungthep Kreetha is located in @22 mini mall Krungthep Kreetha'
+    caption: 'Bee Choo Krungthep Kreetha is located in @22 mini mall Krungthep Kreetha'
   - src: '../../../assets/images/events/saimai-krungthepkreetha/03-423613.jpg'
-    alt: 'New Outlets! Bee Choo Sai Mai and Krungthep Kreetha! — photo 2'
+    alt: 'Bee Choo Sai Mai''s Interior'
+    caption: 'Bee Choo Sai Mai''s Interior'
 wpId: 7801
 wpCategories:
   - 16
@@ -29,7 +31,7 @@ Bee Choo Saimai
 
 Mon. – Fri. Open 9:00 a.m. – 8:00 p.m. Saturday – Sunday open 9:00 a.m. – 7:00 p.m
 
-Outlet is located in Siri Avenue Sai Mai project. Directly opposite PTT gas station and across from Sai Mai Soi 56* Parking in front of the shop is available.
+Outlet is located in Siri Avenue Sai Mai project. Directly opposite PTT gas station and across from Sai Mai Soi 56 * Parking in front of the shop is available.
 
 Google Map: https://goo.gl/maps/oyN4JPs34FBqRPSK9
 
@@ -39,6 +41,6 @@ Google Map: https://goo.gl/maps/oyN4JPs34FBqRPSK9
 
 Open Dailyt 9:00 a.m. – 7:00 p.m.
 
-Outlet is located In the shopping center @22 mini mall Krungthep Kreetha Road, near Soi Krungthep Kreetha 22opposite Soi Krungthep Kreetha 41
+Outlet is located In the shopping center @22 mini mall Krungthep Kreetha Road, near Soi Krungthep Kreetha 22 opposite Soi Krungthep Kreetha 41
 
 Google Map: https://goo.gl/maps/WtCj3FCvyqM9X9pLA

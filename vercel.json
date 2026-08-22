@@ -1,6 +1,294 @@
 {
   "redirects": [
-    { "source": "/th", "destination": "/th/home/", "statusCode": 301 },
-    { "source": "/th/", "destination": "/th/home/", "statusCode": 301 }
+    {
+      "source": "/th",
+      "destination": "/th/home/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/",
+      "destination": "/th/home/",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/events-news/",
+      "destination": "/events-news-release/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/category/เหตุการณ์-ข่าว/",
+      "destination": "/th/เหตุการณ์และข่าว/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/category/%E0%B9%80%E0%B8%AB%E0%B8%95%E0%B8%B8%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%93%E0%B9%8C-%E0%B8%82%E0%B9%88%E0%B8%B2%E0%B8%A7/",
+      "destination": "/th/เหตุการณ์และข่าว/",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/เหตุการณ์-ข่าว/",
+      "destination": "/th/เหตุการณ์และข่าว/",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/%E0%B9%80%E0%B8%AB%E0%B8%95%E0%B8%B8%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%93%E0%B9%8C-%E0%B8%82%E0%B9%88%E0%B8%B2%E0%B8%A7/",
+      "destination": "/th/เหตุการณ์และข่าว/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/events-news-release/",
+      "destination": "/events-news-release/",
+      "statusCode": 301
+    },
+    {
+      "source": "/เหตุการณ์และข่าว/",
+      "destination": "/th/เหตุการณ์และข่าว/",
+      "statusCode": 301
+    },
+    {
+      "source": "/%E0%B9%80%E0%B8%AB%E0%B8%95%E0%B8%B8%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%82%E0%B9%88%E0%B8%B2%E0%B8%A7/",
+      "destination": "/th/เหตุการณ์และข่าว/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/bee-choo-siam-grand-opening/",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/bee-choo-siam-square-make-merit/",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/bee-choo-udomsuk-grand-opening-23-sept-2018/",
+      "destination": "/bee-choo-udomsuk-grand-opening-23-sept-2018/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "destination": "/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-of-new-outlet-bee-choo-chatuchak/",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chatuchak/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-of-new-outlet-bee-choo-chiang-mai/",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chiang-mai/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-of-new-outlet-bee-choo-korat/",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-korat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-of-new-outlet-bee-choo-phutthamonthon/",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-phutthamonthon/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-of-new-outlet-bee-choo-prawet/",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-prawet/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-of-new-outlet-bee-choo-sammakorn/",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-sammakorn/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-of-new-outlet-bee-choo-surat-thani/",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-surat-thani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567/",
+      "destination": "/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-%E0%B8%9A%E0%B8%8A-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A7%E0%B8%A8-7-%E0%B8%81%E0%B8%A3%E0%B8%81%E0%B8%8E%E0%B8%B2%E0%B8%84%E0%B8%A1-2567/",
+      "destination": "/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567-2/",
+      "destination": "/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567-2/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-%E0%B8%9A%E0%B8%8A-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A7%E0%B8%A8-7-%E0%B8%81%E0%B8%A3%E0%B8%81%E0%B8%8E%E0%B8%B2%E0%B8%84%E0%B8%A1-2567-2/",
+      "destination": "/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567-2/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-บีชู-สาขาพุทธมณฑล-ในวั/",
+      "destination": "/grand-opening-บีชู-สาขาพุทธมณฑล-ในวั/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%9E%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B8%A1%E0%B8%93%E0%B8%91%E0%B8%A5-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1/",
+      "destination": "/grand-opening-บีชู-สาขาพุทธมณฑล-ในวั/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-บีชู-สาขาสยามสแควร์วั/",
+      "destination": "/grand-opening-บีชู-สาขาสยามสแควร์วั/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%A2%E0%B8%B2%E0%B8%A1%E0%B8%AA%E0%B9%81%E0%B8%84%E0%B8%A7%E0%B8%A3%E0%B9%8C%E0%B8%A7%E0%B8%B1/",
+      "destination": "/grand-opening-บีชู-สาขาสยามสแควร์วั/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-บีชู-สาขาอุดมสุข-23-กันยา/",
+      "destination": "/grand-opening-บีชู-สาขาอุดมสุข-23-กันยา/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AD%E0%B8%B8%E0%B8%94%E0%B8%A1%E0%B8%AA%E0%B8%B8%E0%B8%82-23-%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%A2%E0%B8%B2/",
+      "destination": "/grand-opening-บีชู-สาขาอุดมสุข-23-กันยา/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-บีชู-สาขาเชียงใหม่-ในว/",
+      "destination": "/grand-opening-บีชู-สาขาเชียงใหม่-ในว/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%87%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88-%E0%B9%83%E0%B8%99%E0%B8%A7/",
+      "destination": "/grand-opening-บีชู-สาขาเชียงใหม่-ในว/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-บีชู-สาขาเดอะคริสตัล-เ/",
+      "destination": "/grand-opening-บีชู-สาขาเดอะคริสตัล-เ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%84%E0%B8%A3%E0%B8%B4%E0%B8%AA%E0%B8%95%E0%B8%B1%E0%B8%A5-%E0%B9%80/",
+      "destination": "/grand-opening-บีชู-สาขาเดอะคริสตัล-เ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-บีชู-สาขาโคราช-ในวันที/",
+      "destination": "/grand-opening-บีชู-สาขาโคราช-ในวันที/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%82%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%8A-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%B5/",
+      "destination": "/grand-opening-บีชู-สาขาโคราช-ในวันที/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-บีชู-สุราษฎร์ธานี-ในวั/",
+      "destination": "/grand-opening-บีชู-สุราษฎร์ธานี-ในวั/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B8%E0%B8%A3%E0%B8%B2%E0%B8%A9%E0%B8%8E%E0%B8%A3%E0%B9%8C%E0%B8%98%E0%B8%B2%E0%B8%99%E0%B8%B5-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1/",
+      "destination": "/grand-opening-บีชู-สุราษฎร์ธานี-ในวั/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-สาขาสัมมากร/",
+      "destination": "/grand-opening-สาขาสัมมากร/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/grand-opening-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%B1%E0%B8%A1%E0%B8%A1%E0%B8%B2%E0%B8%81%E0%B8%A3/",
+      "destination": "/grand-opening-สาขาสัมมากร/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/introducing-essence-shampoo-and-newly-formulated-essence-vitamins/",
+      "destination": "/introducing-essence-shampoo-and-newly-formulated-essence-vitamins/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/naan-charity-trip-2019/",
+      "destination": "/naan-charity-trip-2019/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/new-outlet-saimai-krungthepkreetha/",
+      "destination": "/new-outlet-saimai-krungthepkreetha/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/new-year-new-outlet-bee-choo-ratchada/",
+      "destination": "/new-year-new-outlet-bee-choo-ratchada/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "destination": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/",
+      "destination": "/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/soft-opening-of-new-outlet-bee-choo-suksawat/",
+      "destination": "/soft-opening-of-new-outlet-bee-choo-suksawat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/soft-opening-บช-สาขาสขสวสดในวนท-19-กนย/",
+      "destination": "/soft-opening-บช-สาขาสขสวสดในวนท-19-กนย/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/soft-opening-%E0%B8%9A%E0%B8%8A-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%82%E0%B8%AA%E0%B8%A7%E0%B8%AA%E0%B8%94%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%97-19-%E0%B8%81%E0%B8%99%E0%B8%A2/",
+      "destination": "/soft-opening-บช-สาขาสขสวสดในวนท-19-กนย/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/ขอแนะนำ-essence-shampoo-และ-essence-vitamins-สูตรใหม่/",
+      "destination": "/ขอแนะนำ-essence-shampoo-และ-essence-vitamins-สูตรใหม่/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/%E0%B8%82%E0%B8%AD%E0%B9%81%E0%B8%99%E0%B8%B0%E0%B8%99%E0%B8%B3-essence-shampoo-%E0%B9%81%E0%B8%A5%E0%B8%B0-essence-vitamins-%E0%B8%AA%E0%B8%B9%E0%B8%95%E0%B8%A3%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88/",
+      "destination": "/ขอแนะนำ-essence-shampoo-และ-essence-vitamins-สูตรใหม่/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/ช่วยเหลือเหล่าเด็กๆ-ที่/",
+      "destination": "/ช่วยเหลือเหล่าเด็กๆ-ที่/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/%E0%B8%8A%E0%B9%88%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%AB%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%AB%E0%B8%A5%E0%B9%88%E0%B8%B2%E0%B9%80%E0%B8%94%E0%B9%87%E0%B8%81%E0%B9%86-%E0%B8%97%E0%B8%B5%E0%B9%88/",
+      "destination": "/ช่วยเหลือเหล่าเด็กๆ-ที่/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/ทำบุญเปิดร้านสาขาสยามส/",
+      "destination": "/ทำบุญเปิดร้านสาขาสยามส/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/%E0%B8%97%E0%B8%B3%E0%B8%9A%E0%B8%B8%E0%B8%8D%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%A2%E0%B8%B2%E0%B8%A1%E0%B8%AA/",
+      "destination": "/ทำบุญเปิดร้านสาขาสยามส/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/บีชูชลบุรีสาขาแรกนอกเข/",
+      "destination": "/บีชูชลบุรีสาขาแรกนอกเข/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9%E0%B8%8A%E0%B8%A5%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81%E0%B8%99%E0%B8%AD%E0%B8%81%E0%B9%80%E0%B8%82/",
+      "destination": "/บีชูชลบุรีสาขาแรกนอกเข/",
+      "statusCode": 301
+    }
   ]
 }

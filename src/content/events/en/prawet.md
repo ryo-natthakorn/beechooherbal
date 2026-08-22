@@ -19,7 +19,8 @@ gallery:
   - src: '../../../assets/images/events/prawet/06-s-7651403.jpg'
     alt: 'Grand Opening of New outlet – Bee Choo Prawet ! — photo 5'
   - src: '../../../assets/images/events/prawet/07-grand-opening-prawet-poster-sq.jpg'
-    alt: 'Grand Opening of New outlet – Bee Choo Prawet ! — photo 6'
+    alt: 'Special Promotion Available at Bee Choo Prawet'
+    caption: 'Special Promotion Available at Bee Choo Prawet'
 outlet: 'prawet'
 wpId: 10040
 wpCategories:

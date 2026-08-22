@@ -80,6 +80,9 @@ gallery:
     alt: 'Bee Choo Siam Square Make Merit (Tam Buun) — photo 35'
   - src: '../../../assets/images/events/siam-square-make-merit/37-p1010114-min.jpg'
     alt: 'Bee Choo Siam Square Make Merit (Tam Buun) — photo 36'
+videos:
+  - 'GPqnqCkQnEk'
+outlet: 'siam-square'
 wpId: 2008
 wpCategories:
   - 16

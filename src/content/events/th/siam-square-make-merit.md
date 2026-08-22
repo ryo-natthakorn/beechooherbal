@@ -80,6 +80,9 @@ gallery:
     alt: 'ทำบุญเปิดร้านสาขาสยามสแควร์วัน — photo 35'
   - src: '../../../assets/images/events/siam-square-make-merit/37-p1010114-min.jpg'
     alt: 'ทำบุญเปิดร้านสาขาสยามสแควร์วัน — photo 36'
+videos:
+  - 'GPqnqCkQnEk'
+outlet: 'siam-square'
 wpId: 3626
 wpCategories:
   - 17

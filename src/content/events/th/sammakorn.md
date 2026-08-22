@@ -21,7 +21,8 @@ gallery:
   - src: '../../../assets/images/events/sammakorn/07-s-181370898-0.jpg'
     alt: 'Grand Opening บีชู สาขาสัมมากร 24 มีนาคม 2567 — photo 6'
   - src: '../../../assets/images/events/sammakorn/08-202420314-grand-opening-sammakorn-sq02.jpg'
-    alt: 'Grand Opening บีชู สาขาสัมมากร 24 มีนาคม 2567 — photo 7'
+    alt: 'โปรโมชั่นสุดพิเศษเฉพาะวัน Grand Opening วันที่ 24 มีนาคม 2567'
+    caption: 'โปรโมชั่นสุดพิเศษเฉพาะวัน Grand Opening วันที่ 24 มีนาคม 2567'
 outlet: 'sammakorn'
 wpId: 9561
 wpCategories:
@@ -29,4 +30,4 @@ wpCategories:
   - 17
 ---
 
-บี ชู เฮอร์เบิล ไทยแลนด์ (Bee Choo Herbal Thailand) ขอประกาศให้ทราบว่าสาขาที่ 10 ภายใต้บริษัท บริษัท เนเจอร์ คอลลิง จำกัด เปิดให้บริการอย่างเป็นทางการแล้ววันนี้Bee Choo สาขาที่ 10 ของเราตั้งอยู่ในหมู่บ้านสัมมากร รามคำแหง 110 ใกล้กับ Sammakorn Place Shopping ซึ่งเป็นห้างสรรพสินค้าระดับหรูในย่านรามคำแหง
+บี ชู เฮอร์เบิล ไทยแลนด์ (Bee Choo Herbal Thailand) ขอประกาศให้ทราบว่าสาขาที่ 10 ภายใต้บริษัท บริษัท เนเจอร์ คอลลิง จำกัด เปิดให้บริการอย่างเป็นทางการแล้ววันนี้ Bee Choo สาขาที่ 10 ของเราตั้งอยู่ในหมู่บ้านสัมมากร รามคำแหง 110 ใกล้กับ Sammakorn Place Shopping ซึ่งเป็นห้างสรรพสินค้าระดับหรูในย่านรามคำแหง

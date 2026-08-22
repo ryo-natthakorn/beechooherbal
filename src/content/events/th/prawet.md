@@ -19,7 +19,8 @@ gallery:
   - src: '../../../assets/images/events/prawet/06-img-4078.jpg'
     alt: 'Grand Opening บีชู สาขาประเวศ 7 กรกฎาคม 2567 — photo 5'
   - src: '../../../assets/images/events/prawet/07-grand-opening-prawet-poster-sq.jpg'
-    alt: 'Grand Opening บีชู สาขาประเวศ 7 กรกฎาคม 2567 — photo 6'
+    alt: 'โปรโมชั่นสุดพิเศษเฉพาะวัน Grand Opening วันที่ 7 กรกฎาคม 2567'
+    caption: 'โปรโมชั่นสุดพิเศษเฉพาะวัน Grand Opening วันที่ 7 กรกฎาคม 2567'
 outlet: 'prawet'
 wpId: 10091
 wpCategories:

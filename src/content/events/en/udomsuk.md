@@ -14,6 +14,7 @@ gallery:
   - src: '../../../assets/images/events/udomsuk/03-grandopening-invitation-jpeg.jpg'
     alt: 'Invitation Card'
     caption: 'Invitation Card'
+outlet: 'udomsuk'
 wpId: 2168
 wpCategories:
   - 16

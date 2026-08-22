@@ -14,6 +14,7 @@ gallery:
   - src: '../../../assets/images/events/udomsuk/03-grandopening-invitation-jpeg.jpg'
     alt: 'การ์ดเชิญร่วมงาน Grand Opening'
     caption: 'การ์ดเชิญร่วมงาน Grand Opening'
+outlet: 'udomsuk'
 wpId: 3641
 wpCategories:
   - 17

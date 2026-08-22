@@ -29,6 +29,21 @@ export interface UiStrings {
     lockMap: string;
     onThisPage: string;
   };
+  // Events & News index + post pages (src/components/events/). Navigation chrome, not
+  // page copy — the post titles, excerpts and bodies carry the real (verbatim) wording.
+  // `photos` heads the in-post photo grid; the legacy posts introduce their galleries
+  // in body prose ("Check out more pictures below!"), which is transcribed separately
+  // and left untouched.
+  // ⚠ TH values are newly composed (this chrome never existed on the legacy site,
+  // whose cards were an Elementor widget) — native-speaker/Crispin sign-off needed.
+  events: {
+    readMore: string;
+    backToEvents: string;
+    photos: string;
+    visitBranch: string;
+    previousPost: string;
+    nextPost: string;
+  };
   // Per-outlet card labels (LocationsSection's mobile list).
   outlet: {
     call: string;
@@ -97,6 +112,14 @@ export const UI: Record<"en" | "th", UiStrings> = {
       lockMap: "Lock map",
       onThisPage: "On this page",
     },
+    events: {
+      readMore: "Read more",
+      backToEvents: "Back to Events and News",
+      photos: "Photos",
+      visitBranch: "Visit this branch",
+      previousPost: "Previous",
+      nextPost: "Next",
+    },
     outlet: {
       call: "Call",
       hours: "Hours",
@@ -147,6 +170,14 @@ export const UI: Record<"en" | "th", UiStrings> = {
       enableMapInteraction: "คลิกเพื่อใช้งานแผนที่",
       lockMap: "ล็อกแผนที่",
       onThisPage: "หัวข้อในหน้านี้",
+    },
+    events: {
+      readMore: "อ่านต่อ",
+      backToEvents: "กลับไปหน้าเหตุการณ์และข่าว",
+      photos: "ภาพบรรยากาศ",
+      visitBranch: "ดูข้อมูลสาขานี้",
+      previousPost: "ก่อนหน้า",
+      nextPost: "ถัดไป",
     },
     outlet: {
       call: "โทร",

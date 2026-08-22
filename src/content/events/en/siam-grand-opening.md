@@ -46,6 +46,7 @@ gallery:
     alt: 'Bee Choo Siam Grand Opening — photo 18'
   - src: '../../../assets/images/events/siam-grand-opening/20-bee-choo-siam-grand-opening-12-aug-2018-pic19.jpg'
     alt: 'Bee Choo Siam Grand Opening — photo 19'
+outlet: 'siam-square'
 wpId: 2109
 wpCategories:
   - 16

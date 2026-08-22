@@ -48,6 +48,7 @@ gallery:
     alt: 'Grand Opening บีชู สาขาสยามสแควร์วัน — photo 19'
   - src: '../../../assets/images/events/siam-grand-opening/01-bee-choo-siam-grand-opening-12-aug-2018-pic22.jpg'
     alt: 'Grand Opening บีชู สาขาสยามสแควร์วัน — photo 20'
+outlet: 'siam-square'
 wpId: 3634
 wpCategories:
   - 17

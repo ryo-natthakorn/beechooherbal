@@ -22,7 +22,8 @@ gallery:
   - src: '../../../assets/images/events/sammakorn/07-s-181370898-0.jpg'
     alt: 'Grand Opening of New outlet – Bee Choo Sammakorn ! — photo 6'
   - src: '../../../assets/images/events/sammakorn/08-202420314-grand-opening-sammakorn-sq02.jpg'
-    alt: 'Grand Opening of New outlet – Bee Choo Sammakorn ! — photo 7'
+    alt: 'Special Promotion Available at Bee Choo Sammakorn'
+    caption: 'Special Promotion Available at Bee Choo Sammakorn'
 outlet: 'sammakorn'
 wpId: 9717
 wpCategories:

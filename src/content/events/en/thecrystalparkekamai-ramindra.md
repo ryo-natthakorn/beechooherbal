@@ -23,7 +23,9 @@ gallery:
   - src: '../../../assets/images/events/thecrystalparkekamai-ramindra/08-img-5344.jpg'
     alt: 'Grand Opening of New outlet – Bee Choo The Crystal Ekamai-Ramindra! — photo 7'
   - src: '../../../assets/images/events/thecrystalparkekamai-ramindra/09-grand-opening-crystal-park-sq.jpg'
-    alt: 'Grand Opening of New outlet – Bee Choo The Crystal Ekamai-Ramindra! — photo 8'
+    alt: 'Special Promotion Available at The Crystal (Ekamai-Ramindra)'
+    caption: 'Special Promotion Available at The Crystal (Ekamai-Ramindra)'
+outlet: 'the-crystal'
 wpId: 9038
 wpCategories:
   - 1

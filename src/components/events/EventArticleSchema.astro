@@ -1,0 +1,62 @@
+---
+// src/components/events/EventArticleSchema.astro
+// NewsArticle + BreadcrumbList JSON-LD for individual Events & News posts.
+//
+// NewsArticle, deliberately NOT Event: schema.org `Event` describes a future,
+// attendable occasion and expects startDate/location. These posts are retrospective
+// announcements ("we opened last month"), so Event markup would be inaccurate and
+// would earn a rich-results warning.
+//
+// BreadcrumbList is parity-positive: legacy Yoast emitted one on every post
+// (yoast_head_json.schema['@graph']), so this preserves something the old site had.
+//
+// No aggregateRating / review / offers — CLAUDE.md §8 forbids inventing claims.
+interface Props {
+  lang: "en" | "th";
+  headline: string;
+  description: string;
+  canonical: string;
+  datePublished: string;
+  dateModified?: string;
+  image?: string;
+  /** Index page, for the breadcrumb trail. */
+  sectionName: string;
+  sectionUrl: string;
+}
+
+const { lang, headline, description, canonical, datePublished, dateModified, image, sectionName, sectionUrl } =
+  Astro.props;
+
+const publisher = {
+  "@type": "Organization",
+  name: "Bee Choo Herbal",
+  url: "https://beechooherbal.com/",
+};
+
+const article = {
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  headline,
+  description,
+  url: canonical,
+  mainEntityOfPage: canonical,
+  inLanguage: lang,
+  datePublished,
+  ...(dateModified ? { dateModified } : {}),
+  ...(image ? { image } : {}),
+  author: publisher,
+  publisher,
+};
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: sectionName, item: sectionUrl },
+    { "@type": "ListItem", position: 2, name: headline, item: canonical },
+  ],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(article)} />
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />

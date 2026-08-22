@@ -4,6 +4,8 @@
 // RELATIVE (no domain), with a leading and trailing slash.
 // A page with no twin in the other language simply does not appear here.
 
+import { EVENT_PAIRS } from "../data/events";
+
 export interface Pair {
   en: string | null; // e.g. "/about/"            (null if no EN twin)
   th: string | null; // e.g. "/th/home/"          (null if no TH twin)
@@ -13,7 +15,7 @@ export interface Pair {
 // Populated + re-verified against the live site 2026-07-14 (see
 // docs/session-2026-07-14-audit.md). Thai paths are decoded here; SEOHead
 // percent-encodes them when building absolute hreflang URLs, which is valid.
-export const PAIRS: Pair[] = [
+const CORE_PAIRS: Pair[] = [
   { en: "/", th: "/th/home/" }, // homepage: TH home lives at /th/home/, not /th/
   { en: "/about/", th: "/th/เกี่ยวกับบีชู/" },
   { en: "/team/", th: "/th/ทีม/" },
@@ -41,6 +43,19 @@ export const PAIRS: Pair[] = [
   { en: "/category/blog/", th: "/th/category/บล็อก/" },
   // Both author archives are live 200s on the old site (its only complete cluster):
   { en: "/author/admin/", th: "/th/author/admin/" },
+];
+
+// The 15 EVENTS/News post pairs come from src/data/events.ts rather than being
+// retyped here — that file is where the pairing is derived and justified, and the
+// posts' Thai slugs are long, percent-encoded, and in one case actively misleading
+// (`...ประเวศ...-2567-2` is the Chatuchak post). Import direction is one-way
+// (events.ts imports nothing from here), so getPair stays synchronous.
+//
+// The three EN-only event posts are absent by design: a page with no twin must emit
+// NO hreflang cluster, which is what an undefined getPair() lookup produces.
+export const PAIRS: Pair[] = [
+  ...CORE_PAIRS,
+  ...EVENT_PAIRS.map(({ en, th }): Pair => ({ en, th })),
 ];
 // ---------------------------------------------------------------------------
 

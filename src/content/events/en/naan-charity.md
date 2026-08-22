@@ -25,7 +25,7 @@ We’ve decided to hold a 1-day donation drive on the 14th of December 2019 in B
 
 The participating outlets are:
 
-1) Bee Choo Udomsuk2) Bee Choo Tawanna3) Bee Choo Siam Square One
+\1) Bee Choo Udomsuk 2) Bee Choo Tawanna 3) Bee Choo Siam Square One
 
 All proceeds from treatments done on the 14th December 2019 will be used for charitable purposes. All proceeds will go towards the students. We humbly request your support! Bring your friends, aunties, uncles, mom, dad down to any of our outlets here in Bangkok on the 14th of December 2019 for a herbal scalp treatment. Whatever you pay will be donated to the kids!
 

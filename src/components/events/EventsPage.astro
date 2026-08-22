@@ -1,0 +1,151 @@
+---
+// src/components/events/EventsPage.astro
+// The Events & News index body. Thin route shells set lang/title/description.
+//
+// Shows EVERY post, grouped by year. The legacy page renders only six of its eighteen
+// — an Elementor `posts.cards` default, not an editorial choice — which left twelve
+// English events reachable only through /category/events-news/. See src/data/events.ts
+// for that and for the category fix this batch exists to make.
+//
+// Year grouping instead of pagination or a filter: eighteen items across seven years
+// is small enough that hiding any of them would cost crawlability for no real gain.
+// Everything stays in the DOM, and there is no JavaScript.
+import { getCollection } from "astro:content";
+import LeafDivider from "../LeafDivider.astro";
+import HerbalStrokes from "../HerbalStrokes.astro";
+import LocationsBand from "../LocationsBand.astro";
+import EventCard from "./EventCard.astro";
+import { EVENTS_HERO, EVENT_PAIRS, type Lang } from "../../data/events";
+import { OUTLETS } from "../../data/locations";
+import { UI } from "../../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+const ui = UI[lang];
+
+const posts = (await getCollection("events", (e) => e.data.lang === lang)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// Build-time guard on the PATHS, since those are what hreflang actually advertises:
+// every EVENT_PAIRS entry must name a slug that a real post is emitted at, on both
+// sides. Asserting the paths (rather than the filename key) catches the failure that
+// matters — hreflang pointing at a URL this build does not produce — and it catches a
+// typo in a long percent-encoded Thai slug, which is the likeliest way to get this
+// wrong and the hardest to spot in review.
+const slugsByLang = new Map<string, Set<string>>([
+  ["en", new Set()],
+  ["th", new Set()],
+]);
+for (const entry of await getCollection("events")) {
+  slugsByLang.get(entry.data.lang)?.add(`/${entry.data.slug}/`);
+}
+for (const pair of EVENT_PAIRS) {
+  for (const side of ["en", "th"] as const) {
+    if (!slugsByLang.get(side)?.has(pair[side])) {
+      throw new Error(
+        `EVENT_PAIRS["${pair.key}"].${side} is "${pair[side]}", but no ${side.toUpperCase()} event post ` +
+          `is emitted at that path. hreflang would advertise a URL that does not exist. ` +
+          `Check src/data/events.ts against the slugs in src/content/events/${side}/.`,
+      );
+    }
+  }
+}
+
+// Thai dates use the Buddhist calendar, matching the years the Thai post titles
+// themselves quote (2568, 2567…). Same formatter ReviewsPage.astro uses.
+const dateFormatter = new Intl.DateTimeFormat(lang === "th" ? "th-TH-u-ca-buddhist" : "en-GB", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+const yearFormatter = new Intl.DateTimeFormat(lang === "th" ? "th-TH-u-ca-buddhist" : "en-GB", {
+  year: "numeric",
+});
+
+const outletBySlug = new Map(OUTLETS.map((o) => [o.slug, o]));
+
+// Group in the order the sorted list already gives us: newest year first.
+//
+// `id` is the Gregorian year and `label` is what renders. They must stay separate:
+// the Thai formatter yields "พ.ศ. 2568", which contains a space and cannot be an HTML
+// id — using it directly produced anchors that silently never jumped.
+const groups: { id: string; label: string; posts: typeof posts }[] = [];
+for (const post of posts) {
+  const id = String(post.data.pubDate.getFullYear());
+  const label = yearFormatter.format(post.data.pubDate);
+  const last = groups.at(-1);
+  if (last && last.id === id) last.posts.push(post);
+  else groups.push({ id, label, posts: [post] });
+}
+
+const locationsHref = lang === "th" ? "/th/สถานที่ตั้งของร้านค้า/" : "/locations/";
+---
+
+<main id="main">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-brand-green py-16 text-center text-white md:py-20">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+    <div class="relative mx-auto max-w-3xl px-4 md:px-8">
+      <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} md:text-5xl`}>{EVENTS_HERO.heading[lang]}</h1>
+      <p class="text-sm leading-relaxed text-white/90 md:text-base">{EVENTS_HERO.intro[lang]}</p>
+    </div>
+  </section>
+
+  <!-- Year jump chips -->
+  {
+    groups.length > 1 && (
+      <nav aria-label={ui.misc.onThisPage} class="sticky top-16 z-20 border-b border-brand-earth bg-white/95 backdrop-blur">
+        <div class="mx-auto flex max-w-6xl flex-wrap justify-center gap-2 px-4 py-3 md:px-8">
+          {groups.map((g) => (
+            <a
+              href={`#year-${g.id}`}
+              class="rounded-full border border-brand-earth px-3 py-1 text-xs font-bold text-brand-origin hover:border-brand-green hover:text-brand-green"
+            >
+              {g.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+    )
+  }
+
+  <!-- Posts, newest year first -->
+  {
+    groups.map((group, i) => (
+      <section id={`year-${group.id}`} class={`${i % 2 === 0 ? "bg-white" : "bg-brand-earth/25"} scroll-mt-28 py-14 md:py-20`}>
+        <div class="mx-auto max-w-6xl px-4 md:px-8">
+          <LeafDivider />
+          <h2 class={`mb-8 text-center ${serif} text-2xl font-bold text-brand-green md:text-3xl`} data-mask-reveal>
+            {group.label}
+          </h2>
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {group.posts.map((post) => {
+              const outlet = post.data.outlet ? outletBySlug.get(post.data.outlet) : undefined;
+              return (
+                <EventCard
+                  {lang}
+                  href={`/${post.data.slug}/`}
+                  title={post.data.title}
+                  excerpt={post.data.excerpt}
+                  dateLabel={dateFormatter.format(post.data.pubDate)}
+                  isoDate={post.data.pubDate.toISOString()}
+                  hero={post.data.hero}
+                  heroAlt={post.data.heroAlt}
+                  branch={outlet ? (lang === "th" ? outlet.nameTh : outlet.name) : undefined}
+                  branchHref={outlet ? locationsHref : undefined}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <LocationsBand {lang} background={groups.length % 2 === 0 ? "white" : "earth"} />
+</main>

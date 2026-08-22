@@ -23,7 +23,9 @@ gallery:
   - src: '../../../assets/images/events/thecrystalparkekamai-ramindra/08-img-5344.jpg'
     alt: 'Grand Opening บีชู สาขาเดอะคริสตัล (เอกมัย-รามอินทรา) 18 พฤศจิกายน 2566 — photo 7'
   - src: '../../../assets/images/events/thecrystalparkekamai-ramindra/09-grand-opening-crystal-park-sq.jpg'
-    alt: 'Grand Opening บีชู สาขาเดอะคริสตัล (เอกมัย-รามอินทรา) 18 พฤศจิกายน 2566 — photo 8'
+    alt: 'โปรโมชั่นสุดพิเศษเฉพาะวัน Grand Opening วันที่ 18 พฤศจิกายน 2566'
+    caption: 'โปรโมชั่นสุดพิเศษเฉพาะวัน Grand Opening วันที่ 18 พฤศจิกายน 2566'
+outlet: 'the-crystal'
 wpId: 9336
 wpCategories:
   - 9

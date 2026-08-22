@@ -17,7 +17,8 @@ gallery:
   - src: '../../../assets/images/events/chatuchak/05-s-15294492.jpg'
     alt: 'Grand Opening of New outlet – Bee Choo Chatuchak (Prachachuen)! — photo 4'
   - src: '../../../assets/images/events/chatuchak/06-grand-opening-bee-choo-chatuchak-edit.jpg'
-    alt: 'Grand Opening of New outlet – Bee Choo Chatuchak (Prachachuen)! — photo 5'
+    alt: 'Special Promotion Available at Bee Choo Chatuchak'
+    caption: 'Special Promotion Available at Bee Choo Chatuchak'
 outlet: 'chatuchak'
 wpId: 10311
 wpCategories:
@@ -27,6 +28,6 @@ wpCategories:
 
 Bee Choo Herbal Thailand is pleased to announce the opening of our 12th outlet, operated under the dealership of The Wattana sis Co., Ltd.
 
-Our new location is situated on Ravipha Fitness Club BuildingBehind Ravipha Residences Hotel in Soi Thesaban Songkhro 2, Yeak 1.
+Our new location is situated on Ravipha Fitness Club Building Behind Ravipha Residences Hotel in Soi Thesaban Songkhro 2, Yeak 1.
 
 Check out more pictures below!

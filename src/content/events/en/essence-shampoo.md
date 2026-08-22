@@ -42,11 +42,11 @@ Conditioning the hair, making it soft and smooth.
 
 Grape:
 
-Strengthen the hair, reduce dandruff and hair loss.The vitamin E content in the oil helps build the hair tissue,promoting hair growth.Anti-inflammatory property promotes healthy environment for hair growth
+Strengthen the hair, reduce dandruff and hair loss. The vitamin E content in the oil helps build the hair tissue, promoting hair growth. Anti-inflammatory property promotes healthy environment for hair growth
 
 Linseed Seed:
 
-The anti-inflammatory properties help promote a healthy environment for hair growth in your scalp.Rich source of Omega-3 fatty acids, the fatty acids are essential for healthy hair growth. They nourish the follicles and hair shafts, making them stronger and less prone to damage. This also ensures that the new growth is strong and healthy.
+The anti-inflammatory properties help promote a healthy environment for hair growth in your scalp. Rich source of Omega-3 fatty acids, the fatty acids are essential for healthy hair growth. They nourish the follicles and hair shafts, making them stronger and less prone to damage. This also ensures that the new growth is strong and healthy.
 
 Omega-3 fats nourish the hair follicles and encourage growth. They also prevent inflammation, helping to stave off hair loss, dandruff, and other hair and scalp conditions.
 

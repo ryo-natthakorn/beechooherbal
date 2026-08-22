@@ -60,6 +60,12 @@ const events = defineCollection({
           }),
         )
         .default([]),
+      /**
+       * YouTube ids embedded in the legacy post body. Only the Siam Square merit
+       * ceremony (EN + TH) has one, but it is real content — copy-parity's embed-id
+       * check flags a dropped video, since `legacyFragments` only reasons about text.
+       */
+      videos: z.array(z.string()).default([]),
       /** Slug into OUTLETS in src/data/locations.ts, when the post announces a branch. */
       outlet: z.string().optional(),
       /** Provenance — the WP REST post id in inventory/rest-posts.json. */

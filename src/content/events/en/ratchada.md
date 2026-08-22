@@ -28,6 +28,7 @@ gallery:
     alt: 'New year new outlet! Bee Choo Ratchada — photo 9'
   - src: '../../../assets/images/events/ratchada/11-20220117-bee-choo-ratchada-edit-00-03-22-34-still012.jpg'
     alt: 'New year new outlet! Bee Choo Ratchada — photo 10'
+outlet: 'ratchada'
 wpId: 6625
 wpCategories:
   - 16
