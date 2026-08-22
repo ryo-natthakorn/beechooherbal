@@ -328,16 +328,27 @@ const description = "150 characters max. Specific to this page.";
 - [ ] Decide + TEST redirect strategy before relying on it
 
 ### Phase 3 — Core pages (each in EN + TH)
-- [ ] Home
-- [ ] 7 treatment pages (hair loss, grey/white, oily, dandruff, damaged/dry, bacterial, postpartum)
-- [ ] About, Team, Locations, Privacy Policy
-- [ ] Testimonials, Events & News
+> Corrected 2026-08-22: the unchecked boxes below had gone stale — Home, the 7
+> treatment pages, About, Team, Locations and Testimonials were all built and
+> committed long before this list was last touched. Verify against `git log` and
+> `src/pages/` before trusting any checkbox here.
+- [x] Home
+- [x] 7 treatment pages (hair loss, grey/white, oily, dandruff, damaged/dry, bacterial, postpartum)
+- [x] About, Team, Locations
+- [ ] Privacy Policy — the only Phase-3 page still unbuilt
+- [x] Testimonials (shipped in `dd04800`; it IS the legacy
+      `/reviews-and-testimonials-of-bee-choo-origin-treatment/` page)
+- [x] Events & News (index + 33 event posts, EN + TH)
 - [x] FAQ (+ "Herbal vs Hair Transplant")
 - [x] Treatment Cost in Thailand
 - [x] Products
 
 ### Phase 4 — Migration & SEO
-- [ ] Automate blog migration via REST API (per language)
+- [ ] Automate blog migration via REST API (per language) — the EVENTS half is done
+      (`inventory/scripts/08-fetch-posts.mjs` fetches by category; point it at terms
+      1/9 for the remaining 10 EN + 11 TH blog articles). Note the recategorisation:
+      the 20 grand openings are now events-only, so `/category/blog/` will need its
+      own SKIP group — see `src/data/events.ts`'s header.
 - [ ] Build complete 301 redirect map; wildcard rules in vercel.json if needed
 - [ ] Add schema markup to all pages
 - [ ] Add tracking codes (confirm which: GTM / Meta Pixel / TikTok Pixel) in BaseLayout
