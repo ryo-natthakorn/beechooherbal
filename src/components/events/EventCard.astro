@@ -1,0 +1,85 @@
+---
+// src/components/events/EventCard.astro
+// One post card on the Events & News index.
+//
+// NO CATEGORY BADGE, deliberately. The legacy card shows a "BLOG" / "บล็อก" chip on
+// every post — the bug this batch fixes (the grand openings are filed in both the blog
+// and events terms, and WordPress renders the first one). Re-badging them all
+// "EVENTS/News" would just be a truer label on a chip that says nothing useful on a
+// page where every card is an event. The date carries the information instead, plus a
+// branch chip where the post announces one.
+//
+// The excerpt is rendered IN FULL in the DOM and visually clamped with line-clamp.
+// It is the verbatim WordPress excerpt, which is what 06-copy-parity.mjs matches
+// against — truncating it in markup would fail parity, and hiding it with `display:
+// none` would hide it from crawlers too.
+import { Image } from "astro:assets";
+import { UI } from "../../i18n/ui";
+import type { Lang } from "../../data/events";
+
+interface Props {
+  lang: Lang;
+  href: string;
+  title: string;
+  excerpt: string;
+  dateLabel: string;
+  isoDate: string;
+  hero?: ImageMetadata;
+  heroAlt?: string;
+  branch?: string;
+  branchHref?: string;
+}
+
+const { lang, href, title, excerpt, dateLabel, isoDate, hero, heroAlt, branch, branchHref } = Astro.props;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const ui = UI[lang];
+---
+
+<article class="reveal relative flex flex-col overflow-hidden rounded-2xl border border-brand-earth bg-white shadow-soft">
+  {
+    hero && (
+      <a href={href} tabindex="-1" aria-hidden="true" class="block overflow-hidden">
+        <Image
+          src={hero}
+          alt={heroAlt ?? ""}
+          width={640}
+          height={427}
+          class="aspect-[3/2] w-full object-cover transition-transform duration-300 hover:scale-105"
+        />
+      </a>
+    )
+  }
+
+  <div class="flex flex-1 flex-col gap-3 p-5">
+    <div class="flex flex-wrap items-center gap-2 text-2xs">
+      <time datetime={isoDate} class="font-bold tracking-wide text-brand-green uppercase">{dateLabel}</time>
+      {
+        branch && branchHref && (
+          <a
+            href={branchHref}
+            class="relative z-10 rounded-full border border-brand-earth px-2.5 py-0.5 font-bold text-brand-origin hover:border-brand-green hover:text-brand-green"
+          >
+            {branch}
+          </a>
+        )
+      }
+    </div>
+
+    <h3 class={`${serif} text-lg leading-snug font-bold text-brand-green`}>
+      {/* The card is not itself a link — the branch chip inside it is its own link, and
+          nesting <a> is invalid HTML. Instead the heading's link carries an
+          `after:inset-0` overlay so the whole card is clickable, while the chip sits
+          above it on z-10. Screen readers still get one clear link with the title as
+          its accessible name. */}
+      <a href={href} class="after:absolute after:inset-0 hover:text-brand-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+        {title}
+      </a>
+    </h3>
+
+    <p class="line-clamp-3 text-sm leading-relaxed text-brand-origin">{excerpt}</p>
+
+    <span aria-hidden="true" class="mt-auto pt-1 text-sm font-bold text-brand-green">
+      {ui.events.readMore} &rsaquo;
+    </span>
+  </div>
+</article>

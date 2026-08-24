@@ -49,7 +49,28 @@ const PAGES = [
   ["faq", "/frequently-asked-questions/", "คำถามที่พบบ่อย"],
   ["herbal-vs-transplant", "/hair-transplant-vs-stem-cell-vs-keratin-treatment-vs-natural-herbal-treatment/", "สมุนไพร-vs-การปลูกผม"],
   ["treatment-cost", "/hair-loss-treatment-cost-in-thailand-prices-revealed/", "ราคาการทำทรีทเม้นท์"],
+  // The index page's legacy fragments are its <h1> plus the 6 card titles and 6 card
+  // excerpts its (6-capped) Elementor feed rendered. Our index shows all 18/15 posts and
+  // renders each card's excerpt as the verbatim WP excerpt.rendered, so those fragments
+  // appear naturally — no SKIP group was needed for it.
+  ["events", "/events-news-release/", "เหตุการณ์และข่าว"],
 ];
+
+/**
+ * Individual POSTS, checked against inventory/rest-posts.json (produced by
+ * 08-fetch-posts.mjs) rather than rest-pages.json.
+ *
+ * Shape differs from PAGES on purpose: posts need TWO FULL ROOT PATHS. Every Thai event
+ * post is served from the root, not from /th/<slug>/, so the `dist/th/<thSlug>/`
+ * convention PAGES hardcodes does not apply. `null` on a side means the post has no twin
+ * in that language (3 of the 18 English event posts are EN-only).
+ *
+ * Derived from the collection rather than hand-listed — the content files are themselves
+ * generated from the snapshot, so a hand-kept list here would be a second source of truth
+ * that could silently drift out of sync with the posts actually built.
+ */
+const POSTS_PATH = join(ROOT, "inventory", "rest-posts.json");
+const REST_POSTS = existsSync(POSTS_PATH) ? JSON.parse(readFileSync(POSTS_PATH, "utf8")) : null;
 
 /**
  * Legacy fragments the build drops deliberately. Each entry needs a reason — an
@@ -349,7 +370,58 @@ for (const [slug, enPath, thSlug] of PAGES) {
   }
 }
 
+// --- individual posts ------------------------------------------------------
+// Same comparison, different source of truth (rest-posts.json) and different path
+// convention (both languages live at the root). Skipped entirely when the snapshot is
+// absent, so the gate stays green for anyone who has not run `npm run fetch-posts`.
+let postsChecked = 0;
+if (REST_POSTS) {
+  // Match on the decoded path with `endsWith`, not `includes`: post slugs share long
+  // prefixes here (`…-prawet-7-กรกฎาคม-2567` vs `…-2567-2`), and a substring match
+  // would happily return the wrong post.
+  const postPath = (p) => {
+    try {
+      return decodeURIComponent(new URL(p.link).pathname);
+    } catch {
+      return "";
+    }
+  };
+  const allPosts = [...REST_POSTS.variants.en, ...REST_POSTS.variants.th];
+
+  for (const legacy of allPosts) {
+    const path = postPath(legacy);
+    if (!path || path === "/") continue;
+    const distPath = join(ROOT, "dist", path.replace(/^\/|\/$/g, ""), "index.html");
+    const label = `post ${path.slice(1, 45)}`;
+    if (!existsSync(distPath)) {
+      pending.push(label);
+      continue;
+    }
+    postsChecked++;
+    const html = readFileSync(distPath, "utf8").replace(/<script[\s\S]*?<\/script>/g, " ");
+    const attrs = [...html.matchAll(/\b(?:alt|title)="([^"]*)"/g)].map((m) => m[1]).join(" ");
+    const built = key(`${html.replace(/<[^>]+>/g, " ")} ${attrs}`);
+    const missing = legacyFragments(legacy.content.rendered || legacy.content).filter(
+      (frag) => !built.includes(key(frag)) && !SKIP.some(([re]) => re.test(frag)),
+    );
+    if (missing.length) {
+      missingTotal += missing.length;
+      report.push(`\n  ${label} — ${missing.length} legacy fragment(s) not found in the build:`);
+      for (const frag of missing) report.push(`    · ${frag.slice(0, 150)}${frag.length > 150 ? "…" : ""}`);
+    }
+    const missingVideos = [...legacyVideoIds(legacy.content.rendered || legacy.content)].filter(
+      (id) => !html.includes(id) && !SKIP_VIDEO_IDS.has(id),
+    );
+    if (missingVideos.length) {
+      missingTotal += missingVideos.length;
+      report.push(`\n  ${label} — ${missingVideos.length} legacy video/GIF id(s) not found: ${missingVideos.join(", ")}`);
+    }
+  }
+}
+
 console.log(`copy parity: ${checked} built page(s) checked against inventory/rest-pages.json`);
+if (REST_POSTS) console.log(`             ${postsChecked} built post(s) checked against inventory/rest-posts.json`);
+else console.log("             posts NOT checked — inventory/rest-posts.json is absent (run `npm run fetch-posts`)");
 if (pending.length) console.log(`not built yet (not a failure): ${pending.join(", ")}`);
 if (report.length) console.log(report.join("\n"));
 if (missingTotal === 0) {

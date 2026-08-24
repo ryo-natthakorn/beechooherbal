@@ -1,0 +1,74 @@
+---
+// src/pages/[postSlug].astro
+// Individual Events & News posts, both languages, at their legacy ROOT paths.
+//
+// SINGLE-SEGMENT dynamic route, deliberately not a rest route (`[...slug]`). A rest
+// route would match every unclaimed path on the site, including `/th/…`, and would
+// swallow 404s for URLs that should genuinely 404. `[postSlug]` emits exactly
+// `/<slug>/` and nothing deeper.
+//
+// Named `postSlug` rather than `eventSlug` so the later blog batch can reuse this file
+// by widening the getStaticPaths filter — post URLs share one flat root namespace on
+// this site, so they must share one route.
+//
+// Why Thai posts live here and not under /th/: all 92 sitemap URLs are root URLs and
+// none of the /th/<slug>/ WPML mirrors appear in the sitemap, so moving them would
+// 301 away the URLs Google actually crawls. The mirrors are 301'd to the root in
+// vercel.json. BaseLayout takes `lang` from the entry, which also fixes the legacy
+// site's <html lang="en-US"> on Thai posts. See src/data/events.ts.
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import EventPost from "../components/events/EventPost.astro";
+import EventArticleSchema from "../components/events/EventArticleSchema.astro";
+import { EVENTS_HERO, EVENTS_INDEX } from "../data/events";
+
+export async function getStaticPaths() {
+  const all = await getCollection("events");
+
+  // Prev/next walk within one language's feed, newest first — the same order the
+  // index presents. Built per language so a Thai post never links to an English one.
+  const byLang = { en: [] as typeof all, th: [] as typeof all };
+  for (const entry of all) byLang[entry.data.lang as "en" | "th"].push(entry);
+  for (const list of Object.values(byLang)) {
+    list.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  }
+
+  return all.map((entry) => {
+    const feed = byLang[entry.data.lang as "en" | "th"];
+    const i = feed.findIndex((e) => e.id === entry.id);
+    const link = (e: (typeof feed)[number]) => ({ href: `/${e.data.slug}/`, title: e.data.title });
+    return {
+      params: { postSlug: entry.data.slug },
+      props: {
+        entry,
+        // "Previous" reads as older, so it is the NEXT item in a newest-first list.
+        prev: i < feed.length - 1 ? link(feed[i + 1]) : undefined,
+        next: i > 0 ? link(feed[i - 1]) : undefined,
+      },
+    };
+  });
+}
+
+const { entry, prev, next } = Astro.props;
+const lang = entry.data.lang as "en" | "th";
+
+const site = "https://beechooherbal.com";
+const canonical = new URL(`/${entry.data.slug}/`, site).href;
+const heroUrl = entry.data.hero ? new URL(entry.data.hero.src, site).href : undefined;
+---
+
+<BaseLayout title={`${entry.data.title} - Bee Choo Herbal`} description={entry.data.excerpt} {lang} image={heroUrl}>
+  <EventArticleSchema
+    slot="head"
+    {lang}
+    headline={entry.data.title}
+    description={entry.data.excerpt}
+    {canonical}
+    datePublished={entry.data.pubDate.toISOString()}
+    dateModified={entry.data.modDate?.toISOString()}
+    image={heroUrl}
+    sectionName={EVENTS_HERO.heading[lang]}
+    sectionUrl={new URL(EVENTS_INDEX[lang], site).href}
+  />
+  <EventPost {entry} {prev} {next} />
+</BaseLayout>

@@ -1,0 +1,219 @@
+---
+// src/components/events/EventsPage.astro
+// The Events & News index body. Thin route shells set lang/title/description.
+//
+// Presented as a centre-rail alternating TIMELINE, not a grid — these 18 EN / 15 TH
+// posts are dated milestones, and read in sequence they tell one story (Bee Choo going
+// from its first Siam Square shop in Aug 2018 to OUTLETS.length branches today). The
+// grid version told you "some news items happened"; this makes the growth itself the
+// message. Chosen by Ryo over a left-rail variant, with the mobile-collapse trade-off
+// (see .events-timeline in global.css) already accepted.
+//
+// Shows EVERY post, grouped by year. The legacy page renders only six of its eighteen
+// — an Elementor `posts.cards` default, not an editorial choice — which left twelve
+// English events reachable only through /category/events-news/. See src/data/events.ts
+// for that and for the category fix this batch exists to make.
+//
+// EventCard.astro is used completely unmodified here — see its own file. That is
+// deliberate: its click-overlay contract, its full-DOM (copy-parity-anchored) excerpt,
+// and its `mt-auto` flex pin all survive by construction, so this redesign cannot
+// regress anything copy-parity already checks.
+//
+// Year grouping instead of pagination or a filter: eighteen items across seven years
+// is small enough that hiding any of them would cost crawlability for no real gain.
+// Everything stays in the DOM, and there is no JavaScript — the rail is pure CSS
+// (.events-timeline in global.css), never a scroll-driven fill (see that file's note
+// on why animation-timeline: scroll() was removed once already).
+import { getCollection } from "astro:content";
+import HerbalStrokes from "../HerbalStrokes.astro";
+import LocationsBand from "../LocationsBand.astro";
+import EventCard from "./EventCard.astro";
+import { EVENTS_HERO, EVENT_PAIRS, type Lang } from "../../data/events";
+import { OUTLETS } from "../../data/locations";
+import { UI } from "../../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+const ui = UI[lang];
+
+const posts = (await getCollection("events", (e) => e.data.lang === lang)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// Build-time guard on the PATHS, since those are what hreflang actually advertises:
+// every EVENT_PAIRS entry must name a slug that a real post is emitted at, on both
+// sides. Asserting the paths (rather than the filename key) catches the failure that
+// matters — hreflang pointing at a URL this build does not produce — and it catches a
+// typo in a long percent-encoded Thai slug, which is the likeliest way to get this
+// wrong and the hardest to spot in review.
+const slugsByLang = new Map<string, Set<string>>([
+  ["en", new Set()],
+  ["th", new Set()],
+]);
+for (const entry of await getCollection("events")) {
+  slugsByLang.get(entry.data.lang)?.add(`/${entry.data.slug}/`);
+}
+for (const pair of EVENT_PAIRS) {
+  for (const side of ["en", "th"] as const) {
+    if (!slugsByLang.get(side)?.has(pair[side])) {
+      throw new Error(
+        `EVENT_PAIRS["${pair.key}"].${side} is "${pair[side]}", but no ${side.toUpperCase()} event post ` +
+          `is emitted at that path. hreflang would advertise a URL that does not exist. ` +
+          `Check src/data/events.ts against the slugs in src/content/events/${side}/.`,
+      );
+    }
+  }
+}
+
+// Thai dates use the Buddhist calendar, matching the years the Thai post titles
+// themselves quote (2568, 2567…). Same formatter ReviewsPage.astro uses.
+const dateFormatter = new Intl.DateTimeFormat(lang === "th" ? "th-TH-u-ca-buddhist" : "en-GB", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+const yearFormatter = new Intl.DateTimeFormat(lang === "th" ? "th-TH-u-ca-buddhist" : "en-GB", {
+  year: "numeric",
+});
+
+const outletBySlug = new Map(OUTLETS.map((o) => [o.slug, o]));
+
+// Group in the order the sorted list already gives us: newest year first.
+//
+// `id` is the Gregorian year and `label` is what renders. They must stay separate:
+// the Thai formatter yields "พ.ศ. 2568", which contains a space and cannot be an HTML
+// id — using it directly produced anchors that silently never jumped.
+const groups: { id: string; label: string; posts: typeof posts }[] = [];
+for (const post of posts) {
+  const id = String(post.data.pubDate.getFullYear());
+  const label = yearFormatter.format(post.data.pubDate);
+  const last = groups.at(-1);
+  if (last && last.id === id) last.posts.push(post);
+  else groups.push({ id, label, posts: [post] });
+}
+
+const locationsHref = lang === "th" ? "/th/สถานที่ตั้งของร้านค้า/" : "/locations/";
+
+// Bare digits pulled from the SAME formatter the year markers use, so the summary
+// sentence can never drift from them — and stays Buddhist-era in Thai (2561, not
+// "พ.ศ. 2561" mid-sentence, which yearFormatter.format() would produce).
+const yearDigits = (d: Date) => yearFormatter.formatToParts(d).find((p) => p.type === "year")?.value ?? String(d.getFullYear());
+
+// `posts` is sorted newest-first, so the LAST entry is the oldest — the year the
+// story starts. OUTLETS.length is the one branch count in the codebase that
+// `npm run locations-parity` keeps honest against the live site.
+const oldest = posts.at(-1);
+const summary = oldest ? EVENTS_HERO.summary[lang](OUTLETS.length, yearDigits(oldest.data.pubDate)) : "";
+
+// Timeline placement, resolved here rather than with :nth-child() in CSS.
+//   row  — 1-based index WITHIN this year's <ol>, emitted inline as --r. Every entry
+//          owning its own grid row is what stops a long Thai title on one side from
+//          pushing the card opposite it (see .tl-row in global.css), and it is also
+//          what guarantees visual order == DOM order for accessibility.
+//   side — alternates GLOBALLY across year boundaries, not per <ol>. :nth-child()
+//          restarts at each year group and would put two consecutive cards on the
+//          same side at every seam.
+let seq = 0;
+const timeline = groups.map((group) => ({
+  ...group,
+  rows: group.posts.map((post, j) => ({
+    post,
+    row: j + 1,
+    side: seq++ % 2 === 0 ? "tl-left" : "tl-right",
+  })),
+}));
+---
+
+<main id="main">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-brand-green py-16 text-center text-white md:py-20">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+    <div class="relative mx-auto max-w-3xl px-4 md:px-8">
+      <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} md:text-5xl`}>{EVENTS_HERO.heading[lang]}</h1>
+      <p class="text-sm leading-relaxed text-white/90 md:text-base">{EVENTS_HERO.intro[lang]}</p>
+      {summary && <p class={`mt-3 text-sm leading-relaxed font-bold text-brand-yellow${balance} md:text-base`}>{summary}</p>}
+    </div>
+  </section>
+
+  <!-- Year jump chips. `.events-nav` shares the real header-height offset with
+       `.products-nav` (see global.css) — the previous `top-16` (4rem) was
+       0.25rem + 1px short, so a jump tucked the year pill under the header. -->
+  {
+    groups.length > 1 && (
+      <nav aria-label={ui.misc.onThisPage} class="events-nav sticky z-20 border-b border-brand-earth bg-white/95 backdrop-blur">
+        <div class="mx-auto flex max-w-6xl flex-wrap justify-center gap-2 px-4 py-3 md:px-8">
+          {groups.map((g) => (
+            <a
+              href={`#year-${g.id}`}
+              class="rounded-full border border-brand-earth px-3 py-1 text-xs font-bold text-brand-origin hover:border-brand-green hover:text-brand-green"
+            >
+              {g.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+    )
+  }
+
+  <!-- The timeline. One section, one background — the rail (.events-timeline::before
+       in global.css) is a single continuous line and cannot cross full-bleed
+       alternating bands, so the per-year alternation and LeafDivider both go. -->
+  <section class="bg-brand-earth/25 py-14 md:py-20">
+    <div class="mx-auto max-w-5xl px-4 md:px-8">
+      {/* No horizontal padding on .events-timeline itself: `left: 50%` in CSS is only
+          the true centre when the containing block's padding box equals its content
+          box, so the page gutter has to live on this wrapper, not on the rail's own
+          container. */}
+      <div class="events-timeline">
+        {
+          timeline.map((group) => (
+            <Fragment>
+              <h2 id={`year-${group.id}`} class={`tl-year reveal ${serif} text-xl font-bold text-brand-green md:text-2xl`}>
+                {group.label}
+              </h2>
+              {/* role="list": Tailwind's Preflight sets list-style:none on every <ol>,
+                  which drops list semantics in Safari/VoiceOver. <ol>, not <ul>,
+                  because the sequence IS the content — strict reverse-chronological
+                  order, and visual order can never diverge from it (see .tl-row). */}
+              <ol role="list" class="tl-list">
+                {
+                  group.rows.map(({ post, row, side }) => {
+                    const outlet = post.data.outlet ? outletBySlug.get(post.data.outlet) : undefined;
+                    return (
+                      <li class={`tl-row ${side}`} style={`--r:${row}`}>
+                        {/* The node lives OUTSIDE <article>, in the <li> — so
+                            EventCard's after:inset-0 click overlay (containing block =
+                            the relative <article>) cannot swallow it, and the card's
+                            own overflow-hidden cannot clip it. Purely decorative, so
+                            not being a link/focusable costs nothing. */}
+                        <span aria-hidden="true" class="tl-node" />
+                        <EventCard
+                          {lang}
+                          href={`/${post.data.slug}/`}
+                          title={post.data.title}
+                          excerpt={post.data.excerpt}
+                          dateLabel={dateFormatter.format(post.data.pubDate)}
+                          isoDate={post.data.pubDate.toISOString()}
+                          hero={post.data.hero}
+                          heroAlt={post.data.heroAlt}
+                          branch={outlet ? (lang === "th" ? outlet.nameTh : outlet.name) : undefined}
+                          branchHref={outlet ? locationsHref : undefined}
+                        />
+                      </li>
+                    );
+                  })
+                }
+              </ol>
+            </Fragment>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <LocationsBand {lang} background="white" />
+</main>

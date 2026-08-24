@@ -1,0 +1,19 @@
+---
+// src/pages/events-news-release.astro
+// English Events & News page — reached from the top nav "Events and News" item.
+// Thin route shell.
+// Content is the `events` Content Collection plus src/data/events.ts, transcribed
+// verbatim from the live site (wp-json/wp/v2/pages/1935 for the index chrome,
+// wp/v2/posts for the 18 posts — see inventory/scripts/08-fetch-posts.mjs).
+// hreflang is automatic — this path already exists in src/i18n/pairs.ts.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import EventsPage from "../components/events/EventsPage.astro";
+import { EVENTS_SEO } from "../data/events";
+
+const lang = "en" as const;
+const { title, description } = EVENTS_SEO;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} {lang}>
+  <EventsPage {lang} />
+</BaseLayout>

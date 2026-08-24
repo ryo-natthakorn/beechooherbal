@@ -809,10 +809,13 @@
   color: #fff;
 }
 
-/* Products page — sticky category subnav. top offset is the header's own height
-   (min-h-11 content + py-3 (0.75rem*2) + 1px border-b), same value the treatment
-   pages' sticky TOC bar already computes below the header — see the note there. */
-.products-nav {
+/* Products page — sticky category subnav, and the Events & News year-jump bar. top
+   offset is the header's own height (min-h-11 content + py-3 (0.75rem*2) + 1px
+   border-b), same value the treatment pages' sticky TOC bar already computes below the
+   header — see the note there. Events previously shipped `sticky top-16` (4rem), which
+   is 0.25rem + 1px short: a year jump tucked the marker under the header. */
+.products-nav,
+.events-nav {
   top: calc(4.25rem + 1px);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
@@ -820,4 +823,186 @@
 /* Anchor jumps must clear BOTH the sticky header and the sticky chip bar beneath it. */
 .products-section {
   scroll-margin-top: calc(4.25rem + 1px + 3.5rem);
+}
+
+/* ---------------------------------------------------------------------------
+   Events & News index — centre-rail alternating (zigzag) timeline
+   ---------------------------------------------------------------------------
+   Replaces a 3-column card grid. Below md it collapses to a left rail with a single
+   card column; the MARKUP is identical at both breakpoints — only --tl-gutter,
+   --rail-x and the grid template change here.
+
+   NO scroll-driven rail fill. `animation-timeline: scroll()` was removed from this
+   stylesheet once already because Safari does not support it and it shipped a flat
+   white page on iPhone (see the note by .page-tint above); a partial fill has no safe
+   static default, so the rail is simply always drawn complete. The only motion here is
+   .reveal (already used by EventCard, and now by the year pill below), which is
+   double-gated and whose un-animated state is the visible one.
+
+   Colour, radius, hairline and node dot are all existing site primitives — the rail is
+   LeafDivider's `bg-brand-earth` hairline stood on end, and the node is the
+   h-1.5/w-1.5/rounded-full/bg-brand-green dot already used in AboutPage,
+   TreatmentBenefits and HerbalVsTransplantPage. Nothing new was invented.
+   --------------------------------------------------------------------------- */
+
+.events-timeline {
+  position: relative;
+  /* The only two numbers per breakpoint. Everything else below — node offsets, the
+     connector length — is DERIVED from them, so the rail and the beads on it cannot
+     drift apart. */
+  --tl-gutter: 2rem;
+  --rail-x: calc(var(--tl-gutter) / 2);
+}
+
+/* THE RAIL. One element for the whole timeline, drawn on the CONTAINER — not per row
+   and not per year group. That is what makes it read as a single unbroken line
+   (a) behind the year markers, (b) across the vertical gaps between year groups, and
+   (c) through a year that holds only one entry (English 2021). A per-row segment
+   fails all three; a per-group segment fails (b) and (c).
+   z-index: 0 puts it explicitly in the positioned layer, so the rules below can lift
+   the beads over it with a plain `position: relative` — the same mechanism EventCard
+   already uses to keep its branch chip above the title link's after:inset-0 overlay.
+   The mask dissolves the last 6rem so the line does not hard-stop at the very bottom.
+   If mask-image fails to apply, the rail is merely full-length with a square end —
+   degraded, never broken. Both the prefixed and unprefixed properties ship, matching
+   .marquee above.
+   width: 2px, not 1px — verified in a real render, not just in theory. At 1px, this
+   line's centering transform (-50% of 1px = -0.5px) lands it on a half-pixel
+   boundary, and the browser spreads it across two pixel columns as a faint
+   antialiased blur instead of a solid line — on the built page it was measurably
+   almost invisible (~10% of full rail color per column, sampled directly from a
+   screenshot). .toc-progress's own vertical rail already sidesteps this by using
+   width: 3px; 2px here keeps translateX(-50%) landing on a whole pixel (-1px) while
+   staying visually a hairline against .events-timeline's --tl-gutter values, both of
+   which are whole rem-derived pixel counts (16px / 480px), so `left` never
+   reintroduces a fractional offset. */
+.events-timeline::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: var(--rail-x);
+  width: 2px;
+  transform: translateX(-50%);
+  background-color: var(--color-brand-earth);
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 6rem), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 6rem), transparent);
+}
+
+/* Year marker — a real <h2> carrying the jump-chip anchor id, presented as a bead
+   threaded on the rail rather than as a centred section heading.
+   `position: relative` is load-bearing: the rail is an absolutely positioned ::before,
+   so a static heading paints UNDER it and the hairline would run through the digits.
+   The opaque white background is what makes the marker sit ON the line instead of
+   breaking it.
+   scroll-margin-top is the header height + the sticky year-chip bar height (3.5rem,
+   matching .products-section's own py-3 + text-xs chip row) plus 1rem so the pill
+   is not flush against the bar. */
+.tl-year {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  margin-block: 3rem 1.5rem;
+  border: 1px solid var(--color-brand-earth);
+  border-radius: 9999px;
+  background-color: #fff;
+  padding: 0.375rem 1rem;
+  scroll-margin-top: calc(4.25rem + 1px + 3.5rem + 1rem);
+}
+.tl-year:first-child {
+  margin-top: 0; /* the rail starts at the first marker's top edge, not above it */
+}
+
+.tl-list {
+  display: grid;
+  grid-template-columns: var(--tl-gutter) minmax(0, 1fr);
+  row-gap: 1.5rem;
+}
+
+/* EVERY ENTRY OWNS ITS OWN GRID ROW, server-rendered as --r (EventsPage.astro).
+   This is the whole answer to "uneven text lengths make the two sides drift": with one
+   item per row, a long Thai title or a long excerpt can only make its OWN row taller —
+   it can never push the item opposite it, because there is no item opposite it on that
+   row. Left on `auto`, Grid's sparse auto-placement would happily pack a column-1 and a
+   column-3 item into the same row and the drift would be back.
+   It is also the accessibility answer: two entries can never share a row, so the visual
+   top-to-bottom order is always exactly the DOM order, which stays strictly
+   reverse-chronological.
+   The `auto` fallback matters: if --r were ever missing, `grid-row: auto` is a cosmetic
+   regression to today's packing behaviour, never a broken layout. */
+.tl-row {
+  position: relative;
+  grid-column: 2;
+  grid-row: var(--r, auto);
+}
+
+/* Node. Offset from the RAIL, not from the card, so one number lands it dead on the
+   line at both breakpoints. Sits in the <li>, outside <article> — see EventsPage.astro. */
+.tl-node {
+  position: absolute;
+  z-index: 1;
+  top: 1.5rem; /* beside the card's top edge, independent of whether it has a hero image */
+  left: calc(var(--tl-gutter) / -2);
+  transform: translateX(-50%);
+  height: 0.375rem;
+  width: 0.375rem;
+  border-radius: 9999px;
+  background-color: var(--color-brand-green);
+}
+
+/* Short hairline from the node out to the card edge — the LeafDivider hairline again,
+   turned on its side. Length = half the gutter minus the dot's own radius. */
+.tl-node::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  height: 1px;
+  width: calc(var(--tl-gutter) / 2 - 0.1875rem);
+  background-color: var(--color-brand-earth);
+}
+
+@media (min-width: 48rem) {
+  .events-timeline {
+    --tl-gutter: 4rem;
+    --rail-x: 50%; /* the centre of the middle column, since both side columns are 1fr */
+  }
+  /* fit-content + auto inline margins = the pill is centred ON the rail at any label
+     width, which matters because "2025" and "พ.ศ. 2568" are very different widths. */
+  .tl-year {
+    margin-inline: auto;
+    margin-block: 4rem 2rem;
+  }
+  .tl-list {
+    grid-template-columns: minmax(0, 1fr) var(--tl-gutter) minmax(0, 1fr);
+    row-gap: 1.5rem;
+  }
+  .tl-left {
+    grid-column: 1;
+  }
+  .tl-right {
+    grid-column: 3;
+  }
+  .tl-left .tl-node {
+    left: auto;
+    right: calc(var(--tl-gutter) / -2);
+    transform: translateX(50%);
+  }
+  .tl-left .tl-node::after {
+    left: auto;
+    right: 100%;
+  }
+}
+
+/* Unstyled/print sanity: the DOM already reads as a chronological list, so this only
+   has to remove decoration that means nothing on paper. */
+@media print {
+  .events-timeline::before,
+  .tl-node {
+    display: none;
+  }
+  .tl-list {
+    display: block;
+  }
 }
