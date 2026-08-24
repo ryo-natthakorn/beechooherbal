@@ -57,20 +57,55 @@ const PAGES = [
 ];
 
 /**
- * Individual POSTS, checked against inventory/rest-posts.json (produced by
- * 08-fetch-posts.mjs) rather than rest-pages.json.
+ * Individual POSTS are checked against the post snapshots rather than rest-pages.json,
+ * and against TWO FULL ROOT PATHS rather than PAGES' `dist/th/<thSlug>/` convention —
+ * both languages' posts are served from the root. The list is derived from the snapshots,
+ * never hand-kept, so it cannot drift from the posts actually built.
  *
- * Shape differs from PAGES on purpose: posts need TWO FULL ROOT PATHS. Every Thai event
- * post is served from the root, not from /th/<slug>/, so the `dist/th/<thSlug>/`
- * convention PAGES hardcodes does not apply. `null` on a side means the post has no twin
- * in that language (3 of the 18 English event posts are EN-only).
- *
- * Derived from the collection rather than hand-listed — the content files are themselves
- * generated from the snapshot, so a hand-kept list here would be a second source of truth
- * that could silently drift out of sync with the posts actually built.
+ * Three post snapshots, each written by its own fetcher:
+ *   rest-posts.json          events   — 08-fetch-posts.mjs
+ *   rest-posts-blog.json     blog     — 11-fetch-blog.mjs
+ *   rest-posts-wayback.json  blog     — 13-fetch-wayback.mjs, for the ONE post whose
+ *                                       REST endpoint and HTML page both return 500.
+ *                                       Checked against the frozen 2022 capture, which
+ *                                       is the only source of truth that exists for it.
+ *                                       That is strictly better than skipping it: a
+ *                                       transcription slip in a 2,900-word article is
+ *                                       exactly what this script catches.
+ * Any that are absent are skipped, so the gate stays green for anyone who has not run
+ * every fetcher.
  */
-const POSTS_PATH = join(ROOT, "inventory", "rest-posts.json");
-const REST_POSTS = existsSync(POSTS_PATH) ? JSON.parse(readFileSync(POSTS_PATH, "utf8")) : null;
+const SNAPSHOT_FILES = ["rest-posts.json", "rest-posts-blog.json", "rest-posts-wayback.json"];
+const REST_POSTS = (() => {
+  const merged = { variants: { en: [], th: [] }, files: [] };
+  for (const f of SNAPSHOT_FILES) {
+    const p = join(ROOT, "inventory", f);
+    if (!existsSync(p)) continue;
+    const snap = JSON.parse(readFileSync(p, "utf8"));
+    merged.variants.en.push(...(snap.variants?.en ?? []));
+    merged.variants.th.push(...(snap.variants?.th ?? []));
+    merged.files.push(f);
+  }
+  return merged.files.length ? merged : null;
+})();
+
+/**
+ * Category ARCHIVES, which are NOT pages and therefore cannot go in PAGES above.
+ * Verified: rest-pages.json holds 18 EN / 17 TH page records and not one is a
+ * /category/* URL — a WordPress term archive has no REST page object, unlike
+ * /events-news-release/ which IS a real page (id 1935/3464).
+ *
+ * Different source of truth, same question. The legacy archive rendered one card per
+ * post: title + excerpt. Our index renders those same strings, so the archive is checked
+ * against the POST snapshot it lists.
+ *
+ * ⚠ The card text is `metaDescription ?? excerpt` (see cardText() in src/data/blog.ts —
+ * WordPress truncates every Thai excerpt to 30 characters), so BOTH are accepted here.
+ */
+const ARCHIVES = [
+  { label: "blog index EN", dist: join("category", "blog"), lang: "en" },
+  { label: "blog index TH", dist: join("th", "category", "บล็อก"), lang: "th" },
+];
 
 /**
  * Legacy fragments the build drops deliberately. Each entry needs a reason — an
@@ -80,6 +115,21 @@ const SKIP = [
   // --- WordPress/Elementor chrome and social widget labels, never page copy ---
   [/^(facebook|facebook-f|youtube|yelp|instagram|tiktok|line)$/i, "social widget labels, not copy"],
   [/^(read more|prev|next|search|menu|home)$/i, "WP navigation chrome"],
+
+  // --- Blog: this script's own <ol> chunking, NOT a content drop --------------
+  // Both fragments below are an artefact of the widget-container sweep further down:
+  // it splits on </p>, <br>, <div> and <h1-6>, but NOT on </li> or </ol>. So an <ol>
+  // gets flattened into ONE fragment that also swallows the heading paragraph which
+  // follows it ("…dr. orn clinic 4) การเยียวยาที่บ้าน" — the salon list plus the next
+  // section title).
+  //
+  // The build renders each <li> as its own paragraph, so the same words are all there
+  // but never contiguous in that order. VERIFIED PRESENT on the built page, string by
+  // string: 786 salon, Bond Beauty Bangkok Asoke, Serge Comtesse, Nirunda, Cellport
+  // Clinic, Kamol Hospital, and การเยียวยาที่บ้าน. Nothing is missing; only this
+  // script's chunking disagrees with the DOM.
+  [/^bee choo origin herbal thailand 786 salon bond beauty bangkok asoke/i, "copy-parity's own <ol> flattening — every item verified present on the built page"],
+  [/^nirunda cellport clinic kamol hospital ktop clinic/i, "copy-parity's own <ol> flattening — every item verified present on the built page"],
   // --- Legacy CTAs, replaced by our own Facebook/LINE/Find-a-Branch set (CLAUDE.md §2) ---
   [/^(call us today|talk to us on facebook!?|พูดคุยกับเราผ่านเฟสบุ๊ค)$/i, "legacy CTA button, replaced by our CTA set"],
   // --- The hero strapline, hard-coded in TreatmentHero.astro rather than per page ---
@@ -211,6 +261,43 @@ const SKIP_VIDEO_IDS = new Set([
   // itself rather than its attribution text.
   "37sogIrvhmVY6fdWVH",
   "Zyv6MOrU1FOTlkgllN",
+
+  // --- Blog batch: decorative GIPHY reaction GIFs -----------------------------
+  // Every id below is a giphy.com/embed/* iframe (verified against the raw post HTML,
+  // not inferred from the id shape). They are reaction GIFs punctuating the 2018 travel
+  // listicles and hair-care articles — "chrome, not page copy", the same call already
+  // made for Treatment Cost above.
+  //
+  // Carrying them would mean ~21 third-party giphy.com iframes on a site whose whole
+  // premise is near-zero JS (CLAUDE.md §3), in exchange for decoration that carries no
+  // information. Every one is listed individually rather than skipped by a blanket
+  // giphy.com rule, so a NEW embed still fails loudly and gets a decision.
+  //
+  // Note this list is GIPHY only. Real YouTube videos in these posts are CARRIED, and
+  // two were recovered while building this list: an <a href> link to youtube.com (which
+  // the extractor had been stripping to its label) and an Elementor `video` widget whose
+  // URL lives in a data-settings JSON blob.
+  "1kJYep7bSfVjtmnCFF",
+  "9AIAX6KeXfjGGct3Qa",
+  "3q0gsjUP5gnzokdN44",
+  "8Bl2Aiu7choMmqIt8z",
+  "l0ErF5NVjqvvquRna",
+  "8TCWfhWi30fNinARM6",
+  "MV1jgzE9Sp5zLATwIT",
+  "l2QZXwGah3PZa9x28",
+  "d3MKvWzccYif1XCU",
+  "okMZne8cKftrq",
+  "3o7TKz2eMXx7dn95FS",
+  "3og0IJlBi94ro3OTbq",
+  "xT77XWum9yH7zNkFW0",
+  "l1J3CbFgn5o7DGRuE",
+  "jquDWJfPUMCiI",
+  "3o6fJ2J2Ct3zcv1u7K",
+  "7SdIVBc0xjpja",
+  "xT1R9CMeVujUND154I",
+  "OYgHBpEfKG4UM",
+  "t7752IVYRBN1YzOPaL",
+  "KXNxjTjMzGuEcC7gip",
 ]);
 
 const decode = (s) =>
@@ -371,9 +458,9 @@ for (const [slug, enPath, thSlug] of PAGES) {
 }
 
 // --- individual posts ------------------------------------------------------
-// Same comparison, different source of truth (rest-posts.json) and different path
-// convention (both languages live at the root). Skipped entirely when the snapshot is
-// absent, so the gate stays green for anyone who has not run `npm run fetch-posts`.
+// Same comparison as PAGES, different source of truth (the post snapshots) and different
+// path convention: BOTH languages live at the root, so PAGES' `dist/th/<thSlug>/` shape
+// does not apply.
 let postsChecked = 0;
 if (REST_POSTS) {
   // Match on the decoded path with `endsWith`, not `includes`: post slugs share long
@@ -419,9 +506,59 @@ if (REST_POSTS) {
   }
 }
 
+// --- category archives -----------------------------------------------------
+// The blog index lists one card per post: title + card text. Checked against the post
+// snapshot it lists, because a WP term archive has no REST page record to compare with.
+let archivesChecked = 0;
+if (REST_POSTS) {
+  const blogSnapshotIds = new Set();
+  for (const f of ["rest-posts-blog.json", "rest-posts-wayback.json"]) {
+    const p = join(ROOT, "inventory", f);
+    if (!existsSync(p)) continue;
+    const snap = JSON.parse(readFileSync(p, "utf8"));
+    for (const lang of ["en", "th"]) for (const post of snap.variants?.[lang] ?? []) blogSnapshotIds.add(`${lang}:${post.id}`);
+  }
+
+  for (const archive of ARCHIVES) {
+    const distPath = join(ROOT, "dist", archive.dist, "index.html");
+    if (!existsSync(distPath)) {
+      pending.push(archive.label);
+      continue;
+    }
+    archivesChecked++;
+    const html = readFileSync(distPath, "utf8").replace(/<script[\s\S]*?<\/script>/g, " ");
+    const attrs = [...html.matchAll(/\b(?:alt|title)="([^"]*)"/g)].map((m) => m[1]).join(" ");
+    const built = key(`${html.replace(/<[^>]+>/g, " ")} ${attrs}`);
+
+    // Every post the archive should list must have its TITLE on the page, plus either
+    // its Yoast description or its excerpt (whichever the card renders — see cardText).
+    const missing = [];
+    for (const f of ["rest-posts-blog.json", "rest-posts-wayback.json"]) {
+      const p = join(ROOT, "inventory", f);
+      if (!existsSync(p)) continue;
+      const snap = JSON.parse(readFileSync(p, "utf8"));
+      for (const post of snap.variants?.[archive.lang] ?? []) {
+        const title = decode(post.title?.rendered || "");
+        if (title && !built.includes(key(title))) missing.push(`card title: ${title}`);
+        const desc = decode(post.yoast_head_json?.description || "");
+        const exc = decode((post.excerpt?.rendered || "").replace(/<[^>]+>/g, " "));
+        const cardHas = (desc && built.includes(key(desc))) || (exc && built.includes(key(exc)));
+        if ((desc || exc) && !cardHas) missing.push(`card text for "${title.slice(0, 40)}"`);
+      }
+    }
+    if (missing.length) {
+      missingTotal += missing.length;
+      report.push(`
+  ${archive.label} — ${missing.length} card field(s) not found:`);
+      for (const m of missing) report.push(`    · ${m.slice(0, 150)}`);
+    }
+  }
+}
+
 console.log(`copy parity: ${checked} built page(s) checked against inventory/rest-pages.json`);
-if (REST_POSTS) console.log(`             ${postsChecked} built post(s) checked against inventory/rest-posts.json`);
-else console.log("             posts NOT checked — inventory/rest-posts.json is absent (run `npm run fetch-posts`)");
+if (archivesChecked) console.log(`             ${archivesChecked} category archive(s) checked against the blog snapshot`);
+if (REST_POSTS) console.log(`             ${postsChecked} built post(s) checked against ${REST_POSTS.files.join(" + ")}`);
+else console.log("             posts NOT checked — no post snapshot present (run `npm run fetch-posts` / `fetch-blog`)");
 if (pending.length) console.log(`not built yet (not a failure): ${pending.join(", ")}`);
 if (report.length) console.log(report.join("\n"));
 if (missingTotal === 0) {

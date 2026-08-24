@@ -300,9 +300,17 @@ const description = "150 characters max. Specific to this page.";
 - [x] Map every EN URL to its TH counterpart → `inventory/en-th-map.csv` (**19 pairs**; see caveat below)
 - [x] Pull content via WP REST API → `inventory/rest-pages.json` (en=18, th=17).
       ⚠ CORRECTED 2026-07-14: `/wp/v2/posts` 500s only for **large page-1 collection queries**
-      (`per_page=50`/`100&page=1`); **all 54 posts fetch fine individually** (`per_page=1&page=N`),
-      including the alopecia post whose HTML page 500s. Phase 4 blog migration CAN use REST —
-      pull posts one at a time; no HTML scraping needed. (See `docs/session-2026-07-14-audit.md`.)
+      (`per_page=50`/`100&page=1`); posts fetch fine individually. Phase 4 blog migration
+      CAN use REST — pull posts one at a time; no HTML scraping needed.
+      ⚠⚠ **CORRECTED AGAIN 2026-08-24 — "all 54 posts fetch fine individually" is FALSE.**
+      Post **1530** (`/suffering-from-alopecia-…/`) 500s on `posts/1530?_embed`, on
+      `posts?include=1530`, on its HTML page, **and on any listing whose `_fields`
+      includes `excerpt`** — the excerpt is what breaks. A listing without `excerpt`
+      returns it fine, which is why the standard `LIST_FIELDS` still works. Its 2,900-word
+      body was recovered from a frozen 2022 Wayback capture, committed at
+      `inventory/wayback/1530-20220701072615.html` (the only surviving source — do not
+      delete it) and cross-validated against the live listing's title and date.
+      See `inventory/scripts/13-fetch-wayback.mjs`.
 - [x] Capture SEO metadata (lang, hreflang, title, description, canonical) → `inventory/pages.json`
 - [x] Note moving parts → `inventory/parity-report.md`. Re-run anytime: `node inventory/scripts/run-all.mjs`
 
@@ -344,15 +352,33 @@ const description = "150 characters max. Specific to this page.";
 - [x] Products
 
 ### Phase 4 — Migration & SEO
-- [ ] Automate blog migration via REST API (per language) — the EVENTS half is done
-      (`inventory/scripts/08-fetch-posts.mjs` fetches by category; point it at terms
-      1/9 for the remaining 10 EN + 11 TH blog articles). Note the recategorisation:
-      the 20 grand openings are now events-only, so `/category/blog/` will need its
-      own SKIP group — see `src/data/events.ts`'s header.
-- [ ] Build complete 301 redirect map; wildcard rules in vercel.json if needed
-- [ ] Add schema markup to all pages
+- [x] Automate blog migration via REST API (per language) — **DONE.** Events: 18 EN /
+      15 TH (`08-fetch-posts.mjs` + `09-generate-events.mjs`). Blog: 10 EN / 11 TH
+      (`11-fetch-blog.mjs` + `12-generate-blog.mjs`, plus `13-fetch-wayback.mjs` for the
+      one post REST cannot serve). Shared pipeline in `lib-posts.mjs`.
+      The predicted `/category/blog/` SKIP group turned out **not** to be needed — the
+      fetcher's events-term filter excludes those 20 posts structurally, so they generate
+      no fragment to skip. Explained in `06-copy-parity.mjs` where a reader will look.
+- [ ] Build complete 301 redirect map — **`vercel.json` now has 102 one-to-one rules**
+      (`npm run redirects` regenerates the whole table from the content collections).
+      ⚠ Note: **`redirects.json` DOES NOT EXIST and never did** — §5 and §7 above are
+      wrong about that. Astro's native `redirects` emits 200 + meta-refresh on this
+      static adapter, so every rule lives in `vercel.json`. **Never a wildcard**:
+      `/th/:slug` would destroy every real Thai page and `/category/*` would destroy
+      `/category/blog/`.
+      Remaining: 92-URL sitemap coverage is complete **except `/privacy-policy/`** (the
+      last orphan); the `/wp-content/uploads/*` namespace is unaddressed and every one
+      of those URLs 404s at cutover — a whole-site launch-prep item.
+- [ ] Add schema markup to all pages — Service (7 treatment pages ×2), FAQPage (×2) and
+      NewsArticle/BlogPosting + BreadcrumbList (all 54 posts) are done.
+      **Still missing: `LocalBusiness`/`Organization` on the homepage** — `dist/index.html`
+      currently emits zero JSON-LD, as do 18 other pages, and nothing publishes the 17
+      outlets in `locations.ts`. Biggest remaining local-SEO gap.
 - [ ] Add tracking codes (confirm which: GTM / Meta Pixel / TikTok Pixel) in BaseLayout
-- [ ] Re-runnable URL parity check (EN + TH): assert 200 or 301→200, print every 404
+      — **nothing is installed**: no gtag/GTM/fbq/ttq anywhere. Needs Crispin's IDs.
+- [ ] Re-runnable URL parity check (EN + TH): assert 200 or 301→200, print every 404.
+      Still unwritten. `06-copy-parity.mjs` checks CONTENT, not HTTP status; the orphan
+      count above was derived ad-hoc and deserves to be a committed script.
 
 ### Phase 5 — Launch behind a safety net
 - [ ] Deploy to Vercel preview; run parity check against preview

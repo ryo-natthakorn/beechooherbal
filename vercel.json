@@ -51,6 +51,101 @@
       "statusCode": 301
     },
     {
+      "source": "/author/admin/",
+      "destination": "/category/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/author/admin/",
+      "destination": "/th/category/บล็อก/",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/admin/page/2/",
+      "destination": "/category/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/admin/page/3/",
+      "destination": "/category/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/admin/page/4/",
+      "destination": "/category/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/admin/page/5/",
+      "destination": "/category/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/admin/page/6/",
+      "destination": "/category/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/blog/page/2/",
+      "destination": "/category/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/events-news/page/2/",
+      "destination": "/events-news-release/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/category/blog-th/",
+      "destination": "/th/category/บล็อก/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/category/blog/",
+      "destination": "/th/category/บล็อก/",
+      "statusCode": 301
+    },
+    {
+      "source": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "destination": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/10-สถานที่และสิ่งน่าสนใจ/",
+      "destination": "/10-สถานที่และสิ่งน่าสนใจ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/10-%E0%B8%AA%E0%B8%96%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AA%E0%B8%B4%E0%B9%88%E0%B8%87%E0%B8%99%E0%B9%88%E0%B8%B2%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88/",
+      "destination": "/10-สถานที่และสิ่งน่าสนใจ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/12-best-family-places-to-visit-in-bangkok/",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "destination": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/5-ตัวช่วยเรื่องผมร่วงของ/",
+      "destination": "/5-ตัวช่วยเรื่องผมร่วงของ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/5-%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%8A%E0%B9%88%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%87/",
+      "destination": "/5-ตัวช่วยเรื่องผมร่วงของ/",
+      "statusCode": 301
+    },
+    {
       "source": "/th/bee-choo-siam-grand-opening/",
       "destination": "/bee-choo-siam-grand-opening/",
       "statusCode": 301
@@ -63,6 +158,16 @@
     {
       "source": "/th/bee-choo-udomsuk-grand-opening-23-sept-2018/",
       "destination": "/bee-choo-udomsuk-grand-opening-23-sept-2018/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/chill-places-bangkok/",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/dye-white-hair-naturally/",
+      "destination": "/dye-white-hair-naturally/",
       "statusCode": 301
     },
     {
@@ -211,6 +316,11 @@
       "statusCode": 301
     },
     {
+      "source": "/th/male-pattern-baldness-treatment-in-bangkok-causes-symptoms-of-hair-loss/",
+      "destination": "/male-pattern-baldness-treatment-in-bangkok-causes-symptoms-of-hair-loss/",
+      "statusCode": 301
+    },
+    {
       "source": "/th/naan-charity-trip-2019/",
       "destination": "/naan-charity-trip-2019/",
       "statusCode": 301
@@ -236,6 +346,11 @@
       "statusCode": 301
     },
     {
+      "source": "/th/scalp-dry-ways-combat-dry-scalp/",
+      "destination": "/scalp-dry-ways-combat-dry-scalp/",
+      "statusCode": 301
+    },
+    {
       "source": "/th/soft-opening-of-new-outlet-bee-choo-suksawat/",
       "destination": "/soft-opening-of-new-outlet-bee-choo-suksawat/",
       "statusCode": 301
@@ -248,6 +363,21 @@
     {
       "source": "/th/soft-opening-%E0%B8%9A%E0%B8%8A-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%82%E0%B8%AA%E0%B8%A7%E0%B8%AA%E0%B8%94%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%97-19-%E0%B8%81%E0%B8%99%E0%B8%A2/",
       "destination": "/soft-opening-บช-สาขาสขสวสดในวนท-19-กนย/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/suffering-from-alopecia-hair-loss-natural-herbal-treatment-in-bangkok-thailand/",
+      "destination": "/suffering-from-alopecia-hair-loss-natural-herbal-treatment-in-bangkok-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/suffering-from-mild-hair-loss-in-your-30s-she-found-the-perfect-solution/",
+      "destination": "/suffering-from-mild-hair-loss-in-your-30s-she-found-the-perfect-solution/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/top-10-non-touristy-things-to-do-in-bangkok/",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
       "statusCode": 301
     },
     {
@@ -281,6 +411,16 @@
       "statusCode": 301
     },
     {
+      "source": "/th/ทำไมหนังศีรษะของฉันถึง/",
+      "destination": "/ทำไมหนังศีรษะของฉันถึง/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/%E0%B8%97%E0%B8%B3%E0%B9%84%E0%B8%A1%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%89%E0%B8%B1%E0%B8%99%E0%B8%96%E0%B8%B6%E0%B8%87/",
+      "destination": "/ทำไมหนังศีรษะของฉันถึง/",
+      "statusCode": 301
+    },
+    {
       "source": "/th/บีชูชลบุรีสาขาแรกนอกเข/",
       "destination": "/บีชูชลบุรีสาขาแรกนอกเข/",
       "statusCode": 301
@@ -288,6 +428,86 @@
     {
       "source": "/th/%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9%E0%B8%8A%E0%B8%A5%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81%E0%B8%99%E0%B8%AD%E0%B8%81%E0%B9%80%E0%B8%82/",
       "destination": "/บีชูชลบุรีสาขาแรกนอกเข/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/ปัญหาหนังศีรษะ/",
+      "destination": "/ปัญหาหนังศีรษะ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/%E0%B8%9B%E0%B8%B1%E0%B8%8D%E0%B8%AB%E0%B8%B2%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0/",
+      "destination": "/ปัญหาหนังศีรษะ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/พิชิตผมร่วงกับบีชู/",
+      "destination": "/พิชิตผมร่วงกับบีชู/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/%E0%B8%9E%E0%B8%B4%E0%B8%8A%E0%B8%B4%E0%B8%95%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9/",
+      "destination": "/พิชิตผมร่วงกับบีชู/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/รักษาผมร่วงครั้งแรก/",
+      "destination": "/รักษาผมร่วงครั้งแรก/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%A9%E0%B8%B2%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B9%81%E0%B8%A3%E0%B8%81/",
+      "destination": "/รักษาผมร่วงครั้งแรก/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/%E0%B8%A3%E0%B8%B5%E0%B8%A7%E0%B8%B4%E0%B8%A7-%E0%B8%8B%E0%B8%B2%E0%B8%A5%E0%B8%AD%E0%B8%99%E0%B8%97%E0%B8%B3%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%97%E0%B9%80%E0%B8%A1%E0%B9%89%E0%B8%99%E0%B8%97%E0%B9%8C/",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/สระผมให้ถูกวิธี/",
+      "destination": "/สระผมให้ถูกวิธี/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/%E0%B8%AA%E0%B8%A3%E0%B8%B0%E0%B8%9C%E0%B8%A1%E0%B9%83%E0%B8%AB%E0%B9%89%E0%B8%96%E0%B8%B9%E0%B8%81%E0%B8%A7%E0%B8%B4%E0%B8%98%E0%B8%B5/",
+      "destination": "/สระผมให้ถูกวิธี/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/อะไรเป็นสาเหตุของผมขาว/",
+      "destination": "/อะไรเป็นสาเหตุของผมขาว/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/%E0%B8%AD%E0%B8%B0%E0%B9%84%E0%B8%A3%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%AA%E0%B8%B2%E0%B9%80%E0%B8%AB%E0%B8%95%E0%B8%B8%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%9C%E0%B8%A1%E0%B8%82%E0%B8%B2%E0%B8%A7/",
+      "destination": "/อะไรเป็นสาเหตุของผมขาว/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/แก้ปัญหาหนังศีรษะแบบถึ/",
+      "destination": "/แก้ปัญหาหนังศีรษะแบบถึ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/%E0%B9%81%E0%B8%81%E0%B9%89%E0%B8%9B%E0%B8%B1%E0%B8%8D%E0%B8%AB%E0%B8%B2%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B8%96%E0%B8%B6/",
+      "destination": "/แก้ปัญหาหนังศีรษะแบบถึ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/โรคผมร่วงและทรีทเม้นท์/",
+      "destination": "/โรคผมร่วงและทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/th/%E0%B9%82%E0%B8%A3%E0%B8%84%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%97%E0%B9%80%E0%B8%A1%E0%B9%89%E0%B8%99%E0%B8%97%E0%B9%8C/",
+      "destination": "/โรคผมร่วงและทรีทเม้นท์/",
       "statusCode": 301
     }
   ]
