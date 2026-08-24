@@ -1,0 +1,109 @@
+{
+  "fetched_at": "2026-08-24T05:07:25.272Z",
+  "byUrl": {
+    "https://beechooherbal.com/wp-content/uploads/2018/08/Picture1-2.png": {
+      "url": "https://beechooherbal.com/wp-content/uploads/2018/08/Picture1-2.png",
+      "path": "src/assets/images/blog/alopecia/01-picture1-2.png",
+      "bytes": 148969,
+      "type": ".png",
+      "cached": true
+    },
+    "https://beechooherbal.com/wp-content/uploads/2018/08/example-of-alopecia-areata.jpeg": {
+      "url": "https://beechooherbal.com/wp-content/uploads/2018/08/example-of-alopecia-areata.jpeg",
+      "path": "src/assets/images/blog/alopecia/02-example-of-alopecia-areata.jpg",
+      "bytes": 46430,
+      "type": ".jpg",
+      "cached": true
+    },
+    "https://beechooherbal.com/wp-content/uploads/2018/08/Picture1-1.png": {
+      "url": "https://beechooherbal.com/wp-content/uploads/2018/08/Picture1-1.png",
+      "path": "src/assets/images/blog/alopecia/03-picture1-1.png",
+      "bytes": 66925,
+      "type": ".png",
+      "cached": true
+    },
+    "https://beechooherbal.com/wp-content/uploads/2018/08/ginsing.png": {
+      "url": "https://beechooherbal.com/wp-content/uploads/2018/08/ginsing.png",
+      "path": "src/assets/images/blog/alopecia/04-ginsing.png",
+      "bytes": 376602,
+      "type": ".png",
+      "cached": true
+    },
+    "https://beechooherbal.com/wp-content/uploads/2018/08/living-with-alopecia.png": {
+      "url": "https://beechooherbal.com/wp-content/uploads/2018/08/living-with-alopecia.png",
+      "path": "src/assets/images/blog/alopecia/05-living-with-alopecia.png",
+      "bytes": 103511,
+      "type": ".png",
+      "cached": true
+    },
+    "https://beechooherbal.com/wp-content/uploads/2018/04/Bee-Choo-Pricelist-for-January-2018-.jpg": {
+      "url": "https://beechooherbal.com/wp-content/uploads/2018/04/Bee-Choo-Pricelist-for-January-2018-.jpg",
+      "path": "src/assets/images/blog/alopecia/07-bee-choo-pricelist-for-january-2018.jpg",
+      "bytes": 50522,
+      "type": ".jpg",
+      "cached": false
+    }
+  },
+  "byPost": {
+    "1530": {
+      "key": "alopecia",
+      "lang": "en",
+      "slug": "suffering-from-alopecia-hair-loss-natural-herbal-treatment-in-bangkok-thailand",
+      "images": [
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2018/08/Picture1-2.png",
+          "path": "src/assets/images/blog/alopecia/01-picture1-2.png",
+          "bytes": 148969,
+          "type": ".png",
+          "cached": true
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2018/08/example-of-alopecia-areata.jpeg",
+          "path": "src/assets/images/blog/alopecia/02-example-of-alopecia-areata.jpg",
+          "bytes": 46430,
+          "type": ".jpg",
+          "cached": true
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2018/08/Picture1-1.png",
+          "path": "src/assets/images/blog/alopecia/03-picture1-1.png",
+          "bytes": 66925,
+          "type": ".png",
+          "cached": true
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2018/08/ginsing.png",
+          "path": "src/assets/images/blog/alopecia/04-ginsing.png",
+          "bytes": 376602,
+          "type": ".png",
+          "cached": true
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2018/08/living-with-alopecia.png",
+          "path": "src/assets/images/blog/alopecia/05-living-with-alopecia.png",
+          "bytes": 103511,
+          "type": ".png",
+          "cached": true
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2018/04/Bee-Choo-Pricelist-for-January-2018-.jpg",
+          "path": "src/assets/images/blog/alopecia/07-bee-choo-pricelist-for-january-2018.jpg",
+          "bytes": 50522,
+          "type": ".jpg",
+          "cached": false
+        }
+      ]
+    }
+  },
+  "resized": [],
+  "failures": [
+    {
+      "url": "http://www.beechooladies.com.sg/wp-content/uploads/2018/01/Bee-Choo-Origin-Ladies-Pricelist.jpeg",
+      "reason": "magic-byte check failed (54361b, starts \"<!DOCTYPE html><\")"
+    },
+    {
+      "url": "http://web.archive.org/web/20220701072615im_/http://www.beechooladies.com.sg/wp-content/uploads/2018/01/Bee-Choo-Origin-Ladies-Pricelist.jpeg",
+      "reason": "HTTP 404"
+    }
+  ]
+}

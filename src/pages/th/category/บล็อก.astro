@@ -1,0 +1,22 @@
+---
+// src/pages/th/category/บล็อก.astro
+// Thai blog archive — /th/category/บล็อก/. Twin of src/pages/category/blog.astro.
+//
+// This is the LIVE Thai archive path. The old site's hreflang points at
+// /th/category/blog-th/ (the dead `blog-th` term), which 301s here — corrected during
+// the 2026-07-14 audit and reproduced as a redirect in vercel.json.
+//
+// Note the 11 Thai ARTICLES this page links to live at ROOT paths, not under /th/ —
+// that is where the legacy site serves them and where the sitemap points. See
+// src/data/blog.ts.
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import BlogPage from "../../../components/blog/BlogPage.astro";
+import { BLOG_SEO } from "../../../data/blog";
+
+const lang = "th" as const;
+const { title, description } = BLOG_SEO;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} {lang}>
+  <BlogPage {lang} />
+</BaseLayout>

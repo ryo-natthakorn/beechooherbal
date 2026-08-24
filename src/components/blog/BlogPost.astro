@@ -1,0 +1,121 @@
+---
+// src/components/blog/BlogPost.astro
+// One blog article. Rendered by src/pages/[postSlug].astro, which serves both sections —
+// blog and event posts share one flat root URL namespace, so they must share one route.
+//
+// EventPost.astro minus the outlet aside and the trailing photo grid, because blog
+// images are INLINE in the body in document order rather than hoisted into a frontmatter
+// gallery. See src/content.config.ts's `blog` schema for why that difference exists.
+//
+// Body prose, image captions and (where present) meta descriptions are verbatim legacy
+// copy. Image alt text is composed from one formula where the legacy alt was empty.
+import { Image } from "astro:assets";
+import { render, type CollectionEntry } from "astro:content";
+import HerbalStrokes from "../HerbalStrokes.astro";
+import LocationsBand from "../LocationsBand.astro";
+import YouTubeEmbed from "../YouTubeEmbed.astro";
+import { BLOG_INDEX, type Lang } from "../../data/blog";
+import { UI } from "../../i18n/ui";
+
+interface Props {
+  entry: CollectionEntry<"blog">;
+  prev?: { href: string; title: string };
+  next?: { href: string; title: string };
+}
+
+const { entry, prev, next } = Astro.props;
+const lang = entry.data.lang as Lang;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+const ui = UI[lang];
+
+const { Content } = await render(entry);
+
+const dateFormatter = new Intl.DateTimeFormat(lang === "th" ? "th-TH-u-ca-buddhist" : "en-GB", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+const dateLabel = dateFormatter.format(entry.data.pubDate);
+const indexHref = BLOG_INDEX[lang];
+---
+
+<main id="main">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-brand-green py-14 text-center text-white md:py-16">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+    <div class="relative mx-auto max-w-3xl px-4 md:px-8">
+      <a href={indexHref} class="text-xs font-bold text-white/80 underline-offset-4 hover:text-white hover:underline">
+        &lsaquo; {ui.blog.backToBlog}
+      </a>
+      <h1 class={`mt-4 mb-3 ${serif} text-2xl font-bold${balance} md:text-4xl`}>{entry.data.title}</h1>
+      <time datetime={entry.data.pubDate.toISOString()} class="text-sm text-white/80">{dateLabel}</time>
+    </div>
+  </section>
+
+  <article class="bg-white py-12 md:py-16">
+    <div class="mx-auto max-w-3xl px-4 md:px-8">
+      {
+        entry.data.hero && (
+          <Image
+            src={entry.data.hero}
+            alt={entry.data.heroAlt}
+            width={1000}
+            height={667}
+            class="mb-8 w-full rounded-2xl shadow-soft-lg"
+          />
+        )
+      }
+
+      {/* Legacy body copy, verbatim, with its images inline in document order. Image and
+          caption styling lives here on the wrapper rather than per file, because the
+          Markdown is generated — a per-file style would be overwritten on the next
+          `npm run generate-blog`. Captions are emitted as <em> on their own line. */}
+      <div
+        class="flex flex-col gap-4 text-sm leading-relaxed text-brand-origin md:text-base [&_a]:text-brand-green [&_a]:underline [&_em]:block [&_em]:text-xs [&_em]:not-italic [&_em]:text-brand-origin/80 [&_img]:my-2 [&_img]:w-full [&_img]:rounded-2xl [&_img]:shadow-soft [&_strong]:text-brand-ink"
+      >
+        <Content />
+      </div>
+
+      {
+        entry.data.videos.length > 0 && (
+          <div class="mt-8 flex flex-col gap-6">
+            {entry.data.videos.map((id) => (
+              <YouTubeEmbed {id} title={entry.data.title} />
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </article>
+
+  <!-- Prev / next within this language's blog feed -->
+  {
+    (prev || next) && (
+      <nav class="bg-brand-earth/25 py-10" aria-label={ui.blog.backToBlog}>
+        <div class="mx-auto flex max-w-3xl flex-col gap-3 px-4 sm:flex-row sm:justify-between md:px-8">
+          {prev ? (
+            <a href={prev.href} class="group max-w-xs text-sm">
+              <span class="block text-2xs font-bold tracking-wide text-brand-origin uppercase">
+                &lsaquo; {ui.blog.previousPost}
+              </span>
+              <span class="font-bold text-brand-green group-hover:text-brand-green-deep">{prev.title}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+          {next && (
+            <a href={next.href} class="group max-w-xs text-sm sm:text-right">
+              <span class="block text-2xs font-bold tracking-wide text-brand-origin uppercase">
+                {ui.blog.nextPost} &rsaquo;
+              </span>
+              <span class="font-bold text-brand-green group-hover:text-brand-green-deep">{next.title}</span>
+            </a>
+          )}
+        </div>
+      </nav>
+    )
+  }
+
+  <LocationsBand {lang} background="white" />
+</main>

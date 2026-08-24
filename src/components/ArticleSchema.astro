@@ -1,11 +1,15 @@
 ---
-// src/components/events/EventArticleSchema.astro
-// NewsArticle + BreadcrumbList JSON-LD for individual Events & News posts.
+// src/components/ArticleSchema.astro
+// Article + BreadcrumbList JSON-LD for individual posts — Events & News and Blog.
 //
-// NewsArticle, deliberately NOT Event: schema.org `Event` describes a future,
-// attendable occasion and expects startDate/location. These posts are retrospective
-// announcements ("we opened last month"), so Event markup would be inaccurate and
-// would earn a rich-results warning.
+// NewsArticle for events, BlogPosting for blog articles, chosen per post via
+// `articleType`. schema.org's NewsArticle implies news reporting — right for "we opened
+// a branch last month", wrong for "10 causes of hair loss", which is evergreen advice.
+//
+// Deliberately NOT `Event` for the events posts either: schema.org `Event` describes a
+// future, attendable occasion and expects startDate/location. Those posts are
+// retrospective announcements, so Event markup would be inaccurate and would earn a
+// rich-results warning.
 //
 // BreadcrumbList is parity-positive: legacy Yoast emitted one on every post
 // (yoast_head_json.schema['@graph']), so this preserves something the old site had.
@@ -13,6 +17,8 @@
 // No aggregateRating / review / offers — CLAUDE.md §8 forbids inventing claims.
 interface Props {
   lang: "en" | "th";
+  /** NewsArticle for dated announcements (events), BlogPosting for evergreen articles. */
+  articleType?: "NewsArticle" | "BlogPosting";
   headline: string;
   description: string;
   canonical: string;
@@ -24,7 +30,7 @@ interface Props {
   sectionUrl: string;
 }
 
-const { lang, headline, description, canonical, datePublished, dateModified, image, sectionName, sectionUrl } =
+const { lang, articleType = "NewsArticle", headline, description, canonical, datePublished, dateModified, image, sectionName, sectionUrl } =
   Astro.props;
 
 const publisher = {
@@ -35,7 +41,7 @@ const publisher = {
 
 const article = {
   "@context": "https://schema.org",
-  "@type": "NewsArticle",
+  "@type": articleType,
   headline,
   description,
   url: canonical,

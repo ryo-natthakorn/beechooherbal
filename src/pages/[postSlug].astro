@@ -1,74 +1,130 @@
 ---
 // src/pages/[postSlug].astro
-// Individual Events & News posts, both languages, at their legacy ROOT paths.
+// Individual posts — Events & News AND Blog — both languages, at their legacy ROOT paths.
 //
 // SINGLE-SEGMENT dynamic route, deliberately not a rest route (`[...slug]`). A rest
 // route would match every unclaimed path on the site, including `/th/…`, and would
 // swallow 404s for URLs that should genuinely 404. `[postSlug]` emits exactly
 // `/<slug>/` and nothing deeper.
 //
-// Named `postSlug` rather than `eventSlug` so the later blog batch can reuse this file
-// by widening the getStaticPaths filter — post URLs share one flat root namespace on
-// this site, so they must share one route.
+// ONE route serves BOTH sections because post URLs share one flat root namespace on this
+// site — there is no `/blog/` or `/events/` prefix to separate them, so two routes would
+// both have to claim `/<slug>/`. `section` discriminates the props union, which keeps
+// TypeScript honest: it refuses `entry.data.outlet` on a blog entry rather than handing
+// back undefined.
 //
 // Why Thai posts live here and not under /th/: all 92 sitemap URLs are root URLs and
 // none of the /th/<slug>/ WPML mirrors appear in the sitemap, so moving them would
 // 301 away the URLs Google actually crawls. The mirrors are 301'd to the root in
 // vercel.json. BaseLayout takes `lang` from the entry, which also fixes the legacy
-// site's <html lang="en-US"> on Thai posts. See src/data/events.ts.
+// site's <html lang="en-US"> on Thai posts. See src/data/events.ts and src/data/blog.ts.
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import EventPost from "../components/events/EventPost.astro";
-import EventArticleSchema from "../components/events/EventArticleSchema.astro";
+import BlogPost from "../components/blog/BlogPost.astro";
+import ArticleSchema from "../components/ArticleSchema.astro";
 import { EVENTS_HERO, EVENTS_INDEX } from "../data/events";
+import { BLOG_HERO, BLOG_INDEX, cardText } from "../data/blog";
 
 export async function getStaticPaths() {
-  const all = await getCollection("events");
+  const events = await getCollection("events");
+  const blog = await getCollection("blog");
 
-  // Prev/next walk within one language's feed, newest first — the same order the
-  // index presents. Built per language so a Thai post never links to an English one.
-  const byLang = { en: [] as typeof all, th: [] as typeof all };
-  for (const entry of all) byLang[entry.data.lang as "en" | "th"].push(entry);
-  for (const list of Object.values(byLang)) {
-    list.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  // A slug claimed by BOTH collections would be a build-breaking duplicate-params error
+  // whose message names neither file. Fail here instead, naming both.
+  const claimed = new Map<string, string>();
+  for (const [section, list] of [
+    ["events", events],
+    ["blog", blog],
+  ] as const) {
+    for (const e of list) {
+      const prior = claimed.get(e.data.slug);
+      if (prior) {
+        throw new Error(
+          `Slug collision: "/${e.data.slug}/" is claimed by both ${prior} and ${section}/${e.id}. ` +
+            `Post URLs share one flat root namespace, so a slug can only belong to one section.`,
+        );
+      }
+      claimed.set(e.data.slug, `${section}/${e.id}`);
+    }
   }
 
-  return all.map((entry) => {
-    const feed = byLang[entry.data.lang as "en" | "th"];
-    const i = feed.findIndex((e) => e.id === entry.id);
-    const link = (e: (typeof feed)[number]) => ({ href: `/${e.data.slug}/`, title: e.data.title });
-    return {
-      params: { postSlug: entry.data.slug },
-      props: {
-        entry,
-        // "Previous" reads as older, so it is the NEXT item in a newest-first list.
-        prev: i < feed.length - 1 ? link(feed[i + 1]) : undefined,
-        next: i > 0 ? link(feed[i - 1]) : undefined,
-      },
-    };
-  });
+  // Prev/next walks within ONE (section, lang) feed, newest first — the order each index
+  // presents. So a blog article never links to an event, and a Thai post never to an
+  // English one. flatMap rather than a push accumulator so the props type is inferred
+  // (a bare `const paths = []` is implicitly any[], which `astro check` rejects).
+  const feedFor = <T extends { data: { lang: string; pubDate: Date } }>(list: T[], lang: string) =>
+    list.filter((e) => e.data.lang === lang).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+  const link = (e: { data: { slug: string; title: string } }) => ({ href: `/${e.data.slug}/`, title: e.data.title });
+
+  return [
+    ...(["en", "th"] as const).flatMap((lang) => {
+      const feed = feedFor(events, lang);
+      return feed.map((entry, i) => ({
+        params: { postSlug: entry.data.slug },
+        props: {
+          section: "events" as const,
+          entry,
+          // "Previous" reads as older, so it is the NEXT item in a newest-first list.
+          prev: i < feed.length - 1 ? link(feed[i + 1]) : undefined,
+          next: i > 0 ? link(feed[i - 1]) : undefined,
+        },
+      }));
+    }),
+    ...(["en", "th"] as const).flatMap((lang) => {
+      const feed = feedFor(blog, lang);
+      return feed.map((entry, i) => ({
+        params: { postSlug: entry.data.slug },
+        props: {
+          section: "blog" as const,
+          entry,
+          prev: i < feed.length - 1 ? link(feed[i + 1]) : undefined,
+          next: i > 0 ? link(feed[i - 1]) : undefined,
+        },
+      }));
+    }),
+  ];
 }
 
-const { entry, prev, next } = Astro.props;
+const { section, entry, prev, next } = Astro.props;
 const lang = entry.data.lang as "en" | "th";
+const isBlog = section === "blog";
 
 const site = "https://beechooherbal.com";
 const canonical = new URL(`/${entry.data.slug}/`, site).href;
 const heroUrl = entry.data.hero ? new URL(entry.data.hero.src, site).href : undefined;
+
+// Blog posts prefer their legacy Yoast description; WordPress's own excerpt is truncated
+// to 30 characters on every Thai post (word-count truncation, and Thai has no
+// inter-word spaces). See cardText() in src/data/blog.ts. Events have no Yoast source.
+const description = isBlog ? cardText(entry.data) : entry.data.excerpt;
+
+// BlogPosting for evergreen advice, NewsArticle for dated announcements.
+const articleType = isBlog ? "BlogPosting" : "NewsArticle";
+const sectionName = isBlog ? BLOG_HERO.heading[lang] : EVENTS_HERO.heading[lang];
+const sectionUrl = new URL(isBlog ? BLOG_INDEX[lang] : EVENTS_INDEX[lang], site).href;
 ---
 
-<BaseLayout title={`${entry.data.title} - Bee Choo Herbal`} description={entry.data.excerpt} {lang} image={heroUrl}>
-  <EventArticleSchema
+<BaseLayout title={`${entry.data.title} - Bee Choo Herbal`} {description} {lang} image={heroUrl}>
+  <ArticleSchema
     slot="head"
     {lang}
+    {articleType}
     headline={entry.data.title}
-    description={entry.data.excerpt}
+    {description}
     {canonical}
     datePublished={entry.data.pubDate.toISOString()}
     dateModified={entry.data.modDate?.toISOString()}
     image={heroUrl}
-    sectionName={EVENTS_HERO.heading[lang]}
-    sectionUrl={new URL(EVENTS_INDEX[lang], site).href}
+    {sectionName}
+    {sectionUrl}
   />
-  <EventPost {entry} {prev} {next} />
+  {
+    isBlog ? (
+      <BlogPost entry={entry} {prev} {next} />
+    ) : (
+      <EventPost entry={entry} {prev} {next} />
+    )
+  }
 </BaseLayout>

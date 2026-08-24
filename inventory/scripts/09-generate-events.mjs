@@ -34,10 +34,11 @@ const OUT_DIR = path.join(ROOT, 'src', 'content', 'events');
 const POSTS = JSON.parse(readFileSync(invPath('rest-posts.json'), 'utf8'));
 const IMAGES = JSON.parse(readFileSync(invPath('events-images.json'), 'utf8'));
 
-// Resolves a body <img> src back to its downloaded local file via the manifest,
-// matching on basename so a resized variant still finds the original. 'events' is both
-// the folder under src/assets/images/ and the segment in the emitted relative path.
-const localFor = makeImageResolver(IMAGES, 'events');
+// Resolves a body <img> src back to its downloaded local file via the manifest, matching
+// on basename so a resized body variant still finds the original it was downloaded from.
+// byPost scopes the lookup to the requesting post, so an image basename that appears in
+// more than one post cannot resolve to the wrong post's copy.
+const localFor = makeImageResolver(IMAGES, IMAGES.byPost);
 
 // --- outlet linkage -------------------------------------------------------
 // Maps a pair key to a slug in OUTLETS (src/data/locations.ts) so a post announcing a

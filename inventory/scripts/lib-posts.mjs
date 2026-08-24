@@ -268,19 +268,68 @@ export const stripTags = (s) => s.replace(/<[^>]+>/g, '');
 // 06-copy-parity.mjs's norm() does — otherwise a stray U+00A0 reads as a missing
 // fragment. Emoji are left strictly alone: they are page copy here and dropping them
 // would fail parity.
-export function text(html) {
-  return decodeEntities(stripTags(html.replace(/<br\s*\/?>/gi, ' ')))
+/**
+ * Convert `<a href>` to a Markdown link so the DESTINATION survives into the body.
+ *
+ * Needed because stripTags() keeps only a link's label. On the blog corpus that lost 192
+ * links across 19 of 20 posts — including a YouTube URL that copy-parity's embed-id check
+ * then reported as a missing video, which is how this was found.
+ *
+ * Two guards:
+ *  - A link wrapping an <img> (WordPress lightbox markup) is left completely alone; the
+ *    image extractor handles those, and rewriting here would delete the <img>.
+ *  - Anchor-only and javascript: hrefs carry no destination, so only their label is kept.
+ */
+function linkify(html) {
+  return html.replace(/<a\b[^>]*\bhref="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi, (whole, href, inner) => {
+    if (/<img/i.test(inner)) return whole;
+    const label = inner.replace(/<[^>]+>/g, '').trim();
+    if (!label) return '';
+    if (/^#|^javascript:/i.test(href)) return label;
+    return `[${label.replace(/[[\]]/g, '')}](${href})`;
+  });
+}
+
+/**
+ * @param {object} [opts]
+ * @param {boolean} [opts.keepLinks] emit `<a href>` as a Markdown link. Opt-in: the
+ *   events generator does NOT set it, so its 33 already-shipped content files stay
+ *   byte-identical. (Events drops 3 in-body links as a result — a small pre-existing
+ *   content loss, recorded as a follow-up rather than fixed silently here.)
+ */
+export function text(html, opts = {}) {
+  let h = html.replace(/<br\s*\/?>/gi, ' ');
+  if (opts.keepLinks) h = linkify(h);
+  return decodeEntities(stripTags(h))
     .replace(/ /g, ' ')
     .replace(/[ \t]+/g, ' ')
     .trim();
 }
 
-// Escape what would change meaning at the START of a Markdown line.
-// `\d+\)` matters as much as `\d+\.`: the Naan post opens a paragraph with
-// "1) Bee Choo Udomsuk", and GFM treats `1)` as an ordered-list delimiter, so the
-// literal "1)" was being consumed into list markup and the copy silently lost.
-// copy-parity caught it — exactly the class of drop it exists to catch.
-export const mdEscape = (s) => s.replace(/^(\s*)([#>\-+*]|\d+[.)])(\s)/gm, '$1\\$2$3');
+/**
+ * Escape what would change meaning at the START of a Markdown line.
+ *
+ * TWO DIFFERENT RULES, because CommonMark only honours a backslash escape before ASCII
+ * PUNCTUATION:
+ *
+ *  - `#`, `>`, `-`, `+`, `*` are punctuation, so escaping the marker itself works.
+ *  - A numbered marker is `<digits><delimiter>`, and the digits are NOT punctuation. An
+ *    earlier version escaped the whole marker (`\1)`) which stopped the list from
+ *    forming but rendered a LITERAL BACKSLASH on the page — visible as "\1) Bee Choo
+ *    Udomsuk" on the Naan event post and "\1)…\4)" across a Thai blog article. Escaping
+ *    the DELIMITER instead (`1\)`) suppresses the list and renders a clean "1)".
+ *
+ * copy-parity cannot catch that class: it asks whether the legacy text is PRESENT, and
+ * "\1) foo" does contain "1) foo" as a substring. Found by reading the built page.
+ *
+ * Why this matters at all: a paragraph opening "1) Bee Choo Udomsuk" is prose, not a
+ * list, and GFM reads `1)` as an ordered-list delimiter — which silently ate the literal
+ * "1)" before any escaping was added.
+ */
+export const mdEscape = (s) =>
+  s
+    .replace(/^(\s*)([#>\-+*])(\s)/gm, "$1\\$2$3")
+    .replace(/^(\s*)(\d+)([.)])(\s)/gm, "$1$2\\$3$4");
 
 // YouTube ids from <iframe> embeds. Dropping one loses real content, and copy-parity's
 // separate embed-id check is what caught it on the events batch.
@@ -296,7 +345,7 @@ export function pushImg(out, tag) {
 // regex matches the wrapper first, so anything not split out here is stripped to
 // nothing and silently lost. That cost the 2018 galleries their photos and the Siam
 // Square merit post its video before copy-parity caught both.
-export function emitInner(out, inner, tag) {
+export function emitInner(out, inner, tag, opts = {}) {
   const parts = inner.split(/(<img[^>]*>|<iframe[^>]*>(?:<\/iframe>)?)/i);
   for (const part of parts) {
     if (!part) continue;
@@ -309,16 +358,44 @@ export function emitInner(out, inner, tag) {
       if (id) out.push({ type: 'video', id });
       continue;
     }
-    const t = text(part);
+    const t = text(part, opts);
     if (t) out.push({ type: 'text', tag, text: t });
   }
+}
+
+/**
+ * YouTube ids from Elementor `video` WIDGETS, where the URL lives inside a JSON blob in
+ * a `data-settings` attribute rather than an <iframe src>. blocks() cannot see these: it
+ * walks p/h/li/figcaption/img/iframe, and the widget is a plain <div>.
+ *
+ * This is the exact shape that shipped the damaged-hair treatment page with two videos
+ * silently missing, and it recurs on the blog corpus (post 3331 embeds one). It is
+ * checked by 06-copy-parity.mjs's own embed-id scan, which is how it was caught again.
+ *
+ * NOT called by 09-generate-events.mjs. No event post uses this shape — copy-parity
+ * passes for all 33, which proves it — and calling it there would risk changing content
+ * that has already shipped.
+ */
+export function elementorVideoIds(html) {
+  const ids = new Set();
+  for (const m of html.matchAll(/elementor-widget-video[\s\S]{0,600}?data-settings="([^"]+)"/g)) {
+    const decoded = m[1].replace(/&quot;/g, '"').replace(/&#038;/g, '&');
+    try {
+      const url = JSON.parse(decoded).youtube_url ?? '';
+      const hit = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+      if (hit) ids.add(hit[1]);
+    } catch {
+      /* malformed widget settings on the legacy page — nothing to extract */
+    }
+  }
+  return [...ids];
 }
 
 /**
  * Walk a post body in DOCUMENT ORDER, emitting {type:'text'|'img'|'video'} blocks.
  * Order matters: a caption is the text that FOLLOWS its image.
  */
-export function blocks(html) {
+export function blocks(html, opts = {}) {
   const out = [];
   // `figcaption` is in this list because that is where WordPress puts real image
   // captions ("Special Promotion Available at Bee Choo Sammakorn"). Omitting it
@@ -335,7 +412,7 @@ export function blocks(html) {
       if (id) out.push({ type: 'video', id });
       continue;
     }
-    emitInner(out, m[2], m[1].toLowerCase());
+    emitInner(out, m[2], m[1].toLowerCase(), opts);
   }
   return out;
 }
@@ -347,20 +424,40 @@ export const baseOf = (u) => safeDecodeURI(path.basename(toOriginal(u.split('?')
 
 /**
  * Build a `localFor(src, key)` resolver over a downloaded-image manifest.
- * `section` is the folder under src/assets/images/ AND the segment in the emitted
- * relative path — content files live at src/content/<section>/<lang>/, which is three
- * levels deep, hence the '../../../'.
+ *
+ * Content files live at src/content/<section>/<lang>/, three levels below src/, hence
+ * the '../../../' prefix. The section name is not a parameter: the emitted path is
+ * derived from the matched manifest entry, which already records its own folder.
+ *
+ * TWO THINGS THIS GETS RIGHT, both learned from real breakage on the blog batch, where
+ * `caption.jpg` and `img-9884.jpg` each appear in TWO different posts:
+ *
+ *  1. Lookup is scoped to the REQUESTING POST first (`<key>|<basename>`), falling back to
+ *     a global basename index. Without the scoping, a colliding basename resolves to
+ *     whichever post was downloaded last, so a post silently renders another post's
+ *     photo.
+ *  2. The emitted path comes from the MATCHED ENTRY's own recorded path, never from
+ *     re-joining the requesting key with the matched filename. That combination produced
+ *     paths like `bangkok-chill-places/10-caption.jpg` — one post's folder with another
+ *     post's index-prefixed filename — which exist nowhere and failed the build.
  */
-export function makeImageResolver(images, section) {
+export function makeImageResolver(images, byPost) {
   const byBase = new Map();
   for (const [url, entry] of Object.entries(images.byUrl)) byBase.set(baseOf(url), entry);
 
+  // Per-post index. Manifests name the folder `key` (blog) or `pairKey` (events).
+  const byKeyBase = new Map();
+  for (const rec of Object.values(byPost ?? {})) {
+    const folder = rec.key ?? rec.pairKey;
+    for (const e of rec.images ?? []) byKeyBase.set(`${folder}|${baseOf(e.url)}`, e);
+  }
+
   return function localFor(src, key) {
-    const entry = byBase.get(baseOf(src));
+    const base = baseOf(src);
+    const entry = byKeyBase.get(`${key}|${base}`) ?? byBase.get(base);
     if (!entry) return null;
-    const abs = path.join(ROOT, entry.path);
-    if (!existsSync(abs)) return null;
-    return `../../../assets/images/${section}/` + path.posix.join(key, path.basename(entry.path));
+    if (!existsSync(path.join(ROOT, entry.path))) return null;
+    return '../../../' + entry.path.replace(/^src\//, '');
   };
 }
 

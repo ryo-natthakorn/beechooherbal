@@ -79,4 +79,82 @@ const events = defineCollection({
     }),
 });
 
-export const collections = { events };
+/**
+ * Blog articles — the 10 EN / 11 TH legacy posts from the `blog` category terms.
+ *
+ * A SEPARATE collection rather than a `section` field on `events`, deliberately. A
+ * discriminator inside a collection named `events` would force a filter into TWO places
+ * in EventsPage.astro (the query AND the build-time hreflang guard); miss the second and
+ * the guard silently starts validating EVENT_PAIRS against blog slugs. A guard that
+ * widens without failing is worse than no guard. Two collections also give
+ * [postSlug].astro a discriminated union, so TypeScript refuses `entry.data.outlet` on a
+ * blog entry instead of quietly handing back undefined.
+ *
+ * THREE FIELDS DIFFER FROM `events`, and one is absent:
+ *   - `metaDescription` — 15 of the 21 legacy posts carry a real Yoast description.
+ *     Copied verbatim; the events batch discarded this field and composed instead.
+ *   - `provenance` — one post's body could only be recovered from a 2022 web archive.
+ *   - `wpLang` — one English article is filed on a dead THAI category term.
+ *   - NO `gallery` field. That absence is deliberate and load-bearing: blog images stay
+ *     INLINE in the Markdown body, in document order. Events hoists them into a
+ *     frontmatter gallery so the post can end with a photo grid, which is right for an
+ *     announcement and wrong for a 39-paragraph article with diagrams mid-text —
+ *     hoisting would dump every illustration at the bottom and sever the image/text
+ *     relationship a reader (and Google) depends on. Do not "fix" this back.
+ */
+const blog = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
+  schema: ({ image }) =>
+    z.object({
+      lang: z.enum(["en", "th"]),
+      /** Decoded legacy URL slug, no slashes. The page is emitted at `/<slug>/`. */
+      slug: z.string(),
+      /** Verbatim legacy post title. */
+      title: z.string(),
+      /**
+       * Verbatim WordPress `excerpt.rendered`, tags stripped — the copy-parity anchor,
+       * and what the index cards render. Do not rewrite it; it truncates mid-sentence
+       * on purpose.
+       */
+      excerpt: z.string(),
+      /**
+       * Verbatim legacy Yoast meta description, where the post had one (15 of 21).
+       * COPIED, never composed. Falls back to `excerpt` at render time when absent.
+       */
+      metaDescription: z.string().optional(),
+      pubDate: z.coerce.date(),
+      modDate: z.coerce.date().optional(),
+      hero: image().optional(),
+      heroAlt: z.string().default(""),
+      /** YouTube ids embedded in the legacy body. */
+      videos: z.array(z.string()).default([]),
+      /**
+       * WPML language, set ONLY when it disagrees with `lang`. "th" on
+       * 12-best-family-places-to-visit-in-bangkok (wpId 1814): an ENGLISH article filed
+       * on the dead Thai `blog-th` term (id 7), so on the live site it renders on
+       * neither proper archive.
+       */
+      wpLang: z.enum(["en", "th"]).optional(),
+      /**
+       * Where this post's body actually came from. "wp-rest" for 20 of 21. The alopecia
+       * post (wpId 1530) is "wayback": its REST endpoint, its HTML page, and any listing
+       * requesting `excerpt` all return HTTP 500 — the excerpt is what breaks — so the
+       * body comes from a frozen 2022 capture. See inventory/scripts/13-fetch-wayback.mjs
+       * and src/data/blog.ts's header.
+       */
+      provenance: z
+        .object({
+          source: z.enum(["wp-rest", "wayback"]),
+          capturedAt: z.string().optional(),
+          url: z.string().optional(),
+          note: z.string().optional(),
+        })
+        .default({ source: "wp-rest" }),
+      /** Provenance — the WP REST post id. */
+      wpId: z.number(),
+      /** Legacy category term ids, recorded as found. */
+      wpCategories: z.array(z.number()),
+    }),
+});
+
+export const collections = { events, blog };

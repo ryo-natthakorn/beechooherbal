@@ -44,6 +44,20 @@ export interface UiStrings {
     previousPost: string;
     nextPost: string;
   };
+  // Blog index + article pages (src/components/blog/). Navigation chrome only — the
+  // article titles, excerpts and bodies carry the real (verbatim) legacy wording.
+  // `previousPost`/`nextPost` duplicate the events strings deliberately: the
+  // alternative is either a "Back to Events and News" link on a blog article, or
+  // renaming ui.events.*, which would edit EventCard.astro — and that file is reused
+  // byte-identical by the blog index precisely so its copy-parity and click-overlay
+  // guarantees carry over untouched.
+  // ⚠ TH values are newly composed (this chrome never existed on the legacy archive,
+  // which was an Elementor card widget) — native-speaker/Crispin sign-off needed.
+  blog: {
+    backToBlog: string;
+    previousPost: string;
+    nextPost: string;
+  };
   // Per-outlet card labels (LocationsSection's mobile list).
   outlet: {
     call: string;
@@ -120,6 +134,11 @@ export const UI: Record<"en" | "th", UiStrings> = {
       previousPost: "Previous",
       nextPost: "Next",
     },
+    blog: {
+      backToBlog: "Back to Blog",
+      previousPost: "Previous",
+      nextPost: "Next",
+    },
     outlet: {
       call: "Call",
       hours: "Hours",
@@ -176,6 +195,11 @@ export const UI: Record<"en" | "th", UiStrings> = {
       backToEvents: "กลับไปหน้าเหตุการณ์และข่าว",
       photos: "ภาพบรรยากาศ",
       visitBranch: "ดูข้อมูลสาขานี้",
+      previousPost: "ก่อนหน้า",
+      nextPost: "ถัดไป",
+    },
+    blog: {
+      backToBlog: "กลับไปหน้าบล็อก",
       previousPost: "ก่อนหน้า",
       nextPost: "ถัดไป",
     },

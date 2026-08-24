@@ -1,0 +1,20 @@
+---
+// src/pages/category/blog.astro
+// English blog archive — /category/blog/. Thin route shell.
+//
+// The URL is the LEGACY WordPress category path, kept exactly. The site nav has linked
+// it since the header was built; it 404'd until this batch.
+//
+// Content is the `blog` Content Collection plus src/data/blog.ts. hreflang is automatic —
+// this path is already paired in src/i18n/pairs.ts.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogPage from "../../components/blog/BlogPage.astro";
+import { BLOG_SEO } from "../../data/blog";
+
+const lang = "en" as const;
+const { title, description } = BLOG_SEO;
+---
+
+<BaseLayout title={title[lang]} description={description[lang]} {lang}>
+  <BlogPage {lang} />
+</BaseLayout>

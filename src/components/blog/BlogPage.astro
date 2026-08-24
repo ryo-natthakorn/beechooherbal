@@ -1,0 +1,80 @@
+---
+// src/components/blog/BlogPage.astro
+// The blog archive body — /category/blog/ and /th/category/บล็อก/. Thin route shells set
+// lang/title/description.
+//
+// A FLAT reverse-chronological card grid, NOT the events timeline. Two reasons: these
+// articles are topical rather than a chronological story (the same reasoning that chose
+// a timeline for the openings argues against one here), and the corpus is ~10 items
+// concentrated in 2018-2019, so year grouping would produce mostly single-item buckets.
+//
+// EventCard.astro is imported and used BYTE-IDENTICAL — not copied, not edited. Its
+// click-overlay contract, its full-in-the-DOM excerpt (the copy-parity anchor) and its
+// `mt-auto` flex pin therefore carry over untouched, and this page cannot regress
+// anything copy-parity already checks. Its `branch`/`branchHref` props are optional and
+// simply omitted; its hero-optional path already existed; and its "Read more" / "อ่านต่อ"
+// label reads correctly for an article.
+import { getCollection } from "astro:content";
+import HerbalStrokes from "../HerbalStrokes.astro";
+import LocationsBand from "../LocationsBand.astro";
+import EventCard from "../events/EventCard.astro";
+import { BLOG_HERO, BLOG_PAIRS, cardText, type Lang } from "../../data/blog";
+import { assertPairsResolve, emittedPaths } from "../../i18n/pairGuard";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const serif = lang === "th" ? "font-serif-thai" : "font-serif";
+const balance = lang === "en" ? " text-balance" : "";
+
+const posts = (await getCollection("blog", (e) => e.data.lang === lang)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// Only 4 of the 21 articles have a twin, so this guards a small table — but it is the
+// table hreflang is generated from, and its Thai paths are long and percent-encoded.
+assertPairsResolve(BLOG_PAIRS, emittedPaths(await getCollection("blog")), "src/data/blog.ts");
+
+// Thai dates use the Buddhist calendar, matching the rest of the site.
+const dateFormatter = new Intl.DateTimeFormat(lang === "th" ? "th-TH-u-ca-buddhist" : "en-GB", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+---
+
+<main id="main">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-brand-green py-16 text-center text-white md:py-20">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+    <div class="relative mx-auto max-w-3xl px-4 md:px-8">
+      <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} md:text-5xl`}>{BLOG_HERO.heading[lang]}</h1>
+      <p class="text-sm leading-relaxed text-white/90 md:text-base">{BLOG_HERO.intro[lang]}</p>
+    </div>
+  </section>
+
+  <!-- Articles, newest first -->
+  <section class="bg-brand-earth/25 py-14 md:py-20">
+    <div class="mx-auto max-w-6xl px-4 md:px-8">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          posts.map((post) => (
+            <EventCard
+              {lang}
+              href={`/${post.data.slug}/`}
+              title={post.data.title}
+              excerpt={cardText(post.data)}
+              dateLabel={dateFormatter.format(post.data.pubDate)}
+              isoDate={post.data.pubDate.toISOString()}
+              hero={post.data.hero}
+              heroAlt={post.data.heroAlt}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <LocationsBand {lang} background="white" />
+</main>

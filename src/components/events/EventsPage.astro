@@ -31,6 +31,7 @@ import EventCard from "./EventCard.astro";
 import { EVENTS_HERO, EVENT_PAIRS, type Lang } from "../../data/events";
 import { OUTLETS } from "../../data/locations";
 import { UI } from "../../i18n/ui";
+import { assertPairsResolve, emittedPaths } from "../../i18n/pairGuard";
 
 interface Props {
   lang: Lang;
@@ -44,30 +45,11 @@ const posts = (await getCollection("events", (e) => e.data.lang === lang)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-// Build-time guard on the PATHS, since those are what hreflang actually advertises:
-// every EVENT_PAIRS entry must name a slug that a real post is emitted at, on both
-// sides. Asserting the paths (rather than the filename key) catches the failure that
-// matters — hreflang pointing at a URL this build does not produce — and it catches a
-// typo in a long percent-encoded Thai slug, which is the likeliest way to get this
-// wrong and the hardest to spot in review.
-const slugsByLang = new Map<string, Set<string>>([
-  ["en", new Set()],
-  ["th", new Set()],
-]);
-for (const entry of await getCollection("events")) {
-  slugsByLang.get(entry.data.lang)?.add(`/${entry.data.slug}/`);
-}
-for (const pair of EVENT_PAIRS) {
-  for (const side of ["en", "th"] as const) {
-    if (!slugsByLang.get(side)?.has(pair[side])) {
-      throw new Error(
-        `EVENT_PAIRS["${pair.key}"].${side} is "${pair[side]}", but no ${side.toUpperCase()} event post ` +
-          `is emitted at that path. hreflang would advertise a URL that does not exist. ` +
-          `Check src/data/events.ts against the slugs in src/content/events/${side}/.`,
-      );
-    }
-  }
-}
+// Build-time guard: every declared pair must name a path this build actually emits, or
+// hreflang would advertise a URL that does not exist. Shared with the blog index via
+// src/i18n/pairGuard.ts — a guard that has drifted between two copies is worse than no
+// guard, because it keeps passing while no longer checking what it claims to.
+assertPairsResolve(EVENT_PAIRS, emittedPaths(await getCollection("events")), "src/data/events.ts");
 
 // Thai dates use the Buddhist calendar, matching the years the Thai post titles
 // themselves quote (2568, 2567…). Same formatter ReviewsPage.astro uses.

@@ -5,6 +5,7 @@
 // A page with no twin in the other language simply does not appear here.
 
 import { EVENT_PAIRS } from "../data/events";
+import { BLOG_PAIRS } from "../data/blog";
 
 export interface Pair {
   en: string | null; // e.g. "/about/"            (null if no EN twin)
@@ -35,14 +36,16 @@ const CORE_PAIRS: Pair[] = [
   // medium confidence — get native-speaker/Crispin sign-off before launch:
   { en: "/events-news-release/", th: "/th/เหตุการณ์และข่าว/" },
 
-  // Archive pairs — targets CORRECTED vs en-th-map.csv after the 2026-07-14 live
-  // check (the CSV records what the old site's hreflang literally says, which is
-  // stale). Inert until these archive pages exist in the new build; whether to
-  // rebuild author archives at all is a pending decision.
-  // /th/category/blog-th/ (old hreflang) 301s to the real, live Thai blog index:
+  // Archive pair — target CORRECTED vs en-th-map.csv after the 2026-07-14 live check
+  // (the CSV records what the old site's hreflang literally says, which is stale).
+  // /th/category/blog-th/ (old hreflang) 301s to the real, live Thai blog index.
+  // Both sides of this pair are BUILT as of the blog batch, so it is no longer inert.
   { en: "/category/blog/", th: "/th/category/บล็อก/" },
-  // Both author archives are live 200s on the old site (its only complete cluster):
-  { en: "/author/admin/", th: "/th/author/admin/" },
+  // The author archives (/author/admin/ + /th/author/admin/) were paired here — the old
+  // site's only complete hreflang cluster. REMOVED deliberately: no author archive is
+  // rebuilt (an "Admin" byline archive duplicates the blog index and every post shares
+  // the one author), so both URLs 301 to the blog index in vercel.json. Keeping the pair
+  // would make SEOHead advertise a redirecting URL as an hreflang alternate.
 ];
 
 // The 15 EVENTS/News post pairs come from src/data/events.ts rather than being
@@ -56,6 +59,9 @@ const CORE_PAIRS: Pair[] = [
 export const PAIRS: Pair[] = [
   ...CORE_PAIRS,
   ...EVENT_PAIRS.map(({ en, th }): Pair => ({ en, th })),
+  // Only 4 of the 21 blog articles have a twin — see BLOG_PAIRS' header. The other 17
+  // are absent on purpose so they emit no hreflang cluster at all.
+  ...BLOG_PAIRS.map(({ en, th }): Pair => ({ en, th })),
 ];
 // ---------------------------------------------------------------------------
 
