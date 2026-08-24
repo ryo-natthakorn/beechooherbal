@@ -15,16 +15,29 @@
 
 import { writeFileSync, mkdirSync, existsSync, readdirSync, rmSync } from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
-import { invPath, safeDecodeURI, decodeEntities } from './lib.mjs';
+import { invPath, safeDecodeURI } from './lib.mjs';
+// HTML -> Markdown extraction lives in lib-posts.mjs so the blog generator shares it
+// rather than copying it. Five silent-content-drop fixes live in there; see its header.
+import {
+  ROOT,
+  text,
+  mdEscape,
+  blocks,
+  makeImageResolver,
+  altFor,
+  frontmatter,
+} from './lib-posts.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const OUT_DIR = path.join(ROOT, 'src', 'content', 'events');
-const IMG_ROOT = path.join(ROOT, 'src', 'assets', 'images', 'events');
 
 const POSTS = JSON.parse(readFileSync(invPath('rest-posts.json'), 'utf8'));
 const IMAGES = JSON.parse(readFileSync(invPath('events-images.json'), 'utf8'));
+
+// Resolves a body <img> src back to its downloaded local file via the manifest,
+// matching on basename so a resized variant still finds the original. 'events' is both
+// the folder under src/assets/images/ and the segment in the emitted relative path.
+const localFor = makeImageResolver(IMAGES, 'events');
 
 // --- outlet linkage -------------------------------------------------------
 // Maps a pair key to a slug in OUTLETS (src/data/locations.ts) so a post announcing a
@@ -54,155 +67,6 @@ const OUTLET_BY_KEY = {
   udomsuk: 'udomsuk',
   ratchada: 'ratchada',
 };
-
-// --- HTML -> text ---------------------------------------------------------
-
-const stripTags = (s) => s.replace(/<[^>]+>/g, '');
-
-// Legacy copy runs through this on its way into Markdown. Entities are decoded (the
-// build re-escapes as needed) and NBSP is folded to a normal space, matching what
-// 06-copy-parity.mjs's norm() does — otherwise a stray U+00A0 reads as a missing
-// fragment. Emoji are left strictly alone: they are page copy here (💚🌿 📍) and
-// dropping them would fail parity.
-function text(html) {
-  return decodeEntities(stripTags(html.replace(/<br\s*\/?>/gi, ' ')))
-    .replace(/ /g, ' ')
-    .replace(/[ \t]+/g, ' ')
-    .trim();
-}
-
-// Escape what would change meaning at the START of a Markdown line.
-// `\d+\)` matters as much as `\d+\.`: the Naan post opens a paragraph with
-// "1) Bee Choo Udomsuk", and GFM treats `1)` as an ordered-list delimiter, so the
-// literal "1)" was being consumed into list markup and the copy silently lost.
-// copy-parity caught it — exactly the class of drop it exists to catch.
-const mdEscape = (s) => s.replace(/^(\s*)([#>\-+*]|\d+[.)])(\s)/gm, "$1\\$2$3");
-
-// Walk the post body in document order, emitting paragraphs and image references as
-// they appear. Order matters: a caption is the paragraph that FOLLOWS its image.
-//
-// Images are frequently nested INSIDE the text container (`<p><img …></p>` — that is
-// how the 2018 galleries are marked up, 20 images in a single <p>). So a container's
-// inner HTML is split on <img> and the pieces emitted in order, rather than the
-// container being treated as an opaque text block — doing the latter stripped the
-// images to nothing and silently produced empty galleries.
-function pushImg(out, tag) {
-  const src = tag.match(/\ssrc\s*=\s*"([^"]+)"/i)?.[1];
-  if (src) out.push({ type: 'img', src: src.split('?')[0] });
-}
-
-// YouTube ids from <iframe> embeds. These posts are mostly photo galleries, but two
-// of them (the Siam Square merit ceremony, EN and TH) embed a video, and dropping it
-// lost real content — copy-parity's separate embed-id check caught it.
-const YT_RE = /(?:youtube(?:-nocookie)?\.com\/embed\/|youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{11})/;
-
-// Splits on BOTH <img> and <iframe>. Media is routinely nested inside the text
-// container on these posts (`<p><img ...></p>`, `<p><iframe ...></iframe></p>`), and the
-// paragraph regex matches the wrapper first, so anything not split out here is stripped
-// to nothing and silently lost. That cost the 2018 galleries their photos and the Siam
-// Square merit post its video before copy-parity caught both.
-function emitInner(out, inner, tag) {
-  const parts = inner.split(/(<img[^>]*>|<iframe[^>]*>(?:<\/iframe>)?)/i);
-  for (const part of parts) {
-    if (!part) continue;
-    if (/^<img/i.test(part)) {
-      pushImg(out, part);
-      continue;
-    }
-    if (/^<iframe/i.test(part)) {
-      const id = part.match(YT_RE)?.[1];
-      if (id) out.push({ type: 'video', id });
-      continue;
-    }
-    const t = text(part);
-    if (t) out.push({ type: 'text', tag, text: t });
-  }
-}
-
-function blocks(html) {
-  const out = [];
-  // `figcaption` is in this list because that is where WordPress puts real image
-  // captions ("Special Promotion Available at Bee Choo Sammakorn"). Omitting it
-  // dropped seven captions across the batch.
-  const re = /<img[^>]*>|<iframe[^>]*>(?:<\/iframe>)?|<(p|h[1-6]|li|figcaption)\b[^>]*>([\s\S]*?)<\/\1>/gi;
-  let m;
-  while ((m = re.exec(html))) {
-    if (/^<img/i.test(m[0])) {
-      pushImg(out, m[0]);
-      continue;
-    }
-    if (/^<iframe/i.test(m[0])) {
-      const id = m[0].match(YT_RE)?.[1];
-      if (id) out.push({ type: 'video', id });
-      continue;
-    }
-    emitInner(out, m[2], m[1].toLowerCase());
-  }
-  return out;
-}
-
-// --- image resolution -----------------------------------------------------
-
-// The fetch script normalised URLs (stripped WP's -WxH suffix) before saving, and
-// recorded the mapping in events-images.json. Resolve a body <img> src back to the
-// local file through that manifest, matching on basename so a resized variant in the
-// body still finds the original that was downloaded.
-const toOriginal = (u) => u.replace(/-\d+x\d+(?=\.[a-z0-9]+$)/i, '');
-const baseOf = (u) => safeDecodeURI(path.basename(toOriginal(u.split('?')[0]))).toLowerCase();
-
-const byBase = new Map();
-for (const [url, entry] of Object.entries(IMAGES.byUrl)) {
-  byBase.set(baseOf(url), entry);
-}
-
-function localFor(src, pairKey) {
-  const entry = byBase.get(baseOf(src));
-  if (!entry) return null;
-  // Content files live in src/content/events/<lang>/; images in src/assets/images/events/<key>/.
-  const abs = path.join(ROOT, entry.path);
-  if (!existsSync(abs)) return null;
-  return '../../../assets/images/events/' + path.posix.join(pairKey, path.basename(entry.path));
-}
-
-// --- alt text (⚠ COMPOSED) ------------------------------------------------
-// Every legacy image on these posts has an EMPTY alt attribute, so there is nothing to
-// transcribe. One deterministic formula, applied uniformly, so the ~173 strings can be
-// reviewed as a rule rather than one by one: "<post title>, photo N".
-// A caption, where the legacy post had one, is real copy and is used instead.
-function altFor(title, index, caption) {
-  if (caption) return caption;
-  return `${title} — photo ${index + 1}`;
-}
-
-// --- YAML -----------------------------------------------------------------
-
-// Always single-quote and escape; titles contain ':', '#', emoji, and Thai.
-const yq = (s) => `'${String(s).replace(/'/g, "''")}'`;
-
-function frontmatter(fields) {
-  const lines = [];
-  for (const [k, v] of Object.entries(fields)) {
-    if (v === undefined || v === null) continue;
-    if (Array.isArray(v)) {
-      if (!v.length) continue;
-      lines.push(`${k}:`);
-      for (const item of v) {
-        if (typeof item === 'object') {
-          const [first, ...rest] = Object.entries(item).filter(([, x]) => x !== undefined);
-          lines.push(`  - ${first[0]}: ${typeof first[1] === 'number' ? first[1] : yq(first[1])}`);
-          for (const [ik, iv] of rest) lines.push(`    ${ik}: ${typeof iv === 'number' ? iv : yq(iv)}`);
-        } else {
-          lines.push(`  - ${typeof item === 'number' ? item : yq(item)}`);
-        }
-      }
-    } else if (typeof v === 'number') {
-      lines.push(`${k}: ${v}`);
-    } else {
-      lines.push(`${k}: ${yq(v)}`);
-    }
-  }
-  return lines.join('\n');
-}
 
 // --- pair key (mirrors 08-fetch-posts.mjs) --------------------------------
 const BRANCHES = [
