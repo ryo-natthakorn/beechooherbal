@@ -49,7 +49,9 @@ complex logic — just pages, images, text, and contact/booking CTAs.
 
 ## 2. Business Context
 
-- **Brand:** Bee Choo Herbal / Bee Choo Origin (Bangkok). 16 outlets in Thailand by end 2025.
+- **Brand:** Bee Choo Herbal / Bee Choo Origin (Bangkok). 17 outlets in Thailand as of the
+  Ayutthaya opening (2026-08-20) — see `src/data/locations.ts`; treat this count as live,
+  not the "16... by end 2025" figure this line previously carried.
 - **Audience:** People in Thailand with hair loss, grey hair, oily/itchy scalp, dandruff,
   damaged hair, scalp infections, postpartum hair loss.
 - **Key actions a visitor should take:** Call, message on Facebook, add on LINE, or

@@ -68,14 +68,21 @@ const events = defineCollection({
       videos: z.array(z.string()).default([]),
       /** Slug into OUTLETS in src/data/locations.ts, when the post announces a branch. */
       outlet: z.string().optional(),
-      /** Provenance — the WP REST post id in inventory/rest-posts.json. */
-      wpId: z.number(),
+      /**
+       * Provenance — the WP REST post id in inventory/rest-posts.json. Optional
+       * because a post can now originate with no legacy source at all (e.g. an
+       * outlet added to locations.ts after the WordPress migration, whose grand-
+       * opening announcement never existed on the old site) — there is no id to
+       * record for those.
+       */
+      wpId: z.number().optional(),
       /**
        * Legacy category term ids, recorded as found. The 2023-2025 grand openings
        * carry BOTH the blog and events terms ([1,16] EN / [9,17] TH), which is why
-       * WordPress badges them "BLOG". The rebuild files them as events only.
+       * WordPress badges them "BLOG". The rebuild files them as events only. Empty
+       * for posts with no legacy source (see wpId).
        */
-      wpCategories: z.array(z.number()),
+      wpCategories: z.array(z.number()).default([]),
     }),
 });
 

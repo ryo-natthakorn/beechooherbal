@@ -37,16 +37,16 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
     {/* "Find a Branch" (previously the first, white button here) dropped: it's always on
         screen in the header now (a yellow pill, every page, every scroll position), so
         repeating it in the hero was the same action twice before the visitor had
-        scrolled at all. Facebook (already yellow) and LINE (already outlined) are
-        unchanged. */}
+        scrolled at all. Facebook and LINE share one white-pill style (sitewide CTA fix:
+        yellow read as an already-pressed toggle next to a plain sibling). */}
     <div class="mt-6 flex flex-wrap justify-center gap-3 md:mt-8">
-      <a href="https://www.facebook.com/beechooherbal/" target="_blank" rel="noopener" class="btn-tactile flex min-h-11 items-center gap-2 rounded-full bg-brand-yellow px-7 font-bold text-brand-ink shadow-soft-lg hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+      <a href="https://www.facebook.com/beechooherbal/" target="_blank" rel="noopener" class="btn-tactile flex min-h-11 items-center gap-2 rounded-full bg-white px-7 font-bold text-brand-green shadow-soft-lg hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
         <svg aria-hidden="true" viewBox="0 0 320 512" fill="currentColor" class="h-4 w-4 shrink-0">
           <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
         </svg>
         {t.ctaFacebook[lang]}
       </a>
-      <a href="https://lin.ee/ll3injb" target="_blank" rel="noopener" class="btn-tactile flex min-h-11 items-center gap-2 rounded-full border border-white/60 px-7 font-bold text-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+      <a href="https://lin.ee/ll3injb" target="_blank" rel="noopener" class="btn-tactile flex min-h-11 items-center gap-2 rounded-full bg-white px-7 font-bold text-brand-green shadow-soft-lg hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0">
           <path d="M12 3C6.48 3 2 6.58 2 11c0 2.61 1.61 4.93 4.11 6.41-.18.94-.66 2.49-1.51 3.99a.4.4 0 0 0 .5.55c2.11-.76 3.66-1.7 4.51-2.29.76.14 1.55.21 2.39.21 5.52 0 10-3.58 10-8s-4.48-8-10-8z" />
         </svg>
