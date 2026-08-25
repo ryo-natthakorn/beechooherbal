@@ -117,7 +117,7 @@ const directionsHref = (o: (typeof OUTLETS)[number]) =>
                   <a
                     href={`tel:${outlet.phoneHref}`}
                     aria-label={`${ui.outlet.call} ${lang === "th" ? outlet.nameTh : outlet.name}: ${outlet.phoneDisplay}`}
-                    class="btn-tactile flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-full bg-brand-green px-3 text-sm font-bold text-white hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+                    class="btn-tactile flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-full border border-brand-green px-3 text-sm font-bold text-brand-green hover:bg-brand-green/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
                   >
                     {ui.outlet.call}
                   </a>
