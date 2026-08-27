@@ -1,6 +1,62 @@
 {
-  "fetched_at": "2026-08-21T09:15:22.346Z",
+  "fetched_at": "2026-08-27T08:10:42.028Z",
   "byUrl": {
+    "https://beechooherbal.com/wp-content/uploads/2026/08/1712610_0.jpg": {
+      "url": "https://beechooherbal.com/wp-content/uploads/2026/08/1712610_0.jpg",
+      "path": "src/assets/images/events/ayutthaya/01-1712610-0.jpg",
+      "bytes": 153355,
+      "type": ".jpg",
+      "cached": false
+    },
+    "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6302.jpg": {
+      "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6302.jpg",
+      "path": "src/assets/images/events/ayutthaya/02-img-6302.jpg",
+      "bytes": 217163,
+      "type": ".jpg",
+      "cached": false
+    },
+    "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6309.jpg": {
+      "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6309.jpg",
+      "path": "src/assets/images/events/ayutthaya/03-img-6309.jpg",
+      "bytes": 186807,
+      "type": ".jpg",
+      "cached": false
+    },
+    "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6375.jpg": {
+      "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6375.jpg",
+      "path": "src/assets/images/events/ayutthaya/04-img-6375.jpg",
+      "bytes": 202171,
+      "type": ".jpg",
+      "cached": false
+    },
+    "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6315.jpg": {
+      "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6315.jpg",
+      "path": "src/assets/images/events/ayutthaya/05-img-6315.jpg",
+      "bytes": 201436,
+      "type": ".jpg",
+      "cached": false
+    },
+    "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6359.jpg": {
+      "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6359.jpg",
+      "path": "src/assets/images/events/ayutthaya/06-img-6359.jpg",
+      "bytes": 195477,
+      "type": ".jpg",
+      "cached": false
+    },
+    "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6392-1.jpg": {
+      "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6392-1.jpg",
+      "path": "src/assets/images/events/ayutthaya/07-img-6392-1.jpg",
+      "bytes": 121838,
+      "type": ".jpg",
+      "cached": false
+    },
+    "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6311.jpg": {
+      "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6311.jpg",
+      "path": "src/assets/images/events/ayutthaya/08-img-6311.jpg",
+      "bytes": 194871,
+      "type": ".jpg",
+      "cached": false
+    },
     "https://beechooherbal.com/wp-content/uploads/2025/09/P1111165.jpg": {
       "url": "https://beechooherbal.com/wp-content/uploads/2025/09/P1111165.jpg",
       "path": "src/assets/images/events/phutthamonthon/01-p1111165.jpg",
@@ -3600,198 +3656,134 @@
           "cached": true
         }
       ]
+    },
+    "11403": {
+      "pairKey": "ayutthaya",
+      "lang": "th",
+      "slug": "grand-opening-บีชู-สาขาอยุธยา-ในวันท",
+      "images": [
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/1712610_0.jpg",
+          "path": "src/assets/images/events/ayutthaya/01-1712610-0.jpg",
+          "bytes": 153355,
+          "type": ".jpg",
+          "cached": false
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6302.jpg",
+          "path": "src/assets/images/events/ayutthaya/02-img-6302.jpg",
+          "bytes": 217163,
+          "type": ".jpg",
+          "cached": false
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6309.jpg",
+          "path": "src/assets/images/events/ayutthaya/03-img-6309.jpg",
+          "bytes": 186807,
+          "type": ".jpg",
+          "cached": false
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6375.jpg",
+          "path": "src/assets/images/events/ayutthaya/04-img-6375.jpg",
+          "bytes": 202171,
+          "type": ".jpg",
+          "cached": false
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6315.jpg",
+          "path": "src/assets/images/events/ayutthaya/05-img-6315.jpg",
+          "bytes": 201436,
+          "type": ".jpg",
+          "cached": false
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6359.jpg",
+          "path": "src/assets/images/events/ayutthaya/06-img-6359.jpg",
+          "bytes": 195477,
+          "type": ".jpg",
+          "cached": false
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6392-1.jpg",
+          "path": "src/assets/images/events/ayutthaya/07-img-6392-1.jpg",
+          "bytes": 121838,
+          "type": ".jpg",
+          "cached": false
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6311.jpg",
+          "path": "src/assets/images/events/ayutthaya/08-img-6311.jpg",
+          "bytes": 194871,
+          "type": ".jpg",
+          "cached": false
+        }
+      ]
+    },
+    "11440": {
+      "pairKey": "ayutthaya",
+      "lang": "en",
+      "slug": "grand-opening-of-new-outlet-bee-choo-ayutthaya",
+      "images": [
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/1712610_0.jpg",
+          "path": "src/assets/images/events/ayutthaya/01-1712610-0.jpg",
+          "bytes": 153355,
+          "type": ".jpg",
+          "cached": false
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6302.jpg",
+          "path": "src/assets/images/events/ayutthaya/02-img-6302.jpg",
+          "bytes": 217163,
+          "type": ".jpg",
+          "cached": false
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6309.jpg",
+          "path": "src/assets/images/events/ayutthaya/03-img-6309.jpg",
+          "bytes": 186807,
+          "type": ".jpg",
+          "cached": false
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6375.jpg",
+          "path": "src/assets/images/events/ayutthaya/04-img-6375.jpg",
+          "bytes": 202171,
+          "type": ".jpg",
+          "cached": false
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6315.jpg",
+          "path": "src/assets/images/events/ayutthaya/05-img-6315.jpg",
+          "bytes": 201436,
+          "type": ".jpg",
+          "cached": false
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6359.jpg",
+          "path": "src/assets/images/events/ayutthaya/06-img-6359.jpg",
+          "bytes": 195477,
+          "type": ".jpg",
+          "cached": false
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6392-1.jpg",
+          "path": "src/assets/images/events/ayutthaya/07-img-6392-1.jpg",
+          "bytes": 121838,
+          "type": ".jpg",
+          "cached": false
+        },
+        {
+          "url": "https://beechooherbal.com/wp-content/uploads/2026/08/IMG_6311.jpg",
+          "path": "src/assets/images/events/ayutthaya/08-img-6311.jpg",
+          "bytes": 194871,
+          "type": ".jpg",
+          "cached": false
+        }
+      ]
     }
   },
-  "resized": [
-    {
-      "path": "src/assets/images/events/ratchada/02-20220117-bee-choo-ratchada-edit-00-04-12-20-still013.jpg",
-      "from": "3840x2160",
-      "to": "2400px wide",
-      "bytes": [
-        4930832,
-        366920
-      ]
-    },
-    {
-      "path": "src/assets/images/events/ratchada/03-20220117-bee-choo-ratchada-edit-00-03-34-40-still011.jpg",
-      "from": "3840x2160",
-      "to": "2400px wide",
-      "bytes": [
-        4979367,
-        487484
-      ]
-    },
-    {
-      "path": "src/assets/images/events/ratchada/04-20220117-bee-choo-ratchada-edit-00-03-22-34-still012-1.jpg",
-      "from": "3399x2160",
-      "to": "2400px wide",
-      "bytes": [
-        5303175,
-        671006
-      ]
-    },
-    {
-      "path": "src/assets/images/events/ratchada/05-20220117-bee-choo-ratchada-edit-00-18-32-39-still009.jpg",
-      "from": "3840x2160",
-      "to": "2400px wide",
-      "bytes": [
-        5417952,
-        402016
-      ]
-    },
-    {
-      "path": "src/assets/images/events/ratchada/06-20220117-bee-choo-ratchada-edit-00-12-28-12-still008.jpg",
-      "from": "3840x2160",
-      "to": "2400px wide",
-      "bytes": [
-        4367803,
-        265648
-      ]
-    },
-    {
-      "path": "src/assets/images/events/ratchada/07-20220117-bee-choo-ratchada-edit-00-11-22-52-still017.jpg",
-      "from": "3840x2160",
-      "to": "2400px wide",
-      "bytes": [
-        4464977,
-        314910
-      ]
-    },
-    {
-      "path": "src/assets/images/events/ratchada/09-20220117-bee-choo-ratchada-edit-00-06-40-02-still002.jpg",
-      "from": "3840x2160",
-      "to": "2400px wide",
-      "bytes": [
-        3578677,
-        197692
-      ]
-    },
-    {
-      "path": "src/assets/images/events/ratchada/10-20220117-bee-choo-ratchada-edit-00-05-06-58-still014.jpg",
-      "from": "3840x2160",
-      "to": "2400px wide",
-      "bytes": [
-        5097998,
-        466415
-      ]
-    },
-    {
-      "path": "src/assets/images/events/ratchada/11-20220117-bee-choo-ratchada-edit-00-03-22-34-still012.jpg",
-      "from": "3399x2160",
-      "to": "2400px wide",
-      "bytes": [
-        5303175,
-        671006
-      ]
-    },
-    {
-      "path": "src/assets/images/events/kallapaphruk/02-p1043950.jpg",
-      "from": "4016x2256",
-      "to": "2400px wide",
-      "bytes": [
-        4847616,
-        388117
-      ]
-    },
-    {
-      "path": "src/assets/images/events/kallapaphruk/03-p1043949.jpg",
-      "from": "4016x2256",
-      "to": "2400px wide",
-      "bytes": [
-        4598272,
-        317122
-      ]
-    },
-    {
-      "path": "src/assets/images/events/kallapaphruk/04-p1043947.jpg",
-      "from": "4016x2256",
-      "to": "2400px wide",
-      "bytes": [
-        4284416,
-        289742
-      ]
-    },
-    {
-      "path": "src/assets/images/events/kallapaphruk/05-p1043941.jpg",
-      "from": "4016x2256",
-      "to": "2400px wide",
-      "bytes": [
-        4081664,
-        226286
-      ]
-    },
-    {
-      "path": "src/assets/images/events/kallapaphruk/06-p1043776.jpg",
-      "from": "4016x2256",
-      "to": "2400px wide",
-      "bytes": [
-        3734016,
-        243321
-      ]
-    },
-    {
-      "path": "src/assets/images/events/kallapaphruk/07-p1043770.jpg",
-      "from": "4016x2256",
-      "to": "2400px wide",
-      "bytes": [
-        4771328,
-        392831
-      ]
-    },
-    {
-      "path": "src/assets/images/events/kallapaphruk/08-p1043764.jpg",
-      "from": "4016x2256",
-      "to": "2400px wide",
-      "bytes": [
-        3948544,
-        292430
-      ]
-    },
-    {
-      "path": "src/assets/images/events/kallapaphruk/09-p1043772.jpg",
-      "from": "4016x2256",
-      "to": "2400px wide",
-      "bytes": [
-        2988032,
-        183420
-      ]
-    },
-    {
-      "path": "src/assets/images/events/kallapaphruk/10-p1043774.jpg",
-      "from": "4016x2256",
-      "to": "2400px wide",
-      "bytes": [
-        3759104,
-        240035
-      ]
-    },
-    {
-      "path": "src/assets/images/events/kallapaphruk/11-p1043896.jpg",
-      "from": "4016x2256",
-      "to": "2400px wide",
-      "bytes": [
-        2595328,
-        121791
-      ]
-    },
-    {
-      "path": "src/assets/images/events/kallapaphruk/12-p1043892.jpg",
-      "from": "4016x2256",
-      "to": "2400px wide",
-      "bytes": [
-        2615808,
-        126163
-      ]
-    },
-    {
-      "path": "src/assets/images/events/kallapaphruk/13-p1043903.jpg",
-      "from": "4016x2256",
-      "to": "2400px wide",
-      "bytes": [
-        3754496,
-        258803
-      ]
-    }
-  ],
+  "resized": [],
   "failures": []
 }

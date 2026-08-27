@@ -46,7 +46,7 @@
 // ---------------------------------------------------------------------------
 // URLs
 // ---------------------------------------------------------------------------
-// All 33 posts keep their legacy ROOT paths, Thai included. None of the /th/<slug>/
+// All 35 posts keep their legacy ROOT paths, Thai included. None of the /th/<slug>/
 // WPML mirrors appear in the sitemap, so moving Thai posts under /th/ would 301 away
 // the URLs Google actually crawls. The mirrors are 301'd to the root in vercel.json.
 
@@ -130,10 +130,7 @@ export const EVENT_PAIRS: { key: string; en: string; th: string }[] = [
   { key: "surat-thani", en: "/grand-opening-of-new-outlet-bee-choo-surat-thani/", th: "/grand-opening-บีชู-สุราษฎร์ธานี-ในวั/" },
   { key: "korat", en: "/grand-opening-of-new-outlet-bee-choo-korat/", th: "/grand-opening-บีชู-สาขาโคราช-ในวันที/" },
   { key: "suksawat", en: "/soft-opening-of-new-outlet-bee-choo-suksawat/", th: "/soft-opening-บช-สาขาสขสวสดในวนท-19-กนย/" },
-  // ⚠ PLACEHOLDER post (src/content/events/{en,th}/ayutthaya.md) — no legacy source,
-  // built from Crispin's chat feedback alone. Slugs are provisional; may need to
-  // change once real content replaces the placeholder body.
-  { key: "ayutthaya", en: "/grand-opening-of-new-outlet-bee-choo-ayutthaya/", th: "/grand-opening-บีชู-สาขาอยุธยา/" },
+  { key: "ayutthaya", en: "/grand-opening-of-new-outlet-bee-choo-ayutthaya/", th: "/grand-opening-บีชู-สาขาอยุธยา-ในวันท/" },
   // NOTE the Thai slug below says ประเวศ (Prawet) but the post is CHATUCHAK. Correct as written.
   { key: "chatuchak", en: "/grand-opening-of-new-outlet-bee-choo-chatuchak/", th: "/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567-2/" },
   { key: "prawet", en: "/grand-opening-of-new-outlet-bee-choo-prawet/", th: "/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567/" },

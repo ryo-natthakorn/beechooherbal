@@ -52,6 +52,7 @@ const localFor = makeImageResolver(IMAGES, IMAGES.byPost);
 //                                     Kreetha); Krungthep Kreetha is not in OUTLETS, so
 //                                     linking only Sai Mai would misrepresent the post
 const OUTLET_BY_KEY = {
+  ayutthaya: 'ayutthaya',
   phutthamonthon: 'phutthamonthon',
   'chiang-mai': 'chiang-mai',
   'surat-thani': 'surat-thani',
@@ -71,6 +72,7 @@ const OUTLET_BY_KEY = {
 
 // --- pair key (mirrors 08-fetch-posts.mjs) --------------------------------
 const BRANCHES = [
+  ['ayutthaya', 'อยุธยา'],
   ['phutthamonthon', 'พุทธมณฑล'], ['chiang-mai', 'เชียงใหม่'], ['surat-thani', 'สุราษฎร์'],
   ['korat', 'โคราช'], ['suksawat', 'สุขสวัสดิ์'], ['chatuchak', 'จตุจักร'], ['prawet', 'ประเวศ'],
   ['sammakorn', 'สัมมากร'], ['thecrystalparkekamai-ramindra', 'เดอะคริสตัล'], ['chonburi', 'ชลบุรี'],

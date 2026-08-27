@@ -4,7 +4,7 @@ slug: 'grand-opening-บีชู-สาขาพุทธมณฑล-ในว
 title: 'Grand Opening บีชู สาขาพุทธมณฑล ในวันที่ 20 กันยายน 2568'
 excerpt: 'บีชู เฮอร์เบิล ประเทศไทย มีความยินดีที่จะประกาศเปิดสาขาใหม่ของเราในพุทธมณฑล ซึ่งเป็นสาขาที่ 16 ของเราในประเทศไทย! ดำเนินการโดยตัวแทนจำหน่าย บริษัท เจเอ็นเจ เฮิร์บ จำกัด ผู้ดูแล Bee Choo Siam, Bee Choo กัลปพฤกษ์ และ Bee Choo ชลบุรี และตอนนี้คือ Bee Choo พุทธมณฑล 💚'
 pubDate: '2025-09-22T09:25:56'
-modDate: '2025-09-22T09:31:24'
+modDate: '2026-08-25T05:14:57'
 hero: '../../../assets/images/events/phutthamonthon/01-p1111165.jpg'
 heroAlt: 'Main entrance of Bee Choo Phutthamonthon'
 gallery:

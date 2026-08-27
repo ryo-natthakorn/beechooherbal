@@ -51,8 +51,10 @@ const IMG_DIR = path.join(ROOT, 'src', 'assets', 'images', 'events');
 // Category term -> which rest-posts.json variant it lands in.
 // `lang` is the WPML query param; null means "site default" (English terms).
 const TERMS = [
-  { id: 16, lang: null, variant: 'en', expect: 18, label: 'EN EVENTS/News' },
-  { id: 17, lang: 'th', variant: 'th', expect: 15, label: 'TH เหตุการณ์/ข่าว' },
+  // 2026-08-27: 18/15 -> 19/16 — Bee Choo Ayutthaya's grand-opening post went live
+  // on the site (wpId 11440 EN); re-verified via WP REST before bumping these.
+  { id: 16, lang: null, variant: 'en', expect: 19, label: 'EN EVENTS/News' },
+  { id: 17, lang: 'th', variant: 'th', expect: 16, label: 'TH เหตุการณ์/ข่าว' },
 ];
 
 // The dead `blog-th` term (id 7) carries the Suksawat post as a stray third category.
@@ -75,6 +77,7 @@ const STRAY_TERM = { id: 7, lang: 'th', label: 'blog-th (stray)' };
 // Branch tokens, matched against the post slug (EN) or title (TH). Order matters:
 // longer / more specific first, so `siam-square-make-merit` wins over `siam`.
 const BRANCHES = [
+  ['ayutthaya', 'อยุธยา'],
   ['phutthamonthon', 'พุทธมณฑล'],
   ['chiang-mai', 'เชียงใหม่'],
   ['surat-thani', 'สุราษฎร์'],
@@ -180,7 +183,7 @@ async function main() {
     const thOnly = rows.filter(([, v]) => !v.en && v.th).length;
     const unmatched = rows.filter(([k]) => k.includes('unmatched')).length;
     console.log(`\npairs ${pairs} | EN-only ${enOnly} | TH-only ${thOnly} | unmatched ${unmatched}`);
-    console.log(pairs === 15 && enOnly === 3 && thOnly === 0 && unmatched === 0 ? 'OK — matches the planned 15 + 3.' : 'MISMATCH — fix BRANCHES before the real run.');
+    console.log(pairs === 16 && enOnly === 3 && thOnly === 0 && unmatched === 0 ? 'OK — matches the planned 16 + 3.' : 'MISMATCH — fix BRANCHES before the real run.');
     return;
   }
 
