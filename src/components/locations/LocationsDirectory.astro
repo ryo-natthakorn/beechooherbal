@@ -12,14 +12,13 @@
 // day-range, each stating its own explicit last-walk-in time — see locations.ts) ->
 // phone -> Call/Directions actions.
 //
-// Directions target: the outlet's own real Google Business name (mapsQuery where the
-// legacy embed had one, else "Bee Choo {name} Thailand" — same composed form the
-// original pre-rebuild site used). A name-based search resolves to the actual indexed,
-// reviewed listing Google shows for that branch; a bare lat,lng drops an anonymous pin
-// with no business name attached, which is exactly what Ryo's "point to the real pin,
-// not the latitude-longitude" feedback flagged. `coords` stays in the data model as
-// the verified ground-truth location (used by the map above), just not as the
-// Directions query.
+// Directions target: each outlet's canonical Google Maps PLACE link (`mapsUrl`). This
+// still honours Ryo's "point to the real pin, not the latitude-longitude" rule — a
+// bare lat,lng drops an anonymous pin with no business name — but a place link is
+// exact where the previous /maps/search/ name query was not: a search URL opens a
+// RESULTS LIST and lets Google pick the pin. See locations.ts `mapsUrl`.
+// `coords` stays in the data model as the ground-truth location for schema, not as
+// the Directions query.
 import { HOME, type Lang } from "../../data/home";
 import { UI } from "../../i18n/ui";
 import { OUTLETS } from "../../data/locations";
@@ -42,8 +41,14 @@ const groups = [
   { label: ui.locationsPage.regionUpcountry, outlets: upcountry },
 ];
 
-const directionsHref = (o: (typeof OUTLETS)[number]) =>
-  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.mapsQuery ?? `Bee Choo ${o.name} Thailand`)}`;
+// Directions target: the outlet's own canonical Google Maps PLACE link (locations.ts
+// `mapsUrl`). This used to build a /maps/search/ query from the branch name, which does
+// NOT open a place — it opens a RESULTS LIST and lets Google choose which pin to show.
+// That is how Chatuchak (Prachachuen) came to display the wrong location (reported by
+// Ryo 2026-09-04); every outlet had the same weakness, it just showed up on one.
+// A place link resolves to exactly one listing, which is still the "real named listing,
+// not an anonymous coordinate" behaviour the name search was chosen for.
+const directionsHref = (o: (typeof OUTLETS)[number]) => o.mapsUrl;
 ---
 
 <section class="py-16 text-center md:py-24">

@@ -32,12 +32,14 @@ const t = HOME.locations;
 const ui = UI[lang];
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
-// Name-based query (mapsQuery where the legacy embed had one, else a composed "Bee
-// Choo {name} Thailand") so Directions resolves to the outlet's real, named Google
-// Business listing rather than an anonymous coordinate pin — see LocationsDirectory.astro's
-// header for the full rationale (this mirrors that page's Directions target).
-const directionsHref = (o: (typeof OUTLETS)[number]) =>
-  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.mapsQuery ?? `Bee Choo ${o.name} Thailand`)}`;
+// Directions target: the outlet's own canonical Google Maps PLACE link (locations.ts
+// `mapsUrl`). This used to build a /maps/search/ query from the branch name, which does
+// NOT open a place — it opens a RESULTS LIST and lets Google choose which pin to show.
+// That is how Chatuchak (Prachachuen) came to display the wrong location (reported by
+// Ryo 2026-09-04); every outlet had the same weakness, it just showed up on one.
+// A place link resolves to exactly one listing, which is still the "real named listing,
+// not an anonymous coordinate" behaviour the name search was chosen for.
+const directionsHref = (o: (typeof OUTLETS)[number]) => o.mapsUrl;
 ---
 
 <section class="py-16 text-center md:py-24">
