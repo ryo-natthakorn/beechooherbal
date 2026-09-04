@@ -13,15 +13,35 @@
 // shown up to a closed shop. Ratchada/Chaiyapruek/Korat/Phutthamonthon gained the
 // "last walk-in" precision the legacy site states but our old data dropped.
 //
-// `coords` is the exact Google Maps pin from each outlet's own live embed — used as the
-// Directions link target (a coordinate beats a fuzzy text search). `area` is a
-// DERIVED, coarse district/province hint (reverse-geocoded via OpenStreetMap Nominatim,
-// zoom 18) — NOT a verified street address. Most pins land at subdistrict/district
-// precision with no house number (the outlets are inside malls/plazas, which rarely
-// geocode to a street-level POI). Do not upgrade `area` to a bold "Address:" line in the
-// UI without Crispin confirming it — a wrong address is worse than none on a real
-// business's page. `areaPending: true` marks the one outlet where even the pin itself is
-// suspect.
+// `coords` PROVENANCE (corrected 2026-09-04): supplied by Ryo as one maps.app.goo.gl
+// place link per outlet, resolved to the pin in each resolved URL's `!3d`/`!4d`
+// parameters. The 17 source links are listed at the bottom of this file.
+//   ⚠ TRAP: do NOT read the `@lat,lng` in a resolved Maps URL — that is the map's
+//   VIEWPORT CENTRE, not the place. On these links the two disagree by up to 16 km
+//   (Chaiyapruek), which is exactly how the previous coordinates went wrong.
+// The previous values claimed to be "the exact pin from each outlet's own live embed";
+// that was disproven — 8 of 17 were >= 400 m out, Sai Mai by 23 km, Ayutthaya by 14 km.
+// Every one of the 17 links was checked to resolve to a Bee Choo branch whose Google
+// place name matches its outlet, so `mapsQuery` below is now Google's own verified
+// place name for all 17 (it used to be present on only 4, with the rest falling back to
+// a composed "Bee Choo {name} Thailand" guess).
+//
+// `coords` is NOT the Directions target — LocationsDirectory builds a name search from
+// `mapsQuery`, deliberately, so the link lands on the real reviewed listing instead of
+// dropping an anonymous pin. `coords` is the ground-truth location for schema/map use.
+//
+// `area` is a DERIVED, coarse district/province hint (reverse-geocoded from the
+// CORRECTED coords via OpenStreetMap Nominatim, zoom 18) — NOT a verified street
+// address. Most pins land at subdistrict/district precision with no house number (the
+// outlets sit inside malls/plazas, which rarely geocode to a street-level POI). Do not
+// upgrade `area` to a bold "Address:" line in the UI without Crispin confirming it — a
+// wrong address is worse than none on a real business's page.
+//   Re-derived in this pass, so ⚠ Thai needs native-speaker sign-off like any new UI
+//   string: Sai Mai (new — its areaPending flag is now cleared, the pin is confirmed),
+//   Ratchada (Din Daeng -> Huai Khwang), Kallapaphruk (Bang Khun Thian -> Phasi
+//   Charoen), Phutthamonthon (Sam Phran -> Phutthamonthon), Ayutthaya (Bang Sai ->
+//   Phra Nakhon Si Ayutthaya). The other 12 were derived from pins that were already
+//   accurate and are left as they were.
 export interface Outlet {
   slug: string;
   name: string;
@@ -51,27 +71,15 @@ export const OUTLETS: Outlet[] = [
     name: "Sai Mai",
     nameTh: "สาขา สิริ อเวนิว สายไหม",
     region: "bangkok",
-    // ⚠ This outlet's own live map embed is titled "Bee Choo Tawanna (Shop 1&2)" — a
-    // DIFFERENT mall name than the outlet itself ("Sai Mai" / "Siri Avenue Sai Mai").
-    // Every other outlet with a named pin (Siam Square, Ratchada, Udomsuk) has a name
-    // that matches its own branch — this one doesn't, and it was still wrong on the
-    // 2026-08-20 update. Corroborating find: the live TH page's own (also stale) Yoast
-    // meta description still opens with "ตะวันนา ... 02-108-3938" (Tawanna,
-    // 02-108-3938) as this outlet's old identity — a DIFFERENT phone number than the
-    // 02-121-4419 the page body now shows. Likely explanation: Tawanna was this
-    // branch's former name/number before a rename or relocation to Sai Mai, and both
-    // the map pin and the meta description are stale leftovers nobody updated — but
-    // that is an inference, not a confirmation. Do not show an address for this
-    // outlet; ask Crispin to confirm before launch.
-    areaPending: true,
+    area: { en: "Sai Mai, Bangkok", th: "สายไหม กรุงเทพฯ" },
     phoneDisplay: "02-121-4419",
     phoneHref: "+6621214419",
     hours: {
       en: ["Weekdays: 9am–8pm (last walk-in 8pm)", "Weekends: 9am–7pm (last walk-in 7pm)"],
       th: ["วันจันทร์ – วันศุกร์: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)", "วันเสาร์ – วันอาทิตย์: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"],
     },
-    coords: { lat: 13.723194515651315, lng: 100.59925377984273 },
-    mapsQuery: "Bee Choo Tawanna (Shop 1&2) - Hair Loss Treatment",
+    coords: { lat: 13.9214388, lng: 100.660748 },
+    mapsQuery: "Bee Choo Sai Mai - บีชู สายไหม",
   },
   {
     slug: "siam-square",
@@ -85,23 +93,23 @@ export const OUTLETS: Outlet[] = [
       en: ["Everyday: 10:30am–9:30pm (last walk-in 8pm)"],
       th: ["ทุกวัน: 10.30 – 21.30 น. (รับลูกค้าคนสุดท้าย 20.00 น.)"],
     },
-    coords: { lat: 13.67816145621077, lng: 100.5578651533341 },
-    mapsQuery: "Bee Choo Siam Square One - Hair Loss Treatment",
+    coords: { lat: 13.7449758, lng: 100.5334774 },
+    mapsQuery: "Bee Choo Siam Square - บีชู สยามสแควร์",
   },
   {
     slug: "ratchada",
     name: "Ratchada",
     nameTh: "สาขา รัชดา",
     region: "bangkok",
-    area: { en: "Din Daeng, Bangkok", th: "ดินแดง กรุงเทพฯ" },
+    area: { en: "Huai Khwang, Bangkok", th: "ห้วยขวาง กรุงเทพฯ" },
     phoneDisplay: "06-1729-3434",
     phoneHref: "+66617293434",
     hours: {
       en: ["Everyday: 9am–7pm (last walk-in 6:30pm)"],
       th: ["ทุกวัน: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 18.30 น.)"],
     },
-    coords: { lat: 13.770767790335112, lng: 100.56847791483071 },
-    mapsQuery: "Bee Choo Ratchada - Hair Loss Treatment",
+    coords: { lat: 13.7867949, lng: 100.5752917 },
+    mapsQuery: "Bee Choo Ratchada - บีชู รัชดา",
   },
   {
     slug: "udomsuk",
@@ -115,8 +123,8 @@ export const OUTLETS: Outlet[] = [
       en: ["Weekdays: 9am–8pm (last walk-in 8pm)", "Weekends: 9am–7pm (last walk-in 7pm)"],
       th: ["วันจันทร์ – วันศุกร์: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)", "วันเสาร์ – วันอาทิตย์: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"],
     },
-    coords: { lat: 13.677999290395206, lng: 100.62571691482964 },
-    mapsQuery: "Bee Choo Udomsuk - Hair Loss Treatment",
+    coords: { lat: 13.6778917, lng: 100.6279435 },
+    mapsQuery: "Bee Choo Udomsuk - บีชู อุดมสุข",
   },
   {
     slug: "chaiyapruek",
@@ -131,18 +139,20 @@ export const OUTLETS: Outlet[] = [
       en: ["Everyday: 9am–8pm (last walk-in 7pm)"],
       th: ["ทุกวัน: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"],
     },
-    coords: { lat: 13.8930982, lng: 100.4495541 },
+    coords: { lat: 13.8930759, lng: 100.449464 },
+    mapsQuery: "Bee Choo Chaiyaphruek - บีชู ชัยพฤกษ์",
   },
   {
     slug: "kallapaphruk",
     name: "Kallapaphruk",
     nameTh: "สาขากัลปพฤกษ์",
     region: "bangkok",
-    area: { en: "Bang Khun Thian, Bangkok", th: "บางขุนเทียน กรุงเทพฯ" },
+    area: { en: "Phasi Charoen, Bangkok", th: "ภาษีเจริญ กรุงเทพฯ" },
     phoneDisplay: "090-221-7745",
     phoneHref: "+66902217745",
     hours: { en: ["Everyday: 9am–8pm (last walk-in 8pm)"], th: ["ทุกวัน: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)"] },
-    coords: { lat: 13.7110402941577, lng: 100.45910132461015 },
+    coords: { lat: 13.7059313, lng: 100.4465747 },
+    mapsQuery: "Bee Choo Kallapaphruk - บีชู กัลปพฤกษ์",
   },
   {
     slug: "chonburi",
@@ -155,7 +165,8 @@ export const OUTLETS: Outlet[] = [
     // the corrected value.
     phoneHref: "+66969047964",
     hours: { en: ["Everyday: 9am–8pm (last walk-in 8pm)"], th: ["ทุกวัน: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)"] },
-    coords: { lat: 13.3396377, lng: 100.9669745 },
+    coords: { lat: 13.3395653, lng: 100.966991 },
+    mapsQuery: "Bee Choo Chonburi - บีชู ชลบุรี",
   },
   {
     slug: "the-crystal",
@@ -170,7 +181,8 @@ export const OUTLETS: Outlet[] = [
       en: ["Everyday: 10am–7pm (last walk-in 7pm)"],
       th: ["ทุกวัน: 10.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"],
     },
-    coords: { lat: 13.811590995850063, lng: 100.6161469108795 },
+    coords: { lat: 13.8115792, lng: 100.6188394 },
+    mapsQuery: "Bee Choo Crystal Park (Ekamai-Ramindra) - บีชู คริสตัลปาร์ค (เอกมัย-รามอินทรา)",
   },
   {
     slug: "sammakorn",
@@ -181,7 +193,8 @@ export const OUTLETS: Outlet[] = [
     phoneDisplay: "086-004-1122",
     phoneHref: "+66860041122",
     hours: { en: ["Everyday: 9am–7pm (last walk-in 7pm)"], th: ["ทุกวัน: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"] },
-    coords: { lat: 13.772174396765358, lng: 100.67410061082713 },
+    coords: { lat: 13.7720839, lng: 100.6768173 },
+    mapsQuery: "Bee Choo Sammakorn",
   },
   {
     slug: "prawet",
@@ -195,7 +208,8 @@ export const OUTLETS: Outlet[] = [
       en: ["Weekdays: 9am–8pm (last walk-in 8pm)", "Weekends: 9am–7pm (last walk-in 7pm)"],
       th: ["วันจันทร์ – วันศุกร์: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)", "วันเสาร์ – วันอาทิตย์: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"],
     },
-    coords: { lat: 13.7033444, lng: 100.7064603 },
+    coords: { lat: 13.6989818, lng: 100.7054455 },
+    mapsQuery: "Bee Choo Prawet - บีชูประเวศ",
   },
   {
     slug: "chatuchak",
@@ -206,7 +220,8 @@ export const OUTLETS: Outlet[] = [
     phoneDisplay: "080-274-1868",
     phoneHref: "+66802741868",
     hours: { en: ["Everyday: 9am–7pm (last walk-in 7pm)"], th: ["ทุกวัน: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"] },
-    coords: { lat: 13.839663837717845, lng: 100.55273156587941 },
+    coords: { lat: 13.8398812, lng: 100.553069 },
+    mapsQuery: "Bee Choo Chatuchak (Prachachuen) - บีชู จตุจักร (ประชาชื่น)",
   },
   {
     slug: "suksawat",
@@ -218,6 +233,7 @@ export const OUTLETS: Outlet[] = [
     phoneHref: "+66641532662",
     hours: { en: ["Everyday: 9am–7pm (last walk-in 7pm)"], th: ["ทุกวัน: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"] },
     coords: { lat: 13.6534558, lng: 100.5193583 },
+    mapsQuery: "Bee Choo Suksawat - บีชู สุขสวัสดิ์",
   },
   {
     slug: "korat",
@@ -231,7 +247,8 @@ export const OUTLETS: Outlet[] = [
       en: ["Everyday: 9am–8pm (last walk-in 7:30pm)"],
       th: ["ทุกวัน: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 19.30 น.)"],
     },
-    coords: { lat: 14.9839575, lng: 102.0635698 },
+    coords: { lat: 14.9872254, lng: 102.0572744 },
+    mapsQuery: "Bee Choo Korat - บีชู โคราช",
   },
   {
     slug: "surat-thani",
@@ -245,7 +262,8 @@ export const OUTLETS: Outlet[] = [
       en: ["Weekdays: 9am–8pm (last walk-in 8pm)", "Weekends: 9am–7pm (last walk-in 7pm)"],
       th: ["วันจันทร์ – วันศุกร์: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)", "วันเสาร์ – วันอาทิตย์: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"],
     },
-    coords: { lat: 9.141184499999998, lng: 99.33985489999999 },
+    coords: { lat: 9.1411649, lng: 99.3398456 },
+    mapsQuery: "Bee Choo Surat Thani - บีชู สุราษฎร์ธานี",
   },
   {
     slug: "chiang-mai",
@@ -256,21 +274,23 @@ export const OUTLETS: Outlet[] = [
     phoneDisplay: "082-123-4602",
     phoneHref: "+66821234602",
     hours: { en: ["Everyday: 9am–8pm (last walk-in 8pm)"], th: ["ทุกวัน: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)"] },
-    coords: { lat: 18.72929095248222, lng: 98.94505282418133 },
+    coords: { lat: 18.7246124, lng: 98.9487462 },
+    mapsQuery: "Bee Choo Chiang Mai - บีชู เชียงใหม่",
   },
   {
     slug: "phutthamonthon",
     name: "Phutthamonthon",
     nameTh: "สาขาพุทธมณฑล",
     region: "bangkok",
-    area: { en: "Sam Phran, Nakhon Pathom", th: "สามพราน นครปฐม" },
+    area: { en: "Phutthamonthon, Nakhon Pathom", th: "พุทธมณฑล นครปฐม" },
     phoneDisplay: "083-090-3672",
     phoneHref: "+66830903672",
     hours: {
       en: ["Everyday: 10am–8pm (last walk-in 7:30pm)"],
       th: ["ทุกวัน: 10.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 19.30 น.)"],
     },
-    coords: { lat: 13.7593365, lng: 100.3302113 },
+    coords: { lat: 13.7586629, lng: 100.3298688 },
+    mapsQuery: "Bee Choo Phutthamonthon - บีชู พุทธมณฑล",
   },
   {
     // Added to the live EN page 2026-08-20T04:54; the TH page caught up mid-session at
@@ -280,7 +300,7 @@ export const OUTLETS: Outlet[] = [
     name: "Ayutthaya",
     nameTh: "สาขาอยุธยา",
     region: "upcountry",
-    area: { en: "Bang Sai, Phra Nakhon Si Ayutthaya", th: "บางไทร พระนครศรีอยุธยา" },
+    area: { en: "Phra Nakhon Si Ayutthaya", th: "พระนครศรีอยุธยา" },
     phoneDisplay: "063-237-5413",
     phoneHref: "+66632375413",
     // TH hours facts are from the live page (added 2026-08-20T07:38 — see
@@ -288,6 +308,27 @@ export const OUTLETS: Outlet[] = [
     // other outlet for visual consistency across the directory — same times, not
     // composed from scratch.
     hours: { en: ["Everyday: 9am–8pm (last walk-in 8pm)"], th: ["ทุกวัน: 9.00 – 20.00 น. (รับลูกค้าคนสุดท้าย 20.00 น.)"] },
-    coords: { lat: 14.234499931887632, lng: 100.52441566682144 },
+    coords: { lat: 14.3336293, lng: 100.6050204 },
+    mapsQuery: "Bee Choo Ayutthaya - บีชู อยุธยา",
   },
 ];
+// ---------------------------------------------------------------------------------
+// Source place links for `coords` / `mapsQuery` (Ryo, 2026-09-04). Re-resolve these to
+// re-derive; read `!3d`/`!4d`, never `@`.
+//   sai-mai        https://maps.app.goo.gl/hszg1q6i5ovMZjtH9
+//   siam-square    https://maps.app.goo.gl/3KHVDCFpG314iep37
+//   ratchada       https://maps.app.goo.gl/zpSvgfaTWcHFrbyN8
+//   udomsuk        https://maps.app.goo.gl/G9XqJr7YxqdfG4EW9
+//   chaiyapruek    https://maps.app.goo.gl/aFrCmrhpnT4NUfmY6
+//   kallapaphruk   https://maps.app.goo.gl/xpD5sY5ciDD1UHg78
+//   the-crystal    https://maps.app.goo.gl/S1P3sU3TCHUsnn5t7
+//   sammakorn      https://maps.app.goo.gl/F6VfrosdUfydsbPG6
+//   prawet         https://maps.app.goo.gl/sR9qEnLQW8CzzYcs8
+//   chatuchak      https://maps.app.goo.gl/VQ6m8SDwLeaexMa39
+//   suksawat       https://maps.app.goo.gl/iBix3JQthZx5mojq8
+//   phutthamonthon https://maps.app.goo.gl/eHLSu7Pmghts9Q2G8
+//   chonburi       https://maps.app.goo.gl/AybfwJ4LQbbHowjr9
+//   korat          https://maps.app.goo.gl/Nhyex9n9kPvtnVo29
+//   surat-thani    https://maps.app.goo.gl/1V5eZeAkuJcBuHij8
+//   chiang-mai     https://maps.app.goo.gl/j2PtvWVB8nJHjeYM7
+//   ayutthaya      https://maps.app.goo.gl/Lq94hu8NADGU2B7ZA
