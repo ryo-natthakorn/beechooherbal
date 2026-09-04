@@ -1,0 +1,64 @@
+---
+// src/components/MetaPixel.astro
+// Meta (Facebook) Pixel — Crispin's dataset, supplied 2026-09-04.
+//
+// PRODUCTION ONLY. `import.meta.env.PROD` is false during `astro dev`, so local
+// page reloads never reach Facebook and the dataset stays free of our own test
+// traffic. Note this also covers Vercel PREVIEW deploys — those ARE production
+// builds, so the pixel fires there too. That was the accepted trade for being
+// able to confirm the pixel with Meta Pixel Helper before DNS cutover.
+//
+// Mounted once in BaseLayout, which wraps every EN and TH page — do not add this
+// component to individual pages.
+//
+// `part` splits the snippet because its two halves belong in different places:
+//   "head" → the loader <script>, in <head>, as early as Meta's snippet expects
+//   "body" → the <noscript> beacon, which is invalid inside <head>
+interface Props {
+  part: "head" | "body";
+}
+
+const { part } = Astro.props;
+
+const PIXEL_ID = "2303113449985210";
+const enabled = import.meta.env.PROD;
+---
+
+{
+  enabled && part === "head" && (
+    /* is:inline is REQUIRED. Without it Astro treats this as a bundled ES module,
+       which defers execution and moves it out of <head> — the pixel would either
+       fire late or not at all. Do not remove it, and do not "tidy" this snippet:
+       it is Meta's verbatim loader. */
+    <script is:inline define:vars={{ PIXEL_ID }}>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', PIXEL_ID);
+      fbq('track', 'PageView');
+    </script>
+  )
+}
+
+{
+  enabled && part === "body" && (
+    /* Raw <img> is deliberate here and is NOT the thing CLAUDE.md §7 bans. That
+       rule is about content imagery, which must go through Astro's <Image>. This
+       is a 1x1 tracking beacon on facebook.com — an external URL Astro's image
+       pipeline cannot process and must not rewrite. Leave it as a plain <img>. */
+    <noscript>
+      <img
+        height="1"
+        width="1"
+        style="display:none"
+        alt=""
+        src={`https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1`}
+      />
+    </noscript>
+  )
+}

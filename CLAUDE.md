@@ -377,7 +377,14 @@ const description = "150 characters max. Specific to this page.";
       currently emits zero JSON-LD, as do 18 other pages, and nothing publishes the 17
       outlets in `locations.ts`. Biggest remaining local-SEO gap.
 - [ ] Add tracking codes (confirm which: GTM / Meta Pixel / TikTok Pixel) in BaseLayout
-      — **nothing is installed**: no gtag/GTM/fbq/ttq anywhere. Needs Crispin's IDs.
+      — **Meta Pixel DONE** (2026-09-04): `src/components/MetaPixel.astro`, ID
+      `2303113449985210`, mounted once in BaseLayout so it covers all 92 pages in both
+      languages. Gated on `import.meta.env.PROD`, so `astro dev` sends nothing; note
+      Vercel PREVIEW deploys ARE production builds and DO fire. Verified in `dist/`
+      (92/92 pages, inline not bundled, script in `<head>`, noscript beacon in `<body>`).
+      Still to confirm after DNS cutover: Meta Pixel Helper on the live domain.
+      **Still missing: GTM and TikTok Pixel** — no gtag/GTM/ttq anywhere; needs
+      Crispin's IDs. Box stays unchecked until those land.
 - [ ] Re-runnable URL parity check (EN + TH): assert 200 or 301→200, print every 404.
       Still unwritten. `06-copy-parity.mjs` checks CONTENT, not HTTP status; the orphan
       count above was derived ad-hoc and deserves to be a committed script.
