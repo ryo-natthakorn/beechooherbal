@@ -137,10 +137,18 @@ const seen = new Set(KEEP.map((r) => r.source));
 // canonical — so 301'ing the mirror to the root consolidates onto the URL Google
 // actually crawls. Posts themselves stay at their legacy root paths.
 const add = (source, destination) => {
+  // The DESTINATION must be percent-encoded. Vercel does not accept raw UTF-8 here: a
+  // destination written as literal Thai comes back in the Location header as mojibake
+  // (each UTF-8 byte re-encoded as if it were Latin-1, so ส -> %C3%A0%C2%B8%C2%AA
+  // instead of %E0%B8%AA), and that address 404s. Verified on the preview deploy
+  // 2026-09-07: all 149 rules with a non-ASCII destination failed and all 348 with an
+  // ASCII destination passed — an exact split. The correctly-encoded target returns 200.
+  // encodeURI is a no-op on the ASCII destinations, so this cannot regress them.
+  const dest = encodeURI(destination);
   for (const form of new Set([source, encodeURI(source)])) {
     if (seen.has(form)) continue;
     seen.add(form);
-    rules.push({ source: form, destination, statusCode: 301 });
+    rules.push({ source: form, destination: dest, statusCode: 301 });
   }
 };
 
