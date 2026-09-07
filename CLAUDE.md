@@ -331,11 +331,15 @@ const description = "150 characters max. Specific to this page.";
   canonical for those posts. The Phase 4 redirect map must cover these mirror URLs even though
   they are not among the 92 sitemap URLs.
 
-### Phase 2 — Foundation (trunk before branches)
-- [ ] Scaffold Astro + Tailwind v4, set up Vercel deploy from GitHub
-- [ ] Decide i18n architecture (Astro i18n routing; keep URLs identical to WPML)
-- [ ] Build BaseLayout + SEOHead (with hreflang from day one) + LanguageSwitcher
-- [ ] Decide + TEST redirect strategy before relying on it
+### Phase 2 — Foundation (trunk before branches) — DONE
+> Ticked 2026-09-07. These had been stale for months: the site has been building and
+> deploying since Phase 3. Verify against `git log`, not these boxes.
+- [x] Scaffold Astro + Tailwind v4, set up Vercel deploy from GitHub
+- [x] Decide i18n architecture (Astro i18n routing; keep URLs identical to WPML)
+- [x] Build BaseLayout + SEOHead (with hreflang from day one) + LanguageSwitcher
+- [x] Decide + TEST redirect strategy before relying on it — vercel.json, and the
+      strategy is now genuinely TESTED, not just decided: `npm run url-check` against a
+      real deploy, 586/586 passing (2026-09-07).
 
 ### Phase 3 — Core pages (each in EN + TH)
 > Corrected 2026-08-22: the unchecked boxes below had gone stale — Home, the 7
@@ -345,7 +349,12 @@ const description = "150 characters max. Specific to this page.";
 - [x] Home
 - [x] 7 treatment pages (hair loss, grey/white, oily, dandruff, damaged/dry, bacterial, postpartum)
 - [x] About, Team, Locations
-- [ ] Privacy Policy — the only Phase-3 page still unbuilt
+- [x] Privacy Policy — RESOLVED AS A REDIRECT, not a page. Ryo's call 2026-09-04 after
+      being shown the trade-offs (Google reads a redirect to an unrelated page as a soft
+      404, and a site running the Meta Pixel has a PDPA argument for having one).
+      `/privacy-policy/` 301s to `/`. The original page text is captured in
+      `inventory/rest-pages.json` and a built page also exists, unmerged, on
+      `claude/new-site-launch-plan-d09dmi` if this is ever reversed.
 - [x] Testimonials (shipped in `dd04800`; it IS the legacy
       `/reviews-and-testimonials-of-bee-choo-origin-treatment/` page)
 - [x] Events & News (index + 33 event posts, EN + TH)
@@ -361,21 +370,31 @@ const description = "150 characters max. Specific to this page.";
       The predicted `/category/blog/` SKIP group turned out **not** to be needed — the
       fetcher's events-term filter excludes those 20 posts structurally, so they generate
       no fragment to skip. Explained in `06-copy-parity.mjs` where a reader will look.
-- [ ] Build complete 301 redirect map — **`vercel.json` now has 102 one-to-one rules**
-      (`npm run redirects` regenerates the whole table from the content collections).
+- [x] Build complete 301 redirect map — **DONE. `vercel.json` has 497 one-to-one rules**
+      (`npm run redirects` regenerates the whole table; NEVER hand-edit vercel.json — the
+      script rewrites the entire file and a hand-added rule dies on the next run).
       ⚠ Note: **`redirects.json` DOES NOT EXIST and never did** — §5 and §7 above are
       wrong about that. Astro's native `redirects` emits 200 + meta-refresh on this
       static adapter, so every rule lives in `vercel.json`. **Never a wildcard**:
       `/th/:slug` would destroy every real Thai page and `/category/*` would destroy
-      `/category/blog/`.
-      Remaining: 92-URL sitemap coverage is complete **except `/privacy-policy/`** (the
-      last orphan); the `/wp-content/uploads/*` namespace is unaddressed and every one
-      of those URLs 404s at cutover — a whole-site launch-prep item.
-- [ ] Add schema markup to all pages — Service (7 treatment pages ×2), FAQPage (×2) and
-      NewsArticle/BlogPosting + BreadcrumbList (all 54 posts) are done.
-      **Still missing: `LocalBusiness`/`Organization` on the homepage** — `dist/index.html`
-      currently emits zero JSON-LD, as do 18 other pages, and nothing publishes the 17
-      outlets in `locations.ts`. Biggest remaining local-SEO gap.
+      `/category/blog/`. All 497 rules are one-to-one.
+      Closed since: `/privacy-policy/` -> `/`; `/sitemap_index.xml` -> `/sitemap-index.xml`
+      (Yoast's underscore URL is the one in Search Console); and 388 old
+      `/wp-content/uploads/*` photo URLs -> the article that used each photo, sourced from
+      the `byPost` provenance in `inventory/{blog,events,wayback}-images.json`.
+      Deliberately still 404ing: ~1,161 WordPress thumbnail variants and ~157 originals the
+      migration never copied — we do not have those files, and a 404 is the honest signal.
+      ⚠ Destinations MUST be percent-encoded — see Phase 5 for the bug this caused.
+- [x] Add schema markup to all pages — Service (7 treatment pages ×2), FAQPage (×2),
+      NewsArticle/BlogPosting + BreadcrumbList (all 54 posts), and **Organization +
+      17 HealthAndBeautyBusiness outlets on both homepages** (`OrganizationSchema.astro`,
+      shipped `9df0954`). Pages with no JSON-LD: 20 -> 18.
+      It reads `OUTLETS` from `locations.ts` live, so it publishes the coordinates
+      corrected in `e0159f4`/`ff62e5a` — landing it any earlier would have published 8
+      wrong branch locations to Google.
+      No `streetAddress` by design: `area` is a reverse-geocoded hint, and structured data
+      is a STRONGER claim than UI text, not a weaker one. Crispin-verified street
+      addresses are the single biggest upgrade still available to this markup.
 - [ ] Add tracking codes (confirm which: GTM / Meta Pixel / TikTok Pixel) in BaseLayout
       — **Meta Pixel DONE** (2026-09-04): `src/components/MetaPixel.astro`, ID
       `2303113449985210`, mounted once in BaseLayout so it covers all 92 pages in both
@@ -385,15 +404,77 @@ const description = "150 characters max. Specific to this page.";
       Still to confirm after DNS cutover: Meta Pixel Helper on the live domain.
       **Still missing: GTM and TikTok Pixel** — no gtag/GTM/ttq anywhere; needs
       Crispin's IDs. Box stays unchecked until those land.
-- [ ] Re-runnable URL parity check (EN + TH): assert 200 or 301→200, print every 404.
-      Still unwritten. `06-copy-parity.mjs` checks CONTENT, not HTTP status; the orphan
-      count above was derived ad-hoc and deserves to be a committed script.
+- [x] Re-runnable URL parity check (EN + TH): assert 200 or 301→200, print every 404.
+      **DONE — `inventory/scripts/14-url-status-check.mjs`, `npm run url-check`.**
+      Complements `06-copy-parity.mjs`: that one asks "is the COPY still there?" and never
+      issues a request; this one asks "does the URL still ANSWER?" and never reads content.
+      A page can pass one and fail the other, which is why both exist.
+      Checks all 92 legacy sitemap URLs plus every `vercel.json` redirect source (586
+      total), walks each redirect chain hop by hop, warns on chains longer than one hop,
+      and exits non-zero so it can gate a deploy.
+      ⚠ MUST run against a real Vercel deployment — `vercel.json` is host-level, so
+      `astro preview` ignores it and every rule 404s. The script detects that signature and
+      says so rather than looking like a broken site.
+          BASE_URL=https://<deploy>.vercel.app npm run url-check
 
 ### Phase 5 — Launch behind a safety net
-- [ ] Deploy to Vercel preview; run parity check against preview
+- [x] Deploy to Vercel preview; run parity check against preview — DONE 2026-09-07.
+      **586/586 OK, 0 failing** (89 direct 200, 497 via 301) against
+      `beechooherbal-git-main-ryo-panyee-wedding.vercel.app`. Every rule verified to
+      return 301 specifically, not 302.
+      ⚠ That first run found a REAL bug that had been invisible: 149 of 497 rules were
+      broken, in an exact split — every rule with a non-ASCII destination failed, every
+      ASCII one passed. Vercel does not accept raw UTF-8 in `destination`; it emits a
+      mojibake Location header (ส -> `%C3%A0%C2%B8%C2%AA` instead of `%E0%B8%AA`) and the
+      visitor lands on a 404. **63 of those predated this work** — the Thai post mirrors
+      and category redirects had been broken since they were written, because nothing had
+      ever exercised them. Fixed in `e6f947e` by percent-encoding destinations.
+      The lesson: a redirect table that has never been run against a real host is an
+      untested assumption, not a safety net.
 - [ ] Visual sign-off from Crispin BEFORE pointing DNS
 - [ ] DNS cutover (Cloudflare); confirm redirects live on real domain
 - [ ] Submit new sitemap to Google Search Console; watch crawl errors ~2 weeks
+
+#### Cutover runbook (written 2026-09-07, after the preview passed 586/586)
+
+**Before touching DNS — all four, in order:**
+1. **Crispin's visual sign-off** on the preview. §12 requires it, and it is the only
+   gate that cannot be re-done after the fact.
+2. **Back up `wp-content/uploads` off the WordPress host.** ~157 original photos exist
+   ONLY there — the migration copied 386 of ~543. Deleting WordPress destroys them
+   permanently, and no redirect or backup here can recover them.
+3. **Lower the DNS TTL** in Cloudflare (to ~300s) a day ahead, so a rollback takes
+   minutes rather than hours.
+4. **Confirm Vercel Deployment Protection is OFF for production.** It was on during
+   testing (every request 302'd to a Vercel SSO login). Left on, Googlebot cannot crawl
+   the site AT ALL — the worst possible launch state, and invisible unless checked.
+
+**At cutover:**
+5. Point `beechooherbal.com` at Vercel in Cloudflare. Keep the WordPress origin alive,
+   not deleted, until the checks below pass — it is the rollback.
+
+**Immediately after (minutes, not days):**
+6. `BASE_URL=https://beechooherbal.com npm run url-check` — expect **586/586, 0 failing**.
+   This is the same check the preview passed; a drop here means DNS/proxy trouble, not
+   a code regression.
+7. Confirm on the real domain: `/robots.txt` resolves, `/sitemap-index.xml` returns 200
+   and lists 92 URLs, and `/sitemap_index.xml` (Yoast's underscore) 301s to it.
+8. Load the homepage with the **Meta Pixel Helper** extension and confirm pixel
+   `2303113449985210` fires one PageView. This is the FIRST point at which that can be
+   confirmed on the real domain.
+
+**Within 24h:**
+9. Google Search Console → submit `https://beechooherbal.com/sitemap-index.xml`.
+   The old `/sitemap_index.xml` entry can stay; it 301s.
+10. Paste the homepage into Google's Rich Results Test and confirm the Organization +
+    17-outlet markup validates with zero errors.
+
+**Then watch ~2 weeks:** GSC Coverage and Crawl Stats. Expect a temporary ranking wobble
+as Google re-crawls; a sustained drop in *indexed pages* is the signal to investigate,
+not day-to-day position noise.
+
+**Rollback:** revert the Cloudflare DNS record to the WordPress origin. Nothing in this
+repo needs changing, which is why step 5 says do not delete WordPress.
 
 ---
 
