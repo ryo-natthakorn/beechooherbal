@@ -111,6 +111,16 @@
       "statusCode": 301
     },
     {
+      "source": "/sitemap_index.xml",
+      "destination": "/sitemap-index.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/privacy-policy/",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
       "source": "/th/10-most-possible-causes-of-hair-loss-in-young-women/",
       "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
       "statusCode": 301
@@ -523,6 +533,1956 @@
     {
       "source": "/th/%E0%B9%82%E0%B8%A3%E0%B8%84%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%97%E0%B9%80%E0%B8%A1%E0%B9%89%E0%B8%99%E0%B8%97%E0%B9%8C/",
       "destination": "/โรคผมร่วงและทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/04/bacteria.jpeg",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/04/Bee-Choo-Pricelist-for-January-2018-.jpg",
+      "destination": "/โรคผมร่วงและทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/04/MG_5695.jpg",
+      "destination": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/04/PB060053.jpg",
+      "destination": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/04/tawanna-shop.png",
+      "destination": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/04/Treatment-BCL.jpeg",
+      "destination": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/05/2017-05-28.jpg",
+      "destination": "/dye-white-hair-naturally/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/05/before-after-chinese.png",
+      "destination": "/male-pattern-baldness-treatment-in-bangkok-causes-symptoms-of-hair-loss/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/05/D1.jpg",
+      "destination": "/dye-white-hair-naturally/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/05/dandruff-dry.png",
+      "destination": "/scalp-dry-ways-combat-dry-scalp/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/05/dandruff-oil.png",
+      "destination": "/scalp-dry-ways-combat-dry-scalp/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/05/dry-scalp-1.png",
+      "destination": "/scalp-dry-ways-combat-dry-scalp/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/05/fast-and-furious.jpg",
+      "destination": "/male-pattern-baldness-treatment-in-bangkok-causes-symptoms-of-hair-loss/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/05/IMG_2696.jpg",
+      "destination": "/male-pattern-baldness-treatment-in-bangkok-causes-symptoms-of-hair-loss/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/05/male-pattern-baldness-3.png",
+      "destination": "/male-pattern-baldness-treatment-in-bangkok-causes-symptoms-of-hair-loss/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/05/man-losing-hair.png",
+      "destination": "/male-pattern-baldness-treatment-in-bangkok-causes-symptoms-of-hair-loss/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/05/white.png",
+      "destination": "/dye-white-hair-naturally/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/10-most-possible-cause-of-hair-loss-in-women.png",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/2017-12-06-R-white-hair.jpg",
+      "destination": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/2018-05-02side2.jpg",
+      "destination": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/2018-05-04-at-10.31.19-AM.jpeg",
+      "destination": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/5-CAUSES-OF-HAIR-LOSS-AND-WHERE-TO-FIND-HAIR-TREATMENT-IN-THAILAND.jpg",
+      "destination": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/BC-382.jpg",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/diffused-hair-loss-vs-patchy-hair-loss-Bee-Choo-Origin-.png",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/Example-of-hair-loss-caused-by-oily-scalp-Bee-Choo-Origin.jpg",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/Genetics-can-cause-hair-loss.jpg",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/hair-growth-stages.gif",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/Hair-under-microscope.png",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/level-1.jpg",
+      "destination": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/Man-lose-hair-after-chemical-dye.jpg",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/P1010002_edited-1.jpg",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/P1010038.jpg",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/severe-hair-loss.jpg",
+      "destination": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/severe-hair-loss.png",
+      "destination": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/Supplements-and-medications.jpg",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/syringe-1884784_640.jpg",
+      "destination": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/unhealthy-vs-healthy-hair-scan.png",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/07/WhatsApp-Image-2017-05-09-at-11.14.03-AM.jpeg",
+      "destination": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/11838_12c53f6a1170f03279968627d7ba99f5.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/1200px-Wang_Burapha_Phirom_Phra_Nakhon_Bangkok_Thailand_-_panoramio_2.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/14wt_img_5526s_1.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/1858_og_1.jpeg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/20170818_145602.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/23382771.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/240px-The_Forensic_Science_Museum_in_Bangkok.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/29634266521_c6526b4e27_z-1.jpg",
+      "destination": "/10-สถานที่และสิ่งน่าสนใจ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/29634266521_c6526b4e27_z.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/6.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/6563570787_0665129dd2_b.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/77b2fa8f11474e32b79de1efb828cfda.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/actor-1807557_640-1.jpg",
+      "destination": "/10-สถานที่และสิ่งน่าสนใจ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/actor-1807557_640.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/aroi-mak-picture.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/caption.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/example-of-alopecia-areata.jpeg",
+      "destination": "/โรคผมร่วงและทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/Floating-Markets-Of-Bangkok-Damnoen-Saduak.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/ginsing.png",
+      "destination": "/โรคผมร่วงและทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/living-with-alopecia.png",
+      "destination": "/โรคผมร่วงและทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/lovethailand_content-1402987143.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/montra-1.png",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/ny7wde6k8yxlRxm6Nyj-o.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/P1010064.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/picture-2.png",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/Picture1-1.png",
+      "destination": "/โรคผมร่วงและทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/Picture1-2.png",
+      "destination": "/โรคผมร่วงและทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/Picture1-3.png",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/S_8422772171534.jpg",
+      "destination": "/bee-choo-udomsuk-grand-opening-23-sept-2018/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/Siriraj-Museum_10.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/we-love-king.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/08/yadong.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/1-2.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/2018-09-02-14.19.23.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/2018-09-02-14.19.25.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/2018-09-02-14.43.46-e1536045293884.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/3-2.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Animal-Farm-Dream-Town.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bang_Pa_In_Palace_Ayutthaya_9-X2.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bang-Pa-in-palace.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic1.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic10.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic11.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic12.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic13.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic14.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic15.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic16.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic17.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic18.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic19.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic2.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic21.jpg",
+      "destination": "/grand-opening-บีชู-สาขาสยามสแควร์วั/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic22.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic3.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic4.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic5.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic6.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic7.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic8.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Bee-Choo-Siam-Grand-Opening-12-Aug-2018-Pic9.jpg",
+      "destination": "/bee-choo-siam-grand-opening/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/bounce.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/bouncey.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/buggy-Bang-pa-in.png",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Cabbage.png",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/D-2.png",
+      "destination": "/bee-choo-udomsuk-grand-opening-23-sept-2018/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/doorsill-with-annotations.png",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Dream-world-attractions.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Dream-world-Thailand.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/fish.png",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Grandopening-invitation-jpeg.jpg",
+      "destination": "/bee-choo-udomsuk-grand-opening-23-sept-2018/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/IMG_2181.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/IMG_2327.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/IMG_2328.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/IMG_2329.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/IMG_2332.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/IMG_9884.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/morning-glory.png",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Ngaan-Wat.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/ORI_4138-2.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/ORI_4202-2.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/ORI_4206-3.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/ORI_4260-2.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010002_edited.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010004-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010004.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010005-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010008-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010008.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010010-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010012-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010014-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010023-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010024-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010034-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010037-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010046-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010047-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010058-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010060-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010061-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010064-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010066-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010080-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010082-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010088-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010093-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010096-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010098-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010100-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010102-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010103-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010104-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010106-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010107-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010109-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010110-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010111-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010112-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/P1010114-min.jpg",
+      "destination": "/bee-choo-siam-square-make-merit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/pork-knuckle.png",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Pricing.png",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/rainbow-burget.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Saai-Mai.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Snow-town-Dream-World.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/tawangdang-raminthra.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Tawangdang-Ramintra.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/temple-fair-thailand.png",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/tripzilla.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Unicorn-cafe.jpeg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/Wat-Yai-Chaimongkol.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/water-863053_1280.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/water-theme-park-at-dreamworld.png",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/wishing-well.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/wnv39.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/09/wnv48.jpg",
+      "destination": "/12-best-family-places-to-visit-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/10/img_1091-2.jpg",
+      "destination": "/รักษาผมร่วงครั้งแรก/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/10/img_8801.jpg",
+      "destination": "/ปัญหาหนังศีรษะ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/10/img_9768.jpg",
+      "destination": "/ปัญหาหนังศีรษะ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/10/img_9769.jpg",
+      "destination": "/ปัญหาหนังศีรษะ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/10/img_9771.jpg",
+      "destination": "/ปัญหาหนังศีรษะ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/28365.jpg",
+      "destination": "/รักษาผมร่วงครั้งแรก/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/45096533_2187934478142872_3125589826061991936_n.jpg",
+      "destination": "/รักษาผมร่วงครั้งแรก/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/45101157_526687271142848_8810641953340260352_n.jpg",
+      "destination": "/รักษาผมร่วงครั้งแรก/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/45137780_1392364257566217_1684793950847631360_n.jpg",
+      "destination": "/รักษาผมร่วงครั้งแรก/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/45194076_2147662732165530_1970946542080622592_n.jpg",
+      "destination": "/รักษาผมร่วงครั้งแรก/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/45219131_1479113015566699_7744070920838316032_n-e1541086857960.jpg",
+      "destination": "/รักษาผมร่วงครั้งแรก/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/customer.jpg",
+      "destination": "/รักษาผมร่วงครั้งแรก/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/deenisehairscan.jpg",
+      "destination": "/แก้ปัญหาหนังศีรษะแบบถึ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/deenisehairsteam.png",
+      "destination": "/แก้ปัญหาหนังศีรษะแบบถึ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/img_9772.jpg",
+      "destination": "/ปัญหาหนังศีรษะ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/P1010004_edited.jpg",
+      "destination": "/รักษาผมร่วงครั้งแรก/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/PA180001.jpg",
+      "destination": "/ปัญหาหนังศีรษะ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/PA180004.jpg",
+      "destination": "/ปัญหาหนังศีรษะ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/PA180006.jpg",
+      "destination": "/ปัญหาหนังศีรษะ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/PB230386-e1543296558690.jpg",
+      "destination": "/แก้ปัญหาหนังศีรษะแบบถึ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/PB230390.jpg",
+      "destination": "/แก้ปัญหาหนังศีรษะแบบถึ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/PB230391-e1543297044520.jpg",
+      "destination": "/แก้ปัญหาหนังศีรษะแบบถึ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/PB270073.jpg",
+      "destination": "/แก้ปัญหาหนังศีรษะแบบถึ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/PB270428-e1543302979186.jpg",
+      "destination": "/แก้ปัญหาหนังศีรษะแบบถึ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/S_8422772171534.jpg",
+      "destination": "/grand-opening-บีชู-สาขาอุดมสุข-23-กันยา/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/11/tawanna-shop-1019x1024-1.png",
+      "destination": "/ปัญหาหนังศีรษะ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/004VGU8489B00E69D48E00px.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/1_4PxNUXUTLqVnOjXK1-KA1A.jpeg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/1_sb0og6j8WCkqKujr1mc2FA.jpeg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/12004975_545582578927839_6387528362129523292_n.jpg",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/12299620_762627077177413_1080869738_o.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/1367721453-DSC0016-o.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/15220013_1361387753880099_4580887023257228926_n.jpg",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/2000.jpeg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/2018-12-22-19_20_37-BOYRIKYU.png",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/23032741_1586030424822252_1131225266837072260_n.jpg",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/23032865_1562719863822547_846325137155910085_n.png",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/3HaJVw3AYyXBGbS7K328NXu8bCrJKpEwUA3Bf4ViraBYbDyMRK4CYFWHKiiWd1CQx3J5D6Q1LPptBv7CfARTsjp5vrMoWuqb7r9o97U.jpeg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/4.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/40980476_2645862008772641_8377745787190247424_n.jpg",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/44571489_1162770960542328_665587328059703296_n.jpg",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/46831225_2048607761897847_3518535271576502272_n.jpg",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/47321133_2823538541004986_7530343504124313600_n.png",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/48406171_536476606837208_4916772543488065536_n.jpg",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/4DQpjUtzLUwmJZY57mZTRfif8KeI4yiIADuiJvAkCxjr.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/51312875.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/6af7cb61f3d11286737a2ee794f3885e7b4442be.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/800_tongthaagoon_photos_180_12.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/Aerial_view_of_Lumphini_Park.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/Bee-Choo-price-list-2022_with-color_edit.jpg",
+      "destination": "/5-ตัวช่วยเรื่องผมร่วงของ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/caption.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/download.jpeg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/DSC03467-1170x780-qa-94.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/DSC04.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/e-SJGhGIDSz-section-BkjUagy8z-image.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/EarlyBird_001.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/EarlyBird02.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/example.jpg",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/IMG_9884.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/IMG_9992.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/l_5824_1468230619334094676.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/opip1.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/photo4jpg.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/tea-381235_640.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/tiewnaidee-earlybird-11.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/บางแสน-2.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2018/12/%E0%B8%9A%E0%B8%B2%E0%B8%87%E0%B9%81%E0%B8%AA%E0%B8%99-2.jpg",
+      "destination": "/chill-places-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/01/2019-02-04-10_43_18-รีวิวซาลอน-PowerPoint.png",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/01/2019-02-04-10_43_18-%E0%B8%A3%E0%B8%B5%E0%B8%A7%E0%B8%B4%E0%B8%A7%E0%B8%8B%E0%B8%B2%E0%B8%A5%E0%B8%AD%E0%B8%99-PowerPoint.png",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/01/before-after.png",
+      "destination": "/suffering-from-mild-hair-loss-in-your-30s-she-found-the-perfect-solution/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/01/Sneak-Peek-at-Rikyu-.png",
+      "destination": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/4B6355CB-EB4A-4BDC-B509-0C0D010F49F2-e1539344674421.jpeg",
+      "destination": "/พิชิตผมร่วงกับบีชู/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/5F285F42-AEFB-4B55-B326-6957A423AB76-e1539345349139.jpeg",
+      "destination": "/พิชิตผมร่วงกับบีชู/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/97214F4D-37EA-4027-B850-A5B4BC220880-e1539345116366.jpeg",
+      "destination": "/พิชิตผมร่วงกับบีชู/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/BFB30E21-CB09-4679-9577-58228D45F90C-e1539344858390.jpeg",
+      "destination": "/พิชิตผมร่วงกับบีชู/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/E22DD707-B138-456C-96F6-A99B372D2BE9-e1539345198140.jpeg",
+      "destination": "/พิชิตผมร่วงกับบีชู/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/EA979D86-C837-4B51-89A8-541D06C24FF1-e1539344945567.jpeg",
+      "destination": "/พิชิตผมร่วงกับบีชู/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/Essence-Vitamins-with-box.jpg",
+      "destination": "/introducing-essence-shampoo-and-newly-formulated-essence-vitamins/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/Featured-image-for-new-post.png",
+      "destination": "/สระผมให้ถูกวิธี/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/Featured-image.png",
+      "destination": "/suffering-from-mild-hair-loss-in-your-30s-she-found-the-perfect-solution/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/img2.png",
+      "destination": "/suffering-from-mild-hair-loss-in-your-30s-she-found-the-perfect-solution/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/Marketing-Kit-edited-28_09_2018.jpg",
+      "destination": "/introducing-essence-shampoo-and-newly-formulated-essence-vitamins/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/P1190016.jpg",
+      "destination": "/suffering-from-mild-hair-loss-in-your-30s-she-found-the-perfect-solution/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/P1190031.jpg",
+      "destination": "/suffering-from-mild-hair-loss-in-your-30s-she-found-the-perfect-solution/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/P1190073.jpg",
+      "destination": "/suffering-from-mild-hair-loss-in-your-30s-she-found-the-perfect-solution/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/PB230393.jpg",
+      "destination": "/พิชิตผมร่วงกับบีชู/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/pic.png",
+      "destination": "/suffering-from-mild-hair-loss-in-your-30s-she-found-the-perfect-solution/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/S_8422772533762.jpg",
+      "destination": "/พิชิตผมร่วงกับบีชู/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/02/SHA007.png",
+      "destination": "/introducing-essence-shampoo-and-newly-formulated-essence-vitamins/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/04/P1010064.jpg",
+      "destination": "/ทำบุญเปิดร้านสาขาสยามส/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/07/3907.jpg",
+      "destination": "/naan-charity-trip-2019/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2019/07/postal.jpg",
+      "destination": "/naan-charity-trip-2019/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/20220117-Bee-Choo-Ratchada_edit.00_03_22_34.Still012-1.jpg",
+      "destination": "/new-year-new-outlet-bee-choo-ratchada/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/20220117-Bee-Choo-Ratchada_edit.00_03_22_34.Still012.jpg",
+      "destination": "/new-year-new-outlet-bee-choo-ratchada/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/20220117-Bee-Choo-Ratchada_edit.00_03_34_40.Still011.jpg",
+      "destination": "/new-year-new-outlet-bee-choo-ratchada/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/20220117-Bee-Choo-Ratchada_edit.00_04_12_20.Still013.jpg",
+      "destination": "/new-year-new-outlet-bee-choo-ratchada/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/20220117-Bee-Choo-Ratchada_edit.00_05_06_58.Still014-scaled.jpg",
+      "destination": "/new-year-new-outlet-bee-choo-ratchada/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/20220117-Bee-Choo-Ratchada_edit.00_05_06_58.Still014.jpg",
+      "destination": "/new-year-new-outlet-bee-choo-ratchada/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/20220117-Bee-Choo-Ratchada_edit.00_06_40_02.Still002.jpg",
+      "destination": "/new-year-new-outlet-bee-choo-ratchada/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/20220117-Bee-Choo-Ratchada_edit.00_09_35_28.Still004.jpg",
+      "destination": "/new-year-new-outlet-bee-choo-ratchada/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/20220117-Bee-Choo-Ratchada_edit.00_11_22_52.Still017.jpg",
+      "destination": "/new-year-new-outlet-bee-choo-ratchada/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/20220117-Bee-Choo-Ratchada_edit.00_12_28_12.Still008.jpg",
+      "destination": "/new-year-new-outlet-bee-choo-ratchada/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/20220117-Bee-Choo-Ratchada_edit.00_18_32_39.Still009.jpg",
+      "destination": "/new-year-new-outlet-bee-choo-ratchada/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/P1043764.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/P1043770.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/P1043772.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/P1043774.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/P1043776.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/P1043892.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/P1043896.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/P1043903.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/P1043919-scaled.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/P1043941.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/P1043947.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/P1043949.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/01/P1043950.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/04/Shop.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/09/422535.jpg",
+      "destination": "/new-outlet-saimai-krungthepkreetha/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/09/423602.jpg",
+      "destination": "/new-outlet-saimai-krungthepkreetha/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/09/423613.jpg",
+      "destination": "/new-outlet-saimai-krungthepkreetha/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/09/Template-for-IG-3x3_09.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/11/5003_z-300x287-1.jpg",
+      "destination": "/5-ตัวช่วยเรื่องผมร่วงของ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/11/Cover.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/11/giphy-1.gif",
+      "destination": "/5-ตัวช่วยเรื่องผมร่วงของ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/11/giphy.gif",
+      "destination": "/5-ตัวช่วยเรื่องผมร่วงของ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/11/h9991572_001.jpg",
+      "destination": "/5-ตัวช่วยเรื่องผมร่วงของ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/11/Hair-growth-cycle1.jpg",
+      "destination": "/5-ตัวช่วยเรื่องผมร่วงของ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/11/How-does-FUE-hair-transplantation-work-300x244-1.png",
+      "destination": "/5-ตัวช่วยเรื่องผมร่วงของ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/11/image-3-1.png",
+      "destination": "/5-ตัวช่วยเรื่องผมร่วงของ/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2022/11/S__11698214.jpg",
+      "destination": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/01/324792573_1103892006973421_7964936622621245679_n.jpg",
+      "destination": "/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/01/IMG_1988.jpg",
+      "destination": "/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/01/IMG_1993.jpg",
+      "destination": "/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/01/IMG_2032.jpg",
+      "destination": "/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/01/IMG_2045.jpg",
+      "destination": "/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/01/IMG_2074.jpg",
+      "destination": "/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/01/P1084614.jpg",
+      "destination": "/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/01/P1084645-1.jpg",
+      "destination": "/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/01/P1084645.jpg",
+      "destination": "/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/01/P1084652.jpg",
+      "destination": "/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/01/S__7331936.jpg",
+      "destination": "/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/11/Grand-Opening-Crystal-Park-SQ.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/11/IMG_5297.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/11/IMG_5321.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/11/IMG_5344.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/11/IMG_5355.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/11/P1097527.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/11/P1097595.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/11/S__45154345_0.jpg",
+      "destination": "/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2023/11/snapedit_1700103080515.png",
+      "destination": "/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/03/202420314-Grand-Opening-Sammakorn-SQ02.jpg",
+      "destination": "/grand-opening-สาขาสัมมากร/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/03/IMG_0881_edit.jpg",
+      "destination": "/grand-opening-สาขาสัมมากร/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/03/S__13721627.jpg",
+      "destination": "/grand-opening-สาขาสัมมากร/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/03/S__13721630.jpg",
+      "destination": "/grand-opening-สาขาสัมมากร/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/03/S__13721631.jpg",
+      "destination": "/grand-opening-สาขาสัมมากร/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/03/S__13721638.jpg",
+      "destination": "/grand-opening-สาขาสัมมากร/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/03/S__181370895_0.jpg",
+      "destination": "/grand-opening-สาขาสัมมากร/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/03/S__181370898_0.jpg",
+      "destination": "/grand-opening-สาขาสัมมากร/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/07/Grand-Opening-Prawet-Poster-SQ.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-prawet/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/07/IMG_4055.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-prawet/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/07/IMG_4063.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-prawet/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/07/IMG_4067.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-prawet/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/07/IMG_4076.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-prawet/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/07/IMG_4078.jpg",
+      "destination": "/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/07/IMG_4094.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-prawet/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/07/S__7651403.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-prawet/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/08/Grand-Opening-Bee-Choo-Chatuchak_edit.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chatuchak/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/08/IMG_4474_edit.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chatuchak/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/08/P1098296.jpg",
+      "destination": "/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567-2/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/08/P1098311.jpg",
+      "destination": "/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567-2/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/08/S__15294485_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chatuchak/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/08/S__15294486_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chatuchak/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/08/S__15294487.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chatuchak/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/08/S__15294492.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chatuchak/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/09/001.jpg",
+      "destination": "/soft-opening-of-new-outlet-bee-choo-suksawat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/09/002.jpg",
+      "destination": "/soft-opening-of-new-outlet-bee-choo-suksawat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/09/003.jpg",
+      "destination": "/soft-opening-of-new-outlet-bee-choo-suksawat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/09/004.jpg",
+      "destination": "/soft-opening-of-new-outlet-bee-choo-suksawat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/09/005.jpg",
+      "destination": "/soft-opening-of-new-outlet-bee-choo-suksawat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2024/09/Soft-Opening-Suksawat-Poster.jpg",
+      "destination": "/soft-opening-of-new-outlet-bee-choo-suksawat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/02/P1109239.png",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-korat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/02/P1109252.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-korat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/02/P1109270.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-korat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/02/P1109273.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-korat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/02/P1109277.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-korat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/02/P1109280.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-korat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/02/P1109281.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-korat/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/03/S__17244209_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-surat-thani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/03/S__17244214_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-surat-thani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/03/S__17244221_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-surat-thani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/03/S__17244224_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-surat-thani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/03/S__17244230_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-surat-thani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/03/S__17244235_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-surat-thani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/1412638.jpeg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chiang-mai/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/IMG_6946-1.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-phutthamonthon/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/IMG_6955.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-phutthamonthon/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/IMG_6963.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-phutthamonthon/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/P1111077.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-phutthamonthon/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/P1111165.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-phutthamonthon/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/P1111233_edit.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-phutthamonthon/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/P1111258.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-phutthamonthon/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/S__12173320_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chiang-mai/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/S__12173329_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chiang-mai/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/S__12173333_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chiang-mai/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/S__12173336_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chiang-mai/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/S__12173344_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chiang-mai/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/S__12173345_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-chiang-mai/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2025/09/S__59408441_0.jpg",
+      "destination": "/grand-opening-of-new-outlet-bee-choo-phutthamonthon/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2026/08/1712610_0.jpg",
+      "destination": "/grand-opening-บีชู-สาขาอยุธยา-ในวันท/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2026/08/IMG_6302.jpg",
+      "destination": "/grand-opening-บีชู-สาขาอยุธยา-ในวันท/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2026/08/IMG_6309.jpg",
+      "destination": "/grand-opening-บีชู-สาขาอยุธยา-ในวันท/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2026/08/IMG_6311.jpg",
+      "destination": "/grand-opening-บีชู-สาขาอยุธยา-ในวันท/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2026/08/IMG_6315.jpg",
+      "destination": "/grand-opening-บีชู-สาขาอยุธยา-ในวันท/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2026/08/IMG_6359.jpg",
+      "destination": "/grand-opening-บีชู-สาขาอยุธยา-ในวันท/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2026/08/IMG_6375.jpg",
+      "destination": "/grand-opening-บีชู-สาขาอยุธยา-ในวันท/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/uploads/2026/08/IMG_6392-1.jpg",
+      "destination": "/grand-opening-บีชู-สาขาอยุธยา-ในวันท/",
       "statusCode": 301
     }
   ]

@@ -4,6 +4,7 @@
 // Title/description stay here so the SEO-critical strings are obvious at page level.
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HomePage from "../components/home/HomePage.astro";
+import OrganizationSchema from "../components/OrganizationSchema.astro";
 
 const lang = "en" as const;
 const title = "Bee Choo Herbal - Herbal Hair & Scalp Treatment, Bangkok";
@@ -12,5 +13,9 @@ const description =
 ---
 
 <BaseLayout {title} {description} {lang} headerOverlay>
+  {/* Organization + one HealthAndBeautyBusiness per outlet. Homepages only:
+      this is the brand-level claim, and repeating 17 outlets on all 92 pages
+      would bloat every page for no extra signal. */}
+  <OrganizationSchema slot="head" {lang} />
   <HomePage {lang} />
 </BaseLayout>

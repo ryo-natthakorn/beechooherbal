@@ -75,13 +75,25 @@ const STATIC_RULES = [
 
   // The self-nested duplicate. /5-causes-…/ 301s on the live site to a DOUBLED copy of
   // its own path. The rebuild serves the real post at the clean path, so only the
-  // doubled path needs a rule. The .jpg that chain eventually lands on is deliberately
-  // NOT redirected: /wp-content/uploads/ is a real asset namespace and a rule there
-  // would be the wildcard this file forbids.
+  // doubled path needs a rule. The .jpg that chain lands on IS now redirected, but by
+  // the one-to-one image rules further down — not by a wildcard, which this file still
+  // forbids.
   [
     '/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/',
     '/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/',
   ], // live 301
+
+  // Yoast served the sitemap at /sitemap_index.xml (UNDERSCORE); @astrojs/sitemap emits
+  // /sitemap-index.xml (HYPHEN). That underscore URL is the one registered in Google
+  // Search Console and the one robots.txt advertised for years, so it must keep
+  // resolving or Google keeps fetching a 404 for the file that tells it what to crawl.
+  ['/sitemap_index.xml', '/sitemap-index.xml'],
+
+  // /privacy-policy/ is the last of the 92 legacy sitemap URLs with no page behind it.
+  // Ryo's call (2026-09-04) is to send it to the homepage rather than rebuild the page,
+  // made after being shown the soft-404 and PDPA trade-offs. The original page text
+  // survives in inventory/rest-pages.json if that is ever reversed.
+  ['/privacy-policy/', '/'],
 ];
 
 // Pre-existing rules, preserved verbatim.
@@ -132,14 +144,70 @@ const add = (source, destination) => {
   }
 };
 
+// --- Old WordPress image URLs -> the article that used them ----------------------
+// WordPress served every uploaded photo from /wp-content/uploads/YYYY/MM/name.ext.
+// The rebuilt site has no such namespace (Astro emits content-hashed files under
+// /_astro/), so at cutover every one of those addresses 404s. They are real inbound
+// links: Google Images indexes them, and other sites hotlink them directly.
+//
+// They are NOT in the 92-URL legacy sitemap — that lists pages, not media — so no
+// one-to-one rule was ever generated for them.
+//
+// Destination is the POST that embedded the image, not the image and not the homepage:
+//   - It cannot be the image. The migration renamed and re-optimised these files; the
+//     new URL is /_astro/<name>.<hash>.webp and that hash changes whenever the asset
+//     does, so any rule pointing at it would rot on a future build.
+//   - It must not be the homepage. Redirecting a large namespace to "/" is the pattern
+//     Google treats as a soft 404, so it would preserve almost nothing while looking
+//     like it preserved everything. Ryo chose the article destination on 2026-09-07.
+//
+// Source of truth is the provenance the migration already recorded: `byPost` in
+// inventory/{blog,events,wayback}-images.json maps each original image URL to the post
+// that used it. Reading it here means these rules regenerate with everything else
+// rather than being a frozen list that drifts.
+//
+// NOT a wildcard — every rule below is one-to-one, so the file header still holds. The
+// ~1,161 WordPress thumbnail variants (name-300x212.jpg) and the ~157 originals the
+// migration never copied are left to 404 honestly; we do not have those files, and a
+// 404 is a cleaner signal to Google than a redirect to something that is not it.
+const IMAGE_SOURCES = ['blog-images.json', 'events-images.json', 'wayback-images.json'];
+const imageRules = [];
+const seenImage = new Set();
+for (const file of IMAGE_SOURCES) {
+  const full = path.join(ROOT, 'inventory', file);
+  if (!existsSync(full)) continue;
+  const byPost = JSON.parse(readFileSync(full, 'utf8')).byPost || {};
+  for (const rec of Object.values(byPost)) {
+    if (!rec?.slug) continue;
+    // A destination that is not a real post would be a redirect into a 404 — worse
+    // than leaving the image URL alone. slugOwner is the set of slugs actually built.
+    if (!slugOwner.has(rec.slug)) {
+      throw new Error(
+        `${file}: post slug "${rec.slug}" has images but no content file. ` +
+          `Redirecting images to a URL that does not exist is worse than a 404.`,
+      );
+    }
+    for (const img of rec.images || []) {
+      const url = typeof img === 'string' ? img : img?.url;
+      const m = url && url.match(/(\/wp-content\/uploads\/.+)$/);
+      if (!m || seenImage.has(m[1])) continue;
+      seenImage.add(m[1]);
+      imageRules.push([m[1], `/${rec.slug}/`]);
+    }
+  }
+}
+imageRules.sort((a, b) => a[0].localeCompare(b[0]));
+
 for (const [from, to] of STATIC_RULES) add(from, to);
 for (const slug of slugs) add(`/th/${slug}/`, `/${slug}/`);
+for (const [from, to] of imageRules) add(from, to);
 
 writeFileSync(path.join(ROOT, 'vercel.json'), JSON.stringify({ redirects: rules }, null, 2) + '\n');
 
 const encoded = rules.filter((r) => r.source !== decodeURI(r.source)).length;
 console.log(`wrote vercel.json: ${rules.length} redirect(s)`);
 console.log(`  ${KEEP.length} pre-existing, ${STATIC_RULES.length} archive/index, ${slugs.length} post mirrors`);
+console.log(`  ${imageRules.length} old image URL(s) -> the article that used them`);
 console.log(`  ${encoded} percent-encoded duplicate(s) emitted alongside their decoded form`);
 console.log('\nVercel is not documented as to whether `source` matches the decoded or the');
 console.log('encoded path, and vercel.json had no non-ASCII precedent. Both forms are shipped;');

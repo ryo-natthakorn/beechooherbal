@@ -1,0 +1,132 @@
+---
+// src/components/OrganizationSchema.astro
+// Organization + per-outlet LocalBusiness JSON-LD for the two homepages (/ and
+// /th/home/). Before this, the homepage emitted NO structured data at all while
+// src/data/locations.ts held 17 verified outlets that nothing published — the
+// biggest local-SEO gap left in the rebuild (CLAUDE.md §10 Phase 4).
+//
+// Shape: a single @graph — one Organization node that every outlet points at via
+// parentOrganization, plus one HealthAndBeautyBusiness node per outlet. Same
+// business type as ServiceSchema.astro's `provider`, so the two agree rather than
+// describing the same clinic as two different kinds of thing.
+//
+// Outlet data is read live from locations.ts rather than retyped, so a correction
+// to a phone number or a new branch flows into the markup on the next build. That
+// file is re-verified against the live site by `npm run locations-parity`.
+//
+// DELIBERATELY OMITTED, per CLAUDE.md §8 ("do NOT invent claims"):
+// - aggregateRating / review — fabricated review markup is a manual-action risk.
+// - addressLocality/streetAddress. locations.ts's `area` is a REVERSE-GEOCODED
+//   hint, not a verified postal address, and its own header forbids promoting it
+//   to a stated address without Crispin confirming it. Structured data is a
+//   stronger claim than UI text, not a weaker one, so only `addressCountry` (a
+//   fact — every outlet is in Thailand) is asserted. Adding Crispin-verified
+//   street addresses later is the single biggest upgrade available to this markup.
+// - "last walk-in" times, which are a booking nuance rather than a closing time;
+//   `closes` is the door-close time from the same line.
+import { OUTLETS, type Outlet } from "../data/locations";
+import logoMark from "../assets/images/brand/logo-mark.png";
+
+interface Props {
+  lang: "en" | "th";
+}
+const { lang } = Astro.props;
+
+const site = Astro.site ?? new URL("https://beechooherbal.com");
+const abs = (p: string) => new URL(p, site).href;
+
+const ORG_ID = abs("/#organization");
+
+// Hours are parsed from the ENGLISH lines only. Both languages describe the same
+// clock, and schema.org wants ISO day names + 24h times (language-independent), so
+// there is nothing to gain from the Thai strings — and locations.ts's header notes
+// the Thai hours are composed from the EN data rather than transcribed from a live
+// Thai source, making EN the more trustworthy input of the two.
+const DAYS = {
+  Weekdays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+  Weekends: ["Saturday", "Sunday"],
+  Everyday: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+} as const;
+
+// "Weekdays: 9am–8pm (last walk-in 8pm)" -> Mo-Fr 09:00-20:00.
+// Note the EN DASH in the time range — these strings use –, not -.
+const HOURS_RE = /^(Weekdays|Weekends|Everyday):\s*(\d{1,2}(?::\d{2})?\s*[ap]m)\s*–\s*(\d{1,2}(?::\d{2})?\s*[ap]m)/;
+
+function to24h(clock: string): string {
+  const m = clock.replace(/\s+/g, "").match(/^(\d{1,2})(?::(\d{2}))?([ap])m$/i);
+  if (!m) throw new Error(`OrganizationSchema: unparseable time "${clock}"`);
+  let hour = Number(m[1]) % 12;
+  if (m[3].toLowerCase() === "p") hour += 12;
+  return `${String(hour).padStart(2, "0")}:${m[2] ?? "00"}`;
+}
+
+/** Throws rather than guessing: wrong opening hours in structured data can surface
+ *  in Google as fact, so an unrecognised line must fail the build the way a
+ *  duplicate slug does in inventory/scripts/10-redirects.mjs — loudly, at the point
+ *  the content changed, not silently months later in search results. */
+function openingHours(outlet: Outlet) {
+  return outlet.hours.en.map((line) => {
+    const m = line.match(HOURS_RE);
+    if (!m) {
+      throw new Error(
+        `OrganizationSchema: could not parse hours for "${outlet.slug}": ${JSON.stringify(line)}. ` +
+          `Expected "Weekdays|Weekends|Everyday: <time>–<time> ...". Update the parser or the data.`,
+      );
+    }
+    return {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: DAYS[m[1] as keyof typeof DAYS],
+      opens: to24h(m[2]),
+      closes: to24h(m[3]),
+    };
+  });
+}
+
+const organization = {
+  "@type": "Organization",
+  "@id": ORG_ID,
+  name: "Bee Choo Herbal",
+  alternateName: "Bee Choo Origin",
+  url: abs("/"),
+  logo: abs(logoMark.src),
+  image: abs(logoMark.src),
+  // E.164 — the trunk "0" is dropped after the country code, matching ServiceSchema.astro.
+  telephone: "+6620726698",
+  areaServed: { "@type": "Country", name: "Thailand" },
+  sameAs: [
+    "https://www.facebook.com/beechooherbal/",
+    "https://www.youtube.com/channel/UCx7bazL8Sco0j3LnVnbO3Lg/featured",
+    "https://tiktok.com/@beechooth",
+    "https://lin.ee/ll3injb",
+  ],
+};
+
+// The locations page is the closest thing each outlet has to its own URL — no
+// per-outlet page exists — so every branch points there rather than at a route
+// that would 404.
+const locationsUrl = lang === "th" ? abs("/th/สถานที่ตั้งของร้านค้า/") : abs("/locations/");
+
+const outlets = OUTLETS.map((outlet) => ({
+  "@type": "HealthAndBeautyBusiness",
+  "@id": abs(`/#outlet-${outlet.slug}`),
+  name: lang === "th" ? `Bee Choo Herbal ${outlet.nameTh}` : `Bee Choo Herbal — ${outlet.name}`,
+  parentOrganization: { "@id": ORG_ID },
+  url: locationsUrl,
+  image: abs(logoMark.src),
+  telephone: outlet.phoneHref,
+  address: { "@type": "PostalAddress", addressCountry: "TH" },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: outlet.coords.lat,
+    longitude: outlet.coords.lng,
+  },
+  openingHoursSpecification: openingHours(outlet),
+}));
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [organization, ...outlets],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

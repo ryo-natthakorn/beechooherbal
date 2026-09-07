@@ -1,0 +1,16 @@
+# Bee Choo Herbal — https://beechooherbal.com
+#
+# Mirrors the crawl policy the WordPress site served (Yoast block: User-agent *,
+# Disallow nothing) so the rebuild does not tighten access to anything Google can
+# reach today. Nothing here is private; the whole site is meant to be indexed.
+#
+# Do NOT add "Disallow: /_astro/" — that directory holds the CSS, JS and optimised
+# images Google needs to render pages. Blocking it makes pages look broken to the
+# renderer and costs rankings.
+User-agent: *
+Disallow:
+
+# Yoast served this as /sitemap_index.xml (underscore). @astrojs/sitemap emits
+# /sitemap-index.xml (hyphen). vercel.json 301s the old path to the new one so the
+# URL already registered in Google Search Console keeps resolving.
+Sitemap: https://beechooherbal.com/sitemap-index.xml
