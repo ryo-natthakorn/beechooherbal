@@ -212,8 +212,10 @@ export const OUTLETS: Outlet[] = [
     // Legacy tel: is malformed (tel:+%20+66955365556%20) — using the corrected value.
     phoneHref: "+66955365556",
     hours: {
-      en: ["Everyday: 10am–7pm (last walk-in 7pm)"],
-      th: ["ทุกวัน: 10.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"],
+      // Opening time changed 10am -> 9am, confirmed by Ryo 2026-09-08. Closing and
+      // last-walk-in times are unchanged, as is the phone number.
+      en: ["Everyday: 9am–7pm (last walk-in 7pm)"],
+      th: ["ทุกวัน: 9.00 – 19.00 น. (รับลูกค้าคนสุดท้าย 19.00 น.)"],
     },
     coords: { lat: 13.8115792, lng: 100.6188394 },
     mapsQuery: "Bee Choo Crystal Park (Ekamai-Ramindra) - บีชู คริสตัลปาร์ค (เอกมัย-รามอินทรา)",
