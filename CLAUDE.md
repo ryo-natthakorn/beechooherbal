@@ -431,9 +431,48 @@ const description = "150 characters max. Specific to this page.";
       ever exercised them. Fixed in `e6f947e` by percent-encoding destinations.
       The lesson: a redirect table that has never been run against a real host is an
       untested assumption, not a safety net.
-- [ ] Visual sign-off from Crispin BEFORE pointing DNS
-- [ ] DNS cutover (Cloudflare); confirm redirects live on real domain
-- [ ] Submit new sitemap to Google Search Console; watch crawl errors ~2 weeks
+- [x] Visual sign-off from Crispin BEFORE pointing DNS — confirmed by Ryo 2026-09-07.
+- [x] DNS cutover — **DONE 2026-09-08, ~10:15 ICT.** `beechooherbal.com` now serves
+      **Cloudflare Pages**, not Vercel (see the hosting note under Rollback).
+      **588/588 OK, 0 failing** on the live domain.
+      Site was down ~1 minute mid-switch (Cloudflare 522) while the Pages custom domain
+      finished initialising; it recovered unaided. Expect that gap on any future move.
+      ⚠ The first live parity run reported 144 failures that were NOT real — the checker's
+      8-way concurrency against a freshly-initialised domain produced 522s. Every one
+      returned 200 when fetched individually. Re-run before believing a bad result on a
+      minutes-old deployment.
+- [x] `www` — broke at cutover and was fixed the same hour. It had 301'd to the apex
+      before; that redirect lived with the old setup and did not survive. The DNS record
+      was fine (CNAME -> apex, proxied) but Pages only knew the apex hostname, so www
+      returned 522. Fixed with a Cloudflare **Redirect Rule** (Rules -> Redirect Rules,
+      "Redirect from WWW to root" template) rather than adding www as a second Pages
+      custom domain — a 301 to one canonical host beats serving the same pages at two.
+      Verified: path AND query string survive, so ad tracking parameters are intact.
+- [x] Submit new sitemap to Google Search Console — done 2026-09-08,
+      `https://beechooherbal.com/sitemap-index.xml`. NOTE: this is a **domain property**
+      (`sc-domain:`), which rejects a bare path — it needs the full URL.
+- [ ] Watch GSC crawl errors ~2 weeks. **Baseline at cutover: 2,685 search clicks/90d,
+      100 pages indexed, 84 not indexed.** Indexed count holding near 100 or rising is
+      healthy; a sustained drop is the signal to investigate. Day-to-day click noise is not.
+
+#### Two bugs Search Console exposed that nothing else would have (2026-09-08)
+
+**1. Every unmatched URL answered 200 with the HOMEPAGE.** No `404.html` existed, so
+Cloudflare Pages fell back to the homepage — a soft 404 sitewide, the exact pattern this
+project rejected when it declined to wildcard `/wp-content/uploads/*` to `/`. It arrived by
+accident instead. Fixed by adding `src/pages/404.astro` (`ed7af16`); Astro emits
+`dist/404.html` and Pages then returns a real 404. Verified it stays OUT of the sitemap.
+
+**2. Search Console had `/sitemap.xml` registered, NOT `/sitemap_index.xml`.** The old
+robots.txt advertised the underscore name, and this project had built its redirect around
+that. GSC showed the truth: three successful submissions, all `/sitemap.xml` (2017-18, last
+read 2026-09-06, 94 pages), plus a `/sitemaps.xml` failing since 2018. Astro emits neither.
+Google's own sitemap URL would have broken on the first post-cutover crawl — silently, since
+it would have hit the soft-404 homepage above. Both names now 301 to `/sitemap-index.xml`.
+
+**The transferable lesson:** robots.txt says what a site ADVERTISES; Search Console says
+what Google actually FETCHES. They disagreed here, and only the second one mattered. Open
+the real console before assuming the config is the source of truth.
 
 #### Cutover runbook (written 2026-09-07, after the preview passed 586/586)
 
