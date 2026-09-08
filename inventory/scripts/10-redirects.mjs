@@ -88,6 +88,14 @@ const STATIC_RULES = [
   // Search Console and the one robots.txt advertised for years, so it must keep
   // resolving or Google keeps fetching a 404 for the file that tells it what to crawl.
   ['/sitemap_index.xml', '/sitemap-index.xml'],
+  // ...and the filenames Search Console ACTUALLY has registered. Checked in GSC
+  // 2026-09-08: the three successful sitemap submissions are all `/sitemap.xml`
+  // (submitted 2017-2018, last read 2026-09-06, 94 pages), NOT the `/sitemap_index.xml`
+  // that robots.txt advertised. A fourth, `/sitemaps.xml`, has been failing since 2018.
+  // Astro emits neither name, so without these rules Google's own registered sitemap
+  // URLs break on the first crawl after cutover.
+  ['/sitemap.xml', '/sitemap-index.xml'],
+  ['/sitemaps.xml', '/sitemap-index.xml'],
 
   // /privacy-policy/ is the last of the 92 legacy sitemap URLs with no page behind it.
   // Ryo's call (2026-09-04) is to send it to the homepage rather than rebuild the page,

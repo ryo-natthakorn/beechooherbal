@@ -116,6 +116,16 @@
       "statusCode": 301
     },
     {
+      "source": "/sitemap.xml",
+      "destination": "/sitemap-index.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/sitemaps.xml",
+      "destination": "/sitemap-index.xml",
+      "statusCode": 301
+    },
+    {
       "source": "/privacy-policy/",
       "destination": "/",
       "statusCode": 301

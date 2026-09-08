@@ -1,0 +1,63 @@
+---
+// src/pages/404.astro — the "page not found" page.
+//
+// WHY THIS EXISTS (added 2026-09-08, the day of DNS cutover): without a 404.html in
+// the build, Cloudflare Pages answered every unmatched URL with 200 OK and the
+// HOMEPAGE's HTML. That is a soft 404 across the entire site — the precise pattern we
+// rejected when we chose NOT to wildcard /wp-content/uploads/* to "/". Google treats a
+// 200 that returns unrelated content as a dead end and can drop the URL, so the ~1,161
+// WordPress thumbnail variants and ~157 uncopied originals we deliberately left to fail
+// were failing in the worst possible way rather than the honest one.
+//
+// Astro emits this route as dist/404.html; Cloudflare Pages then serves it with a real
+// 404 status for any unmatched path. Nothing else needs configuring.
+//
+// Bilingual on one page: a 404 has no language context to key off — the URL is by
+// definition unrecognised — so both languages appear rather than guessing wrong. lang
+// is "en" because the document needs one value and English is the unprefixed locale.
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const lang = "en" as const;
+const title = "Page Not Found - Bee Choo Herbal";
+const description =
+  "The page you are looking for could not be found. Browse our herbal hair and scalp treatments, or find your nearest Bee Choo outlet.";
+---
+
+<BaseLayout {title} {description} {lang}>
+  <section class="bg-brand-earth/25 py-20 text-center md:py-28">
+    <div class="mx-auto max-w-2xl px-4 md:px-8">
+      <p class="font-serif text-6xl text-brand-green md:text-7xl">404</p>
+
+      <h1 class="mt-4 font-serif text-3xl text-brand-ink md:text-4xl">Page not found</h1>
+      <p class="mt-3 text-brand-ink/75">
+        The page you were looking for has moved or no longer exists.
+      </p>
+
+      <p class="mt-6 font-thai text-2xl text-brand-ink md:text-3xl">ไม่พบหน้าที่ค้นหา</p>
+      <p class="mt-2 font-thai text-brand-ink/75">
+        หน้าที่คุณกำลังมองหาอาจถูกย้ายหรือไม่มีอยู่แล้ว
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <a
+          href="/"
+          class="rounded-full bg-brand-green px-6 py-3 font-bold text-white transition hover:bg-brand-green-deep"
+        >
+          English home
+        </a>
+        <a
+          href="/th/home/"
+          class="rounded-full bg-brand-green px-6 py-3 font-thai font-bold text-white transition hover:bg-brand-green-deep"
+        >
+          หน้าแรกภาษาไทย
+        </a>
+        <a
+          href="/locations/"
+          class="rounded-full border-2 border-brand-green px-6 py-3 font-bold text-brand-green transition hover:bg-brand-green hover:text-white"
+        >
+          Find an outlet
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
