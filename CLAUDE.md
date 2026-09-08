@@ -473,8 +473,25 @@ const description = "150 characters max. Specific to this page.";
 as Google re-crawls; a sustained drop in *indexed pages* is the signal to investigate,
 not day-to-day position noise.
 
-**Rollback:** revert the Cloudflare DNS record to the WordPress origin. Nothing in this
-repo needs changing, which is why step 5 says do not delete WordPress.
+**Rollback — the exact record.** Cutover replaces the apex record, so the old value is no
+longer visible anywhere in the Cloudflare UI. Captured 2026-09-08 from the confirmation
+screen, immediately before it was overwritten:
+
+| | Type | Name | Content |
+|---|---|---|---|
+| BEFORE (WordPress origin) | `A` | `@` | `159.223.50.208` |
+| AFTER (Cloudflare Pages) | `CNAME` | `@` | `beechooherbal.pages.dev` |
+
+To roll back: delete the CNAME and recreate the A record with `159.223.50.208`. Nothing in
+this repo changes — which is why the runbook says do not delete or disable WordPress. That
+IP is only useful while the WordPress host is still running.
+
+**Hosting note (2026-09-08):** the site moved to **Cloudflare Pages**, not Vercel. Vercel's
+Hobby plan forbids commercial use and this is a commercial site; Cloudflare Pages has no
+such restriction and the site sits far inside the free tier (930 files vs 20,000; 497
+redirects vs 2,000). `npm run redirects` emits BOTH `vercel.json` and `public/_redirects`
+from one rule table, so Vercel stays a working fallback and switching hosts is a DNS change
+rather than a migration. §3's "Hosting: Vercel" row is stale.
 
 ---
 
