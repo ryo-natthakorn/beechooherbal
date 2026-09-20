@@ -33,34 +33,34 @@ const pricing = HOME.pricing;
 
 <main id="main">
   <!-- Hero -->
-  <section class="relative overflow-hidden bg-brand-green py-16 text-center text-white md:py-20">
-    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+  <section class="relative overflow-hidden bg-action py-16 text-center text-on-action md:py-20">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-on-action/10" />
     <div class="relative mx-auto max-w-3xl px-4 md:px-8">
       <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} md:text-4xl`}>{COST_HERO.heading[lang]}</h1>
     </div>
   </section>
 
   <!-- Intro -->
-  <section class="bg-white py-16 md:py-24">
+  <section class="bg-surface py-16 md:py-24">
     <div class="mx-auto max-w-2xl space-y-4 px-4 md:px-8">
       <LeafDivider />
-      <p class="text-sm leading-relaxed text-brand-origin md:text-base">{COST_INTRO.hook[lang]}</p>
-      <p class="text-sm leading-relaxed text-brand-origin md:text-base">{COST_INTRO.transition[lang]}</p>
+      <p class="text-sm leading-relaxed text-text-muted md:text-base">{COST_INTRO.hook[lang]}</p>
+      <p class="text-sm leading-relaxed text-text-muted md:text-base">{COST_INTRO.transition[lang]}</p>
     </div>
   </section>
 
   <!-- Pricing -->
   <PricingSection lang={lang} heading={ui.toc.pricing} background="earth" showCta />
-  <section class="bg-brand-earth/25 pb-16 md:pb-24">
+  <section class="bg-surface-muted pb-16 md:pb-24">
     <div class="mx-auto max-w-2xl px-4 md:px-8">
       <ul class="grid gap-3 sm:grid-cols-2">
         {pricing.tiers.map((tier) => (
-          <li class="flex items-center justify-between rounded-xl border border-brand-earth bg-white px-4 py-3 text-sm">
-            <span class="text-brand-origin">
+          <li class="flex items-center justify-between rounded-xl border border-line bg-surface px-4 py-3 text-sm">
+            <span class="text-text-muted">
               {tier.lengthName[lang]}
-              {tier.cmRange[lang] && <span class="text-brand-origin/70"> ({tier.cmRange[lang]})</span>}
+              {tier.cmRange[lang] && <span class="text-text-muted"> ({tier.cmRange[lang]})</span>}
             </span>
-            <span class="font-bold text-brand-green">
+            <span class="font-bold text-action">
               {tier.price} {pricing.currency[lang]}
             </span>
           </li>
@@ -70,22 +70,22 @@ const pricing = HOME.pricing;
   </section>
 
   <!-- Market context -->
-  <section class="bg-white py-16 md:py-24">
+  <section class="bg-surface py-16 md:py-24">
     <div class="mx-auto max-w-2xl px-4 md:px-8">
       <LeafDivider />
-      <h2 data-mask-reveal class={`mb-6 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+      <h2 data-mask-reveal class={`mb-6 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
         {MARKET_CONTEXT.heading[lang]}
       </h2>
-      <p class="text-sm leading-relaxed text-brand-origin md:text-base">{MARKET_CONTEXT.paragraph[lang]}</p>
+      <p class="text-sm leading-relaxed text-text-muted md:text-base">{MARKET_CONTEXT.paragraph[lang]}</p>
     </div>
   </section>
 
   <!-- How it works -->
-  <section class="bg-brand-earth/25 py-16 text-center md:py-24">
+  <section class="bg-surface-muted py-16 text-center md:py-24">
     <div class="mx-auto max-w-3xl px-4 md:px-8">
       <LeafDivider />
-      <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>{ui.toc.howItWorks}</h2>
-      <div class="mb-8 space-y-4 text-left text-sm leading-relaxed text-brand-origin md:text-base">
+      <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{ui.toc.howItWorks}</h2>
+      <div class="mb-8 space-y-4 text-left text-sm leading-relaxed text-text-muted md:text-base">
         {HOW_IT_WORKS.paragraphs[lang].map((p) => <p>{p}</p>)}
       </div>
       <YouTubeEmbed id={COST_VIDEO.id} title={ui.toc.howItWorks} />

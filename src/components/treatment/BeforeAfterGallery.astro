@@ -26,7 +26,7 @@ interface Props {
 
 const { lang, heading, body, images, embeds = [], background } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
-const bgClass = background === "earth" ? "bg-brand-earth/25" : "bg-white";
+const bgClass = background === "earth" ? "bg-surface-muted" : "bg-surface";
 
 // GIPHY clips are square on the legacy site; YouTube case videos are 16:9. Mixing the
 // two ratios in one row would letterbox one of them, and no legacy page mixes kinds, so
@@ -44,13 +44,13 @@ const embedSrc = (e: NonNullable<Props["embeds"]>[number]) =>
 <section class={`${bgClass} py-16 md:py-24`}>
   <div class="mx-auto max-w-3xl px-4 md:px-8">
     <LeafDivider />
-    <h2 data-mask-reveal class={`mb-6 text-center ${serif} text-2xl font-bold text-brand-green md:text-3xl`}>
+    <h2 data-mask-reveal class={`mb-6 text-center ${serif} text-2xl font-bold text-action md:text-3xl`}>
       {heading}
     </h2>
 
     {
       body.length > 0 && (
-        <div class="mx-auto flex max-w-prose flex-col gap-4 text-center text-brand-origin">
+        <div class="mx-auto flex max-w-prose flex-col gap-4 text-center text-text-muted">
           {body.map((p) => (
             <p class="leading-relaxed">{p}</p>
           ))}
@@ -62,11 +62,11 @@ const embedSrc = (e: NonNullable<Props["embeds"]>[number]) =>
       images.length > 0 && (
         <div class="mt-8 flex flex-wrap items-start justify-center gap-6">
           {images.map(({ src, alt, caption }) => (
-            <figure class="w-full max-w-[280px] overflow-hidden rounded-xl bg-white shadow-soft">
+            <figure class="w-full max-w-[280px] overflow-hidden rounded-xl bg-surface shadow-soft">
               <div class="aspect-[9/10] w-full overflow-hidden">
                 <Image src={src} alt={alt} widths={[300, 600]} sizes="280px" class="h-full w-full object-cover" />
               </div>
-              <figcaption class="px-3 py-2 text-center text-sm leading-snug text-brand-origin">{caption ?? alt}</figcaption>
+              <figcaption class="px-3 py-2 text-center text-sm leading-snug text-text-muted">{caption ?? alt}</figcaption>
             </figure>
           ))}
         </div>

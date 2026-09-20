@@ -53,13 +53,13 @@ const visibleReviews = REVIEWS.filter((r) => r.heading[lang]);
   <section class="py-16 text-center md:py-24">
     <div class="mx-auto max-w-3xl px-4 md:px-8">
       <LeafDivider />
-      <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} text-brand-green md:text-4xl`}>{REVIEWS_INTRO.heading[lang]}</h1>
-      <p class="text-sm leading-relaxed text-brand-origin">{REVIEWS_INTRO.intro[lang]}</p>
+      <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} text-action md:text-4xl`}>{REVIEWS_INTRO.heading[lang]}</h1>
+      <p class="text-sm leading-relaxed text-text-muted">{REVIEWS_INTRO.intro[lang]}</p>
 
       {REVIEWS_INTRO.subHeading[lang] && (
         <>
-          <h2 class={`mt-10 mb-3 ${serif} text-xl font-bold text-brand-green`}>{REVIEWS_INTRO.subHeading[lang]}</h2>
-          <p class="text-sm leading-relaxed text-brand-origin">{REVIEWS_INTRO.subParagraph[lang]}</p>
+          <h2 class={`mt-10 mb-3 ${serif} text-xl font-bold text-action`}>{REVIEWS_INTRO.subHeading[lang]}</h2>
+          <p class="text-sm leading-relaxed text-text-muted">{REVIEWS_INTRO.subParagraph[lang]}</p>
         </>
       )}
 
@@ -79,11 +79,11 @@ const visibleReviews = REVIEWS.filter((r) => r.heading[lang]);
         ))}
 
         <div class="mb-10 flex flex-wrap justify-center gap-2">
-          <label for="concern-all" class="concern-chip btn-tactile cursor-pointer rounded-full border border-brand-earth bg-white px-4 py-2 text-sm font-bold text-brand-green">
+          <label for="concern-all" class="concern-chip btn-tactile cursor-pointer rounded-full border border-line bg-surface px-4 py-2 text-sm font-bold text-action">
             {filterAllLabel}
           </label>
           {usedConcerns.map((slug) => (
-            <label for={`concern-${slug}`} class="concern-chip btn-tactile cursor-pointer rounded-full border border-brand-earth bg-white px-4 py-2 text-sm font-bold text-brand-green">
+            <label for={`concern-${slug}`} class="concern-chip btn-tactile cursor-pointer rounded-full border border-line bg-surface px-4 py-2 text-sm font-bold text-action">
               {concernMeta.get(slug)?.title[lang]}
             </label>
           ))}
@@ -91,22 +91,22 @@ const visibleReviews = REVIEWS.filter((r) => r.heading[lang]);
 
         <ul class="grid grid-cols-1 items-start gap-6 text-left md:grid-cols-2">
           {visibleReviews.map((review) => (
-            <li class="review-card flex flex-col rounded-2xl border border-brand-earth bg-white p-6 shadow-soft" data-concerns={review.concerns.join(" ")}>
+            <li class="review-card flex flex-col rounded-2xl border border-line bg-surface p-6 shadow-soft" data-concerns={review.concerns.join(" ")}>
               <div class="mb-3 flex flex-wrap gap-1.5">
                 {review.concerns.map((slug) => (
                   <a
                     href={concernMeta.get(slug)?.href[lang]}
-                    class="rounded-full bg-brand-green-mist px-2.5 py-1 text-2xs font-bold text-brand-green-deep hover:bg-brand-green hover:text-white"
+                    class="rounded-full bg-surface-muted px-2.5 py-1 text-2xs font-bold text-action-hover hover:bg-action hover:text-on-action"
                   >
                     {concernMeta.get(slug)?.title[lang]}
                   </a>
                 ))}
               </div>
 
-              <h2 class={`mb-3 ${serif} text-lg font-bold text-brand-green`}>{review.heading[lang]}</h2>
+              <h2 class={`mb-3 ${serif} text-lg font-bold text-action`}>{review.heading[lang]}</h2>
 
               {review.body[lang] && (
-                <div class="space-y-3 text-sm leading-relaxed text-brand-origin">
+                <div class="space-y-3 text-sm leading-relaxed text-text-muted">
                   {review.body[lang]!.map((p) => <p>{p}</p>)}
                 </div>
               )}
@@ -116,14 +116,14 @@ const visibleReviews = REVIEWS.filter((r) => r.heading[lang]);
                   {review.introPhotos.map((photo) => (
                     <figure>
                       <Image src={photo.src} alt={photo.caption[lang] ?? ""} width={225} height={300} class="h-auto w-32 rounded-lg object-cover shadow-soft md:w-40" />
-                      <figcaption class="mt-1.5 max-w-[10rem] text-center text-2xs text-brand-origin md:max-w-[10.5rem]">{photo.caption[lang]}</figcaption>
+                      <figcaption class="mt-1.5 max-w-[10rem] text-center text-2xs text-text-muted md:max-w-[10.5rem]">{photo.caption[lang]}</figcaption>
                     </figure>
                   ))}
                 </div>
               )}
 
               {review.quote[lang] && (
-                <blockquote class="mt-4 space-y-2 rounded-xl bg-brand-earth/25 p-4 text-sm leading-relaxed text-brand-origin italic">
+                <blockquote class="mt-4 space-y-2 rounded-xl bg-surface-muted p-4 text-sm leading-relaxed text-text-muted italic">
                   {review.quote[lang]!.map((q) => <p>{q}</p>)}
                 </blockquote>
               )}
@@ -157,7 +157,7 @@ const visibleReviews = REVIEWS.filter((r) => r.heading[lang]);
                   {review.gallery.map((img) => (
                     <figure class="shrink-0">
                       <Image src={img.src} alt={img.alt[lang] ?? ""} width={140} height={140} class="h-28 w-28 rounded-lg object-cover shadow-soft" />
-                      {img.date && <figcaption class="mt-1 text-center text-2xs text-brand-origin">{formatDate(img.date)}</figcaption>}
+                      {img.date && <figcaption class="mt-1 text-center text-2xs text-text-muted">{formatDate(img.date)}</figcaption>}
                     </figure>
                   ))}
                 </div>
@@ -171,8 +171,8 @@ const visibleReviews = REVIEWS.filter((r) => r.heading[lang]);
     {REVIEWS_CLOSING.heading[lang] && (
       <div class="mx-auto mt-16 max-w-3xl px-4 md:px-8">
         <LeafDivider />
-        <h2 class={`mb-4 ${serif} text-xl font-bold text-brand-green`}>{REVIEWS_CLOSING.heading[lang]}</h2>
-        <div class="space-y-3 text-sm leading-relaxed text-brand-origin">
+        <h2 class={`mb-4 ${serif} text-xl font-bold text-action`}>{REVIEWS_CLOSING.heading[lang]}</h2>
+        <div class="space-y-3 text-sm leading-relaxed text-text-muted">
           {REVIEWS_CLOSING.body[lang]!.map((p) => <p>{p}</p>)}
         </div>
         {REVIEWS_CLOSING.videoId[lang] && (

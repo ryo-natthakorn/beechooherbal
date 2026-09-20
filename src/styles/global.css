@@ -9,32 +9,34 @@
 @import "@fontsource/noto-serif-thai/400.css";
 @import "@fontsource/noto-serif-thai/700.css";
 
-/* Brand tokens — from 2026 BC_brandguide_R4_18122025.pdf, primary + secondary colour system. */
+/* Ivory + Forest UI palette. Original logo/media colours remain untouched. */
 @theme {
-  --color-brand-green: #2D6946;   /* Harmony Green — primary: headings, logo, nav, CTAs */
-  --color-brand-green-deep: #1F4A31; /* darker SHADE of Harmony Green (not a new hue) — cinematic
-                                        hero/scene gradient depth for the heavy-motion redesign */
-  --color-brand-green-mist: #CDE9D6;  /* lighter SHADE of Harmony Green (hue 139 vs 145 — not a new
-                                         hue), the Part 2 scroll wash. It is NOT `brand-green mixed
-                                         into white`: desaturating a dark green with white lands on
-                                         near-grey (18% mix = #d9e4de, chroma 11), which is why that
-                                         wash read as "barely visible". This holds the SAME contrast
-                                         as the value it replaces (brand-origin 4.55:1 vs 4.51:1,
-                                         brand-green headings 5.04:1) with 2.5x the chroma
-                                         (28), matching Part 1's mint endpoint (#c8e9e3, 4.55:1,
-                                         chroma 33) so the two halves read as equally coloured. */
-  --color-brand-yellow: #FFC600;  /* Oriental Yellow — CTA accents, alerts */
-  --color-brand-pink: #EFA693;    /* Gentle Pink — soft accents (not used on homepage by design) */
-  --color-brand-earth: #DBCBC1;   /* section backgrounds, dividers */
-  --color-brand-origin: #6F6259;  /* body text on light backgrounds */
-  --color-brand-treasure: #DAC556;
-  --color-brand-root: #D47E00;
-  --color-brand-nude: #F6B9A7;
-  --color-brand-serenity: #B2E1D8;
-  --color-brand-ink: #26201A;     /* warm near-black (neutral, not a brand-guide colour) — the
-                                     blessed ink for text on brand-yellow: 10.2:1, vs 3.7:1 for
-                                     brand-origin which fails WCAG AA */
+  --color-canvas: #F7F5EF;
+  --color-surface: #FFFDF8;
+  --color-surface-muted: #ECE8DF;
+  --color-text: #292D29;
+  --color-text-muted: #62675F;
+  --color-action: #29483C;
+  --color-action-hover: #20392F;
+  --color-on-action: #F7F5EF;
+  --color-line: #D8D7CE;
+  --color-accent: #A38B5C;
+  --color-focus: #29483C;
 
+  /* Compatibility aliases for shared data and existing brand-based utilities. */
+  --color-brand-green: var(--color-action);
+  --color-brand-green-deep: var(--color-action-hover);
+  --color-brand-green-mist: var(--color-surface-muted);
+  --color-brand-yellow: var(--color-accent);
+  --color-brand-earth: var(--color-line);
+  --color-brand-sand: var(--color-canvas);
+  --color-brand-origin: var(--color-text-muted);
+  --color-brand-ink: var(--color-text);
+  --color-brand-serenity: var(--color-surface-muted);
+  --color-brand-root: var(--color-action);
+  --color-brand-treasure: var(--color-accent);
+  --color-brand-pink: var(--color-surface-muted);
+  --color-brand-nude: var(--color-surface-muted);
   /* Body text: Roboto (EN) / Noto Sans Thai (TH). Headings: Lora (EN) / Noto Serif Thai (TH) —
      the brand guide's digital typeface set (Lora stands in for print-only Minion Pro). */
   --font-sans: "Roboto", system-ui, sans-serif;
@@ -46,9 +48,9 @@
      stay on a single line in the mobile 2-col stat grid instead of an arbitrary value. */
   --text-2xs: 0.65rem;
 
-  /* Soft UI Evolution elevation — green-cast soft shadows instead of hard borders. */
-  --shadow-soft: 0 4px 16px rgb(45 105 70 / 0.08), 0 1px 3px rgb(0 0 0 / 0.05);
-  --shadow-soft-lg: 0 12px 32px rgb(45 105 70 / 0.12), 0 2px 6px rgb(0 0 0 / 0.06);
+  /* Subtle neutral elevation for menus and raised surfaces. */
+  --shadow-soft: 0 3px 12px rgb(41 45 41 / 0.04), 0 1px 2px rgb(41 45 41 / 0.03);
+  --shadow-soft-lg: 0 8px 24px rgb(41 45 41 / 0.06), 0 2px 4px rgb(41 45 41 / 0.03);
 
   /* Spring-like ease for a more premium feel on hover/press transitions. */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
@@ -105,31 +107,12 @@
    traffic. A passive scroll listener batched into one rAF works everywhere and only
    touches a custom property, so no layout is recalculated. */
 
-/* Page tint: white easing to the brand mint as the visitor scrolls. Sections are
-   forced transparent so ONE page-level tint shows through instead of each band
-   painting over it — this deliberately replaces the alternating white/earth rhythm
-   on pages that opt in.
-   Implemented as a fixed sheet whose OPACITY tracks scroll, rather than animating a
-   colour: opacity takes a bare number straight from the custom property and is
-   universally supported, where interpolating a colour would lean on calc() inside
-   color-mix() — if that failed to parse on any engine the whole effect would silently
-   vanish, which is the exact failure this replaced.
-   The mint is serenity at 72%, not 65% and not full strength. Body text (brand-origin,
-   relative luminance 0.1283) measures 4.11:1 on serenity at 100% (fails AA), 4.68:1 at
-   65%, and 4.51:1 at 75% — so 72% (~4.57:1) is the darkest value that still keeps real
-   headroom over the 4.5:1 line. Darkened from 65% so the end of Part 1 reads as clearly
-   distinct from the white Part 2 slab that follows it.
-   Opacity tracks --part1-progress, NOT --scroll-progress: the Part 1/Part 2 seam sits
-   around 45% of the document, so the document-wide value left the final mint section at
-   under half strength. See the script in TreatmentPage.astro.
-   `z-index: -1` keeps it above the page canvas but behind all content; <main> creates
-   no stacking context, and <body> paints no background of its own, so nothing covers
-   it. */
+/* Scroll tint blends the ivory canvas into warm stone; transparent sections reveal it. */
 .page-tint {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background-color: color-mix(in srgb, var(--color-brand-serenity) 72%, #fff);
+  background-color: var(--color-surface-muted);
   opacity: var(--part1-progress, 0);
   pointer-events: none;
 }
@@ -157,7 +140,7 @@
     max-width: none;
     border-radius: 0;
     border-width: 0 0 1px;
-    background-color: rgb(255 255 255 / 0.92);
+    background-color: color-mix(in srgb, var(--color-surface) 92%, transparent);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
   }
@@ -167,7 +150,7 @@
     top: 100%;
     max-height: min(60vh, 24rem);
     overflow-y: auto;
-    background-color: #fff;
+    background-color: var(--color-surface);
     border-bottom: 1px solid var(--color-brand-earth);
     box-shadow: var(--shadow-soft-lg);
   }
@@ -250,7 +233,7 @@
    to 16rem (see .toc above) fixed the wrap, so the radius could go back to a real pill. */
 .toc a[aria-current="true"] {
   background-color: var(--color-brand-green);
-  color: #fff;
+  color: var(--color-on-action);
   font-weight: 700;
 }
 .toc a[aria-current="true"] .toc-dot {
@@ -375,48 +358,11 @@
   }
 }
 
-/* Brand band (Part 2 of a treatment page — "about Bee Choo Herbal"): How It Works,
-   Pricing, Reviews, Recognitions and cross-sell, grouped as one visually distinct part
-   so the page reads as two halves instead of one long scroll. See BRAND_SECTIONS in
-   treatment-pages.ts.
-
-   TWO-STAGE BACKGROUND. Part 1 builds white -> mint on the fixed .page-tint sheet
-   above. Part 2 must RESET to white and build white -> soft green on its own, so the
-   wash lives here rather than on the page sheet:
-   - The wrapper paints an OPAQUE near-white base. Opaque is load-bearing: it covers
-     .page-tint (fixed, z-index -1), so Part 2 starts from a clean white instead of
-     green-over-mint, which would look muddy and invalidate the contrast maths.
-   - ::before is the green wash, its OPACITY tracking --part2-progress. Same house
-     pattern as .page-tint: animate the opacity of a flat sheet using a bare
-     custom-property number. NEVER calc() inside color-mix() — see the note above.
-   - `isolation: isolate` makes the wrapper a stacking context so the wash's
-     `z-index: -1` is trapped inside it: it paints above the wrapper's own background
-     and below all content. With `z-index: 0` instead it would paint OVER the copy.
-   - The base is green at 2% rather than pure #fff so Part 2 stays faintly distinct even
-     with JS off (where --part2-progress is never published and the wash sits at
-     opacity 0). At opacity 1 the wash fully replaces the base.
-   CONTRAST — and why the wash is a TOKEN, not a white mix. Body text is brand-origin,
-   and 4.5:1 caps how dark this ground can go: brand-green mixed into white measures
-   15% -> 4.75:1, 18% -> 4.51:1, 20% -> 4.38:1 (FAILS AA). So 18% was already the
-   darkest legal white-mix — yet it still reviewed as "barely visible", because the
-   problem was never lightness, it was CHROMA: desaturating a dark green with white
-   lands on a near-grey (#d9e4de, chroma 11) while Part 1's mint endpoint is #c8e9e3,
-   chroma 33. Same luminance, three times the colour. --color-brand-green-mist (#CDE9D6,
-   chroma 28) is the fix: brand-origin 4.55:1 and brand-green headings 5.04:1, i.e. a
-   hair MORE contrast than the 18% mix it replaces, and as coloured as Part 1.
-   --part2-progress is also SQRT-eased in TreatmentPage.astro's script (front-loads the
-   ramp: 50% scrolled -> ~71% opacity instead of 50%), so the shift reads well before
-   the visitor reaches the very end. Text colour is untouched — see the .closing-band
-   note about the 3.79:1 failure that came from dimming type.
-
-   Moving the wash from `.brand-band section` to the wrapper also lands the "About Bee
-   Choo Herbal" eyebrow (a child of the wrapper, not of the section) on the white
-   instead of the mint, with no DOM change. It also removes the old source-order
-   dependency on `.scroll-tint section`: these no longer target the same element. */
+/* Opaque neutral surface keeps the two scroll-tint layers independent. */
 .brand-band {
   position: relative;
   isolation: isolate;
-  background-color: color-mix(in srgb, var(--color-brand-green) 2%, #fff);
+  background-color: var(--color-canvas);
 }
 .brand-band::before {
   content: "";
@@ -443,29 +389,12 @@
   border-top-right-radius: 1.5rem;
 }
 
-/* Hero aura — layered radial glow in brand white (no off-brand hues; the yellow tint
-   this had is gone per Crispin's feedback), deepening only slightly toward
-   brand-green-deep at the base. Doubles as the always-on fallback surface beneath the
-   WebGL hero canvas (mobile, reduced-motion, no-JS, or WebGL-unavailable all land
-   here). The flat background-color lift + widened/lowered radials + shallower dark
-   wash brighten the whole field and soften the shadowed base, while staying under the
-   ~0.14 composited-white ceiling the brand-yellow tagline needs to hold 3:1 contrast.
-   Must stay background-color + background-image (not the `background` shorthand,
-   which would reset background-color to transparent). */
-.hero-aura {
-  background-color: rgb(255 255 255 / 0.05);
-  background-image:
-    radial-gradient(72% 92% at 16% 0%, rgb(255 255 255 / 0.08), transparent 72%),
-    radial-gradient(70% 60% at 100% 100%, rgb(255 255 255 / 0.05), transparent 70%),
-    linear-gradient(170deg, transparent 55%, rgb(31 74 49 / 0.16) 100%);
-}
-
 /* Hero scroll cue — purely decorative (aria-hidden), a thin line with a falling
    gold pulse. Static hairline under reduced motion. */
 .scroll-cue-line {
   width: 1px;
   height: 2.25rem;
-  background: rgb(255 255 255 / 0.35);
+  background: var(--color-line);
   position: relative;
   overflow: hidden;
 }
@@ -625,7 +554,7 @@
       box-shadow 200ms var(--ease-spring);
   }
   .md-label:has(.md-radio:checked) {
-    background-color: #fff;
+    background-color: var(--color-surface);
     box-shadow: var(--shadow-soft);
   }
   .md-panel {
@@ -806,7 +735,7 @@
 .concern-chip:has(input:checked) {
   background-color: var(--color-brand-green);
   border-color: var(--color-brand-green);
-  color: #fff;
+  color: var(--color-on-action);
 }
 
 /* Products page — sticky category subnav, and the Events & News year-jump bar. top
@@ -906,7 +835,7 @@
   margin-block: 3rem 1.5rem;
   border: 1px solid var(--color-brand-earth);
   border-radius: 9999px;
-  background-color: #fff;
+  background-color: var(--color-surface);
   padding: 0.375rem 1rem;
   scroll-margin-top: calc(4.25rem + 1px + 3.5rem + 1rem);
 }
@@ -1005,4 +934,10 @@
   .tl-list {
     display: block;
   }
+}
+
+@layer base {
+  html { background: var(--color-canvas); color: var(--color-text); }
+  body { color: var(--color-text); }
+  ::selection { background: var(--color-action); color: var(--color-on-action); }
 }

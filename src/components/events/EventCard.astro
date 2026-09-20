@@ -35,7 +35,7 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const ui = UI[lang];
 ---
 
-<article class="reveal relative flex flex-col overflow-hidden rounded-2xl border border-brand-earth bg-white shadow-soft">
+<article class="reveal relative flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-soft">
   {
     hero && (
       <a href={href} tabindex="-1" aria-hidden="true" class="block overflow-hidden">
@@ -52,12 +52,12 @@ const ui = UI[lang];
 
   <div class="flex flex-1 flex-col gap-3 p-5">
     <div class="flex flex-wrap items-center gap-2 text-2xs">
-      <time datetime={isoDate} class="font-bold tracking-wide text-brand-green uppercase">{dateLabel}</time>
+      <time datetime={isoDate} class="font-bold tracking-wide text-action uppercase">{dateLabel}</time>
       {
         branch && branchHref && (
           <a
             href={branchHref}
-            class="relative z-10 rounded-full border border-brand-earth px-2.5 py-0.5 font-bold text-brand-origin hover:border-brand-green hover:text-brand-green"
+            class="relative z-10 rounded-full border border-line px-2.5 py-0.5 font-bold text-text-muted hover:border-brand-green hover:text-action"
           >
             {branch}
           </a>
@@ -65,20 +65,20 @@ const ui = UI[lang];
       }
     </div>
 
-    <h3 class={`${serif} text-lg leading-snug font-bold text-brand-green`}>
+    <h3 class={`${serif} text-lg leading-snug font-bold text-action`}>
       {/* The card is not itself a link — the branch chip inside it is its own link, and
           nesting <a> is invalid HTML. Instead the heading's link carries an
           `after:inset-0` overlay so the whole card is clickable, while the chip sits
           above it on z-10. Screen readers still get one clear link with the title as
           its accessible name. */}
-      <a href={href} class="after:absolute after:inset-0 hover:text-brand-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+      <a href={href} class="after:absolute after:inset-0 hover:text-action-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus">
         {title}
       </a>
     </h3>
 
-    <p class="line-clamp-3 text-sm leading-relaxed text-brand-origin">{excerpt}</p>
+    <p class="line-clamp-3 text-sm leading-relaxed text-text-muted">{excerpt}</p>
 
-    <span aria-hidden="true" class="mt-auto pt-1 text-sm font-bold text-brand-green">
+    <span aria-hidden="true" class="mt-auto pt-1 text-sm font-bold text-action">
       {ui.events.readMore} &rsaquo;
     </span>
   </div>

@@ -26,10 +26,10 @@ const plain = variant === "plain";
 const ui = UI[lang];
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 
-// Focus ring has to flip too: outline-white is invisible on a light background.
+// Focus ring has to flip too: outline-on-action is invisible on a light background.
 const focusRing = plain
-  ? "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
-  : "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+  ? "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+  : "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-action";
 // Compact by design: the labels used to be full sentences ("Message us on Facebook"),
 // which flex-wrap broke into three stacked full-width bars that swallowed the whole first
 // screen on a 375px phone. Short labels + icons + tight chrome fit all three on ONE line
@@ -43,8 +43,8 @@ const btnBase = "btn-tactile inline-flex min-h-11 items-center gap-1.5 rounded-f
 // banner; on the light "plain" variant that's invisible, so it flips to
 // green-fill/white-text instead — same pair used at Pricing.
 const btnCta = plain
-  ? `${btnBase} bg-brand-green text-white hover:bg-brand-green/90 ${focusRing}`
-  : `${btnBase} bg-white text-brand-green hover:bg-white/90 ${focusRing}`;
+  ? `${btnBase} bg-action text-on-action hover:bg-action/90 ${focusRing}`
+  : `${btnBase} bg-surface text-action hover:bg-surface/90 ${focusRing}`;
 
 // Verbatim shared strap line, identical across all 7 treatment pages on the live
 // site (see spec: this is NOT the same string as the homepage's condition-listing
@@ -55,7 +55,7 @@ const strapline =
     : "100% Natural Herbal Hair Treatment, Safe, Highly Effective, Proven, Award Winning Hair Salon Clinic";
 ---
 
-<section class:list={[plain ? "bg-white" : "relative overflow-hidden bg-brand-green"]}>
+<section class:list={[plain ? "bg-surface" : "relative overflow-hidden bg-action"]}>
   {
     !plain && (
       <div class="relative aspect-[4/3] w-full md:aspect-[21/9]">
@@ -78,11 +78,11 @@ const strapline =
   <div
     class:list={[
       "relative mx-auto max-w-4xl px-4 text-center md:px-8",
-      plain ? "pt-10 pb-8 md:pt-14 md:pb-10" : "pt-2 pb-10 text-white md:pb-14",
+      plain ? "pt-10 pb-8 md:pt-14 md:pb-10" : "pt-2 pb-10 text-on-action md:pb-14",
     ]}
   >
-    <h1 class:list={[serif, "text-balance text-3xl font-bold md:text-5xl", plain && "text-brand-green"]}>{heroTitle}</h1>
-    <p class:list={["mt-3 text-balance text-sm md:text-base", plain ? "text-brand-origin" : "text-brand-serenity"]}>
+    <h1 class:list={[serif, "text-balance text-3xl font-bold md:text-5xl", plain && "text-action"]}>{heroTitle}</h1>
+    <p class:list={["mt-3 text-balance text-sm md:text-base", plain ? "text-text-muted" : "text-on-action"]}>
       {strapline}
     </p>
 

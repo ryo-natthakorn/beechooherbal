@@ -32,12 +32,12 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 ---
 
 <nav
-  class="toc relative mx-auto mt-5 mb-2 max-w-prose rounded-2xl border border-brand-earth bg-white/80 2xl:mx-0 2xl:my-0 2xl:max-w-none"
+  class="toc relative mx-auto mt-5 mb-2 max-w-prose rounded-2xl border border-line bg-surface/80 2xl:mx-0 2xl:my-0 2xl:max-w-none"
   aria-label={ui.misc.onThisPage}
 >
   <details class="group/toc" open data-toc-details>
     <summary
-      class="flex min-h-11 cursor-pointer list-none items-center gap-2 px-5 py-2 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green [&::-webkit-details-marker]:hidden"
+      class="flex min-h-11 cursor-pointer list-none items-center gap-2 px-5 py-2 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus [&::-webkit-details-marker]:hidden"
     >
       {/* Chevron sits on the RIGHT in every presentation (`order-last`). On the >=1536px
           rail global.css rotates it to point sideways and, once collapsed, it becomes
@@ -56,15 +56,15 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
         stroke="currentColor"
         stroke-width="2"
         stroke-linecap="round"
-        class="order-last ml-auto h-4 w-4 shrink-0 text-brand-green transition-transform duration-200 group-open/toc:rotate-180"
+        class="order-last ml-auto h-4 w-4 shrink-0 text-action transition-transform duration-200 group-open/toc:rotate-180"
       >
         <path d="m6 9 6 6 6-6" />
       </svg>
       {/* data-toc-title is the hook global.css uses to take this out of flow (sr-only,
           NOT display:none) while the >=1536px rail is collapsed — it stays the
           summary's accessible name there. */}
-      <span data-toc-title class:list={[serif, "shrink-0 text-sm font-bold text-brand-green"]}>{ui.misc.onThisPage}</span>
-      <span data-toc-current class="min-w-0 flex-1 truncate text-right text-xs text-brand-origin 2xl:hidden"></span>
+      <span data-toc-title class:list={[serif, "shrink-0 text-sm font-bold text-action"]}>{ui.misc.onThisPage}</span>
+      <span data-toc-current class="min-w-0 flex-1 truncate text-right text-xs text-text-muted 2xl:hidden"></span>
     </summary>
     <div class="toc-panel px-3 pt-1 pb-3">
       {
@@ -81,7 +81,7 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
                 <p
                   class:list={[
                     serif,
-                    "mt-4 mb-2 border-b border-brand-green/20 px-1 pb-1 text-xs font-bold text-brand-green first:mt-0",
+                    "mt-4 mb-2 border-b border-brand-green/20 px-1 pb-1 text-xs font-bold text-action first:mt-0",
                     lang === "en" && "uppercase tracking-widest",
                   ]}
                 >
@@ -93,12 +93,12 @@ const serif = lang === "th" ? "font-serif-thai" : "font-serif";
                       <a
                         href={`#${item.id}`}
                         data-toc-link
-                        class="flex items-center gap-2 rounded-full px-2.5 py-1.5 text-xs leading-snug text-brand-origin transition-colors duration-200 hover:bg-brand-green/8 hover:text-brand-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+                        class="flex items-center gap-2 rounded-full px-2.5 py-1.5 text-xs leading-snug text-text-muted transition-colors duration-200 hover:bg-action/8 hover:text-action focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
                       >
                         {/* items-center is safe now that no label wraps (see the width
                             note on .toc in global.css) — every item is a single line at
                             every breakpoint. Dot turns brand-yellow when active. */}
-                        <span aria-hidden="true" class="toc-dot h-1.5 w-1.5 shrink-0 rounded-full bg-brand-green/40" />
+                        <span aria-hidden="true" class="toc-dot h-1.5 w-1.5 shrink-0 rounded-full bg-action/40" />
                         <span class="min-w-0">{item.label}</span>
                       </a>
                     </li>

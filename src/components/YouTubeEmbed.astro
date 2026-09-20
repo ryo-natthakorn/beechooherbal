@@ -35,7 +35,7 @@ const thumb = THUMBS[id];
 {
   thumb ? (
     <div
-      class="yt-facade relative mx-auto aspect-video w-full max-w-3xl overflow-hidden rounded-xl bg-brand-green shadow-soft"
+      class="yt-facade relative mx-auto aspect-video w-full max-w-3xl overflow-hidden rounded-xl bg-action shadow-soft"
       data-yt-id={id}
       data-yt-title={title}
       data-yt-start={start ?? undefined}
@@ -47,11 +47,11 @@ const thumb = THUMBS[id];
         height={432}
         class="absolute inset-0 h-full w-full object-cover"
       />
-      <button type="button" data-yt-play class="group absolute inset-0 flex cursor-pointer items-center justify-center focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-white">
+      <button type="button" data-yt-play class="group absolute inset-0 flex cursor-pointer items-center justify-center focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-on-action">
         <span class="sr-only">{title}</span>
         <span
           aria-hidden="true"
-          class="flex h-16 w-16 items-center justify-center rounded-full bg-brand-green/95 text-white shadow-soft-lg transition-transform duration-200 motion-safe:group-hover:scale-110"
+          class="flex h-16 w-16 items-center justify-center rounded-full bg-action/95 text-on-action shadow-soft-lg transition-transform duration-200 motion-safe:group-hover:scale-110"
         >
           <svg viewBox="0 0 24 24" fill="currentColor" class="ml-1 h-7 w-7">
             <path d="M8 5.14v13.72L19 12 8 5.14z" />

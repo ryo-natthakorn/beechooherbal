@@ -46,16 +46,16 @@ const dateFormatter = new Intl.DateTimeFormat(lang === "th" ? "th-TH-u-ca-buddhi
 
 <main id="main">
   <!-- Hero -->
-  <section class="relative overflow-hidden bg-brand-green py-16 text-center text-white md:py-20">
-    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+  <section class="relative overflow-hidden bg-action py-16 text-center text-on-action md:py-20">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-on-action/10" />
     <div class="relative mx-auto max-w-3xl px-4 md:px-8">
       <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} md:text-5xl`}>{BLOG_HERO.heading[lang]}</h1>
-      <p class="text-sm leading-relaxed text-white/90 md:text-base">{BLOG_HERO.intro[lang]}</p>
+      <p class="text-sm leading-relaxed text-on-action/90 md:text-base">{BLOG_HERO.intro[lang]}</p>
     </div>
   </section>
 
   <!-- Articles, newest first -->
-  <section class="bg-brand-earth/25 py-14 md:py-20">
+  <section class="bg-surface-muted py-14 md:py-20">
     <div class="mx-auto max-w-6xl px-4 md:px-8">
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {

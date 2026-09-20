@@ -112,12 +112,12 @@ const timeline = groups.map((group) => ({
 
 <main id="main">
   <!-- Hero -->
-  <section class="relative overflow-hidden bg-brand-green py-16 text-center text-white md:py-20">
-    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+  <section class="relative overflow-hidden bg-action py-16 text-center text-on-action md:py-20">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-on-action/10" />
     <div class="relative mx-auto max-w-3xl px-4 md:px-8">
       <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} md:text-5xl`}>{EVENTS_HERO.heading[lang]}</h1>
-      <p class="text-sm leading-relaxed text-white/90 md:text-base">{EVENTS_HERO.intro[lang]}</p>
-      {summary && <p class={`mt-3 text-sm leading-relaxed font-bold text-brand-yellow${balance} md:text-base`}>{summary}</p>}
+      <p class="text-sm leading-relaxed text-on-action/90 md:text-base">{EVENTS_HERO.intro[lang]}</p>
+      {summary && <p class={`mt-3 text-sm leading-relaxed font-bold text-on-action${balance} md:text-base`}>{summary}</p>}
     </div>
   </section>
 
@@ -126,12 +126,12 @@ const timeline = groups.map((group) => ({
        0.25rem + 1px short, so a jump tucked the year pill under the header. -->
   {
     groups.length > 1 && (
-      <nav aria-label={ui.misc.onThisPage} class="events-nav sticky z-20 border-b border-brand-earth bg-white/95 backdrop-blur">
+      <nav aria-label={ui.misc.onThisPage} class="events-nav sticky z-20 border-b border-line bg-surface/95 backdrop-blur">
         <div class="mx-auto flex max-w-6xl flex-wrap justify-center gap-2 px-4 py-3 md:px-8">
           {groups.map((g) => (
             <a
               href={`#year-${g.id}`}
-              class="rounded-full border border-brand-earth px-3 py-1 text-xs font-bold text-brand-origin hover:border-brand-green hover:text-brand-green"
+              class="rounded-full border border-line px-3 py-1 text-xs font-bold text-text-muted hover:border-brand-green hover:text-action"
             >
               {g.label}
             </a>
@@ -144,7 +144,7 @@ const timeline = groups.map((group) => ({
   <!-- The timeline. One section, one background — the rail (.events-timeline::before
        in global.css) is a single continuous line and cannot cross full-bleed
        alternating bands, so the per-year alternation and LeafDivider both go. -->
-  <section class="bg-brand-earth/25 py-14 md:py-20">
+  <section class="bg-surface-muted py-14 md:py-20">
     <div class="mx-auto max-w-5xl px-4 md:px-8">
       {/* No horizontal padding on .events-timeline itself: `left: 50%` in CSS is only
           the true centre when the containing block's padding box equals its content
@@ -154,7 +154,7 @@ const timeline = groups.map((group) => ({
         {
           timeline.map((group) => (
             <Fragment>
-              <h2 id={`year-${group.id}`} class={`tl-year reveal ${serif} text-xl font-bold text-brand-green md:text-2xl`}>
+              <h2 id={`year-${group.id}`} class={`tl-year reveal ${serif} text-xl font-bold text-action md:text-2xl`}>
                 {group.label}
               </h2>
               {/* role="list": Tailwind's Preflight sets list-style:none on every <ol>,

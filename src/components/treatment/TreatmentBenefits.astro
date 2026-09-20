@@ -27,13 +27,13 @@ interface Props {
 const { lang, heading, blocks, background, divider = true, video, accent = false } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
-const bgClass = accent ? "bg-brand-serenity/30" : background === "white" ? "bg-white" : "bg-brand-earth/25";
+const bgClass = accent ? "bg-surface-muted/30" : background === "white" ? "bg-surface" : "bg-surface-muted";
 ---
 
 <section class={`${bgClass} py-16 md:py-24`}>
   <div class="mx-auto max-w-3xl px-4 md:px-8">
     {divider && <LeafDivider />}
-    <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+    <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
       {heading}
     </h2>
     {
@@ -51,14 +51,14 @@ const bgClass = accent ? "bg-brand-serenity/30" : background === "white" ? "bg-w
         </div>
       )
     }
-    <div class="mx-auto flex max-w-prose flex-col gap-4 text-brand-origin">
+    <div class="mx-auto flex max-w-prose flex-col gap-4 text-text-muted">
       {
         blocks.map((block) =>
           block.kind === "list" ? (
             <ul class="flex flex-col gap-2 pl-1">
               {block.items.map((item) => (
                 <li class="flex gap-2 leading-relaxed">
-                  <span aria-hidden="true" class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-green" />
+                  <span aria-hidden="true" class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-action" />
                   {item}
                 </li>
               ))}

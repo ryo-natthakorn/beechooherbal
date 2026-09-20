@@ -29,8 +29,8 @@ const balance = lang === "en" ? " text-balance" : "";
 
 <main id="main">
     <!-- Hero -->
-    <section class="relative overflow-hidden bg-brand-green py-16 text-center text-white md:py-20">
-      <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+    <section class="relative overflow-hidden bg-action py-16 text-center text-on-action md:py-20">
+      <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-on-action/10" />
       <div class="relative mx-auto max-w-3xl px-4 md:px-8">
         <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} md:text-5xl`}>{a.hero.heading[lang]}</h1>
       </div>
@@ -42,20 +42,20 @@ const balance = lang === "en" ? " text-balance" : "";
           height={800}
           class="mx-auto h-auto w-full rounded-2xl shadow-soft-lg"
         />
-        <p class="mt-3 text-xs text-white/70">{a.hero.caption}</p>
+        <p class="mt-3 text-xs text-on-action/70">{a.hero.caption}</p>
       </div>
     </section>
 
     <!-- Logo story -->
-    <section class="bg-white py-16 md:py-24">
+    <section class="bg-surface py-16 md:py-24">
       <div class="mx-auto max-w-5xl px-4 md:px-8">
         <LeafDivider />
-        <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+        <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
           {a.logoStory.heading[lang]}
         </h2>
         <div class="grid items-center gap-10 md:grid-cols-2">
           <Image src={a.logoStory.image} alt="" width={480} height={680} class="mx-auto h-auto w-full max-w-xs" />
-          <div class="space-y-4 text-left text-sm leading-relaxed text-brand-origin md:text-base">
+          <div class="space-y-4 text-left text-sm leading-relaxed text-text-muted md:text-base">
             {a.logoStory.paragraphs.map((p) => <p>{p[lang]}</p>)}
           </div>
         </div>
@@ -63,23 +63,23 @@ const balance = lang === "en" ? " text-balance" : "";
     </section>
 
     <!-- Brand philosophy -->
-    <section class="bg-brand-earth/25 py-16 md:py-24">
+    <section class="bg-surface-muted py-16 md:py-24">
       <div class="mx-auto max-w-3xl px-4 md:px-8">
         <LeafDivider />
-        <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+        <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
           {a.philosophy.heading[lang]}
         </h2>
-        <div class="space-y-4 text-left text-sm leading-relaxed text-brand-origin md:text-base">
+        <div class="space-y-4 text-left text-sm leading-relaxed text-text-muted md:text-base">
           {a.philosophy.paragraphs.map((p) => <p>{p[lang]}</p>)}
         </div>
       </div>
     </section>
 
     <!-- Customer video -->
-    <section class="bg-white py-16 text-center md:py-24">
+    <section class="bg-surface py-16 text-center md:py-24">
       <div class="mx-auto max-w-3xl px-4 md:px-8">
         <LeafDivider />
-        <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+        <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
           {a.video.heading[lang]}
         </h2>
         <YouTubeEmbed id={a.video.id} title={a.video.heading[lang]} start={a.video.start[lang]} />
@@ -87,19 +87,19 @@ const balance = lang === "en" ? " text-balance" : "";
     </section>
 
     <!-- Values / Vision / Mission -->
-    <section class="bg-brand-earth/25 py-16 md:py-24">
+    <section class="bg-surface-muted py-16 md:py-24">
       <div class="mx-auto max-w-5xl px-4 md:px-8">
         <LeafDivider />
         <div class="grid gap-6 md:grid-cols-3">
           {[a.values, a.vision, a.mission].map((block) => (
-            <div class="rounded-2xl border border-brand-earth bg-white p-6 text-left shadow-soft">
-              <h2 class={`mb-4 ${serif} text-lg font-bold text-brand-green md:text-xl`}>{block.heading[lang]}</h2>
-              <ul class="space-y-2.5 text-sm leading-relaxed text-brand-origin">
+            <div class="rounded-2xl border border-line bg-surface p-6 text-left shadow-soft">
+              <h2 class={`mb-4 ${serif} text-lg font-bold text-action md:text-xl`}>{block.heading[lang]}</h2>
+              <ul class="space-y-2.5 text-sm leading-relaxed text-text-muted">
                 {block.items
                   .filter((item) => item[lang])
                   .map((item) => (
                     <li class="flex gap-2">
-                      <span aria-hidden="true" class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-green" />
+                      <span aria-hidden="true" class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-action" />
                       <span>{item[lang]}</span>
                     </li>
                   ))}
@@ -107,7 +107,7 @@ const balance = lang === "en" ? " text-balance" : "";
             </div>
           ))}
         </div>
-        <p class="mt-10 text-center text-xs text-brand-origin/80">{a.operatorLine[lang]}</p>
+        <p class="mt-10 text-center text-xs text-text-muted">{a.operatorLine[lang]}</p>
       </div>
     </section>
   </main>

@@ -20,7 +20,7 @@ if (!prefersReducedMotion) {
   countUpStats();
   parallaxLayers();
   treatmentsMasterDetail();
-  heroShader();
+
 }
 
 /** Header: transparent over the hero, solid once scrolled. The markup ships solid
@@ -170,18 +170,4 @@ function treatmentsMasterDetail() {
       animate(panel, { opacity: [0, 1], y: [8, 0] }, { duration: 0.35, ease: "easeOut" });
     });
   });
-}
-
-/** WebGL hero shader — lazy-loaded and hard-gated: desktop width + fine pointer only
- *  (mobile and crawlers never fetch the module). The CSS .hero-aura beneath the canvas
- *  is the everywhere-else fallback, including WebGL-unavailable. */
-function heroShader() {
-  const canvas = document.querySelector<HTMLCanvasElement>("canvas[data-hero-canvas]");
-  if (!canvas) return;
-  if (!window.matchMedia("(min-width: 768px) and (pointer: fine)").matches) return;
-  import("./hero-webgl")
-    .then((m) => m.initHeroShader(canvas))
-    .catch(() => {
-      /* module load failed — aura fallback stays */
-    });
 }

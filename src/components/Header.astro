@@ -29,51 +29,52 @@ const isCurrent = (href: string) => currentPath === href;
 const isGroup = (item: (typeof navItems)[number]): item is NavGroup => "children" in item;
 const isCurrentGroup = (item: NavGroup) => item.children.some((child) => isCurrent(child.href));
 // First NAV entry is always the Home leaf link (see src/i18n/ui.ts).
-const homeHref = navItems[0].href as string;
+const homeEntry = navItems[0];
+const homeHref = isGroup(homeEntry) ? homeEntry.children[0].href : homeEntry.href;
 
 const topLevelLinkClass = (current: boolean) =>
   [
-    "py-2 transition-colors duration-200 hover:text-brand-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green",
+    "py-2 transition-colors duration-200 hover:text-action focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
     current
-      ? "font-bold text-brand-green underline decoration-brand-yellow decoration-2 underline-offset-8 group-data-[at-top]:text-white"
-      : "text-brand-origin group-data-[at-top]:text-white/85 group-data-[at-top]:hover:text-white",
+      ? "font-bold text-action underline decoration-accent decoration-2 underline-offset-8 group-data-[at-top]:text-on-action"
+      : "text-text-muted group-data-[at-top]:text-on-action/85 group-data-[at-top]:hover:text-on-action",
   ].join(" ");
 
 const mobileLinkClass = (current: boolean) =>
   [
-    "block rounded-xl px-4 py-3 font-bold transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green",
-    current ? "bg-brand-green/10 text-brand-green" : "text-brand-origin hover:bg-brand-green/5 hover:text-brand-green",
+    "block rounded-xl px-4 py-3 font-bold transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus",
+    current ? "bg-action/10 text-action" : "text-text-muted hover:bg-action/5 hover:text-action",
   ].join(" ");
 
 const mobileChildLinkClass = (current: boolean) =>
   [
-    "block rounded-lg px-4 py-2.5 text-sm transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green",
-    current ? "bg-brand-green/10 font-bold text-brand-green" : "text-brand-origin hover:bg-brand-green/5 hover:text-brand-green",
+    "block rounded-lg px-4 py-2.5 text-sm transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus",
+    current ? "bg-action/10 font-bold text-action" : "text-text-muted hover:bg-action/5 hover:text-action",
   ].join(" ");
 
 const desktopChildLinkClass = (current: boolean) =>
   [
-    "block rounded-xl px-4 py-2.5 text-sm transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green",
-    current ? "bg-brand-green/10 font-bold text-brand-green" : "text-brand-origin hover:bg-brand-green/5 hover:text-brand-green",
+    "block rounded-xl px-4 py-2.5 text-sm transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus",
+    current ? "bg-action/10 font-bold text-action" : "text-text-muted hover:bg-action/5 hover:text-action",
   ].join(" ");
 ---
 
 <header
   data-overlay={overlay ? "true" : undefined}
   class:list={[
-    "group z-30 flex items-center justify-between gap-2 border-b border-brand-earth bg-white px-4 py-3 transition-colors duration-500 md:px-8",
+    "group z-30 flex items-center justify-between gap-2 border-b border-line bg-surface px-4 py-3 transition-colors duration-500 md:px-8",
     overlay ? "fixed inset-x-0 top-0 data-[at-top]:border-transparent data-[at-top]:bg-transparent" : "sticky top-0",
   ]}
 >
-  <a href={homeHref} class="flex min-h-11 items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+  <a href={homeHref} class="flex min-h-11 items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus">
     <Image src={logoLeaf} alt="Bee Choo Herbal" width={36} height={31} class="rounded-md" />
     <span
-      class={`${fontClass} text-lg font-bold whitespace-nowrap text-brand-green transition-colors duration-500 group-data-[at-top]:text-white`}
+      class={`${fontClass} text-sm sm:text-lg font-bold whitespace-nowrap text-action transition-colors duration-500 group-data-[at-top]:text-on-action`}
       >{wordmark}</span
     >
   </a>
 
-  <nav aria-label={ui.misc.menu} class="hidden items-center gap-6 md:flex">
+  <nav aria-label={ui.misc.menu} class="hidden items-center gap-6 xl:flex">
     {
       navItems.map((item) =>
         isGroup(item) ? (
@@ -93,7 +94,7 @@ const desktopChildLinkClass = (current: boolean) =>
               </svg>
             </button>
             <div class="invisible absolute top-full left-1/2 z-40 w-64 -translate-x-1/2 pt-2 opacity-0 transition-[opacity,visibility] duration-150 group-hover/nav:visible group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:opacity-100">
-              <div class="rounded-2xl border border-brand-earth bg-white p-2 shadow-soft-lg">
+              <div class="rounded-2xl border border-line bg-surface p-2 shadow-soft-lg">
                 {item.children.map((child) => (
                   <a href={child.href} aria-current={isCurrent(child.href) ? "page" : undefined} class={desktopChildLinkClass(isCurrent(child.href))}>
                     {child.label}
@@ -120,19 +121,19 @@ const desktopChildLinkClass = (current: boolean) =>
         and yellow reads on both the solid white bar and the transparent green overlay. */}
     <a
       href={HOME.locations.href[lang]}
-      class="btn-tactile flex min-h-11 items-center gap-2 rounded-full bg-brand-yellow px-4 text-sm font-bold text-brand-ink hover:bg-brand-yellow/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+      class="btn-tactile flex min-h-11 items-center gap-2 rounded-full bg-action px-4 text-sm font-bold text-on-action hover:bg-action-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
     >
       <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0">
         <path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" />
       </svg>
       {/* Short on phones: the full label risked pushing the wordmark into wrapping onto
           two lines at 375px, same failure mode the old LINE pill had. */}
-      <span class="md:hidden">{ui.cta.callShort}</span>
-      <span class="hidden md:inline">{ui.cta.call}</span>
+      <span class="xl:hidden">{ui.cta.callShort}</span>
+      <span class="hidden xl:inline">{ui.cta.call}</span>
     </a>
 
-    <details class="relative md:hidden">
-      <summary class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full text-brand-green transition-colors duration-200 hover:bg-brand-green/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green group-data-[at-top]:text-white group-data-[at-top]:hover:bg-white/10 [&::-webkit-details-marker]:hidden">
+    <details class="relative xl:hidden">
+      <summary class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full text-action transition-colors duration-200 hover:bg-action/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus group-data-[at-top]:text-on-action group-data-[at-top]:hover:bg-surface/10 [&::-webkit-details-marker]:hidden">
         <span class="sr-only">{ui.misc.menu}</span>
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="h-6 w-6">
           <path d="M4 7h16M4 12h16M4 17h16" />
@@ -140,7 +141,7 @@ const desktopChildLinkClass = (current: boolean) =>
       </summary>
       <nav
         aria-label={ui.misc.menu}
-        class="absolute top-full right-0 mt-2 w-72 max-h-[calc(100vh-6rem)] overflow-y-auto rounded-2xl border border-brand-earth bg-white p-2 shadow-soft-lg"
+        class="absolute top-full right-0 mt-2 w-72 max-h-[calc(100vh-6rem)] overflow-y-auto rounded-2xl border border-line bg-surface p-2 shadow-soft-lg"
       >
         {
           navItems.map((item) =>
@@ -162,7 +163,7 @@ const desktopChildLinkClass = (current: boolean) =>
                     <path d="m6 9 6 6 6-6" />
                   </svg>
                 </summary>
-                <div class="ml-3 border-l border-brand-earth pl-2">
+                <div class="ml-3 border-l border-line pl-2">
                   {item.children.map((child) => (
                     <a href={child.href} aria-current={isCurrent(child.href) ? "page" : undefined} class={mobileChildLinkClass(isCurrent(child.href))}>
                       {child.label}

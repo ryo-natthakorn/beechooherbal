@@ -42,18 +42,18 @@ const indexHref = BLOG_INDEX[lang];
 
 <main id="main">
   <!-- Hero -->
-  <section class="relative overflow-hidden bg-brand-green py-14 text-center text-white md:py-16">
-    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+  <section class="relative overflow-hidden bg-action py-14 text-center text-on-action md:py-16">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-on-action/10" />
     <div class="relative mx-auto max-w-3xl px-4 md:px-8">
-      <a href={indexHref} class="text-xs font-bold text-white/80 underline-offset-4 hover:text-white hover:underline">
+      <a href={indexHref} class="text-xs font-bold text-on-action/80 underline-offset-4 hover:text-on-action hover:underline">
         &lsaquo; {ui.blog.backToBlog}
       </a>
       <h1 class={`mt-4 mb-3 ${serif} text-2xl font-bold${balance} md:text-4xl`}>{entry.data.title}</h1>
-      <time datetime={entry.data.pubDate.toISOString()} class="text-sm text-white/80">{dateLabel}</time>
+      <time datetime={entry.data.pubDate.toISOString()} class="text-sm text-on-action/80">{dateLabel}</time>
     </div>
   </section>
 
-  <article class="bg-white py-12 md:py-16">
+  <article class="bg-surface py-12 md:py-16">
     <div class="mx-auto max-w-3xl px-4 md:px-8">
       {
         entry.data.hero && (
@@ -72,7 +72,7 @@ const indexHref = BLOG_INDEX[lang];
           Markdown is generated — a per-file style would be overwritten on the next
           `npm run generate-blog`. Captions are emitted as <em> on their own line. */}
       <div
-        class="flex flex-col gap-4 text-sm leading-relaxed text-brand-origin md:text-base [&_a]:text-brand-green [&_a]:underline [&_em]:block [&_em]:text-xs [&_em]:not-italic [&_em]:text-brand-origin/80 [&_img]:my-2 [&_img]:w-full [&_img]:rounded-2xl [&_img]:shadow-soft [&_strong]:text-brand-ink"
+        class="flex flex-col gap-4 text-sm leading-relaxed text-text-muted md:text-base [&_a]:[overflow-wrap:anywhere] [&_a]:text-action [&_a]:underline [&_em]:block [&_em]:text-xs [&_em]:not-italic [&_em]:text-text-muted [&_img]:my-2 [&_img]:w-full [&_img]:rounded-2xl [&_img]:shadow-soft [&_strong]:text-text"
       >
         <Content />
       </div>
@@ -92,24 +92,24 @@ const indexHref = BLOG_INDEX[lang];
   <!-- Prev / next within this language's blog feed -->
   {
     (prev || next) && (
-      <nav class="bg-brand-earth/25 py-10" aria-label={ui.blog.backToBlog}>
+      <nav class="bg-surface-muted py-10" aria-label={ui.blog.backToBlog}>
         <div class="mx-auto flex max-w-3xl flex-col gap-3 px-4 sm:flex-row sm:justify-between md:px-8">
           {prev ? (
             <a href={prev.href} class="group max-w-xs text-sm">
-              <span class="block text-2xs font-bold tracking-wide text-brand-origin uppercase">
+              <span class="block text-2xs font-bold tracking-wide text-text-muted uppercase">
                 &lsaquo; {ui.blog.previousPost}
               </span>
-              <span class="font-bold text-brand-green group-hover:text-brand-green-deep">{prev.title}</span>
+              <span class="font-bold text-action group-hover:text-action-hover">{prev.title}</span>
             </a>
           ) : (
             <span />
           )}
           {next && (
             <a href={next.href} class="group max-w-xs text-sm sm:text-right">
-              <span class="block text-2xs font-bold tracking-wide text-brand-origin uppercase">
+              <span class="block text-2xs font-bold tracking-wide text-text-muted uppercase">
                 {ui.blog.nextPost} &rsaquo;
               </span>
-              <span class="font-bold text-brand-green group-hover:text-brand-green-deep">{next.title}</span>
+              <span class="font-bold text-action group-hover:text-action-hover">{next.title}</span>
             </a>
           )}
         </div>
