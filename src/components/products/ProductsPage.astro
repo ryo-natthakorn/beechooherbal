@@ -127,7 +127,7 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
   </section>
 
   <!-- Bee Choo Conditioners -->
-  <section id={conditioners.id} class="products-section bg-surface-muted py-16 md:py-24">
+  <section id={conditioners.id} class="products-section bg-surface-botanical py-16 md:py-24">
     <div class="mx-auto max-w-6xl px-4 md:px-8">
       <LeafDivider />
       <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{conditioners.heading}</h2>
@@ -183,7 +183,7 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
             </div>
             <div class="flex flex-1 flex-col p-6">
               {product.signatureLine?.[lang] && (
-                <span class="mb-3 inline-flex w-fit items-center rounded-full bg-surface-muted px-2.5 py-1 text-2xs font-bold text-text">
+                <span class="mb-3 inline-flex w-fit items-center rounded-full bg-surface-highlight px-2.5 py-1 text-2xs font-bold text-text">
                   {stripAsterisks(product.signatureLine[lang]!)}
                 </span>
               )}

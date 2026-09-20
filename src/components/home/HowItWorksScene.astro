@@ -30,7 +30,7 @@ interface Props {
 }
 
 const { lang, copy, background, video } = Astro.props;
-const bgClass = background === "earth" ? "bg-surface-muted" : background === "white" ? "bg-surface" : "";
+const bgClass = background === "earth" ? "bg-surface-botanical" : background === "white" ? "bg-surface" : "";
 const t = HOME.howItWorks;
 const videoId = video?.id ?? t.videoId;
 const videoTitle = video?.title ?? t.videoTitle[lang];

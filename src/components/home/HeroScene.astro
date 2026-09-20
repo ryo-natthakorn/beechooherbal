@@ -1,6 +1,6 @@
 ---
 // src/components/home/HeroScene.astro
-// Brand introduction on a quiet stone surface; original SEO copy stays intact.
+// Brand introduction on a soft sage surface; original SEO copy stays intact.
 import HerbalStrokes from "../HerbalStrokes.astro";
 import { HOME, type Lang } from "../../data/home";
 
@@ -13,7 +13,7 @@ const t = HOME.hero;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 ---
 
-<section class="relative flex min-h-[100svh] items-center overflow-hidden bg-surface-muted pt-24 pb-14 text-center md:py-28">
+<section class="relative flex min-h-[100svh] items-center overflow-hidden bg-surface-botanical pt-24 pb-14 text-center md:py-28">
   <HerbalStrokes draw class="pointer-events-none absolute inset-0 h-full w-full text-action opacity-10" />
   <div class="hero-enter relative mx-auto w-full max-w-6xl px-4 md:px-8">
     <h1 class={`mx-auto max-w-4xl ${serif} font-bold text-action`}>

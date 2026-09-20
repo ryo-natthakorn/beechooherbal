@@ -9,30 +9,33 @@
 @import "@fontsource/noto-serif-thai/400.css";
 @import "@fontsource/noto-serif-thai/700.css";
 
-/* Ivory + Forest UI palette. Original logo/media colours remain untouched. */
+/* Botanical UI palette. Original logo/media colours remain untouched. */
 @theme {
   --color-canvas: #F7F5EF;
   --color-surface: #FFFDF8;
   --color-surface-muted: #ECE8DF;
   --color-text: #292D29;
   --color-text-muted: #62675F;
-  --color-action: #29483C;
-  --color-action-hover: #20392F;
+  --color-action: #326348;
+  --color-action-hover: #203F30;
   --color-on-action: #F7F5EF;
   --color-line: #D8D7CE;
-  --color-accent: #A38B5C;
-  --color-focus: #29483C;
+  --color-accent: #B4934E;
+  --color-focus: #326348;
+  --color-surface-botanical: #E6EDDF;
+  --color-surface-highlight: #F2E8CE;
+  --color-text-botanical: #4C6251;
 
   /* Compatibility aliases for shared data and existing brand-based utilities. */
   --color-brand-green: var(--color-action);
   --color-brand-green-deep: var(--color-action-hover);
-  --color-brand-green-mist: var(--color-surface-muted);
+  --color-brand-green-mist: var(--color-surface-botanical);
   --color-brand-yellow: var(--color-accent);
   --color-brand-earth: var(--color-line);
   --color-brand-sand: var(--color-canvas);
   --color-brand-origin: var(--color-text-muted);
   --color-brand-ink: var(--color-text);
-  --color-brand-serenity: var(--color-surface-muted);
+  --color-brand-serenity: var(--color-surface-botanical);
   --color-brand-root: var(--color-action);
   --color-brand-treasure: var(--color-accent);
   --color-brand-pink: var(--color-surface-muted);
@@ -107,12 +110,12 @@
    traffic. A passive scroll listener batched into one rAF works everywhere and only
    touches a custom property, so no layout is recalculated. */
 
-/* Scroll tint blends the ivory canvas into warm stone; transparent sections reveal it. */
+/* Scroll tint blends the ivory canvas into sage; transparent sections reveal it. */
 .page-tint {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background-color: var(--color-surface-muted);
+  background-color: var(--color-surface-botanical);
   opacity: var(--part1-progress, 0);
   pointer-events: none;
 }
@@ -941,3 +944,11 @@
   body { color: var(--color-text); }
   ::selection { background: var(--color-action); color: var(--color-on-action); }
 }
+
+/* Semantic section colour survives the treatment scroll-tint presentation. */
+.treatment-main [data-section-tone="botanical"] { background-color: var(--color-surface-botanical); }
+.treatment-main [data-section-tone="highlight"] { background-color: var(--color-surface-highlight); }
+.treatment-main [data-section-tone] > section { background-color: transparent; }
+.treatment-main [data-section-tone]::before { background-color: transparent; }
+.bg-surface-botanical .text-text-muted,
+[data-section-tone="botanical"] .text-text-muted { color: var(--color-text-botanical); }

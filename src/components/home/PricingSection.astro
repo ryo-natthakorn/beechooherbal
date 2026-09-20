@@ -30,7 +30,7 @@ interface Props {
 }
 
 const { lang, heading, intro, closing = [], background, showCta = false } = Astro.props;
-const bgClass = background === "white" ? "bg-surface" : "bg-surface-muted";
+const bgClass = background === "white" ? "bg-surface" : "bg-surface-highlight";
 // Treatment pages pass a much longer `intro` than the homepage's short blurb, so only
 // they get the 65ch prose cap — the homepage (signed off) keeps its existing width.
 const introWidth = intro ? "max-w-prose" : "max-w-2xl";

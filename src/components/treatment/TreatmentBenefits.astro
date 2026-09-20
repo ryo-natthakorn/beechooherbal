@@ -27,7 +27,7 @@ interface Props {
 const { lang, heading, blocks, background, divider = true, video, accent = false } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
-const bgClass = accent ? "bg-surface-muted/30" : background === "white" ? "bg-surface" : "bg-surface-muted";
+const bgClass = accent ? "bg-surface-botanical" : background === "white" ? "bg-surface" : "bg-surface-botanical";
 ---
 
 <section class={`${bgClass} py-16 md:py-24`}>

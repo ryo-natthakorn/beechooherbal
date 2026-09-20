@@ -114,16 +114,16 @@ const titleClass = lang === "th" ? "font-serif-thai" : "font-serif";
   .product-benefits-list li { display: flex; align-items: baseline; gap: .75rem; line-height: 1.7; }
   .product-benefits-list svg { flex-shrink: 0; align-self: center; color: var(--color-action); }
   .product-booking { margin-top: 1.75rem; border-top: 1px solid var(--color-line); padding-top: 1.5rem; }
-  .product-launch-price { margin: 0; font-size: 1.25rem; font-weight: 700; line-height: 1.6; }
+  .product-launch-price { width: fit-content; padding: .375rem .75rem; background: var(--color-surface-highlight); margin: 0; font-size: 1.25rem; font-weight: 700; line-height: 1.6; }
   .product-booking .product-launch-cta { margin-top: 1rem; }
-  .product-composition { display: grid; gap: 1.75rem; margin-top: 3rem; border-block: 1px solid var(--color-line); padding-block: 2rem; }
+  .product-composition { background: var(--color-surface-botanical); padding-inline: 1.5rem; display: grid; gap: 1.75rem; margin-top: 3rem; border-block: 1px solid var(--color-line); padding-block: 2rem; }
   .product-composition-heading { margin: 0; color: var(--color-action); font-size: clamp(1.75rem, 2.6vw, 2.25rem); line-height: 1.5; text-wrap: balance; }
   .product-facts-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; margin: 0; padding: 0; list-style: none; }
   .product-facts-list li { min-width: 0; border-left: 1px solid var(--color-line); padding-left: .75rem; }
   .product-facts-list li:first-child { border-left: 0; padding-left: 0; }
   .product-facts-list strong, .product-facts-list span { display: block; }
   .product-facts-list strong { color: var(--color-action); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 400; line-height: 1.2; font-variant-numeric: tabular-nums; }
-  .product-facts-list span { margin-top: .5rem; color: var(--color-text-muted); font-size: .875rem; line-height: 1.6; }
+  .product-facts-list span { margin-top: .5rem; color: var(--color-text-botanical); font-size: .875rem; line-height: 1.6; }
   .product-pairing { margin-top: 2rem; border-radius: .5rem; background: var(--color-surface-muted); padding: 1.5rem; }
   .product-pairing-heading { margin: 0; font-size: 1.0625rem; font-weight: 700; line-height: 1.6; }
   .product-pairing p { margin: .5rem 0 0; color: var(--color-text-muted); line-height: 1.8; }

@@ -112,6 +112,7 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
       <div
         id={anchorId(key)}
         data-section-anchor
+        data-section-tone={key === "benefits" ? "botanical" : key === "pricing" ? "highlight" : undefined}
         data-brand-band-start={index === brandStart ? "" : undefined}
         class:list={bandClass(index, key)}
       >
