@@ -1,4 +1,4 @@
-# Botanical colour pass and preliminary design audit
+# Botanical colour pass and representative design audit
 
 ## Status and limits
 
@@ -38,6 +38,35 @@ These are design issues, not assertions of broken functionality. Brand imagery, 
 - Astro check: three existing errors remain (Vite plugin type mismatch in astro.config.mjs; two nullable DOM values in TreatmentPage.astro). No new reported errors.
 - GitHub deployment for baseline redesign: Preview, successful.
 
-## Remaining acceptance work
+## Original outstanding acceptance work (superseded by follow-up below)
 
 New-colour browser inspection remains outstanding: home and grey-hair treatment EN/TH at 375/768/1440, then desktop/mobile representatives for About, Team, Locations, FAQ, comparison, pricing, products, reviews, blog index/post, event index/post and 404. Inspect full-page rhythm, colour dosage and inherited foreground/background combinations. Check hover/focus, menu, LINE destination, video controls and reduced motion. Record route and screenshot evidence for each new visual finding before changing layout. Do not declare the whole-site slop audit complete until this coverage is done.
+
+
+## Follow-up browser audit — 20 September 2026
+
+Resumed on user instruction. Five-hour account usage started at 21% and reached 68% at the coverage checkpoint. This again exceeded the intended 10-point allowance; the shared meter cannot isolate this task. No broader layout rewrite was performed.
+
+### Coverage and evidence
+
+- Home EN/TH and grey-hair treatment EN/TH: 375, 768 and 1440px. Screenshots inspected for title wrapping, header, hero hierarchy, video proportions and colour roles. All four routes retain one H1 and have no document horizontal overflow.
+- About, Team, Locations, FAQ, herbal/transplant comparison, treatment cost, Products, Reviews, Blog index and Events index: EN/TH DOM layout checks at 375 and 1440px. Representative screenshots inspected (About/Team desktop; other groups mobile).
+- Blog post examples: /suffering-from-mild-hair-loss-in-your-30s-she-found-the-perfect-solution/ and /5-ตัวช่วยเรื่องผมร่วงของ/. Event examples: /grand-opening-of-new-outlet-bee-choo-ayutthaya/ and /grand-opening-บีชู-สาขาอยุธยา-ในวันท/. Checked each at 375/1440 along with /404/.
+- 62 route/viewport checks in total including the initial Thai mobile check: no document overflow or duplicate/missing H1 found. This is representative template coverage, not every individual URL or every scroll position.
+- Actual computed ingredient/benefits background: rgb(230,237,223); pricing: rgb(242,232,206). LINE links on checked pages retain https://lin.ee/ll3injb.
+- Native video controls, mute and poster present; source ratio 1281/726; Space pauses playback. Thai mobile menu opens/closes without overflow. Reduced-motion initial state and preference-change pause behaviour pass a VM execution of the actual component script.
+- Contrast pairs: ivory/action 6.39:1; muted text/pale gold 4.75:1; botanical text/sage 5.53:1; action/sage 5.82:1. These token checks are not an exhaustive per-element accessibility audit.
+- Vercel reports Botanical commit 3b8d096 as a Preview deployment.
+
+### Visual findings confirmed or added
+
+1. **P1, Home:** the second full-height brand introduction visibly separates the launch details from core treatments with too much vertical space. Keep the existing H1, remove the viewport minimum in the next layout pass.
+2. **P2, Products EN/TH mobile:** long centered opening copy consumes most of the first screen before products appear. Keep all copy, but use a short visible introduction plus a clearly labelled expandable remainder or move supporting copy below the first product group; this needs a layout decision before implementation.
+3. **P2, shared language switcher:** the fixed bottom-right pill overlays article/review reading space on narrow screens. Move the control into the header/menu in the next navigation pass, preserving page-specific language pairing.
+4. **P2, FAQ/Locations/Reviews/Team:** repeated leaf divider, centered heading, large vertical padding and rounded frames reinforce the same template rhythm across unrelated content. Use the backlog above to remove decorative repetition selectively.
+5. **P2, media presentation:** several embedded/lazy-media areas appear as large empty framed regions in initial captures. Do not classify these as missing content from a screenshot alone; some images were confirmed loaded in DOM. Review loading/fallback affordances separately from palette changes.
+6. **P3, global.css:** mechanical detector flags the existing TOC width transition at line 223. Replace with a non-layout animation or remove transition during a focused motion pass.
+
+### Bounds of this sign-off
+
+The Botanical palette passes representative layout and token-contrast checks. No new colour defect requiring code changes was found in this pass. The original build, copy-parity and five ProductBanner test results remain applicable because this follow-up changes documentation only. The three pre-existing Astro type errors remain. Full-page image-load verification, exhaustive hover/focus inspection and browser-level reduced-motion emulation were not completed; they are not claimed as passed. Structural slop fixes remain a prioritised next implementation pass, as specified in the approved scope.
