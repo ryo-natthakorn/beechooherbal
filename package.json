@@ -32,5 +32,10 @@
     "motion": "^12.42.2",
     "tailwindcss": "^4",
     "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "@tailwindcss/vite": {
+      "vite": "6.4.3"
+    }
   }
 }

@@ -70,3 +70,8 @@ Resumed on user instruction. Five-hour account usage started at 21% and reached 
 ### Bounds of this sign-off
 
 The Botanical palette passes representative layout and token-contrast checks. No new colour defect requiring code changes was found in this pass. The original build, copy-parity and five ProductBanner test results remain applicable because this follow-up changes documentation only. The three pre-existing Astro type errors remain. Full-page image-load verification, exhaustive hover/focus inspection and browser-level reduced-motion emulation were not completed; they are not claimed as passed. Structural slop fixes remain a prioritised next implementation pass, as specified in the approved scope.
+
+
+## Latest checkpoint — 21 September 2026
+
+Layout and type fixes have been checkpointed; status and unfinished visual acceptance are recorded in [Astra Priority handoff](astra-priority-handoff-2026-09-21.md). Build, copy parity and 5 ProductBanner tests pass; Astro check now reports zero errors and zero warnings. These fixes have not received a fresh browser visual pass. Work stopped because weekly quota had only 7% remaining, following the user's handoff instruction.

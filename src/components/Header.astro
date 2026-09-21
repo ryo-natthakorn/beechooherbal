@@ -7,6 +7,7 @@
 // (home-motion.ts) adds data-at-top near scroll 0, turning it transparent with white
 // chrome. The markup SHIPS solid — no-JS and reduced-motion visitors keep exactly the
 // safe white bar on every page.
+import LanguageSwitcher from "./LanguageSwitcher.astro";
 import { Image } from "astro:assets";
 import logoLeaf from "../assets/images/logo-leaf.jpg";
 import { UI, NAV, type NavGroup } from "../i18n/ui";
@@ -74,7 +75,7 @@ const desktopChildLinkClass = (current: boolean) =>
     >
   </a>
 
-  <nav aria-label={ui.misc.menu} class="hidden items-center gap-6 xl:flex">
+  <nav aria-label={ui.misc.menu} class="hidden items-center gap-3 xl:flex">
     {
       navItems.map((item) =>
         isGroup(item) ? (
@@ -132,6 +133,7 @@ const desktopChildLinkClass = (current: boolean) =>
       <span class="hidden xl:inline">{ui.cta.call}</span>
     </a>
 
+    <div class="hidden xl:block"><LanguageSwitcher {lang} /></div>
     <details class="relative xl:hidden">
       <summary class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full text-action transition-colors duration-200 hover:bg-action/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus group-data-[at-top]:text-on-action group-data-[at-top]:hover:bg-surface/10 [&::-webkit-details-marker]:hidden">
         <span class="sr-only">{ui.misc.menu}</span>
@@ -143,6 +145,7 @@ const desktopChildLinkClass = (current: boolean) =>
         aria-label={ui.misc.menu}
         class="absolute top-full right-0 mt-2 w-72 max-h-[calc(100vh-6rem)] overflow-y-auto rounded-2xl border border-line bg-surface p-2 shadow-soft-lg"
       >
+        <div class="border-b border-line p-2"><LanguageSwitcher {lang} /></div>
         {
           navItems.map((item) =>
             isGroup(item) ? (

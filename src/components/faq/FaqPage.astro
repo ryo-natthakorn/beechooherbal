@@ -5,7 +5,6 @@
 // file's header for the two content fixes (Q9 junk image dropped, Q10 broken
 // cross-domain link dropped) and the accordion-vs-flat-list design decision.
 import { Image } from "astro:assets";
-import LeafDivider from "../LeafDivider.astro";
 import HerbalStrokes from "../HerbalStrokes.astro";
 import YouTubeEmbed from "../YouTubeEmbed.astro";
 import FaqSchema from "../FaqSchema.astro";
@@ -40,17 +39,15 @@ const schemaItems = FAQ_ITEMS.map((item) => {
   </section>
 
   <!-- Video -->
-  <section class="bg-surface py-16 md:py-24">
+  <section class="bg-surface py-16 md:py-16">
     <div class="mx-auto max-w-3xl px-4 md:px-8">
-      <LeafDivider />
       <YouTubeEmbed id={FAQ_VIDEO.id} title={FAQ_HERO.heading[lang]} />
     </div>
   </section>
 
   <!-- FAQ accordion -->
-  <section class="bg-surface-muted py-16 md:py-24">
+  <section class="bg-surface-muted py-16 md:py-16">
     <div class="mx-auto max-w-3xl px-4 md:px-8">
-      <LeafDivider />
       <div class="flex flex-col gap-3">
         {FAQ_ITEMS.map((item) => (
           <details class="group overflow-hidden rounded-2xl border border-line bg-surface open:shadow-soft">

@@ -12,7 +12,6 @@
 // PricingSection was originally simplified for (see that component's own header:
 // Crispin chose image-only there, "keep it simple"). ⚠ Flagged for Crispin —
 // confirm this real-text addition, or revert to image-only to match that precedent.
-import LeafDivider from "../LeafDivider.astro";
 import HerbalStrokes from "../HerbalStrokes.astro";
 import YouTubeEmbed from "../YouTubeEmbed.astro";
 import LocationsBand from "../LocationsBand.astro";
@@ -41,9 +40,8 @@ const pricing = HOME.pricing;
   </section>
 
   <!-- Intro -->
-  <section class="bg-surface py-16 md:py-24">
+  <section class="bg-surface py-16 md:py-16">
     <div class="mx-auto max-w-2xl space-y-4 px-4 md:px-8">
-      <LeafDivider />
       <p class="text-sm leading-relaxed text-text-muted md:text-base">{COST_INTRO.hook[lang]}</p>
       <p class="text-sm leading-relaxed text-text-muted md:text-base">{COST_INTRO.transition[lang]}</p>
     </div>
@@ -53,9 +51,9 @@ const pricing = HOME.pricing;
   <PricingSection lang={lang} heading={ui.toc.pricing} background="earth" showCta />
   <section class="bg-surface-highlight pb-16 md:pb-24">
     <div class="mx-auto max-w-2xl px-4 md:px-8">
-      <ul class="grid gap-3 sm:grid-cols-2">
+      <ul class="divide-y divide-line">
         {pricing.tiers.map((tier) => (
-          <li class="flex items-center justify-between rounded-xl border border-line bg-surface px-4 py-3 text-sm">
+          <li class="flex items-center justify-between px-1 py-4 text-sm">
             <span class="text-text-muted">
               {tier.lengthName[lang]}
               {tier.cmRange[lang] && <span class="text-text-muted"> ({tier.cmRange[lang]})</span>}
@@ -70,9 +68,8 @@ const pricing = HOME.pricing;
   </section>
 
   <!-- Market context -->
-  <section class="bg-surface py-16 md:py-24">
+  <section class="bg-surface py-16 md:py-16">
     <div class="mx-auto max-w-2xl px-4 md:px-8">
-      <LeafDivider />
       <h2 data-mask-reveal class={`mb-6 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
         {MARKET_CONTEXT.heading[lang]}
       </h2>
@@ -81,9 +78,8 @@ const pricing = HOME.pricing;
   </section>
 
   <!-- How it works -->
-  <section class="bg-surface-botanical py-16 text-center md:py-24">
+  <section class="bg-surface-botanical py-16 text-center md:py-16">
     <div class="mx-auto max-w-3xl px-4 md:px-8">
-      <LeafDivider />
       <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{ui.toc.howItWorks}</h2>
       <div class="mb-8 space-y-4 text-left text-sm leading-relaxed text-text-muted md:text-base">
         {HOW_IT_WORKS.paragraphs[lang].map((p) => <p>{p}</p>)}

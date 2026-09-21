@@ -15,10 +15,6 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 
 if (!prefersReducedMotion) {
   headerOverlay();
-  drawStrokes();
-  maskHeadlines();
-  countUpStats();
-  parallaxLayers();
   treatmentsMasterDetail();
 
 }

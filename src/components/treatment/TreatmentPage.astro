@@ -243,8 +243,11 @@ const heroImageAbsolute = new URL(treatment.image.src, Astro.site ?? "https://be
       const band = document.querySelector("[data-brand-band-start]");
       const links = Array.from(document.querySelectorAll("[data-toc-link]"));
       const targets = links
-        .map((link) => ({ link, el: document.getElementById(link.getAttribute("href").slice(1)) }))
-        .filter((t) => t.el);
+        .flatMap((link) => {
+          const href = link.getAttribute("href");
+          const el = href?.startsWith("#") ? document.getElementById(href.slice(1)) : null;
+          return el ? [{ link, el }] : [];
+        });
       const currentLabel = document.querySelector("[data-toc-current]");
       const clamp = (n: number) => Math.min(1, Math.max(0, n));
 

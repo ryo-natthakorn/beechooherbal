@@ -19,7 +19,6 @@
 // every page (CLAUDE.md §2); a second LINE control would be redundant chrome, the
 // same call treatment-pages.ts makes for the legacy LINE "Add Friend" badge.
 import { Image } from "astro:assets";
-import LeafDivider from "../LeafDivider.astro";
 import HerbalStrokes from "../HerbalStrokes.astro";
 import { CATEGORIES, PRODUCTS, PRODUCTS_INTRO, PRODUCTS_CTA, LOCATIONS_BANNER, PRODUCTS_SEO, type Lang, type CategoryId } from "../../data/products";
 import { UI } from "../../i18n/ui";
@@ -50,9 +49,6 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
     <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-on-action/10" />
     <div class="relative mx-auto max-w-3xl px-4 md:px-8">
       <h1 class={`mb-6 ${serif} text-3xl font-bold${balance} md:text-5xl`}>{PRODUCTS_SEO.title[lang]?.split(" - ")[0]}</h1>
-      <div class="space-y-3 text-sm leading-relaxed text-on-action/90 md:text-base">
-        {PRODUCTS_INTRO.paragraphs[lang]!.map((p) => <p>{p}</p>)}
-      </div>
       <a
         href={PRODUCTS_CTA.href}
         target="_blank"
@@ -79,9 +75,8 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
   </nav>
 
   <!-- Bee Choo Shampoos -->
-  <section id={shampoos.id} class="products-section bg-surface py-16 md:py-24">
+  <section id={shampoos.id} class="products-section bg-surface py-16 md:py-16">
     <div class="mx-auto max-w-6xl px-4 md:px-8">
-      <LeafDivider />
       <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{shampoos.heading}</h2>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {byCategory(shampoos.id).map((product) => (
@@ -126,10 +121,15 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
     </div>
   </section>
 
+  <section class="bg-surface py-10 md:py-14" aria-label={PRODUCTS_SEO.title[lang]?.split(" - ")[0]}>
+    <div class="mx-auto max-w-3xl space-y-4 px-4 text-left text-text-muted leading-relaxed md:px-8">
+      {PRODUCTS_INTRO.paragraphs[lang]!.map((p) => <p>{p}</p>)}
+    </div>
+  </section>
+
   <!-- Bee Choo Conditioners -->
-  <section id={conditioners.id} class="products-section bg-surface-botanical py-16 md:py-24">
+  <section id={conditioners.id} class="products-section bg-surface-botanical py-16 md:py-16">
     <div class="mx-auto max-w-6xl px-4 md:px-8">
-      <LeafDivider />
       <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{conditioners.heading}</h2>
       <div class="mx-auto grid max-w-3xl gap-6 sm:grid-cols-2">
         {byCategory(conditioners.id).map((product) => (
@@ -166,9 +166,8 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
   </section>
 
   <!-- Bee Choo Hair Tonics -->
-  <section id={tonics.id} class="products-section bg-surface py-16 md:py-24">
+  <section id={tonics.id} class="products-section bg-surface py-16 md:py-16">
     <div class="mx-auto max-w-6xl px-4 md:px-8">
-      <LeafDivider />
       <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{tonics.heading}</h2>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {byCategory(tonics.id).map((product) => (
@@ -215,9 +214,8 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
   </section>
 
   <!-- Bee Choo Spas, Serum and Cremes -->
-  <section id={spas.id} class="products-section bg-surface-muted py-16 md:py-24">
+  <section id={spas.id} class="products-section bg-surface-muted py-16 md:py-16">
     <div class="mx-auto max-w-6xl px-4 md:px-8">
-      <LeafDivider />
       <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{spas.heading}</h2>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {byCategory(spas.id).map((product) => (
@@ -260,9 +258,8 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
   </section>
 
   <!-- Locations band -->
-  <section class="bg-surface py-16 text-center md:py-24">
+  <section class="bg-surface py-16 text-center md:py-16">
     <div class="mx-auto max-w-2xl px-4 md:px-8">
-      <LeafDivider />
       <Image src={LOCATIONS_BANNER.image[lang]} alt={LOCATIONS_BANNER.alt[lang]} width={800} height={566} class="mx-auto h-auto w-full rounded-2xl shadow-soft-lg" />
       <a
         href={HOME.locations.href[lang]}

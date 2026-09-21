@@ -11,7 +11,6 @@
 // FAQ page: this is a comparison article meant to be read straight through, not a
 // set of discrete, mutually-independent questions.
 import { Image } from "astro:assets";
-import LeafDivider from "../LeafDivider.astro";
 import HerbalStrokes from "../HerbalStrokes.astro";
 import YouTubeEmbed from "../YouTubeEmbed.astro";
 import LocationsBand from "../LocationsBand.astro";
@@ -43,9 +42,8 @@ const balance = lang === "en" ? " text-balance" : "";
   </section>
 
   <!-- Intro -->
-  <section class="bg-surface py-16 md:py-24">
+  <section class="bg-surface py-16 md:py-16">
     <div class="mx-auto max-w-3xl space-y-4 px-4 md:px-8">
-      <LeafDivider />
       {TRANSPLANT_INTRO.paragraphs1[lang].map((p) => <p class="text-sm leading-relaxed text-text-muted md:text-base">{p}</p>)}
       <h2 class={`pt-4 ${serif} text-xl font-bold text-action`}>{TRANSPLANT_INTRO.subheading[lang]}</h2>
       {TRANSPLANT_INTRO.paragraphs2[lang].map((p) => <p class="text-sm leading-relaxed text-text-muted md:text-base">{p}</p>)}
@@ -55,9 +53,8 @@ const balance = lang === "en" ? " text-balance" : "";
 
   <!-- 4 comparison sections -->
   {COMPARISON_SECTIONS.map((section, i) => (
-    <section class={`py-16 md:py-24 ${i % 2 === 0 ? "bg-surface-muted" : "bg-surface"}`}>
+    <section class={`py-16 md:py-16 ${i % 2 === 0 ? "bg-surface-muted" : "bg-surface"}`}>
       <div class="mx-auto max-w-4xl px-4 md:px-8">
-        <LeafDivider />
         <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
           {section.heading[lang]}
         </h2>
@@ -104,9 +101,8 @@ const balance = lang === "en" ? " text-balance" : "";
   ))}
 
   <!-- Clinics warning -->
-  <section class="bg-surface-muted py-16 md:py-24">
+  <section class="bg-surface-muted py-16 md:py-16">
     <div class="mx-auto max-w-3xl px-4 md:px-8">
-      <LeafDivider />
       <h2 data-mask-reveal class={`mb-6 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
         {CLINICS_WARNING.heading[lang]}
       </h2>
@@ -115,9 +111,8 @@ const balance = lang === "en" ? " text-balance" : "";
   </section>
 
   <!-- Natural Alternative -->
-  <section class="bg-surface py-16 md:py-24">
+  <section class="bg-surface py-16 md:py-16">
     <div class="mx-auto max-w-3xl px-4 md:px-8">
-      <LeafDivider />
       <h2 data-mask-reveal class={`mb-6 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
         {NATURAL_ALTERNATIVE.heading[lang]}
       </h2>
@@ -167,9 +162,8 @@ const balance = lang === "en" ? " text-balance" : "";
   </section>
 
   <!-- Video -->
-  <section class="bg-surface-muted py-16 text-center md:py-24">
+  <section class="bg-surface-muted py-16 text-center md:py-16">
     <div class="mx-auto max-w-3xl px-4 md:px-8">
-      <LeafDivider />
       <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
         {NATURAL_ALTERNATIVE.videoHeading[lang]}
       </h2>

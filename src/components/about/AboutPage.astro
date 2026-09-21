@@ -13,7 +13,6 @@
 // operator line. The legacy trailing FB/YouTube/LINE block is the site Footer already
 // (BaseLayout renders it) — not reproduced here as page content.
 import { Image } from "astro:assets";
-import LeafDivider from "../LeafDivider.astro";
 import HerbalStrokes from "../HerbalStrokes.astro";
 import YouTubeEmbed from "../YouTubeEmbed.astro";
 import { ABOUT, type Lang } from "../../data/about";
@@ -47,9 +46,8 @@ const balance = lang === "en" ? " text-balance" : "";
     </section>
 
     <!-- Logo story -->
-    <section class="bg-surface py-16 md:py-24">
+    <section class="bg-surface py-16 md:py-16">
       <div class="mx-auto max-w-5xl px-4 md:px-8">
-        <LeafDivider />
         <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
           {a.logoStory.heading[lang]}
         </h2>
@@ -63,9 +61,8 @@ const balance = lang === "en" ? " text-balance" : "";
     </section>
 
     <!-- Brand philosophy -->
-    <section class="bg-surface-muted py-16 md:py-24">
+    <section class="bg-surface-muted py-16 md:py-16">
       <div class="mx-auto max-w-3xl px-4 md:px-8">
-        <LeafDivider />
         <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
           {a.philosophy.heading[lang]}
         </h2>
@@ -76,9 +73,8 @@ const balance = lang === "en" ? " text-balance" : "";
     </section>
 
     <!-- Customer video -->
-    <section class="bg-surface py-16 text-center md:py-24">
+    <section class="bg-surface py-16 text-center md:py-16">
       <div class="mx-auto max-w-3xl px-4 md:px-8">
-        <LeafDivider />
         <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
           {a.video.heading[lang]}
         </h2>
@@ -87,12 +83,11 @@ const balance = lang === "en" ? " text-balance" : "";
     </section>
 
     <!-- Values / Vision / Mission -->
-    <section class="bg-surface-muted py-16 md:py-24">
+    <section class="bg-surface-muted py-16 md:py-16">
       <div class="mx-auto max-w-5xl px-4 md:px-8">
-        <LeafDivider />
         <div class="grid gap-6 md:grid-cols-3">
           {[a.values, a.vision, a.mission].map((block) => (
-            <div class="rounded-2xl border border-line bg-surface p-6 text-left shadow-soft">
+            <div class="border-t border-line py-6 text-left">
               <h2 class={`mb-4 ${serif} text-lg font-bold text-action md:text-xl`}>{block.heading[lang]}</h2>
               <ul class="space-y-2.5 text-sm leading-relaxed text-text-muted">
                 {block.items

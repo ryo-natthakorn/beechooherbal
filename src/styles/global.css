@@ -220,7 +220,7 @@
   }
   @media (prefers-reduced-motion: no-preference) {
     .toc {
-      transition: width 300ms var(--ease-spring);
+      transition: none;
     }
   }
 }
@@ -570,33 +570,6 @@
   .treatment-row,
   .md-label {
     transition: none;
-  }
-}
-
-/* Language pill dock. The pill is fixed bottom-right on mobile, and the footer's last
-   row (the social icons, 44px targets) lands in exactly that corner — at full scroll the
-   pill covered part of the TikTok tap target at 320-414px in both languages. Reserving
-   footer padding would have cost ~64px of the height this pass is meant to remove, so
-   instead the pill lives in a zero-height STICKY dock whose containing block stops at the
-   end of the page content: it floats 1rem off the viewport bottom exactly as before, then
-   parks at the footer's top edge and can never enter the footer. Zero JS, no reserved
-   space, language- and width-independent.
-   height:0 + align-items:flex-end makes the pill overflow UPWARD from the dock's own
-   zero-height line, so the dock contributes nothing to document height. */
-@media (max-width: 767.98px) {
-  .lang-dock {
-    position: sticky;
-    bottom: 1rem;
-    z-index: 30;
-    display: flex;
-    height: 0;
-    align-items: flex-end;
-    justify-content: flex-end;
-    padding-inline: 0.75rem;
-    pointer-events: none;
-  }
-  .lang-dock > * {
-    pointer-events: auto;
   }
 }
 
@@ -952,3 +925,10 @@
 .treatment-main [data-section-tone]::before { background-color: transparent; }
 .bg-surface-botanical .text-text-muted,
 [data-section-tone="botanical"] .text-text-muted { color: var(--color-text-botanical); }
+
+/* Stable reading surfaces: no repeated scroll entrances or automatic carousels. */
+.reveal { animation: none; }
+.team-fader, .reviews-fader { aspect-ratio: auto; }
+.team-fade-item, .reviews-fade-item { position: static; opacity: 1; animation: none; }
+.brand-band > section { padding-block: 2.5rem; }
+.brand-band .leaf-divider { display: none; }

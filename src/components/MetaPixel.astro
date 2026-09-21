@@ -12,7 +12,7 @@
 // component to individual pages.
 //
 // `part` splits the snippet because its two halves belong in different places:
-//   "head" → the loader <script>, in <head>, as early as Meta's snippet expects
+//   "head" → the loader script, in the document head, as early as Meta's snippet expects
 //   "body" → the <noscript> beacon, which is invalid inside <head>
 interface Props {
   part: "head" | "body";
