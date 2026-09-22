@@ -80,6 +80,12 @@
 .btn-tactile:active {
   transform: scale(0.97);
 }
+@media (prefers-reduced-motion: reduce) {
+  .btn-tactile, .btn-tactile:hover, .btn-tactile:active {
+    transform: none;
+    transition: none;
+  }
+}
 
 /* Scroll-driven section reveal — zero JS. Content is fully visible by default;
    the animation only engages when the browser supports scroll timelines AND the
