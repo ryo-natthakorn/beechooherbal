@@ -9,39 +9,43 @@
 @import "@fontsource/noto-serif-thai/400.css";
 @import "@fontsource/noto-serif-thai/700.css";
 
-/* Botanical UI palette. Original logo/media colours remain untouched. */
+/* Brand guide R4: white/light surfaces, Harmony Green and Oriental Yellow.
+   Supporting surfaces are explicit tints of the guide's colours, not a new palette. */
 @theme {
-  --color-canvas: #F7F5EF;
-  --color-surface: #FFFDF8;
-  --color-surface-muted: #ECE8DF;
+  --color-canvas: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --color-surface-muted: color-mix(in srgb, #dbcbc1 18%, white);
   --color-text: #292D29;
-  --color-text-muted: #62675F;
-  --color-action: #326348;
-  --color-action-hover: #203F30;
-  --color-on-action: #F7F5EF;
-  --color-line: #D8D7CE;
-  --color-accent: #B4934E;
-  --color-focus: #326348;
-  --color-surface-botanical: #E6EDDF;
-  --color-surface-highlight: #F2E8CE;
-  --color-text-botanical: #4C6251;
+  --color-text-muted: #6F6259;
+  --color-action: #2D6946;
+  --color-action-hover: color-mix(in srgb, #2D6946 85%, black);
+  --color-on-action: #FFFFFF;
+  --color-line: #DBCBC1;
+  --color-accent: #DAC556;
+  --color-cta: #FFC600;
+  --color-cta-hover: color-mix(in srgb, #FFC600 85%, white);
+  --color-focus: #2D6946;
+  --color-surface-botanical: color-mix(in srgb, #2D6946 6%, white);
+  --color-surface-highlight: color-mix(in srgb, #FFC600 15%, white);
+  --color-text-botanical: #2D6946;
 
   /* Compatibility aliases for shared data and existing brand-based utilities. */
   --color-brand-green: var(--color-action);
   --color-brand-green-deep: var(--color-action-hover);
   --color-brand-green-mist: var(--color-surface-botanical);
-  --color-brand-yellow: var(--color-accent);
+  --color-brand-yellow: var(--color-cta);
   --color-brand-earth: var(--color-line);
   --color-brand-sand: var(--color-canvas);
   --color-brand-origin: var(--color-text-muted);
   --color-brand-ink: var(--color-text);
-  --color-brand-serenity: var(--color-surface-botanical);
-  --color-brand-root: var(--color-action);
+  --color-brand-serenity: #B2E1D8;
+  --color-brand-root: #D47E00;
   --color-brand-treasure: var(--color-accent);
-  --color-brand-pink: var(--color-surface-muted);
-  --color-brand-nude: var(--color-surface-muted);
+  --color-brand-pink: #EFA693;
+  --color-brand-nude: #F6B9A7;
   /* Body text: Roboto (EN) / Noto Sans Thai (TH). Headings: Lora (EN) / Noto Serif Thai (TH) —
-     the brand guide's digital typeface set (Lora stands in for print-only Minion Pro). */
+     Lora is specified for digital. Roboto (print in the guide) and the Thai families
+     are explicit user-approved web exceptions, confirmed 2026-09-22. */
   --font-sans: "Roboto", system-ui, sans-serif;
   --font-thai: "Noto Sans Thai", sans-serif;
   --font-serif: "Lora", Georgia, serif;

@@ -1,12 +1,6 @@
 ---
 // src/components/home/ReviewsWall.astro
-// Reveal-and-disappear testimonial fader (redesign revision): the 4 reviews crossfade
-// one at a time in a shared square frame — a slow reveal in, a hold, then a fade out
-// before the next one starts — instead of the old two-column marquee (whose fixed-height
-// grey box left too much empty space around only 2 short columns). Zero-JS: a single
-// CSS keyframe animation, staggered per item via a negative animation-delay so exactly
-// one is visible at any time. Reduced motion collapses to a plain static stack of all 4
-// (see .reviews-fade-item rules in global.css) — nothing content-bearing ships hidden.
+// Original review images in a static reading grid; no automatic crossfade or crop.
 import { Image } from "astro:assets";
 import LeafDivider from "../LeafDivider.astro";
 import YouTubeEmbed from "../YouTubeEmbed.astro";
@@ -43,10 +37,10 @@ const bgClass = background === "white" ? "bg-surface" : "bg-surface-muted";
     <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
       {sectionHeading}
     </h2>
-    <div class="reviews-fader relative mx-auto max-w-md">
-      {t.items.map((review, i) => (
-        <div class="reviews-fade-item overflow-hidden rounded-xl shadow-soft" style={`--i:${i}`}>
-          <Image src={review.img} alt={review.alt[lang]} width={500} height={500} class="h-full w-full object-cover" />
+    <div class="reviews-gallery mx-auto grid max-w-4xl gap-4 md:grid-cols-2">
+      {t.items.map((review) => (
+        <div class="overflow-hidden">
+          <Image src={review.img} alt={review.alt[lang]} width={500} height={500} class="h-auto w-full object-contain" />
         </div>
       ))}
     </div>

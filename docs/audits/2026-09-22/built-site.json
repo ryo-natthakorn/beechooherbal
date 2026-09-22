@@ -1,0 +1,2017 @@
+{
+  "pages": 93,
+  "failed": 0,
+  "results": [
+    {
+      "route": "/404.html",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/404/",
+      "description": "The page you are looking for could not be found. Browse our herbal hair and scalp treatments, or find your nearest Bee Choo outlet.",
+      "alternates": [],
+      "images": 3,
+      "localMedia": 2,
+      "issues": []
+    },
+    {
+      "route": "/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/",
+      "description": "Award-winning 100% natural herbal hair and scalp treatment clinic in Bangkok, Thailand. Hair loss, oily scalp, dandruff, grey hair and more.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/home/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/"
+        }
+      ],
+      "images": 45,
+      "localMedia": 48,
+      "issues": []
+    },
+    {
+      "route": "/โรคผมร่วงและทรีทเม้นท์/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/%E0%B9%82%E0%B8%A3%E0%B8%84%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%97%E0%B9%80%E0%B8%A1%E0%B9%89%E0%B8%99%E0%B8%97%E0%B9%8C/",
+      "description": "ใครหลายคนที่มีการผมร่วงอาจไม่ทราบว่าโรคผมร่วงมีหลายแบบ โดยโรคผมร่วงแบ่งออกเป็นห้าแบบหลัก แต่ละประเภทมีสาเหตุที่แตกต่างกัน และวิธีแก้ที่แตกต่างกัน",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/suffering-from-alopecia-hair-loss-natural-herbal-treatment-in-bangkok-thailand/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/%E0%B9%82%E0%B8%A3%E0%B8%84%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%97%E0%B9%80%E0%B8%A1%E0%B9%89%E0%B8%99%E0%B8%97%E0%B9%8C/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/suffering-from-alopecia-hair-loss-natural-herbal-treatment-in-bangkok-thailand/"
+        }
+      ],
+      "images": 11,
+      "localMedia": 10,
+      "issues": []
+    },
+    {
+      "route": "/แก้ปัญหาหนังศีรษะแบบถึ/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/%E0%B9%81%E0%B8%81%E0%B9%89%E0%B8%9B%E0%B8%B1%E0%B8%8D%E0%B8%AB%E0%B8%B2%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B8%96%E0%B8%B6/",
+      "description": "การที่มีหนังศีรษะสุขภาพดีจะส่งผลให้สุขภาพเส้นผมดีไปด้วย เพราะการบำรุงหนังศีรษะคือวิธีการบำรุงตั้งแต่รากผม สามารถลดอาการผมร่วงให้น้อยลง ...",
+      "alternates": [],
+      "images": 12,
+      "localMedia": 11,
+      "issues": []
+    },
+    {
+      "route": "/อะไรเป็นสาเหตุของผมขาว/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/%E0%B8%AD%E0%B8%B0%E0%B9%84%E0%B8%A3%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%AA%E0%B8%B2%E0%B9%80%E0%B8%AB%E0%B8%95%E0%B8%B8%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%9C%E0%B8%A1%E0%B8%82%E0%B8%B2%E0%B8%A7/",
+      "description": "โดยปกติแล้ว ผมขาว ผมหงอก จะเริ่มปรากฏเมื่อร่างกายหยุดผลิตเมลานิน เมลานินนั้นจะช่วยทำให้ผมมีสีธรรมชาติและยังคงทำให้ผมมีความชุ่มชื่นอีกด้วย",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/dye-white-hair-naturally/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/%E0%B8%AD%E0%B8%B0%E0%B9%84%E0%B8%A3%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%AA%E0%B8%B2%E0%B9%80%E0%B8%AB%E0%B8%95%E0%B8%B8%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%9C%E0%B8%A1%E0%B8%82%E0%B8%B2%E0%B8%A7/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/dye-white-hair-naturally/"
+        }
+      ],
+      "images": 8,
+      "localMedia": 7,
+      "issues": []
+    },
+    {
+      "route": "/สระผมให้ถูกวิธี/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/%E0%B8%AA%E0%B8%A3%E0%B8%B0%E0%B8%9C%E0%B8%A1%E0%B9%83%E0%B8%AB%E0%B9%89%E0%B8%96%E0%B8%B9%E0%B8%81%E0%B8%A7%E0%B8%B4%E0%B8%98%E0%B8%B5/",
+      "description": "หลีกเลี่ยงการใช้เล็บในขณะที่สระผม การเกาหนังศีรษะอาจทำให้รู้สึกผ่อนคลาย สบายหัว แต่ว่าการเกาอาจส่งผลเสียให้กับหนังศีรษะโดยทำให้หนังศีรษะเป็นแผล",
+      "alternates": [],
+      "images": 6,
+      "localMedia": 5,
+      "issues": []
+    },
+    {
+      "route": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/%E0%B8%A3%E0%B8%B5%E0%B8%A7%E0%B8%B4%E0%B8%A7-%E0%B8%8B%E0%B8%B2%E0%B8%A5%E0%B8%AD%E0%B8%99%E0%B8%97%E0%B8%B3%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%97%E0%B9%80%E0%B8%A1%E0%B9%89%E0%B8%99%E0%B8%97%E0%B9%8C/",
+      "description": "เราได้ทำการค้นหา กลั่นกรองและรวบรวมซาลอนหรือร้านทำผมที่เป็นที่นิยมมากที่สุดของคนในกรุงเทพจากอินเตอร์เน็ต โซเชียลมีเดีย และกระทู้ต่าง ๆ",
+      "alternates": [],
+      "images": 17,
+      "localMedia": 16,
+      "issues": []
+    },
+    {
+      "route": "/รักษาผมร่วงครั้งแรก/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%A9%E0%B8%B2%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B9%81%E0%B8%A3%E0%B8%81/",
+      "description": "คนส่วนใหญ่มีความเสี่ยงที่จะใช้ผลิตภัณฑ์ที่เป็นสารเคมีอย่างเช่นสีย้อมผมมากเกินไปจนทำให้เกิดการระคายเคืองของหนักศีรษะและทำให้ผมร่วงและผมบาง",
+      "alternates": [],
+      "images": 14,
+      "localMedia": 13,
+      "issues": []
+    },
+    {
+      "route": "/พิชิตผมร่วงกับบีชู/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/%E0%B8%9E%E0%B8%B4%E0%B8%8A%E0%B8%B4%E0%B8%95%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9/",
+      "description": "ดิฉันคิดว่าเส้นผมและหนังศีรษะควรได้รับการดูแลอย่างเร่งด่วนเพื่อแก้ปัญหาผมร่วงที่ดิฉันเป็น สถานที่ที่ดิฉันคิดว่าสามารถแก้ปัญหาเส้นผม ...",
+      "alternates": [],
+      "images": 13,
+      "localMedia": 12,
+      "issues": []
+    },
+    {
+      "route": "/ปัญหาหนังศีรษะ/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/%E0%B8%9B%E0%B8%B1%E0%B8%8D%E0%B8%AB%E0%B8%B2%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0/",
+      "description": "ทรีทเม้นท์รักษาผมร่วงที่ Bee Choo จะช่วยให้สุขภาพเส้นผมและหนังศีรษะดีขึ้นจริงๆ และแน่นอนว่าดิฉันจะกลับมาเป็นลูกค้าที่ร้านนี้อย่างแน่นอน",
+      "alternates": [],
+      "images": 15,
+      "localMedia": 13,
+      "issues": []
+    },
+    {
+      "route": "/บีชูชลบุรีสาขาแรกนอกเข/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9%E0%B8%8A%E0%B8%A5%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81%E0%B8%99%E0%B8%AD%E0%B8%81%E0%B9%80%E0%B8%82/",
+      "description": "ร้าน Bee Choo ชลบุรี เปิดตัวเมื่อวันที่ 9 เมษายน 2566 ตั้งอยู่ข้างเซ็นทรัลชลบุรี ในคาซาลูนาร์ อเวนิว นี่เป็นสาขาแรกนอกกรุงเทพฯ!",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/first-outlet-outside-of-bangkok-bee-choo-chonburi/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9%E0%B8%8A%E0%B8%A5%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81%E0%B8%99%E0%B8%AD%E0%B8%81%E0%B9%80%E0%B8%82/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/first-outlet-outside-of-bangkok-bee-choo-chonburi/"
+        }
+      ],
+      "images": 17,
+      "localMedia": 15,
+      "issues": []
+    },
+    {
+      "route": "/ทำไมหนังศีรษะของฉันถึง/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/%E0%B8%97%E0%B8%B3%E0%B9%84%E0%B8%A1%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%89%E0%B8%B1%E0%B8%99%E0%B8%96%E0%B8%B6%E0%B8%87/",
+      "description": "หลาย ๆ คนที่มีปัญหาหนังศีรษะแห",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/scalp-dry-ways-combat-dry-scalp/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/%E0%B8%97%E0%B8%B3%E0%B9%84%E0%B8%A1%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%89%E0%B8%B1%E0%B8%99%E0%B8%96%E0%B8%B6%E0%B8%87/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/scalp-dry-ways-combat-dry-scalp/"
+        }
+      ],
+      "images": 8,
+      "localMedia": 7,
+      "issues": []
+    },
+    {
+      "route": "/ทำบุญเปิดร้านสาขาสยามส/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/%E0%B8%97%E0%B8%B3%E0%B8%9A%E0%B8%B8%E0%B8%8D%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%A2%E0%B8%B2%E0%B8%A1%E0%B8%AA/",
+      "description": "ภาพถ่ายและวิดีโอบันทึกความทรงจ",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/bee-choo-siam-square-make-merit/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/%E0%B8%97%E0%B8%B3%E0%B8%9A%E0%B8%B8%E0%B8%8D%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%A2%E0%B8%B2%E0%B8%A1%E0%B8%AA/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/bee-choo-siam-square-make-merit/"
+        }
+      ],
+      "images": 43,
+      "localMedia": 41,
+      "issues": []
+    },
+    {
+      "route": "/ช่วยเหลือเหล่าเด็กๆ-ที่/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/%E0%B8%8A%E0%B9%88%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%AB%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%AB%E0%B8%A5%E0%B9%88%E0%B8%B2%E0%B9%80%E0%B8%94%E0%B9%87%E0%B8%81%E0%B9%86-%E0%B8%97%E0%B8%B5%E0%B9%88/",
+      "description": "เราจะมุ่งหน้าไปที่จังหวัดน่านใ",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/naan-charity-trip-2019/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/%E0%B8%8A%E0%B9%88%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%AB%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%AB%E0%B8%A5%E0%B9%88%E0%B8%B2%E0%B9%80%E0%B8%94%E0%B9%87%E0%B8%81%E0%B9%86-%E0%B8%97%E0%B8%B5%E0%B9%88/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/naan-charity-trip-2019/"
+        }
+      ],
+      "images": 6,
+      "localMedia": 5,
+      "issues": []
+    },
+    {
+      "route": "/ขอแนะนำ-essence-shampoo-และ-essence-vitamins-สูตรใหม่/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/%E0%B8%82%E0%B8%AD%E0%B9%81%E0%B8%99%E0%B8%B0%E0%B8%99%E0%B8%B3-essence-shampoo-%E0%B9%81%E0%B8%A5%E0%B8%B0-essence-vitamins-%E0%B8%AA%E0%B8%B9%E0%B8%95%E0%B8%A3%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88/",
+      "description": "Essence Shampoo – รูปโฉม",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/introducing-essence-shampoo-and-newly-formulated-essence-vitamins/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/%E0%B8%82%E0%B8%AD%E0%B9%81%E0%B8%99%E0%B8%B0%E0%B8%99%E0%B8%B3-essence-shampoo-%E0%B9%81%E0%B8%A5%E0%B8%B0-essence-vitamins-%E0%B8%AA%E0%B8%B9%E0%B8%95%E0%B8%A3%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/introducing-essence-shampoo-and-newly-formulated-essence-vitamins/"
+        }
+      ],
+      "images": 9,
+      "localMedia": 7,
+      "issues": []
+    },
+    {
+      "route": "/top-10-non-touristy-things-to-do-in-bangkok/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/top-10-non-touristy-things-to-do-in-bangkok/",
+      "description": "I have found many interesting places which are lesser known to tourist because they are not advertised widely on the internet but are extremely popular with",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/top-10-non-touristy-things-to-do-in-bangkok/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/10-%E0%B8%AA%E0%B8%96%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AA%E0%B8%B4%E0%B9%88%E0%B8%87%E0%B8%99%E0%B9%88%E0%B8%B2%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/top-10-non-touristy-things-to-do-in-bangkok/"
+        }
+      ],
+      "images": 32,
+      "localMedia": 31,
+      "issues": []
+    },
+    {
+      "route": "/th/แชมพูบีชูป้องกันผมร่วง/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B9%81%E0%B8%8A%E0%B8%A1%E0%B8%9E%E0%B8%B9%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9%E0%B8%9B%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87/",
+      "description": "แชมพูป้องกันผมร่วง ปรับสภาพของเส้นผมและกระตุ้นการไหลเวียนของเลือดภายในรากผม โดยผสานพลังจาก AHASจากผลไม้จะช่วยผลัดเซลล์หนังศีรษะออกอย่างอ่อนโยน",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/bee-choo-hair-care-products/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B9%81%E0%B8%8A%E0%B8%A1%E0%B8%9E%E0%B8%B9%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9%E0%B8%9B%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/bee-choo-hair-care-products/"
+        }
+      ],
+      "images": 22,
+      "localMedia": 21,
+      "issues": []
+    },
+    {
+      "route": "/th/แก้ผมเสียเร่งด่วน/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B9%81%E0%B8%81%E0%B9%89%E0%B8%9C%E0%B8%A1%E0%B9%80%E0%B8%AA%E0%B8%B5%E0%B8%A2%E0%B9%80%E0%B8%A3%E0%B9%88%E0%B8%87%E0%B8%94%E0%B9%88%E0%B8%A7%E0%B8%99/",
+      "description": "น้ำยาย้อมผมตัวเด็ดของเรานั้น เป็นที่รู้กันดีว่าประกอบไปด้วยสมุนไพรจีนพื้นบ้านหลายชนิด ได้แก่ ชวนซง, โสม, ตังกุย, ห่อสิ่วโอว และเห็ดหลินจือ และในการทำทรีทเม้",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/repair-chemically-damaged-dry-hair-with-herbal-treatment/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B9%81%E0%B8%81%E0%B9%89%E0%B8%9C%E0%B8%A1%E0%B9%80%E0%B8%AA%E0%B8%B5%E0%B8%A2%E0%B9%80%E0%B8%A3%E0%B9%88%E0%B8%87%E0%B8%94%E0%B9%88%E0%B8%A7%E0%B8%99/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/repair-chemically-damaged-dry-hair-with-herbal-treatment/"
+        }
+      ],
+      "images": 48,
+      "localMedia": 44,
+      "issues": []
+    },
+    {
+      "route": "/th/เหตุการณ์และข่าว/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B9%80%E0%B8%AB%E0%B8%95%E0%B8%B8%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%82%E0%B9%88%E0%B8%B2%E0%B8%A7/",
+      "description": "ข่าวสารการเปิดสาขาใหม่และกิจกรรมของ Bee Choo Herbal ประเทศไทย ทรีทเม้นท์สมุนไพรดูแลหนังศีรษะและปัญหาผมร่วง",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/events-news-release/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B9%80%E0%B8%AB%E0%B8%95%E0%B8%B8%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%82%E0%B9%88%E0%B8%B2%E0%B8%A7/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/events-news-release/"
+        }
+      ],
+      "images": 21,
+      "localMedia": 20,
+      "issues": []
+    },
+    {
+      "route": "/th/เกี่ยวกับบีชู/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B9%80%E0%B8%81%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%A7%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9/",
+      "description": "บีชู ออริจิน ให้บริการทรีทเม้นท์สมุนไพรธรรมชาติดูแลเส้นผมและหนังศีรษะในประเทศไทยมากว่า 18 ปี อ่านเรื่องราว ค่านิยม และพันธกิจของเรา",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/about/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B9%80%E0%B8%81%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%A7%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/about/"
+        }
+      ],
+      "images": 6,
+      "localMedia": 5,
+      "issues": []
+    },
+    {
+      "route": "/th/หนังศีรษะติดเชื้อ/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0%E0%B8%95%E0%B8%B4%E0%B8%94%E0%B9%80%E0%B8%8A%E0%B8%B7%E0%B9%89%E0%B8%AD/",
+      "description": "สำหรับลูกค้าที่เผชิญหน้ากับการติดเชื้อจากแบคทีเรียและเชื้อรา พวกเรามีเสปรย์ป้องกันแบคทีเรียซึ่งใช้ควบคู่กับการทำทรีทเม้นท์สมุนไพรจะช่วยกำจัดการติดเชื้ออย่าง",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/herbal-treatment-cure-for-bacteria-infection-alopecia-areata-and-other-hair-diseases/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0%E0%B8%95%E0%B8%B4%E0%B8%94%E0%B9%80%E0%B8%8A%E0%B8%B7%E0%B9%89%E0%B8%AD/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/herbal-treatment-cure-for-bacteria-infection-alopecia-areata-and-other-hair-diseases/"
+        }
+      ],
+      "images": 49,
+      "localMedia": 45,
+      "issues": []
+    },
+    {
+      "route": "/th/สมุนไพร-vs-การปลูกผม/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B8%AA%E0%B8%A1%E0%B8%B8%E0%B8%99%E0%B9%84%E0%B8%9E%E0%B8%A3-vs-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9B%E0%B8%A5%E0%B8%B9%E0%B8%81%E0%B8%9C%E0%B8%A1/",
+      "description": "เปรียบเทียบการปลูกผม สเต็มเซลล์บำบัด เคราตินทรีทเม้นท์ และการสักไรผม กับทรีทเม้นท์สมุนไพรจากธรรมชาติของบีชู เฮอร์บัล",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/hair-transplant-vs-stem-cell-vs-keratin-treatment-vs-natural-herbal-treatment/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%AA%E0%B8%A1%E0%B8%B8%E0%B8%99%E0%B9%84%E0%B8%9E%E0%B8%A3-vs-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9B%E0%B8%A5%E0%B8%B9%E0%B8%81%E0%B8%9C%E0%B8%A1/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/hair-transplant-vs-stem-cell-vs-keratin-treatment-vs-natural-herbal-treatment/"
+        }
+      ],
+      "images": 15,
+      "localMedia": 14,
+      "issues": []
+    },
+    {
+      "route": "/th/สถานที่ตั้งของร้านค้า/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B8%AA%E0%B8%96%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2/",
+      "description": "ค้นหาสาขาบีชู เฮอร์บัล ที่ใกล้คุณที่สุดทั่วประเทศไทย พร้อมเวลาทำการ เบอร์โทรศัพท์ และเส้นทางการเดินทางของทุกสาขา",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/locations/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%AA%E0%B8%96%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/locations/"
+        }
+      ],
+      "images": 4,
+      "localMedia": 3,
+      "issues": []
+    },
+    {
+      "route": "/th/วิธีแก้หนังศีรษะมัน/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B8%A7%E0%B8%B4%E0%B8%98%E0%B8%B5%E0%B9%81%E0%B8%81%E0%B9%89%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0%E0%B8%A1%E0%B8%B1%E0%B8%99/",
+      "description": "ปัญหาหนังศีรษะมันเป็นปัญหาธรรมดาที่สามารถรักษาได้ด้วย บีชู เฮอร์เบิล ทรีทเม้นท์ ที่ซาลอน/คลินิก บีชู ของเรา น้ำยาทรีทเม้นท์นั้นทำจาก เห็ดหลินจือ ซึ่งรู้กัน",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/herbal-treatment-to-get-rid-of-oily-scalp-hair/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%A7%E0%B8%B4%E0%B8%98%E0%B8%B5%E0%B9%81%E0%B8%81%E0%B9%89%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0%E0%B8%A1%E0%B8%B1%E0%B8%99/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/herbal-treatment-to-get-rid-of-oily-scalp-hair/"
+        }
+      ],
+      "images": 47,
+      "localMedia": 42,
+      "issues": []
+    },
+    {
+      "route": "/th/รีวิวทรีทเม้นท์ที่ดี/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B8%A3%E0%B8%B5%E0%B8%A7%E0%B8%B4%E0%B8%A7%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%97%E0%B9%80%E0%B8%A1%E0%B9%89%E0%B8%99%E0%B8%97%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%94%E0%B8%B5/",
+      "description": "เรื่องราวจากลูกค้าจริงของบีชู เฮอร์บัล ประเทศไทย ปัญหาผมร่วง รังแค หนังศีรษะมัน ติดเชื้อแบคทีเรีย ผมขาว และผมร่วงหลังคลอด บอกเล่าโดยลูกค้าเอง",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/reviews-and-testimonials-of-bee-choo-origin-treatment/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%A3%E0%B8%B5%E0%B8%A7%E0%B8%B4%E0%B8%A7%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%97%E0%B9%80%E0%B8%A1%E0%B9%89%E0%B8%99%E0%B8%97%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%94%E0%B8%B5/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/reviews-and-testimonials-of-bee-choo-origin-treatment/"
+        }
+      ],
+      "images": 18,
+      "localMedia": 17,
+      "issues": []
+    },
+    {
+      "route": "/th/ราคาการทำทรีทเม้นท์/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%97%E0%B8%B3%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%97%E0%B9%80%E0%B8%A1%E0%B9%89%E0%B8%99%E0%B8%97%E0%B9%8C/",
+      "description": "คุณเคยสังเกตไหมว่าคุณไม่สามารถหาราคาการทำทรีทเม้นท์รักษาปัญหาหนังศีรษะและเส้นผมผ่านทางเว็บไซต์ของคลินิกหรือซาลอนส่วนใหญ่ได้ และวีธีเดียวที่คุณสามารถทราบ",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/hair-loss-treatment-cost-in-thailand-prices-revealed/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%97%E0%B8%B3%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%97%E0%B9%80%E0%B8%A1%E0%B9%89%E0%B8%99%E0%B8%97%E0%B9%8C/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/hair-loss-treatment-cost-in-thailand-prices-revealed/"
+        }
+      ],
+      "images": 6,
+      "localMedia": 5,
+      "issues": []
+    },
+    {
+      "route": "/th/รักษารังแค-ขจัดรังแค-ให้/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%A9%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%87%E0%B9%81%E0%B8%84-%E0%B8%82%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B8%A3%E0%B8%B1%E0%B8%87%E0%B9%81%E0%B8%84-%E0%B9%83%E0%B8%AB%E0%B9%89/",
+      "description": "น้ำยาทรีทเม้นท์ของ บีชู มีส่วนประกอบของเห็ดหลินจือที่จะช่วยปรับสภาพของหนังศีรษะให้อยู่ในสภาพที่เป็นปกติ โกฐหัวบัวจะช่วยในการไหลเวียนโลหิตซึ่งจะทำให้การทำงาน",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/cure-dandruff-hair-with-herbal-treatment/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%A9%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%87%E0%B9%81%E0%B8%84-%E0%B8%82%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B8%A3%E0%B8%B1%E0%B8%87%E0%B9%81%E0%B8%84-%E0%B9%83%E0%B8%AB%E0%B9%89/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/cure-dandruff-hair-with-herbal-treatment/"
+        }
+      ],
+      "images": 49,
+      "localMedia": 49,
+      "issues": []
+    },
+    {
+      "route": "/th/ภาวะผมร่วงเฉียบพลันของ/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B8%A0%E0%B8%B2%E0%B8%A7%E0%B8%B0%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B9%80%E0%B8%89%E0%B8%B5%E0%B8%A2%E0%B8%9A%E0%B8%9E%E0%B8%A5%E0%B8%B1%E0%B8%99%E0%B8%82%E0%B8%AD%E0%B8%87/",
+      "description": "ปัญหาภาวะผมร่วงเฉียบพลันที่คุณแม่หลังคลอด ต้องประสบพบเจอในช่วงระยะเวลา 2-4 เดือนหลังคลอดบุตร.ลองมาดูว่าเราจะสามารถแก้ปัญหาเหล่านี้ด้วยวิธี...",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/postpartum-hair-loss-treatment-in-thailand/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%A0%E0%B8%B2%E0%B8%A7%E0%B8%B0%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B9%80%E0%B8%89%E0%B8%B5%E0%B8%A2%E0%B8%9A%E0%B8%9E%E0%B8%A5%E0%B8%B1%E0%B8%99%E0%B8%82%E0%B8%AD%E0%B8%87/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/postpartum-hair-loss-treatment-in-thailand/"
+        }
+      ],
+      "images": 51,
+      "localMedia": 51,
+      "issues": []
+    },
+    {
+      "route": "/th/ปิดผมหงอกวิธีธรรมชาติ/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%9C%E0%B8%A1%E0%B8%AB%E0%B8%87%E0%B8%AD%E0%B8%81%E0%B8%A7%E0%B8%B4%E0%B8%98%E0%B8%B5%E0%B8%98%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%8A%E0%B8%B2%E0%B8%95%E0%B8%B4/",
+      "description": "โดยปกติแล้วหนังศีรษะของลูกค้าของเราจะได้รับการรักษาไปพร้อมๆกับการปกปิดผมหงอกและผมขาวโดยผลิตภัณฑ์ บีชู เฮอร์เบิล จะช่วยปกปิดผมขาวตั้งแต่โคนจรดปลายโดยไม่ก่อ",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/reverse-premature-grey-white-hair-by-herbal-treatment/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%9C%E0%B8%A1%E0%B8%AB%E0%B8%87%E0%B8%AD%E0%B8%81%E0%B8%A7%E0%B8%B4%E0%B8%98%E0%B8%B5%E0%B8%98%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%8A%E0%B8%B2%E0%B8%95%E0%B8%B4/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/reverse-premature-grey-white-hair-by-herbal-treatment/"
+        }
+      ],
+      "images": 49,
+      "localMedia": 47,
+      "issues": []
+    },
+    {
+      "route": "/th/ทีม/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B8%97%E0%B8%B5%E0%B8%A1/",
+      "description": "รู้จักผู้ก่อตั้งบีชู ออริจิน ประเทศไทย ริค ลิม และ คริสปิน ฟรานซิส ผู้ร่วมก่อตั้ง อาร์ ซี บิซซิเนส กรุ๊ป",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/team/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%97%E0%B8%B5%E0%B8%A1/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/team/"
+        }
+      ],
+      "images": 9,
+      "localMedia": 8,
+      "issues": []
+    },
+    {
+      "route": "/th/ซาลอน-คลินิกรักษาผมร่วง/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B8%8B%E0%B8%B2%E0%B8%A5%E0%B8%AD%E0%B8%99-%E0%B8%84%E0%B8%A5%E0%B8%B4%E0%B8%99%E0%B8%B4%E0%B8%81%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%A9%E0%B8%B2%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87/",
+      "description": "คลินิกรักษาผมร่วงที่มี ทรีทเม้นท์แก้ปัญหาผมร่วง รักษาผมบาง จากสมุนไพรธรรมชาติ 100 เปอร์เซ็นต์ ราคาเป็นมิตรและเข้าถึงได้ง่าย",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/scalp-hair-loss-treatment-salon-clinic-in-bangkok/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%8B%E0%B8%B2%E0%B8%A5%E0%B8%AD%E0%B8%99-%E0%B8%84%E0%B8%A5%E0%B8%B4%E0%B8%99%E0%B8%B4%E0%B8%81%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%A9%E0%B8%B2%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/scalp-hair-loss-treatment-salon-clinic-in-bangkok/"
+        }
+      ],
+      "images": 48,
+      "localMedia": 45,
+      "issues": []
+    },
+    {
+      "route": "/th/คำถามที่พบบ่อย/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/%E0%B8%84%E0%B8%B3%E0%B8%96%E0%B8%B2%E0%B8%A1%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%9E%E0%B8%9A%E0%B8%9A%E0%B9%88%E0%B8%AD%E0%B8%A2/",
+      "description": "ในส่วนนี้เราได้ตอบคำถามที่พบบ่อยจากลูกค้าของเรา หรือถ้าคุณลูกค้ามีข้อสงสัยอะไรสามารถส่งข้อความหาเราได้ทางเฟสบุ๊ค",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/frequently-asked-questions/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%84%E0%B8%B3%E0%B8%96%E0%B8%B2%E0%B8%A1%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%9E%E0%B8%9A%E0%B8%9A%E0%B9%88%E0%B8%AD%E0%B8%A2/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/frequently-asked-questions/"
+        }
+      ],
+      "images": 7,
+      "localMedia": 6,
+      "issues": []
+    },
+    {
+      "route": "/th/home/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/home/",
+      "description": "คลินิกทรีตเมนต์สมุนไพรธรรมชาติ 100% รักษาผมร่วง หนังศีรษะมัน รังแค ผมขาว ในกรุงเทพฯ ได้รับรางวัลการันตี",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/home/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/"
+        }
+      ],
+      "images": 45,
+      "localMedia": 48,
+      "issues": []
+    },
+    {
+      "route": "/th/category/บล็อก/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/th/category/%E0%B8%9A%E0%B8%A5%E0%B9%87%E0%B8%AD%E0%B8%81/",
+      "description": "บทความและคำแนะนำเรื่องเส้นผมและหนังศีรษะจาก Bee Choo Herbal ประเทศไทย ทั้งสาเหตุของผมร่วง ผมหงอก หนังศีรษะแห้ง และสถานที่น่าไปในกรุงเทพ",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/category/blog/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/category/%E0%B8%9A%E0%B8%A5%E0%B9%87%E0%B8%AD%E0%B8%81/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/category/blog/"
+        }
+      ],
+      "images": 15,
+      "localMedia": 14,
+      "issues": []
+    },
+    {
+      "route": "/team/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/team/",
+      "description": "Meet the founders of Bee Choo Origin Thailand — Rick Lim and Crispin Francis, co-founders of R.C. Business Group.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/team/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%97%E0%B8%B5%E0%B8%A1/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/team/"
+        }
+      ],
+      "images": 9,
+      "localMedia": 8,
+      "issues": []
+    },
+    {
+      "route": "/suffering-from-mild-hair-loss-in-your-30s-she-found-the-perfect-solution/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/suffering-from-mild-hair-loss-in-your-30s-she-found-the-perfect-solution/",
+      "description": "I noticed that I was having minor hair fall and an increase in oiliness in my scalp! Hi, I am Ploy, I am writing this blog post for any ladies",
+      "alternates": [],
+      "images": 12,
+      "localMedia": 11,
+      "issues": []
+    },
+    {
+      "route": "/suffering-from-alopecia-hair-loss-natural-herbal-treatment-in-bangkok-thailand/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/suffering-from-alopecia-hair-loss-natural-herbal-treatment-in-bangkok-thailand/",
+      "description": "Alopecia means hair loss. However, not everyone suffering for alopecia have the same exact form of hair loss. Different types of alopecia exist, and not everyone with alopecia is diagnosed with the same thing. Here, we will take a look at some of the most common types of alopecia.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/suffering-from-alopecia-hair-loss-natural-herbal-treatment-in-bangkok-thailand/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/%E0%B9%82%E0%B8%A3%E0%B8%84%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%97%E0%B9%80%E0%B8%A1%E0%B9%89%E0%B8%99%E0%B8%97%E0%B9%8C/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/suffering-from-alopecia-hair-loss-natural-herbal-treatment-in-bangkok-thailand/"
+        }
+      ],
+      "images": 11,
+      "localMedia": 10,
+      "issues": []
+    },
+    {
+      "route": "/soft-opening-บช-สาขาสขสวสดในวนท-19-กนย/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/soft-opening-%E0%B8%9A%E0%B8%8A-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%82%E0%B8%AA%E0%B8%A7%E0%B8%AA%E0%B8%94%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%97-19-%E0%B8%81%E0%B8%99%E0%B8%A2/",
+      "description": "ร้าน Bee Choo สุขสวัสดิ์ เปิดตัว soft opening ในวันที่ 19 กันยายน 2567 ตั้งอยู่ใน หมู่บ้านบิสทาวน์ สุขสวัสดิ์",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/soft-opening-of-new-outlet-bee-choo-suksawat/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/soft-opening-%E0%B8%9A%E0%B8%8A-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%82%E0%B8%AA%E0%B8%A7%E0%B8%AA%E0%B8%94%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%97-19-%E0%B8%81%E0%B8%99%E0%B8%A2/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/soft-opening-of-new-outlet-bee-choo-suksawat/"
+        }
+      ],
+      "images": 12,
+      "localMedia": 10,
+      "issues": []
+    },
+    {
+      "route": "/soft-opening-of-new-outlet-bee-choo-suksawat/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/soft-opening-of-new-outlet-bee-choo-suksawat/",
+      "description": "Bee Choo Herbal Thailand is pleased to announce the opening of our 13th outlet, operated under the dealership of the Next TP Co., Ltd. Our new location is situated.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/soft-opening-of-new-outlet-bee-choo-suksawat/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/soft-opening-%E0%B8%9A%E0%B8%8A-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%82%E0%B8%AA%E0%B8%A7%E0%B8%AA%E0%B8%94%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%97-19-%E0%B8%81%E0%B8%99%E0%B8%A2/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/soft-opening-of-new-outlet-bee-choo-suksawat/"
+        }
+      ],
+      "images": 12,
+      "localMedia": 10,
+      "issues": []
+    },
+    {
+      "route": "/scalp-hair-loss-treatment-salon-clinic-in-bangkok/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/scalp-hair-loss-treatment-salon-clinic-in-bangkok/",
+      "description": "Looking for scalp treatment? See our transparent 4 step herbal treatment process from Singapore. Affordable prices yet effective. Hear from our clients too.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/scalp-hair-loss-treatment-salon-clinic-in-bangkok/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%8B%E0%B8%B2%E0%B8%A5%E0%B8%AD%E0%B8%99-%E0%B8%84%E0%B8%A5%E0%B8%B4%E0%B8%99%E0%B8%B4%E0%B8%81%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%A9%E0%B8%B2%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/scalp-hair-loss-treatment-salon-clinic-in-bangkok/"
+        }
+      ],
+      "images": 51,
+      "localMedia": 52,
+      "issues": []
+    },
+    {
+      "route": "/scalp-dry-ways-combat-dry-scalp/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/scalp-dry-ways-combat-dry-scalp/",
+      "description": "People who have dry scalp will observe flaking skin at the scalp and this will generate dandruff that can be quite irritable. However, dry scalp is not the only cause of dandruff. Dandruff is also possibly a result of too much oil on your scalp. The quickest way to get rid of Dry Scalp is to visit us, Bee Choo Origin..",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/scalp-dry-ways-combat-dry-scalp/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/%E0%B8%97%E0%B8%B3%E0%B9%84%E0%B8%A1%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%89%E0%B8%B1%E0%B8%99%E0%B8%96%E0%B8%B6%E0%B8%87/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/scalp-dry-ways-combat-dry-scalp/"
+        }
+      ],
+      "images": 8,
+      "localMedia": 7,
+      "issues": []
+    },
+    {
+      "route": "/reviews-and-testimonials-of-bee-choo-origin-treatment/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/reviews-and-testimonials-of-bee-choo-origin-treatment/",
+      "description": "Real customer stories from Bee Choo Herbal Thailand — hair loss, dandruff, oily scalp, bacterial infection, grey hair and postpartum hair loss, in their own words.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/reviews-and-testimonials-of-bee-choo-origin-treatment/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%A3%E0%B8%B5%E0%B8%A7%E0%B8%B4%E0%B8%A7%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%97%E0%B9%80%E0%B8%A1%E0%B9%89%E0%B8%99%E0%B8%97%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%94%E0%B8%B5/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/reviews-and-testimonials-of-bee-choo-origin-treatment/"
+        }
+      ],
+      "images": 19,
+      "localMedia": 17,
+      "issues": []
+    },
+    {
+      "route": "/reverse-premature-grey-white-hair-by-herbal-treatment/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/reverse-premature-grey-white-hair-by-herbal-treatment/",
+      "description": "100% natural herbal treatment covers premature grey and white hair with a natural dye, right to the roots, while treating the scalp. Safe, non-invasive, no elaborate course required.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/reverse-premature-grey-white-hair-by-herbal-treatment/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%9C%E0%B8%A1%E0%B8%AB%E0%B8%87%E0%B8%AD%E0%B8%81%E0%B8%A7%E0%B8%B4%E0%B8%98%E0%B8%B5%E0%B8%98%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%8A%E0%B8%B2%E0%B8%95%E0%B8%B4/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/reverse-premature-grey-white-hair-by-herbal-treatment/"
+        }
+      ],
+      "images": 49,
+      "localMedia": 47,
+      "issues": []
+    },
+    {
+      "route": "/repair-chemically-damaged-dry-hair-with-herbal-treatment/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/repair-chemically-damaged-dry-hair-with-herbal-treatment/",
+      "description": "Chuan Xiong, Ginseng, Dang Gui, He Shou Wu and Ling Zhi coat every strand with a protective layer, repairing chemically damaged hair and covering white hair without dye.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/repair-chemically-damaged-dry-hair-with-herbal-treatment/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B9%81%E0%B8%81%E0%B9%89%E0%B8%9C%E0%B8%A1%E0%B9%80%E0%B8%AA%E0%B8%B5%E0%B8%A2%E0%B9%80%E0%B8%A3%E0%B9%88%E0%B8%87%E0%B8%94%E0%B9%88%E0%B8%A7%E0%B8%99/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/repair-chemically-damaged-dry-hair-with-herbal-treatment/"
+        }
+      ],
+      "images": 48,
+      "localMedia": 44,
+      "issues": []
+    },
+    {
+      "route": "/postpartum-hair-loss-treatment-in-thailand/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/postpartum-hair-loss-treatment-in-thailand/",
+      "description": "Postpartum hair loss is the condition where mothers experience hair loss 2-4 months after birth. Find out how you can solve this with...",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/postpartum-hair-loss-treatment-in-thailand/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%A0%E0%B8%B2%E0%B8%A7%E0%B8%B0%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B9%80%E0%B8%89%E0%B8%B5%E0%B8%A2%E0%B8%9A%E0%B8%9E%E0%B8%A5%E0%B8%B1%E0%B8%99%E0%B8%82%E0%B8%AD%E0%B8%87/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/postpartum-hair-loss-treatment-in-thailand/"
+        }
+      ],
+      "images": 51,
+      "localMedia": 51,
+      "issues": []
+    },
+    {
+      "route": "/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/",
+      "description": "Bee Choo Herbal Thailand is please to announce our 9th outlet under the dealership of The Eternalknot Group Co.,Ltd. Our 9th outlet is located at The Crystal (Ekamai-Ramindra) an upscale",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%84%E0%B8%A3%E0%B8%B4%E0%B8%AA%E0%B8%95%E0%B8%B1%E0%B8%A5-%E0%B9%80/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/"
+        }
+      ],
+      "images": 15,
+      "localMedia": 13,
+      "issues": []
+    },
+    {
+      "route": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/opening-of-new-outlet-bee-choo-kallapaphruk/",
+      "description": "We are proud to announce that in the midst of a pandemic, we still managed to expand to our 5th outlet! The 5th outlet is located in City Connect, Kallapapruk.",
+      "alternates": [],
+      "images": 19,
+      "localMedia": 17,
+      "issues": []
+    },
+    {
+      "route": "/new-year-new-outlet-bee-choo-ratchada/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/new-year-new-outlet-bee-choo-ratchada/",
+      "description": "We are pleased to announce that Bee Choo Ratchada has undergone a major facelift! Officially opened from 3rd Jan 2022, the outlet that was previously located at Ratchada Soi 7",
+      "alternates": [],
+      "images": 17,
+      "localMedia": 14,
+      "issues": []
+    },
+    {
+      "route": "/new-outlet-saimai-krungthepkreetha/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/new-outlet-saimai-krungthepkreetha/",
+      "description": "Opening of Bee Choo Sai mai &#38; Bee Choo Krungthep Kreetha Bee Choo Tawanna’s branch has relocated to Sai Mai from 5th Sept with grand opening scheduled on 11th Sept",
+      "alternates": [],
+      "images": 9,
+      "localMedia": 7,
+      "issues": []
+    },
+    {
+      "route": "/naan-charity-trip-2019/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/naan-charity-trip-2019/",
+      "description": "Charity Trip to Naan Dec 2019! We are heading to Naan on the 27th of December 2019 to help the kids at the local school. Our Bee Choo Udomsuk manager,",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/naan-charity-trip-2019/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/%E0%B8%8A%E0%B9%88%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%AB%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%AB%E0%B8%A5%E0%B9%88%E0%B8%B2%E0%B9%80%E0%B8%94%E0%B9%87%E0%B8%81%E0%B9%86-%E0%B8%97%E0%B8%B5%E0%B9%88/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/naan-charity-trip-2019/"
+        }
+      ],
+      "images": 8,
+      "localMedia": 6,
+      "issues": []
+    },
+    {
+      "route": "/male-pattern-baldness-treatment-in-bangkok-causes-symptoms-of-hair-loss/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/male-pattern-baldness-treatment-in-bangkok-causes-symptoms-of-hair-loss/",
+      "description": "Genetic Hair loss in Men Male genetic pattern baldness (hair loss) starts its invasion through the creation of receding hairline and after that hair thinning would occur at the crown.",
+      "alternates": [],
+      "images": 8,
+      "localMedia": 7,
+      "issues": []
+    },
+    {
+      "route": "/locations/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/locations/",
+      "description": "Find your nearest Bee Choo Herbal branch in Thailand. Opening hours, phone numbers and directions for every outlet.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/locations/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%AA%E0%B8%96%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/locations/"
+        }
+      ],
+      "images": 4,
+      "localMedia": 3,
+      "issues": []
+    },
+    {
+      "route": "/introducing-essence-shampoo-and-newly-formulated-essence-vitamins/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/introducing-essence-shampoo-and-newly-formulated-essence-vitamins/",
+      "description": "Essence Shampoo – Signature look, brand new feel, more natural than ever We are pleased to announce that our previous Anti-hair Loss Shampoo has been replaced by a newly formulated",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/introducing-essence-shampoo-and-newly-formulated-essence-vitamins/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/%E0%B8%82%E0%B8%AD%E0%B9%81%E0%B8%99%E0%B8%B0%E0%B8%99%E0%B8%B3-essence-shampoo-%E0%B9%81%E0%B8%A5%E0%B8%B0-essence-vitamins-%E0%B8%AA%E0%B8%B9%E0%B8%95%E0%B8%A3%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/introducing-essence-shampoo-and-newly-formulated-essence-vitamins/"
+        }
+      ],
+      "images": 9,
+      "localMedia": 7,
+      "issues": []
+    },
+    {
+      "route": "/herbal-treatment-to-get-rid-of-oily-scalp-hair/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/herbal-treatment-to-get-rid-of-oily-scalp-hair/",
+      "description": "100% natural herbal treatment for oily, itchy scalp using traditional Ling Zhi herb. Safe, effective, trusted by thousands of clients in Bangkok.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/herbal-treatment-to-get-rid-of-oily-scalp-hair/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%A7%E0%B8%B4%E0%B8%98%E0%B8%B5%E0%B9%81%E0%B8%81%E0%B9%89%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0%E0%B8%A1%E0%B8%B1%E0%B8%99/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/herbal-treatment-to-get-rid-of-oily-scalp-hair/"
+        }
+      ],
+      "images": 49,
+      "localMedia": 44,
+      "issues": []
+    },
+    {
+      "route": "/herbal-treatment-cure-for-bacteria-infection-alopecia-areata-and-other-hair-diseases/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/herbal-treatment-cure-for-bacteria-infection-alopecia-areata-and-other-hair-diseases/",
+      "description": "An anti-bacterial spray used alongside the herbal paste's Ling Zhi and Dang Gui helps eradicate scalp infections. Ringworm, folliculitis and alopecia areata can be treated.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/herbal-treatment-cure-for-bacteria-infection-alopecia-areata-and-other-hair-diseases/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0%E0%B8%95%E0%B8%B4%E0%B8%94%E0%B9%80%E0%B8%8A%E0%B8%B7%E0%B9%89%E0%B8%AD/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/herbal-treatment-cure-for-bacteria-infection-alopecia-areata-and-other-hair-diseases/"
+        }
+      ],
+      "images": 48,
+      "localMedia": 44,
+      "issues": []
+    },
+    {
+      "route": "/hair-transplant-vs-stem-cell-vs-keratin-treatment-vs-natural-herbal-treatment/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/hair-transplant-vs-stem-cell-vs-keratin-treatment-vs-natural-herbal-treatment/",
+      "description": "Comparing hair transplant, stem cell therapy, keratin treatment and scalp micropigmentation against Bee Choo Herbal's natural herbal hair treatment.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/hair-transplant-vs-stem-cell-vs-keratin-treatment-vs-natural-herbal-treatment/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%AA%E0%B8%A1%E0%B8%B8%E0%B8%99%E0%B9%84%E0%B8%9E%E0%B8%A3-vs-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9B%E0%B8%A5%E0%B8%B9%E0%B8%81%E0%B8%9C%E0%B8%A1/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/hair-transplant-vs-stem-cell-vs-keratin-treatment-vs-natural-herbal-treatment/"
+        }
+      ],
+      "images": 15,
+      "localMedia": 14,
+      "issues": []
+    },
+    {
+      "route": "/hair-loss-treatment-cost-in-thailand-prices-revealed/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/hair-loss-treatment-cost-in-thailand-prices-revealed/",
+      "description": "What does hair loss treatment cost in Thailand? See Bee Choo Herbal's real, transparent pricing — no hidden charges, based on hair length.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/hair-loss-treatment-cost-in-thailand-prices-revealed/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%97%E0%B8%B3%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%97%E0%B9%80%E0%B8%A1%E0%B9%89%E0%B8%99%E0%B8%97%E0%B9%8C/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/hair-loss-treatment-cost-in-thailand-prices-revealed/"
+        }
+      ],
+      "images": 6,
+      "localMedia": 5,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-สาขาสัมมากร/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%B1%E0%B8%A1%E0%B8%A1%E0%B8%B2%E0%B8%81%E0%B8%A3/",
+      "description": "ร้าน Bee Choo สัมมากร เปิดตัวเมื่อวันที่ 24 มีนาคม 2567 ตั้งอยู่ในหมู่บ้านสัมมากร รามคำแหง 110 ใกล้กับ Sammakorn Place Shopping",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-sammakorn/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%B1%E0%B8%A1%E0%B8%A1%E0%B8%B2%E0%B8%81%E0%B8%A3/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-sammakorn/"
+        }
+      ],
+      "images": 14,
+      "localMedia": 12,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-บีชู-สุราษฎร์ธานี-ในวั/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B8%E0%B8%A3%E0%B8%B2%E0%B8%A9%E0%B8%8E%E0%B8%A3%E0%B9%8C%E0%B8%98%E0%B8%B2%E0%B8%99%E0%B8%B5-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1/",
+      "description": "Grand Opening- Bee Choo สุราษฎร์ธานี ในวันที่ 7 มีนาคม 2568 ตั้งอยู่ติดถนนอำเภอ ร้านเราอยู่บ้านเลขที่ 236/39",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-surat-thani/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B8%E0%B8%A3%E0%B8%B2%E0%B8%A9%E0%B8%8E%E0%B8%A3%E0%B9%8C%E0%B8%98%E0%B8%B2%E0%B8%99%E0%B8%B5-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-surat-thani/"
+        }
+      ],
+      "images": 12,
+      "localMedia": 10,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-บีชู-สาขาโคราช-ในวันที/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%82%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%8A-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%B5/",
+      "description": "ร้าน Bee Choo โคราช เปิดตัว Grand Opening บีชู สาขาโคราช ในวันที่ 11 มกราคม 2568 ตั้งอยู่ในโครงการThe Venice Park,",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-korat/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%82%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%8A-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%B5/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-korat/"
+        }
+      ],
+      "images": 13,
+      "localMedia": 11,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-บีชู-สาขาเดอะคริสตัล-เ/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%84%E0%B8%A3%E0%B8%B4%E0%B8%AA%E0%B8%95%E0%B8%B1%E0%B8%A5-%E0%B9%80/",
+      "description": "ร้าน Bee Choo เดอะคริสตัล(เอกมัย-รามอินทรา) เปิดตัวเมื่อวันที่ 18 พฤศจิกายน 2566 ตั้งอยู่ที่ศูนย์การค้า เดอะคริสตัล เอกมัย-รามอินทรา",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%84%E0%B8%A3%E0%B8%B4%E0%B8%AA%E0%B8%95%E0%B8%B1%E0%B8%A5-%E0%B9%80/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/"
+        }
+      ],
+      "images": 15,
+      "localMedia": 13,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-บีชู-สาขาเชียงใหม่-ในว/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%87%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88-%E0%B9%83%E0%B8%99%E0%B8%A7/",
+      "description": "บีชู เฮอร์เบิล ประเทศไทย มีความยินดีที่จะประกาศเปิดสาขาใหม่ของเราในเชียงใหม่ ซึ่งเป็นสาขาที่ 15 ของเราในประเทศไทย! ดำเนินการโดยตัวแทนจำหน่าย บริษัท จ้าวโปรเจค จำกัด💚🌿",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-chiang-mai/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%87%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88-%E0%B9%83%E0%B8%99%E0%B8%A7/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-chiang-mai/"
+        }
+      ],
+      "images": 13,
+      "localMedia": 11,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-บีชู-สาขาอุดมสุข-23-กันยา/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AD%E0%B8%B8%E0%B8%94%E0%B8%A1%E0%B8%AA%E0%B8%B8%E0%B8%82-23-%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%A2%E0%B8%B2/",
+      "description": "บีชู สาขาอุดมสุขได้เปิดทำการมา",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/bee-choo-udomsuk-grand-opening-23-sept-2018/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AD%E0%B8%B8%E0%B8%94%E0%B8%A1%E0%B8%AA%E0%B8%B8%E0%B8%82-23-%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%A2%E0%B8%B2/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/bee-choo-udomsuk-grand-opening-23-sept-2018/"
+        }
+      ],
+      "images": 9,
+      "localMedia": 7,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-บีชู-สาขาอยุธยา-ในวันท/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AD%E0%B8%A2%E0%B8%B8%E0%B8%98%E0%B8%A2%E0%B8%B2-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%97/",
+      "description": "บีชู เฮอร์เบิล ประเทศไทย มีความยินดีที่จะประกาศเปิดสาขาใหม่ของเราในอยุธยา ซึ่งเป็นสาขาที่ 17 ของเราในประเทศไทย! ดำเนินการโดยตัวแทนจำหน่าย บริษัท โมเดิร์น แอนด์ โมเดล กรุ๊ป จำกัด ผู้ดูแล Bee Choo Korat ตอนนี้คือ Bee Choo Ayutthaya 💚",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-ayutthaya/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AD%E0%B8%A2%E0%B8%B8%E0%B8%98%E0%B8%A2%E0%B8%B2-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%97/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-ayutthaya/"
+        }
+      ],
+      "images": 15,
+      "localMedia": 12,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-บีชู-สาขาสยามสแควร์วั/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%A2%E0%B8%B2%E0%B8%A1%E0%B8%AA%E0%B9%81%E0%B8%84%E0%B8%A7%E0%B8%A3%E0%B9%8C%E0%B8%A7%E0%B8%B1/",
+      "description": "บีชู สาขาสยามสแควร์วันจัดงาน G",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/bee-choo-siam-grand-opening/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%A2%E0%B8%B2%E0%B8%A1%E0%B8%AA%E0%B9%81%E0%B8%84%E0%B8%A7%E0%B8%A3%E0%B9%8C%E0%B8%A7%E0%B8%B1/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/bee-choo-siam-grand-opening/"
+        }
+      ],
+      "images": 27,
+      "localMedia": 25,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-บีชู-สาขาพุทธมณฑล-ในวั/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%9E%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B8%A1%E0%B8%93%E0%B8%91%E0%B8%A5-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1/",
+      "description": "บีชู เฮอร์เบิล ประเทศไทย มีความยินดีที่จะประกาศเปิดสาขาใหม่ของเราในพุทธมณฑล ซึ่งเป็นสาขาที่ 16 ของเราในประเทศไทย! ดำเนินการโดยตัวแทนจำหน่าย บริษัท เจเอ็นเจ เฮิร์บ จำกัด ผู้ดูแล Bee Choo Siam, Bee Choo กัลปพฤกษ์ และ Bee Choo ชลบุรี และตอนนี้คือ Bee Choo พุทธมณฑล 💚",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-phutthamonthon/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%9E%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B8%A1%E0%B8%93%E0%B8%91%E0%B8%A5-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-phutthamonthon/"
+        }
+      ],
+      "images": 14,
+      "localMedia": 12,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567-2/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%8A-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A7%E0%B8%A8-7-%E0%B8%81%E0%B8%A3%E0%B8%81%E0%B8%8E%E0%B8%B2%E0%B8%84%E0%B8%A1-2567-2/",
+      "description": "ร้าน Bee Choo จตุจักร เปิดตัวในวันที่ 3 สิงหาคม 2567 ตั้งอยู่ที่ Ravipha Residence’s Fitness Club ด้านหลังโรงแรม Ravipha Residences ในซอยเทศบาลสงเคราะห์ 2 แยก1",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-chatuchak/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%8A-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A7%E0%B8%A8-7-%E0%B8%81%E0%B8%A3%E0%B8%81%E0%B8%8E%E0%B8%B2%E0%B8%84%E0%B8%A1-2567-2/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-chatuchak/"
+        }
+      ],
+      "images": 13,
+      "localMedia": 11,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%8A-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A7%E0%B8%A8-7-%E0%B8%81%E0%B8%A3%E0%B8%81%E0%B8%8E%E0%B8%B2%E0%B8%84%E0%B8%A1-2567/",
+      "description": "ร้าน Bee Choo ประเวศ เปิดตัวในวันที่ 7 กรกฎาคม 2567 ตั้งอยู่บนถนนสุขาภิบาล 2 เขตประเวศ ในK space minimall ตรงข้ามกับ Green Plaza.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-prawet/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%8A-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A7%E0%B8%A8-7-%E0%B8%81%E0%B8%A3%E0%B8%81%E0%B8%8E%E0%B8%B2%E0%B8%84%E0%B8%A1-2567/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-prawet/"
+        }
+      ],
+      "images": 13,
+      "localMedia": 11,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-of-new-outlet-bee-choo-surat-thani/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-surat-thani/",
+      "description": "Bee Choo Herbal Thailand is thrilled to announce the grand opening of our 15th outlet in Surat Thani, operated under the dealership of B &#38; J LUMINOUS LIFE COMPANY LIMITED. Conveniently",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-surat-thani/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B8%E0%B8%A3%E0%B8%B2%E0%B8%A9%E0%B8%8E%E0%B8%A3%E0%B9%8C%E0%B8%98%E0%B8%B2%E0%B8%99%E0%B8%B5-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-surat-thani/"
+        }
+      ],
+      "images": 12,
+      "localMedia": 10,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-of-new-outlet-bee-choo-sammakorn/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-sammakorn/",
+      "description": "Bee Choo Herbal Thailand is please to announce our 10th outlet under the dealership of The Nature Calling Co.,Ltd. Our 10th outlet is located in Sammakorn village (Ramkhamhaeng 110 Alley)",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-sammakorn/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%B1%E0%B8%A1%E0%B8%A1%E0%B8%B2%E0%B8%81%E0%B8%A3/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-sammakorn/"
+        }
+      ],
+      "images": 14,
+      "localMedia": 12,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-of-new-outlet-bee-choo-prawet/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-prawet/",
+      "description": "Bee Choo Herbal Thailand is pleased to announce the opening of our 11th outlet, operated under the dealership of The Organic Club Co., Ltd. Our new location is situated",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-prawet/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%8A-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A7%E0%B8%A8-7-%E0%B8%81%E0%B8%A3%E0%B8%81%E0%B8%8E%E0%B8%B2%E0%B8%84%E0%B8%A1-2567/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-prawet/"
+        }
+      ],
+      "images": 13,
+      "localMedia": 11,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-of-new-outlet-bee-choo-phutthamonthon/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-phutthamonthon/",
+      "description": "Bee Choo Herbal Thailand is thrilled to announce the grand opening of our 16th outlet in Phutthamonthon , operated under the dealership of JnJ Herb Co., Ltd 💚🌿 📍",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-phutthamonthon/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%9E%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B8%A1%E0%B8%93%E0%B8%91%E0%B8%A5-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-phutthamonthon/"
+        }
+      ],
+      "images": 14,
+      "localMedia": 12,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-of-new-outlet-bee-choo-korat/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-korat/",
+      "description": "Bee Choo Herbal Thailand is thrilled to announce the grand opening of our 14th outlet in Korat, operated under the dealership of The MODERN AND MODEL GROUP CO., LTD. Conveniently",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-korat/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%82%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%8A-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%B5/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-korat/"
+        }
+      ],
+      "images": 13,
+      "localMedia": 11,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-of-new-outlet-bee-choo-chiang-mai/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-chiang-mai/",
+      "description": "Bee Choo Herbal Thailand is thrilled to announce the grand opening of our 15th outlet in Chiang Mai , operated under the dealership of JAO PROJECT CO., LTD. 💚🌿 📍 Shop Address: 169/65",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-chiang-mai/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%87%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88-%E0%B9%83%E0%B8%99%E0%B8%A7/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-chiang-mai/"
+        }
+      ],
+      "images": 13,
+      "localMedia": 11,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-of-new-outlet-bee-choo-chatuchak/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-chatuchak/",
+      "description": "Bee Choo Herbal Thailand is pleased to announce the opening of our 12th outlet, operated under the dealership of The Wattana sis Co., Ltd. Our new location is situated",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-chatuchak/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%8A-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A7%E0%B8%A8-7-%E0%B8%81%E0%B8%A3%E0%B8%81%E0%B8%8E%E0%B8%B2%E0%B8%84%E0%B8%A1-2567-2/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-chatuchak/"
+        }
+      ],
+      "images": 12,
+      "localMedia": 10,
+      "issues": []
+    },
+    {
+      "route": "/grand-opening-of-new-outlet-bee-choo-ayutthaya/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-ayutthaya/",
+      "description": "Bee Choo Herbal Thailand is thrilled to announce the grand opening of our 17th outlet in Ayutthaya, operated under the dealership of MODERN AND MODEL GROUP CO., LTD. 💚🌿 📍",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-ayutthaya/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AD%E0%B8%A2%E0%B8%B8%E0%B8%98%E0%B8%A2%E0%B8%B2-%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%97/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/grand-opening-of-new-outlet-bee-choo-ayutthaya/"
+        }
+      ],
+      "images": 15,
+      "localMedia": 12,
+      "issues": []
+    },
+    {
+      "route": "/frequently-asked-questions/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/frequently-asked-questions/",
+      "description": "Answers to the most frequently asked questions about Bee Choo Herbal's natural herbal hair treatment — safety, results, ingredients and more.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/frequently-asked-questions/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%84%E0%B8%B3%E0%B8%96%E0%B8%B2%E0%B8%A1%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%9E%E0%B8%9A%E0%B8%9A%E0%B9%88%E0%B8%AD%E0%B8%A2/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/frequently-asked-questions/"
+        }
+      ],
+      "images": 7,
+      "localMedia": 6,
+      "issues": []
+    },
+    {
+      "route": "/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+      "description": "Opening of Bee Choo Chonburi, Thailand on 9th April 2023. Located next to Central Chonburi on Casalunar Avenue, this outlet is the first branch outside of Bangkok!",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/first-outlet-outside-of-bangkok-bee-choo-chonburi/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9%E0%B8%8A%E0%B8%A5%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81%E0%B8%99%E0%B8%AD%E0%B8%81%E0%B9%80%E0%B8%82/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/first-outlet-outside-of-bangkok-bee-choo-chonburi/"
+        }
+      ],
+      "images": 17,
+      "localMedia": 15,
+      "issues": []
+    },
+    {
+      "route": "/events-news-release/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/events-news-release/",
+      "description": "Grand openings, new outlets and news from Bee Choo Herbal Thailand — herbal scalp and hair-loss treatment, nationwide.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/events-news-release/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B9%80%E0%B8%AB%E0%B8%95%E0%B8%B8%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%82%E0%B9%88%E0%B8%B2%E0%B8%A7/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/events-news-release/"
+        }
+      ],
+      "images": 24,
+      "localMedia": 23,
+      "issues": []
+    },
+    {
+      "route": "/dye-white-hair-naturally/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/dye-white-hair-naturally/",
+      "description": "White hairs normally starts to appear when your body stops producing melanin. Melanin provides your hair with its natural hair colour. When melanin stops producing, your hair will start to become white. It is best to cover your white hair natural (without chemical dyes).",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/dye-white-hair-naturally/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/%E0%B8%AD%E0%B8%B0%E0%B9%84%E0%B8%A3%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%AA%E0%B8%B2%E0%B9%80%E0%B8%AB%E0%B8%95%E0%B8%B8%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%9C%E0%B8%A1%E0%B8%82%E0%B8%B2%E0%B8%A7/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/dye-white-hair-naturally/"
+        }
+      ],
+      "images": 8,
+      "localMedia": 7,
+      "issues": []
+    },
+    {
+      "route": "/cure-dandruff-hair-with-herbal-treatment/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/cure-dandruff-hair-with-herbal-treatment/",
+      "description": "Ling Zhi and Chuan Xiong in Bee Choo's herbal paste settle a dry, flaking scalp and restore healthy circulation. Even persistent dandruff clears in a few sessions.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/cure-dandruff-hair-with-herbal-treatment/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%A9%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%87%E0%B9%81%E0%B8%84-%E0%B8%82%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B8%A3%E0%B8%B1%E0%B8%87%E0%B9%81%E0%B8%84-%E0%B9%83%E0%B8%AB%E0%B9%89/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/cure-dandruff-hair-with-herbal-treatment/"
+        }
+      ],
+      "images": 50,
+      "localMedia": 50,
+      "issues": []
+    },
+    {
+      "route": "/chill-places-bangkok/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/chill-places-bangkok/",
+      "description": "Chill places to visit in Bangkok, Thailand, some popular, some lesser known, but still equally chill out and less tourist...",
+      "alternates": [],
+      "images": 10,
+      "localMedia": 9,
+      "issues": []
+    },
+    {
+      "route": "/category/blog/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/category/blog/",
+      "description": "Hair and scalp advice from Bee Choo Herbal Thailand — causes of hair loss, greying and dry scalp, plus places to visit around Bangkok.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/category/blog/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/category/%E0%B8%9A%E0%B8%A5%E0%B9%87%E0%B8%AD%E0%B8%81/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/category/blog/"
+        }
+      ],
+      "images": 15,
+      "localMedia": 14,
+      "issues": []
+    },
+    {
+      "route": "/bee-choo-udomsuk-grand-opening-23-sept-2018/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/bee-choo-udomsuk-grand-opening-23-sept-2018/",
+      "description": "Bee Choo Udomsuk which has been in operation since 14 July 2018 will be conducting its opening ceremony of Bee Choo Udomsuk on 23 Sept 2018. During this special day,",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/bee-choo-udomsuk-grand-opening-23-sept-2018/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AD%E0%B8%B8%E0%B8%94%E0%B8%A1%E0%B8%AA%E0%B8%B8%E0%B8%82-23-%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%A2%E0%B8%B2/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/bee-choo-udomsuk-grand-opening-23-sept-2018/"
+        }
+      ],
+      "images": 9,
+      "localMedia": 7,
+      "issues": []
+    },
+    {
+      "route": "/bee-choo-siam-square-make-merit/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/bee-choo-siam-square-make-merit/",
+      "description": "Here are the photos and videos of Bee Choo Siam Square Make Merit Ceremony held on 8th August 2018 to celebrate the reopening after renovations and change of management From",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/bee-choo-siam-square-make-merit/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/%E0%B8%97%E0%B8%B3%E0%B8%9A%E0%B8%B8%E0%B8%8D%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%A2%E0%B8%B2%E0%B8%A1%E0%B8%AA/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/bee-choo-siam-square-make-merit/"
+        }
+      ],
+      "images": 43,
+      "localMedia": 41,
+      "issues": []
+    },
+    {
+      "route": "/bee-choo-siam-grand-opening/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/bee-choo-siam-grand-opening/",
+      "description": "Bee Choo Siam Square held its grand opening ceremony on 12 August 2018 which was also Mother’s day in Thailand. This was indeed a very special day with numerous friends,",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/bee-choo-siam-grand-opening/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/grand-opening-%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AA%E0%B8%A2%E0%B8%B2%E0%B8%A1%E0%B8%AA%E0%B9%81%E0%B8%84%E0%B8%A7%E0%B8%A3%E0%B9%8C%E0%B8%A7%E0%B8%B1/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/bee-choo-siam-grand-opening/"
+        }
+      ],
+      "images": 26,
+      "localMedia": 24,
+      "issues": []
+    },
+    {
+      "route": "/bee-choo-hair-care-products/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/bee-choo-hair-care-products/",
+      "description": "Shampoos, conditioners, hair tonics and treatment cremes from Bee Choo Herbal — natural herbal hair care for oily scalp, dandruff and hair loss.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/bee-choo-hair-care-products/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B9%81%E0%B8%8A%E0%B8%A1%E0%B8%9E%E0%B8%B9%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9%E0%B8%9B%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/bee-choo-hair-care-products/"
+        }
+      ],
+      "images": 22,
+      "localMedia": 21,
+      "issues": []
+    },
+    {
+      "route": "/about/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/about/",
+      "description": "Bee Choo Origin has provided natural, safe herbal hair and scalp treatment in Thailand for over 18 years — read our story, values and mission.",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/about/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/th/%E0%B9%80%E0%B8%81%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%A7%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%9A%E0%B8%B5%E0%B8%8A%E0%B8%B9/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/about/"
+        }
+      ],
+      "images": 6,
+      "localMedia": 5,
+      "issues": []
+    },
+    {
+      "route": "/5-ตัวช่วยเรื่องผมร่วงของ/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/5-%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%8A%E0%B9%88%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%87/",
+      "description": "ทรีทเม้นท์บำรุงหนังศีรษะ มีตัว",
+      "alternates": [],
+      "images": 12,
+      "localMedia": 11,
+      "issues": []
+    },
+    {
+      "route": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+      "description": "The most common causes of hair loss are: Genetics, Internal Conditions, External Factors, Stress and Medication. Understand your hair &#38; scalp condition",
+      "alternates": [],
+      "images": 17,
+      "localMedia": 16,
+      "issues": []
+    },
+    {
+      "route": "/12-best-family-places-to-visit-in-bangkok/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/12-best-family-places-to-visit-in-bangkok/",
+      "description": "12 Best Family Places to Visit",
+      "alternates": [],
+      "images": 40,
+      "localMedia": 39,
+      "issues": []
+    },
+    {
+      "route": "/10-สถานที่และสิ่งน่าสนใจ/",
+      "lang": "th",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/10-%E0%B8%AA%E0%B8%96%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AA%E0%B8%B4%E0%B9%88%E0%B8%87%E0%B8%99%E0%B9%88%E0%B8%B2%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88/",
+      "description": "ผมได้รู้จักกับสถานที่ต่างๆที่ไม่ค่อยเป็นที่รู้จักเพราะสถานที่เหล่านี้ไม่ได้ถูกโฆษณาหรือโปรโมททางสื่อต่างๆมากนัก แต่สถานที่เหล่านี้กลับเป็นที่นิยมสำหรับคน",
+      "alternates": [
+        {
+          "lang": "en",
+          "href": "https://beechooherbal.com/top-10-non-touristy-things-to-do-in-bangkok/"
+        },
+        {
+          "lang": "th",
+          "href": "https://beechooherbal.com/10-%E0%B8%AA%E0%B8%96%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AA%E0%B8%B4%E0%B9%88%E0%B8%87%E0%B8%99%E0%B9%88%E0%B8%B2%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88/"
+        },
+        {
+          "lang": "x-default",
+          "href": "https://beechooherbal.com/top-10-non-touristy-things-to-do-in-bangkok/"
+        }
+      ],
+      "images": 28,
+      "localMedia": 27,
+      "issues": []
+    },
+    {
+      "route": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "lang": "en",
+      "h1": 1,
+      "canonical": "https://beechooherbal.com/10-most-possible-causes-of-hair-loss-in-young-women/",
+      "description": "Article originally posted on www.beechooladies.com.sg There are many causes for hair loss, it could be due to a myriad of factors or a singular key cause to hair loss. If",
+      "alternates": [],
+      "images": 19,
+      "localMedia": 18,
+      "issues": []
+    }
+  ]
+}

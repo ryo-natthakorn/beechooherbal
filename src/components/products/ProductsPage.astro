@@ -77,16 +77,16 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
   <!-- Bee Choo Shampoos -->
   <section id={shampoos.id} class="products-section bg-surface py-16 md:py-16">
     <div class="mx-auto max-w-6xl px-4 md:px-8">
-      <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{shampoos.heading}</h2>
+      <h2 data-mask-reveal class={`mb-8 text-left ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{shampoos.heading}</h2>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {byCategory(shampoos.id).map((product) => (
-          <article class="reveal flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-soft">
+          <article class="flex flex-col overflow-hidden border-t border-line bg-surface">
             <div class="flex h-48 items-center justify-center bg-surface-muted p-4">
               <Image src={product.image} alt={product.alt[lang]} width={300} height={300} class="max-h-40 w-auto object-contain" />
             </div>
             <div class="flex flex-1 flex-col p-5">
               <h3 class={`mb-2 ${serif} text-base font-bold text-action`}>{product.name[lang]}</h3>
-              <div class="flex-1 space-y-2 text-xs leading-relaxed text-text-muted">
+              <div class="flex-1 space-y-2 text-sm leading-relaxed text-text-muted">
                 {product.paragraphs[lang]?.map((p) => <p>{p}</p>)}
               </div>
               {product.note?.[lang] && <p class="mt-3 text-2xs text-text-muted italic">{product.note[lang]}</p>}
@@ -98,19 +98,19 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
       <!-- Amino trio — matched family, own row -->
       <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {aminoTrio.map((product) => (
-          <article class="reveal flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-soft">
+          <article class="flex flex-col overflow-hidden border-t border-line bg-surface">
             <div class="flex h-48 items-center justify-center bg-surface-muted/30 p-4">
               <Image src={product.image} alt={product.alt[lang]} width={300} height={300} class="max-h-40 w-auto object-contain" />
             </div>
             <div class="flex flex-1 flex-col p-5">
               <h3 class={`mb-2 ${serif} text-base font-bold text-action`}>{product.name[lang]}</h3>
-              <div class="space-y-1 text-xs leading-relaxed text-text-muted">
+              <div class="space-y-1 text-sm leading-relaxed text-text-muted">
                 {product.paragraphs[lang]?.map((p) => <p>{p}</p>)}
               </div>
               {product.taglines?.[lang] && (
                 <div class="mt-auto flex flex-wrap gap-1.5 pt-3">
                   {product.taglines[lang]!.map((tag) => (
-                    <span class="rounded-full bg-surface-muted px-2.5 py-1 text-2xs font-bold text-action-hover">{tag}</span>
+                    <span class="rounded-sm bg-surface-muted px-2.5 py-1 text-xs font-bold text-action-hover">{tag}</span>
                   ))}
                 </div>
               )}
@@ -130,10 +130,10 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
   <!-- Bee Choo Conditioners -->
   <section id={conditioners.id} class="products-section bg-surface-botanical py-16 md:py-16">
     <div class="mx-auto max-w-6xl px-4 md:px-8">
-      <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{conditioners.heading}</h2>
+      <h2 data-mask-reveal class={`mb-8 text-left ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{conditioners.heading}</h2>
       <div class="mx-auto grid max-w-3xl gap-6 sm:grid-cols-2">
         {byCategory(conditioners.id).map((product) => (
-          <article class="reveal flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-soft">
+          <article class="flex flex-col overflow-hidden border-t border-line bg-surface">
             <div class="flex h-56 items-center justify-center bg-surface-muted p-6">
               <Image src={product.image} alt={product.alt[lang]} width={400} height={400} class="max-h-48 w-auto object-contain" />
             </div>
@@ -168,13 +168,13 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
   <!-- Bee Choo Hair Tonics -->
   <section id={tonics.id} class="products-section bg-surface py-16 md:py-16">
     <div class="mx-auto max-w-6xl px-4 md:px-8">
-      <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{tonics.heading}</h2>
+      <h2 data-mask-reveal class={`mb-8 text-left ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{tonics.heading}</h2>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {byCategory(tonics.id).map((product) => (
           <article
             class:list={[
-              "reveal flex flex-col overflow-hidden rounded-2xl border bg-surface shadow-soft",
-              product.signatureLine ? "border-accent/70 shadow-soft-lg ring-1 ring-accent/40" : "border-line",
+              "flex flex-col overflow-hidden border-t bg-surface",
+              product.signatureLine ? "border-accent" : "border-line",
             ]}
           >
             <div class="flex h-56 items-center justify-center bg-surface-muted p-6">
@@ -190,7 +190,7 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
               {product.taglines?.[lang] && (
                 <div class="mb-3 flex flex-wrap gap-1.5">
                   {product.taglines[lang]!.map((tag) => (
-                    <span class="rounded-full bg-surface-muted px-2.5 py-1 text-2xs font-bold text-action-hover">{tag}</span>
+                    <span class="rounded-sm bg-surface-muted px-2.5 py-1 text-xs font-bold text-action-hover">{tag}</span>
                   ))}
                 </div>
               )}
@@ -216,10 +216,10 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
   <!-- Bee Choo Spas, Serum and Cremes -->
   <section id={spas.id} class="products-section bg-surface-muted py-16 md:py-16">
     <div class="mx-auto max-w-6xl px-4 md:px-8">
-      <h2 data-mask-reveal class={`mb-10 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{spas.heading}</h2>
+      <h2 data-mask-reveal class={`mb-8 text-left ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{spas.heading}</h2>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {byCategory(spas.id).map((product) => (
-          <article class="reveal flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-soft">
+          <article class="flex flex-col overflow-hidden border-t border-line bg-surface">
             <div class="flex h-56 items-center justify-center bg-surface-muted p-6">
               <Image src={product.image} alt={product.alt[lang]} width={400} height={400} class="max-h-48 w-auto object-contain" />
             </div>
@@ -231,7 +231,7 @@ const stripAsterisks = (s: string) => s.replace(/^\*+|\*+$/g, "").trim();
               {product.taglines?.[lang] && (
                 <div class="mt-3 flex flex-wrap gap-1.5">
                   {product.taglines[lang]!.map((tag) => (
-                    <span class="rounded-full bg-surface-muted px-2.5 py-1 text-2xs font-bold text-action-hover">{tag}</span>
+                    <span class="rounded-sm bg-surface-muted px-2.5 py-1 text-xs font-bold text-action-hover">{tag}</span>
                   ))}
                 </div>
               )}

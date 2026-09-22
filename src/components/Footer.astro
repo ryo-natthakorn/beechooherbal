@@ -16,7 +16,7 @@ const { lang } = Astro.props;
 const ui = UI[lang];
 ---
 
-<footer class="relative overflow-hidden bg-action-hover px-4 pt-5 pb-4 text-on-action md:px-8 md:py-6">
+<footer class="relative overflow-hidden bg-action px-4 pt-5 pb-4 text-on-action md:px-8 md:py-6">
   <HerbalStrokes draw class="pointer-events-none absolute inset-0 h-full w-full text-on-action opacity-10" />
   <div
     class="relative mx-auto flex max-w-5xl flex-col items-center gap-3 text-center md:flex-row md:justify-between md:gap-8 md:text-left"
@@ -51,7 +51,7 @@ const ui = UI[lang];
            cta note in src/i18n/ui.ts. -->
       <a
         href={HOME.locations.href[lang]}
-        class="btn-tactile flex min-h-11 items-center gap-2 rounded-full bg-surface px-3.5 font-bold text-action hover:bg-surface/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-action"
+        class="btn-tactile flex min-h-11 items-center gap-2 rounded-full border border-on-action/60 px-3.5 font-bold text-on-action hover:bg-surface/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-action"
       >
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0">
           <path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" />
@@ -62,7 +62,7 @@ const ui = UI[lang];
         href="https://www.facebook.com/beechooherbal/"
         target="_blank"
         rel="noopener"
-        class="btn-tactile flex min-h-11 items-center rounded-full bg-surface px-3.5 font-bold text-action hover:bg-surface/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-action"
+        class="btn-tactile flex min-h-11 items-center rounded-full border border-on-action/60 px-3.5 font-bold text-on-action hover:bg-surface/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-action"
       >
         {ui.cta.facebook}
       </a>
@@ -70,7 +70,7 @@ const ui = UI[lang];
         href="https://lin.ee/ll3injb"
         target="_blank"
         rel="noopener"
-        class="btn-tactile flex min-h-11 items-center rounded-full bg-surface px-3.5 font-bold text-action hover:bg-surface/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-action"
+        class="btn-tactile flex min-h-11 items-center rounded-full bg-cta px-3.5 font-bold text-text hover:bg-cta-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-action"
       >
         {ui.cta.line}
       </a>
