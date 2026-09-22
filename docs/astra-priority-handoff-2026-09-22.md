@@ -1,5 +1,11 @@
 # Astra — Priority: brand alignment and whole-site audit checkpoint
 
+## Final stop checkpoint
+
+Stopped at five-hour **12% remaining**, weekly 71%, per the user's quota rule. Implementation commit **`e23a95a3d20e6ef23c3056d1694b6c2331ef614d`** is pushed and remote SHA verified. GitHub commit status reports Vercel deployment success; deployment `6582602039` is **Preview** for that exact implementation SHA. This final documentation-only commit records the results.
+
+Preview URL checker passed **588/588** (89 direct 200, 499 via redirect, zero failures). It started while deployment was pending and finished after success, so this is an alias availability/redirect check during rollout, **not** an exclusively post-deployment exact-build check. Re-run once against the settled deployment when continuing. Settled browser URL after the Thai switch was subsequently confirmed as `http://127.0.0.1:4322/th/home/`. Viewport override reset. Remaining visual/media/interaction work below is deliberately unfinished; no full-site visual sign-off.
+
 ## Objective and current state
 
 Continue on `codex/hero-dead-sea-recolor`, from the commit accompanying this file (parent `568ffb6`). No merge or production promotion. User requests a full EN/TH AI-slop, aesthetics and brand audit, authorizes layout changes, and requires checkpoint/push/handoff before either quota runs out. Stop starting new work at 15% remaining. Last checkpoint before writing: five-hour 22% remaining, weekly 73%. Limits are account-wide.
