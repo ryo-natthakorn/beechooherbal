@@ -26,10 +26,10 @@ const plain = variant === "plain";
 const ui = UI[lang];
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 
-// Focus ring has to flip too: outline-white is invisible on a light background.
+// Focus ring has to flip too: outline-on-action is invisible on a light background.
 const focusRing = plain
-  ? "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
-  : "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+  ? "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+  : "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-action";
 // Compact by design: the labels used to be full sentences ("Message us on Facebook"),
 // which flex-wrap broke into three stacked full-width bars that swallowed the whole first
 // screen on a 375px phone. Short labels + icons + tight chrome fit all three on ONE line
@@ -38,13 +38,10 @@ const focusRing = plain
 // traded away for the density. At 320px the row wraps to two — flex-wrap handles it, and
 // two rows is still far better than the three full-width bars this replaced.
 const btnBase = "btn-tactile inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-bold";
-// Both CTAs share one style now (sitewide fix: yellow was reading as an
-// already-pressed toggle next to a white sibling). White-pill on the green
-// banner; on the light "plain" variant that's invisible, so it flips to
-// green-fill/white-text instead — same pair used at Pricing.
+// Facebook remains secondary; LINE uses the brand yellow primary action below.
 const btnCta = plain
-  ? `${btnBase} bg-brand-green text-white hover:bg-brand-green/90 ${focusRing}`
-  : `${btnBase} bg-white text-brand-green hover:bg-white/90 ${focusRing}`;
+  ? `${btnBase} bg-action text-on-action hover:bg-action/90 ${focusRing}`
+  : `${btnBase} bg-surface text-action hover:bg-surface/90 ${focusRing}`;
 
 // Verbatim shared strap line, identical across all 7 treatment pages on the live
 // site (see spec: this is NOT the same string as the homepage's condition-listing
@@ -55,7 +52,7 @@ const strapline =
     : "100% Natural Herbal Hair Treatment, Safe, Highly Effective, Proven, Award Winning Hair Salon Clinic";
 ---
 
-<section class:list={[plain ? "bg-white" : "relative overflow-hidden bg-brand-green"]}>
+<section class:list={[plain ? "bg-surface" : "relative overflow-hidden bg-action"]}>
   {
     !plain && (
       <div class="relative aspect-[4/3] w-full md:aspect-[21/9]">
@@ -78,11 +75,11 @@ const strapline =
   <div
     class:list={[
       "relative mx-auto max-w-4xl px-4 text-center md:px-8",
-      plain ? "pt-10 pb-8 md:pt-14 md:pb-10" : "pt-2 pb-10 text-white md:pb-14",
+      plain ? "pt-10 pb-8 md:pt-14 md:pb-10" : "pt-2 pb-10 text-on-action md:pb-14",
     ]}
   >
-    <h1 class:list={[serif, "text-balance text-3xl font-bold md:text-5xl", plain && "text-brand-green"]}>{heroTitle}</h1>
-    <p class:list={["mt-3 text-balance text-sm md:text-base", plain ? "text-brand-origin" : "text-brand-serenity"]}>
+    <h1 class:list={[serif, "text-balance text-3xl font-bold md:text-5xl", plain && "text-action"]}>{heroTitle}</h1>
+    <p class:list={["mt-3 text-balance text-sm md:text-base", plain ? "text-text-muted" : "text-on-action"]}>
       {strapline}
     </p>
 
@@ -96,7 +93,7 @@ const strapline =
         </svg>
         {ui.cta.facebook}
       </a>
-      <a href="https://lin.ee/ll3injb" target="_blank" rel="noopener" class={btnCta}>
+      <a href="https://lin.ee/ll3injb" target="_blank" rel="noopener" class={`${btnBase} bg-cta text-text hover:bg-cta-hover ${focusRing}`}>
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0">
           <path d="M12 3C6.48 3 2 6.58 2 11c0 2.61 1.61 4.93 4.11 6.41-.18.94-.66 2.49-1.51 3.99a.4.4 0 0 0 .5.55c2.11-.76 3.66-1.7 4.51-2.29.76.14 1.55.21 2.39.21 5.52 0 10-3.58 10-8s-4.48-8-10-8z" />
         </svg>

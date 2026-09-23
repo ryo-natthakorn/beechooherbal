@@ -50,7 +50,7 @@ const {
 } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
-const bgClass = background === "earth" ? "bg-brand-earth/25" : "bg-white";
+const bgClass = background === "earth" ? "bg-surface-muted" : "bg-surface";
 
 // The live TH grey-hair page ships its four education topics as one undivided wall of
 // text while the EN page collapses the same four into an accordion. Rendering both the
@@ -65,7 +65,7 @@ const accordionItems = [
 <section class={`${bgClass} py-16 md:py-24`}>
   <div class="mx-auto max-w-3xl px-4 md:px-8">
     <LeafDivider />
-    <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+    <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
       {heading}
     </h2>
 
@@ -74,11 +74,11 @@ const accordionItems = [
     {/* max-w-prose (65ch) keeps prose in the comfortable 60-75 character band. The
         container stays wider so media (video, photos) isn't shrunk with the text —
         wide media, narrow copy. */}
-    <div class="mx-auto mt-8 flex max-w-prose flex-col gap-4 text-brand-origin">
+    <div class="mx-auto mt-8 flex max-w-prose flex-col gap-4 text-text-muted">
       {intro.map((p) => <p class="leading-relaxed">{p}</p>)}
       {
         introList.length > 0 && (
-          <ul class="ml-5 flex list-disc flex-col gap-2 leading-relaxed marker:text-brand-green">
+          <ul class="ml-5 flex list-disc flex-col gap-2 leading-relaxed marker:text-action">
             {introList.map((item) => (
               <li>{item}</li>
             ))}
@@ -116,19 +116,19 @@ const accordionItems = [
     {accordionItems.length > 0 && (
       <div class="mt-8 flex flex-col gap-3">
         {accordionItems.map((item) => (
-          <details class="group overflow-hidden rounded-2xl border border-brand-earth bg-white open:shadow-soft">
+          <details class="group overflow-hidden rounded-2xl border border-line bg-surface open:shadow-soft">
             <summary
               class:list={[
                 serif,
-                "flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 font-bold text-brand-green marker:content-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green",
+                "flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 font-bold text-action marker:content-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
               ]}
             >
               {item.summary}
               <span aria-hidden="true" class="shrink-0 text-xl leading-none transition-transform duration-200 group-open:rotate-45">+</span>
             </summary>
-            <div class="flex flex-col gap-3 border-t border-brand-earth px-5 py-4">
+            <div class="flex flex-col gap-3 border-t border-line px-5 py-4">
               {item.paragraphs.map((p) => (
-                <p class="leading-relaxed text-brand-origin">{p}</p>
+                <p class="leading-relaxed text-text-muted">{p}</p>
               ))}
               {
                 item.image && (
@@ -138,7 +138,7 @@ const accordionItems = [
                         measured 3.79:1, under WCAG AA's 4.5:1 for 14px text. The italic +
                         smaller size already mark it as a caption, so the opacity was doing
                         nothing the type didn't already do. Full strength is 5.89:1. */}
-                    <figcaption class="mt-2 text-center text-sm italic text-brand-origin">{item.image.caption}</figcaption>
+                    <figcaption class="mt-2 text-center text-sm italic text-text-muted">{item.image.caption}</figcaption>
                   </figure>
                 )
               }

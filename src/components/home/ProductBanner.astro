@@ -1,0 +1,146 @@
+---
+import { Image } from "astro:assets";
+import productImage from "../../assets/images/products/dead-sea-mud.webp";
+import { type Lang } from "../../data/home";
+import { PRODUCT_BANNER as product } from "../../data/product-banner";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const titleClass = lang === "th" ? "font-serif-thai" : "font-serif";
+---
+
+<section id="dead-sea-mud" aria-labelledby="dead-sea-mud-title" class="product-launch">
+  <div class="product-launch-hero">
+    <div class="product-container product-hero-grid">
+      <div class="product-launch-hero-copy">
+        <p class="product-launch-label">{product.launchLabel[lang]}</p>
+        <h2 id="dead-sea-mud-title" class:list={["product-launch-title", titleClass]}>{product.title[lang]}</h2>
+        <p class="product-launch-description">{product.description[lang]}</p>
+        <a href={product.href} target="_blank" rel="noopener" class="product-launch-cta btn-tactile">
+          <span>{product.cta[lang]}</span>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
+        </a>
+      </div>
+      <div class="product-launch-media">
+        <video data-dead-sea-video class="product-launch-video" width="1281" height="726" poster="/media/dead-sea-mud/cover.jpg" preload="none" muted loop playsinline controls aria-label={product.title[lang]}>
+          <source src="/media/dead-sea-mud/dead-sea-launch.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-container product-launch-details-inner">
+    <div class="product-overview">
+      <div class="product-details-image">
+        <Image src={productImage} alt={product.alt[lang]} widths={[400, 640, 900]} sizes="(min-width: 1200px) 560px, (min-width: 768px) 44vw, calc(100vw - 40px)" loading="lazy" decoding="async" />
+      </div>
+      <div class="product-details-copy">
+        <p class="product-details-kicker">{product.productName}</p>
+        <p class="product-launch-meta">{product.eyebrow[lang]}</p>
+        <section class="product-care" aria-labelledby="dead-sea-benefits-title">
+          <h3 id="dead-sea-benefits-title" class:list={["product-care-heading", titleClass]}>{product.benefitsHeading[lang]}</h3>
+          <ul class="product-benefits-list">
+            {product.benefits.map((benefit) => <li>
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m5 12 4 4L19 6" /></svg>
+              <span>{benefit[lang]}</span>
+            </li>)}
+          </ul>
+        </section>
+        <div class="product-booking">
+          <p class="product-launch-price">{product.price[lang]}</p>
+          <a href={product.href} target="_blank" rel="noopener" class="product-launch-cta btn-tactile">
+            <span>{product.cta[lang]}</span>
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <section class="product-composition" aria-labelledby="dead-sea-composition-title">
+      <h3 id="dead-sea-composition-title" class:list={["product-composition-heading", titleClass]}>{product.ingredientsHeading[lang]}</h3>
+      <ol class="product-facts-list">
+        {product.ingredients.map((ingredient) => <li><strong>{ingredient.amount}</strong><span>{ingredient.label[lang]}</span></li>)}
+      </ol>
+    </section>
+    <section class="product-pairing" aria-labelledby="dead-sea-pairing-title">
+      <h3 id="dead-sea-pairing-title" class="product-pairing-heading">{product.pairingHeading[lang]}</h3>
+      <p>{product.pairing[lang]}</p>
+    </section>
+  </div>
+</section>
+
+<script>
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const videos = document.querySelectorAll<HTMLVideoElement>("[data-dead-sea-video]");
+  const syncVideoMotion = () => {
+    videos.forEach((video) => {
+      if (reducedMotion.matches) {
+        video.pause();
+        return;
+      }
+      // Keep the poster visible until the visitor uses the native play control.
+    });
+  };
+  syncVideoMotion();
+  reducedMotion.addEventListener("change", syncVideoMotion);
+</script>
+
+<style>
+  .product-launch { scroll-margin-top: 6rem; background: var(--color-surface); color: var(--color-text); }
+  .product-container { width: min(100% - 2.5rem, 75rem); margin-inline: auto; }
+  .product-launch-hero { background: var(--color-canvas); padding-block: 3.5rem; }
+  .product-hero-grid { display: grid; gap: 2.5rem; align-items: center; }
+  .product-launch-hero-copy { min-width: 0; }
+  .product-launch-label { margin: 0 0 1.25rem; color: var(--color-action); font-size: .8125rem; font-weight: 700; line-height: 1.6; }
+  .product-launch-title { margin: 0; color: var(--color-action); font-size: clamp(2.5rem, 4.3vw, 4rem); line-height: 1.12; letter-spacing: -.035em; text-wrap: balance; }
+  .product-launch-title.font-serif-thai { font-size: clamp(2rem, 3.4vw, 3.125rem); line-height: 1.5; letter-spacing: normal; }
+  .product-launch-description { max-width: 32rem; margin: 1.25rem 0 0; color: var(--color-text-muted); font-size: 1.0625rem; line-height: 1.8; }
+  .product-launch-cta { display: inline-flex; min-height: 3rem; max-width: 100%; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.75rem; border-radius: 9999px; background: var(--color-cta); padding: .875rem 1.5rem; color: var(--color-text); font-size: .9375rem; font-weight: 700; line-height: 1.5; }
+  .product-launch-cta svg { flex-shrink: 0; }
+  .product-launch-cta:hover { background: var(--color-cta-hover); }
+  .product-launch-cta:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
+  .product-launch-media { min-width: 0; border-radius: .5rem; overflow: hidden; background: var(--color-action-hover); }
+  .product-launch-video { display: block; width: 100%; height: auto; object-fit: contain; }
+  .product-launch-details-inner { padding-block: 3.5rem; }
+  .product-overview { display: grid; gap: 2rem; align-items: center; }
+  .product-details-image { overflow: hidden; border-radius: .5rem; }
+  .product-details-image :global(img) { display: block; width: 100%; height: auto; }
+  .product-details-copy { min-width: 0; }
+  .product-details-kicker { margin: 0; max-width: 28rem; font-size: 1.0625rem; font-weight: 700; line-height: 1.6; text-wrap: balance; }
+  .product-launch-meta { margin: .625rem 0 0; color: var(--color-text-muted); font-size: .9375rem; line-height: 1.7; }
+  .product-care { margin-top: 1.75rem; }
+  .product-care-heading { margin: 0; color: var(--color-action); font-size: clamp(1.5rem, 2.3vw, 2rem); line-height: 1.5; text-wrap: balance; }
+  .product-benefits-list { display: grid; gap: .75rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+  .product-benefits-list li { display: flex; align-items: baseline; gap: .75rem; line-height: 1.7; }
+  .product-benefits-list svg { flex-shrink: 0; align-self: center; color: var(--color-action); }
+  .product-booking { margin-top: 1.75rem; border-top: 1px solid var(--color-line); padding-top: 1.5rem; }
+  .product-launch-price { width: fit-content; padding: .375rem .75rem; background: var(--color-surface-highlight); margin: 0; font-size: 1.25rem; font-weight: 700; line-height: 1.6; }
+  .product-booking .product-launch-cta { margin-top: 1rem; }
+  .product-composition { background: var(--color-surface-botanical); padding-inline: 1.5rem; display: grid; gap: 1.75rem; margin-top: 3rem; border-block: 1px solid var(--color-line); padding-block: 2rem; }
+  .product-composition-heading { margin: 0; color: var(--color-action); font-size: clamp(1.75rem, 2.6vw, 2.25rem); line-height: 1.5; text-wrap: balance; }
+  .product-facts-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; margin: 0; padding: 0; list-style: none; }
+  .product-facts-list li { min-width: 0; border-left: 1px solid var(--color-line); padding-left: .75rem; }
+  .product-facts-list li:first-child { border-left: 0; padding-left: 0; }
+  .product-facts-list strong, .product-facts-list span { display: block; }
+  .product-facts-list strong { color: var(--color-action); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 400; line-height: 1.2; font-variant-numeric: tabular-nums; }
+  .product-facts-list span { margin-top: .5rem; color: var(--color-text-botanical); font-size: .875rem; line-height: 1.6; }
+  .product-pairing { margin-top: 2rem; border-radius: .5rem; background: var(--color-surface-muted); padding: 1.5rem; }
+  .product-pairing-heading { margin: 0; font-size: 1.0625rem; font-weight: 700; line-height: 1.6; }
+  .product-pairing p { margin: .5rem 0 0; color: var(--color-text-muted); line-height: 1.8; }
+  @media (min-width: 768px) {
+    .product-container { width: min(100% - 4rem, 75rem); }
+    .product-launch-hero { padding-block: 4.5rem; }
+    .product-overview { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; }
+    .product-launch-details-inner { padding-block: 4.5rem; }
+    .product-composition { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 3rem; align-items: center; }
+    .product-pairing { padding: 2rem; }
+  }
+  @media (min-width: 1024px) {
+    .product-hero-grid { grid-template-columns: minmax(0, 45fr) minmax(0, 55fr); gap: 0; }
+    .product-launch-hero-copy { padding-right: 3rem; }
+    .product-overview { gap: 5rem; }
+    .product-pairing { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 3rem; align-items: center; }
+    .product-pairing p { margin: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .product-launch-cta { transition: none; transform: none; }
+  }
+</style>

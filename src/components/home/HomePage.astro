@@ -8,6 +8,7 @@
 // Soft UI elevation on cards, serif headings (Lora / Noto Serif Thai), leaf dividers on
 // the two key sections only, zero-JS scroll reveals (see global.css).
 import HeroScene from "./HeroScene.astro";
+import ProductBanner from "./ProductBanner.astro";
 import TrustStats from "./TrustStats.astro";
 import TreatmentsSection from "./TreatmentsSection.astro";
 import HowItWorksScene from "./HowItWorksScene.astro";
@@ -25,6 +26,7 @@ const { lang } = Astro.props;
 ---
 
 <main id="main">
+  <ProductBanner {lang} />
   <HeroScene {lang} />
   <TrustStats {lang} />
   <TreatmentsSection {lang} />

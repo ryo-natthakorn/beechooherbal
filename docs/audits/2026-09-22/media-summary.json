@@ -1,0 +1,1898 @@
+[
+  {
+    "route": "/about/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 5
+  },
+  {
+    "route": "/th/เกี่ยวกับบีชู/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 5
+  },
+  {
+    "route": "/404/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 2
+  },
+  {
+    "route": "/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 44
+  },
+  {
+    "route": "/โรคผมร่วงและทรีทเม้นท์/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 10
+  },
+  {
+    "route": "/แก้ปัญหาหนังศีรษะแบบถึ/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 11
+  },
+  {
+    "route": "/อะไรเป็นสาเหตุของผมขาว/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 7
+  },
+  {
+    "route": "/สระผมให้ถูกวิธี/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 5
+  },
+  {
+    "route": "/รีวิว-ซาลอนทำทรีทเม้นท์/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 16
+  },
+  {
+    "route": "/รักษาผมร่วงครั้งแรก/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 13
+  },
+  {
+    "route": "/พิชิตผมร่วงกับบีชู/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 12
+  },
+  {
+    "route": "/ปัญหาหนังศีรษะ/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 14
+  },
+  {
+    "route": "/บีชูชลบุรีสาขาแรกนอกเข/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 16
+  },
+  {
+    "route": "/ทำไมหนังศีรษะของฉันถึง/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 7
+  },
+  {
+    "route": "/ทำบุญเปิดร้านสาขาสยามส/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 42
+  },
+  {
+    "route": "/ช่วยเหลือเหล่าเด็กๆ-ที่/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 5
+  },
+  {
+    "route": "/ขอแนะนำ-essence-shampoo-และ-essence-vitamins-สูตรใหม่/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 8
+  },
+  {
+    "route": "/top-10-non-touristy-things-to-do-in-bangkok/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 31
+  },
+  {
+    "route": "/th/แชมพูบีชูป้องกันผมร่วง/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 21
+  },
+  {
+    "route": "/th/แก้ผมเสียเร่งด่วน/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 47
+  },
+  {
+    "route": "/th/เหตุการณ์และข่าว/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 20
+  },
+  {
+    "route": "/th/หนังศีรษะติดเชื้อ/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/11-bacteria.C0eWOWw3_rORrF.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 48
+  },
+  {
+    "route": "/th/สมุนไพร-vs-การปลูกผม/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 14
+  },
+  {
+    "route": "/th/สถานที่ตั้งของร้านค้า/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 3
+  },
+  {
+    "route": "/th/วิธีแก้หนังศีรษะมัน/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 46
+  },
+  {
+    "route": "/th/รีวิวทรีทเม้นท์ที่ดี/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 17
+  },
+  {
+    "route": "/th/ราคาการทำทรีทเม้นท์/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 5
+  },
+  {
+    "route": "/th/รักษารังแค-ขจัดรังแค-ให้/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 48
+  },
+  {
+    "route": "/th/ภาวะผมร่วงเฉียบพลันของ/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 50
+  },
+  {
+    "route": "/th/ปิดผมหงอกวิธีธรรมชาติ/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 48
+  },
+  {
+    "route": "/th/ทีม/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 8
+  },
+  {
+    "route": "/th/ซาลอน-คลินิกรักษาผมร่วง/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 47
+  },
+  {
+    "route": "/th/คำถามที่พบบ่อย/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 6
+  },
+  {
+    "route": "/th/home/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 44
+  },
+  {
+    "route": "/th/category/บล็อก/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 14
+  },
+  {
+    "route": "/team/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 8
+  },
+  {
+    "route": "/suffering-from-mild-hair-loss-in-your-30s-she-found-the-perfect-solution/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 11
+  },
+  {
+    "route": "/suffering-from-alopecia-hair-loss-natural-herbal-treatment-in-bangkok-thailand/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 10
+  },
+  {
+    "route": "/soft-opening-บช-สาขาสขสวสดในวนท-19-กนย/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 11
+  },
+  {
+    "route": "/soft-opening-of-new-outlet-bee-choo-suksawat/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 11
+  },
+  {
+    "route": "/scalp-hair-loss-treatment-salon-clinic-in-bangkok/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 50
+  },
+  {
+    "route": "/scalp-dry-ways-combat-dry-scalp/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 7
+  },
+  {
+    "route": "/reviews-and-testimonials-of-bee-choo-origin-treatment/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 18
+  },
+  {
+    "route": "/reverse-premature-grey-white-hair-by-herbal-treatment/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": [
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      }
+    ]
+  },
+  {
+    "route": "/repair-chemically-damaged-dry-hair-with-herbal-treatment/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 47
+  },
+  {
+    "route": "/postpartum-hair-loss-treatment-in-thailand/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 50
+  },
+  {
+    "route": "/opening-of-new-outlet-bee-choo-thecrystalparkekamai-ramindra/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 14
+  },
+  {
+    "route": "/opening-of-new-outlet-bee-choo-kallapaphruk/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 18
+  },
+  {
+    "route": "/new-year-new-outlet-bee-choo-ratchada/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 16
+  },
+  {
+    "route": "/new-outlet-saimai-krungthepkreetha/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 8
+  },
+  {
+    "route": "/naan-charity-trip-2019/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 7
+  },
+  {
+    "route": "/male-pattern-baldness-treatment-in-bangkok-causes-symptoms-of-hair-loss/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 7
+  },
+  {
+    "route": "/locations/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 3
+  },
+  {
+    "route": "/introducing-essence-shampoo-and-newly-formulated-essence-vitamins/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 8
+  },
+  {
+    "route": "/herbal-treatment-to-get-rid-of-oily-scalp-hair/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/oily-scalp.Du5yuLRu_1to3CK.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/oily-scalp-faq-scan.BI2TOsvu_Z1gy4Jr.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 48
+  },
+  {
+    "route": "/herbal-treatment-cure-for-bacteria-infection-alopecia-areata-and-other-hair-diseases/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/11-bacteria.C0eWOWw3_rORrF.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 47
+  },
+  {
+    "route": "/hair-transplant-vs-stem-cell-vs-keratin-treatment-vs-natural-herbal-treatment/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 14
+  },
+  {
+    "route": "/hair-loss-treatment-cost-in-thailand-prices-revealed/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 5
+  },
+  {
+    "route": "/grand-opening-สาขาสัมมากร/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 13
+  },
+  {
+    "route": "/grand-opening-บีชู-สุราษฎร์ธานี-ในวั/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 11
+  },
+  {
+    "route": "/grand-opening-บีชู-สาขาโคราช-ในวันที/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 12
+  },
+  {
+    "route": "/grand-opening-บีชู-สาขาเดอะคริสตัล-เ/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 14
+  },
+  {
+    "route": "/grand-opening-บีชู-สาขาเชียงใหม่-ในว/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 12
+  },
+  {
+    "route": "/grand-opening-บีชู-สาขาอุดมสุข-23-กันยา/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 8
+  },
+  {
+    "route": "/grand-opening-บีชู-สาขาอยุธยา-ในวันท/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 14
+  },
+  {
+    "route": "/grand-opening-บีชู-สาขาสยามสแควร์วั/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 26
+  },
+  {
+    "route": "/grand-opening-บีชู-สาขาพุทธมณฑล-ในวั/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 13
+  },
+  {
+    "route": "/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567-2/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 12
+  },
+  {
+    "route": "/grand-opening-บช-สาขาประเวศ-7-กรกฎาคม-2567/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 12
+  },
+  {
+    "route": "/grand-opening-of-new-outlet-bee-choo-surat-thani/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 11
+  },
+  {
+    "route": "/grand-opening-of-new-outlet-bee-choo-sammakorn/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 13
+  },
+  {
+    "route": "/grand-opening-of-new-outlet-bee-choo-prawet/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 12
+  },
+  {
+    "route": "/grand-opening-of-new-outlet-bee-choo-phutthamonthon/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 13
+  },
+  {
+    "route": "/grand-opening-of-new-outlet-bee-choo-korat/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 12
+  },
+  {
+    "route": "/grand-opening-of-new-outlet-bee-choo-chiang-mai/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 12
+  },
+  {
+    "route": "/grand-opening-of-new-outlet-bee-choo-chatuchak/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 11
+  },
+  {
+    "route": "/grand-opening-of-new-outlet-bee-choo-ayutthaya/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 14
+  },
+  {
+    "route": "/frequently-asked-questions/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 6
+  },
+  {
+    "route": "/first-outlet-outside-of-bangkok-bee-choo-chonburi/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 16
+  },
+  {
+    "route": "/events-news-release/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 23
+  },
+  {
+    "route": "/dye-white-hair-naturally/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 7
+  },
+  {
+    "route": "/cure-dandruff-hair-with-herbal-treatment/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 49
+  },
+  {
+    "route": "/category/blog/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 14
+  },
+  {
+    "route": "/bee-choo-udomsuk-grand-opening-23-sept-2018/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 8
+  },
+  {
+    "route": "/bee-choo-siam-square-make-merit/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 42
+  },
+  {
+    "route": "/bee-choo-siam-grand-opening/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 25
+  },
+  {
+    "route": "/bee-choo-hair-care-products/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 21
+  },
+  {
+    "route": "/5-ตัวช่วยเรื่องผมร่วงของ/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 11
+  },
+  {
+    "route": "/5-causes-of-hair-loss-and-where-to-find-hair-treatment-in-thailand/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 16
+  },
+  {
+    "route": "/12-best-family-places-to-visit-in-bangkok/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 39
+  },
+  {
+    "route": "/10-สถานที่และสิ่งน่าสนใจ/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 27
+  },
+  {
+    "route": "/10-most-possible-causes-of-hair-loss-in-young-women/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 18
+  },
+  {
+    "route": "/chill-places-bangkok/",
+    "width": 1440,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 9
+  },
+  {
+    "route": "/404/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 2
+  },
+  {
+    "route": "/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/super-health-brand.y7ncdHoQ_29RCWS.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/the-entrepreneur.CSgg3_ve_qMyFk.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/golden-eagle-award.GozhIUvd_22f8kU.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/promising-sme-500.DM9ogsNm_Z1eiV7.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/readers-choice.bDALLeVc_xfTaF.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/super-health-brand.y7ncdHoQ_29RCWS.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/the-entrepreneur.CSgg3_ve_qMyFk.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/golden-eagle-award.GozhIUvd_22f8kU.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/promising-sme-500.DM9ogsNm_Z1eiV7.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/readers-choice.bDALLeVc_xfTaF.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 44
+  },
+  {
+    "route": "/th/แชมพูบีชูป้องกันผมร่วง/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 21
+  },
+  {
+    "route": "/th/แก้ผมเสียเร่งด่วน/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/super-health-brand.y7ncdHoQ_29RCWS.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/the-entrepreneur.CSgg3_ve_qMyFk.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/golden-eagle-award.GozhIUvd_22f8kU.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/promising-sme-500.DM9ogsNm_Z1eiV7.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/readers-choice.bDALLeVc_xfTaF.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/super-health-brand.y7ncdHoQ_29RCWS.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/the-entrepreneur.CSgg3_ve_qMyFk.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/golden-eagle-award.GozhIUvd_22f8kU.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/promising-sme-500.DM9ogsNm_Z1eiV7.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/readers-choice.bDALLeVc_xfTaF.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 47
+  },
+  {
+    "route": "/th/เหตุการณ์และข่าว/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 20
+  },
+  {
+    "route": "/th/เกี่ยวกับบีชู/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 5
+  },
+  {
+    "route": "/th/หนังศีรษะติดเชื้อ/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [
+      {
+        "src": "/_astro/11-bacteria.C0eWOWw3_rORrF.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/super-health-brand.y7ncdHoQ_29RCWS.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/the-entrepreneur.CSgg3_ve_qMyFk.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/golden-eagle-award.GozhIUvd_22f8kU.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/promising-sme-500.DM9ogsNm_Z1eiV7.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/readers-choice.bDALLeVc_xfTaF.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/super-health-brand.y7ncdHoQ_29RCWS.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/the-entrepreneur.CSgg3_ve_qMyFk.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/golden-eagle-award.GozhIUvd_22f8kU.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/promising-sme-500.DM9ogsNm_Z1eiV7.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/readers-choice.bDALLeVc_xfTaF.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp",
+        "complete": false
+      },
+      {
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp",
+        "complete": false
+      }
+    ],
+    "images": 48
+  },
+  {
+    "route": "/th/สมุนไพร-vs-การปลูกผม/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "pending": [],
+    "images": 14
+  },
+  {
+    "route": "/th/สถานที่ตั้งของร้านค้า/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/th/วิธีแก้หนังศีรษะมัน/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": [
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      }
+    ]
+  },
+  {
+    "route": "/th/รีวิวทรีทเม้นท์ที่ดี/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/th/ราคาการทำทรีทเม้นท์/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/th/รักษารังแค-ขจัดรังแค-ให้/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": [
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      }
+    ]
+  },
+  {
+    "route": "/th/ภาวะผมร่วงเฉียบพลันของ/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": [
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      }
+    ]
+  },
+  {
+    "route": "/th/ปิดผมหงอกวิธีธรรมชาติ/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": [
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      }
+    ]
+  },
+  {
+    "route": "/th/ทีม/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/th/ซาลอน-คลินิกรักษาผมร่วง/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": [
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      }
+    ]
+  },
+  {
+    "route": "/th/คำถามที่พบบ่อย/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/th/home/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": [
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      }
+    ]
+  },
+  {
+    "route": "/th/category/บล็อก/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/team/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/suffering-from-mild-hair-loss-in-your-30s-she-found-the-perfect-solution/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/reviews-and-testimonials-of-bee-choo-origin-treatment/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/reverse-premature-grey-white-hair-by-herbal-treatment/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": [
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/super-health-brand.y7ncdHoQ_29RCWS.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/the-entrepreneur.CSgg3_ve_qMyFk.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/golden-eagle-award.GozhIUvd_22f8kU.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/promising-sme-500.DM9ogsNm_Z1eiV7.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/readers-choice.bDALLeVc_xfTaF.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/super-health-brand.y7ncdHoQ_29RCWS.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/the-entrepreneur.CSgg3_ve_qMyFk.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/golden-eagle-award.GozhIUvd_22f8kU.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/promising-sme-500.DM9ogsNm_Z1eiV7.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/readers-choice.bDALLeVc_xfTaF.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/service-class.C8Q_BHv6_53f3c.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/sin-chew-business.Dp0VgFoL_1veh1i.webp"
+      },
+      {
+        "complete": false,
+        "marquee": true,
+        "src": "/_astro/tap-awards-most-innovative.CX06t7H6_Z2dXN1X.webp"
+      }
+    ]
+  },
+  {
+    "route": "/locations/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/hair-transplant-vs-stem-cell-vs-keratin-treatment-vs-natural-herbal-treatment/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/hair-loss-treatment-cost-in-thailand-prices-revealed/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/grand-opening-บีชู-สาขาอยุธยา-ในวันท/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/grand-opening-of-new-outlet-bee-choo-ayutthaya/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/frequently-asked-questions/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/events-news-release/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/category/blog/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/bee-choo-hair-care-products/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/about/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  },
+  {
+    "route": "/5-ตัวช่วยเรื่องผมร่วงของ/",
+    "width": 375,
+    "atBottom": true,
+    "overflow": false,
+    "footerCount": 1,
+    "pending": []
+  }
+]

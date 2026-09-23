@@ -44,7 +44,7 @@ const directionsHref = (o: (typeof OUTLETS)[number]) => o.mapsUrl;
 
 <section class="py-16 text-center md:py-24">
   <div class="mx-auto max-w-6xl px-4 md:px-8">
-    <h2 class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>{t.heading[lang]}</h2>
+    <h2 class={`mb-8 ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>{t.heading[lang]}</h2>
 
     <!-- Interactive map (the live site's own My Maps embed) — every width now, not
          just desktop. See the file header for why the mobile scroll-trap concern that
@@ -61,13 +61,13 @@ const directionsHref = (o: (typeof OUTLETS)[number]) => o.mapsUrl;
       ></iframe>
       <label
         for="map-gate"
-        class="btn-tactile absolute inset-x-0 bottom-4 z-10 mx-auto flex w-fit cursor-pointer items-center gap-2 rounded-full bg-brand-ink/80 px-4 py-2 text-xs font-bold text-white shadow-soft hover:bg-brand-ink/90 peer-checked:hidden"
+        class="btn-tactile absolute inset-x-0 bottom-4 z-10 mx-auto flex w-fit cursor-pointer items-center gap-2 rounded-full bg-brand-ink/80 px-4 py-2 text-xs font-bold text-on-action shadow-soft hover:bg-brand-ink/90 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-focus peer-checked:hidden"
       >
         {ui.misc.enableMapInteraction}
       </label>
       <label
         for="map-gate"
-        class="btn-tactile absolute inset-x-0 bottom-4 z-10 mx-auto hidden w-fit cursor-pointer items-center gap-2 rounded-full bg-brand-ink/80 px-4 py-2 text-xs font-bold text-white shadow-soft hover:bg-brand-ink/90 peer-checked:flex"
+        class="btn-tactile absolute inset-x-0 bottom-4 z-10 mx-auto hidden w-fit cursor-pointer items-center gap-2 rounded-full bg-brand-ink/80 px-4 py-2 text-xs font-bold text-on-action shadow-soft hover:bg-brand-ink/90 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-focus peer-checked:flex"
       >
         {ui.misc.lockMap}
       </label>
@@ -78,10 +78,10 @@ const directionsHref = (o: (typeof OUTLETS)[number]) => o.mapsUrl;
          md+ gets the full interactive map instead and the card list would just repeat it. -->
     <ul class="mx-auto mt-6 grid max-w-2xl grid-cols-2 gap-3 text-left md:hidden">
       {OUTLETS.map((outlet) => (
-        <li class="flex flex-col rounded-2xl border border-brand-earth bg-white p-3">
-          <p class="text-sm font-bold leading-snug text-brand-green">{lang === "th" ? outlet.nameTh : outlet.name}</p>
-          <p class="mt-0.5 text-[11px] font-bold tabular-nums text-brand-origin">{outlet.phoneDisplay}</p>
-          <p class="mt-1 flex-1 text-[11px] leading-snug text-brand-origin">
+        <li class="flex flex-col rounded-2xl border border-line bg-surface p-3">
+          <p class="text-sm font-bold leading-snug text-action">{lang === "th" ? outlet.nameTh : outlet.name}</p>
+          <p class="mt-0.5 text-[11px] font-bold tabular-nums text-text-muted">{outlet.phoneDisplay}</p>
+          <p class="mt-1 flex-1 text-[11px] leading-snug text-text-muted">
             <span class="sr-only">{ui.outlet.hours}: </span>
             {outlet.hours[lang].join(" · ")}
           </p>
@@ -89,7 +89,7 @@ const directionsHref = (o: (typeof OUTLETS)[number]) => o.mapsUrl;
             <a
               href={`tel:${outlet.phoneHref}`}
               aria-label={`${ui.outlet.call} ${outlet.name}: ${outlet.phoneDisplay}`}
-              class="btn-tactile flex min-h-11 flex-1 basis-16 items-center justify-center gap-1 rounded-full border border-brand-green px-2 text-2xs font-bold whitespace-nowrap text-brand-green hover:bg-brand-green/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+              class="btn-tactile flex min-h-11 flex-1 basis-16 items-center justify-center gap-1 rounded-full border border-brand-green px-2 text-2xs font-bold whitespace-nowrap text-action hover:bg-action/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
             >
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5 shrink-0">
                 <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.57 1 1 0 0 1-.25 1.02z" />
@@ -101,7 +101,7 @@ const directionsHref = (o: (typeof OUTLETS)[number]) => o.mapsUrl;
               target="_blank"
               rel="noopener"
               aria-label={`${ui.outlet.directions} — ${outlet.name}`}
-              class="btn-tactile flex min-h-11 flex-1 basis-16 items-center justify-center rounded-full border border-brand-green px-2 text-2xs font-bold whitespace-nowrap text-brand-green hover:bg-brand-green/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+              class="btn-tactile flex min-h-11 flex-1 basis-16 items-center justify-center rounded-full border border-brand-green px-2 text-2xs font-bold whitespace-nowrap text-action hover:bg-action/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
             >
               {ui.outlet.directions}
             </a>
@@ -113,7 +113,7 @@ const directionsHref = (o: (typeof OUTLETS)[number]) => o.mapsUrl;
     <div>
       <a
         href={HOME.locations.href[lang]}
-        class="btn-tactile mt-8 inline-flex min-h-11 items-center rounded-full bg-brand-green px-7 font-bold text-white shadow-soft hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+        class="btn-tactile mt-8 inline-flex min-h-11 items-center rounded-full bg-action px-7 font-bold text-on-action shadow-soft hover:bg-action/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
       >
         {ui.misc.viewLocations} &rarr;
       </a>

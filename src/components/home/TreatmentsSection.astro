@@ -87,7 +87,7 @@ const {
 const treatments = excludeSlug ? TREATMENTS.filter((t) => t.slug !== excludeSlug) : TREATMENTS;
 // Same 12 badges the homepage's AwardsSection renders, per-language alt text.
 const awards = showAwards ? HOME.awards.items.map((item) => ({ img: item.img, alt: item.alt[lang] })) : [];
-const bgClass = background === "white" ? "bg-white" : "bg-brand-earth/25";
+const bgClass = background === "white" ? "bg-surface" : "bg-surface-muted";
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
 const sectionHeading = heading ?? HOME.treatments.heading[lang];
@@ -106,13 +106,13 @@ const bandWidths = (intrinsicWidth: number) =>
 <section class={`${bgClass} py-16 md:py-24`}>
   <div class="mx-auto max-w-6xl px-4 md:px-8">
     <LeafDivider />
-    <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+    <h2 data-mask-reveal class={`mb-8 text-center ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
       {sectionHeading}
     </h2>
 
     {
       part !== "grid" && paragraphs.length > 0 && (
-        <div class="mx-auto mb-8 flex max-w-prose flex-col gap-4 text-brand-origin">
+        <div class="mx-auto mb-8 flex max-w-prose flex-col gap-4 text-text-muted">
           {paragraphs.map((para, i) => (
             <>
               <p class="leading-relaxed">
@@ -124,7 +124,7 @@ const bandWidths = (intrinsicWidth: number) =>
                       href={seg.href}
                       target="_blank"
                       rel="noopener"
-                      class="font-bold text-brand-green underline decoration-brand-yellow decoration-2 underline-offset-4 hover:decoration-brand-green"
+                      class="font-bold text-action underline decoration-accent decoration-2 underline-offset-4 hover:decoration-action"
                     >
                       {seg.text}
                     </a>
@@ -146,7 +146,7 @@ const bandWidths = (intrinsicWidth: number) =>
                     class="w-full rounded-2xl shadow-soft"
                   />
                   {photo.caption && (
-                    <figcaption class="mt-2 text-center text-sm italic text-brand-origin">{photo.caption}</figcaption>
+                    <figcaption class="mt-2 text-center text-sm italic text-text-muted">{photo.caption}</figcaption>
                   )}
                 </figure>
               )}
@@ -165,7 +165,7 @@ const bandWidths = (intrinsicWidth: number) =>
       data-treatments-md
     >
       {treatments.map((treatment, i) => (
-        <div class="treatment-row overflow-hidden rounded-2xl border border-brand-earth bg-white md:contents">
+        <div class="treatment-row overflow-hidden rounded-2xl border border-line bg-surface md:contents">
           {/* No first/last corner rounding here: at md+ `md:contents` on .treatment-row
               removes the row box, so `:first-child`/`:last-child` resolve against the
               row's OWN children (label + panel), not the grid — `md:last:*` could never
@@ -175,19 +175,19 @@ const bandWidths = (intrinsicWidth: number) =>
               same (Ryo's brief). */}
           <label
             for={`treatment-${i}`}
-            class="md-label flex cursor-pointer items-center gap-3 px-5 py-4 font-bold text-brand-origin transition-colors duration-200 hover:bg-brand-earth/20 has-checked:bg-brand-green/8 has-checked:text-brand-green md:border-b md:border-brand-earth"
+            class="md-label flex cursor-pointer items-center gap-3 px-5 py-4 font-bold text-text-muted transition-colors duration-200 hover:bg-surface-muted has-checked:bg-action/8 has-checked:text-action md:border-b md:border-line"
           >
             <input
               type="radio"
               name="treatment-select"
               id={`treatment-${i}`}
               checked={i === 0}
-              class="md-radio h-4 w-4 shrink-0 accent-brand-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+              class="md-radio h-4 w-4 shrink-0 accent-brand-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
             />
             {treatment.title[lang]}
           </label>
 
-          <article class="md-panel overflow-hidden border-t border-brand-earth md:flex md:flex-col md:rounded-2xl md:border-t-0 md:shadow-soft">
+          <article class="md-panel overflow-hidden border-t border-line md:flex md:flex-col md:rounded-2xl md:border-t-0 md:shadow-soft">
             <div class="relative aspect-[3/2] overflow-hidden md:aspect-video md:grow">
               <Image
                 src={treatment.image}
@@ -199,13 +199,13 @@ const bandWidths = (intrinsicWidth: number) =>
               />
             </div>
             <div class="flex flex-col gap-3 p-6 md:shrink-0">
-              <h3 class:list={[serif, "text-xl font-bold text-brand-green"]}>
-                <a href={treatment.href[lang]} class="hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">{treatment.title[lang]}</a>
+              <h3 class:list={[serif, "text-xl font-bold text-action"]}>
+                <a href={treatment.href[lang]} class="hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus">{treatment.title[lang]}</a>
               </h3>
-              <p class="flex-1 text-sm leading-relaxed text-brand-origin">{treatment.teaser[lang]}</p>
+              <p class="flex-1 text-sm leading-relaxed text-text-muted">{treatment.teaser[lang]}</p>
               <a
                 href={treatment.href[lang]}
-                class="btn-tactile mt-1 inline-block self-start rounded-full bg-brand-green px-5 py-3 text-center text-sm font-bold text-white hover:bg-brand-green/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green"
+                class="btn-tactile mt-1 inline-block self-start rounded-full bg-action px-5 py-3 text-center text-sm font-bold text-on-action hover:bg-action/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
               >
                 {readMore} &rarr;
               </a>

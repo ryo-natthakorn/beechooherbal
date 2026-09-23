@@ -1,28 +1,6 @@
 ---
 // src/components/LanguageSwitcher.astro
-// Floating horizontal pill. Fixed bottom-right on mobile, top-right (below the
-// sticky header) at md+. It used to sit top-right on every breakpoint, but on the
-// homepage the header is fixed OVER the hero (not pushing content down), and the
-// hero's own text is vertically centered in the viewport — its vertical position
-// shifts with content height/viewport height, so any fixed top offset could still
-// land on top of the H1 on some phone height. Bottom-right is always clear of the
-// hero's centered content. It is NOT unconditionally free, though — an earlier version
-// of this note claimed it was, having only accounted for the removed mobile ContactBar:
-// at full scroll the pill covered part of the footer's last row (the social icons). That
-// is now handled structurally by .lang-dock, not by reserving footer space.
-// Desktop keeps top-right (never collided —
-// the hero heading is centered in a max-w-4xl column, nowhere near this pill's
-// right-3 position at desktop widths). Targets are ≥44px (min-h-11) and the nav
-// label is localized per page language.
-//
-// It asks the same registry SEOHead uses ("what's my twin?") and links to it — no
-// hardcoded URLs; pairs.ts is the single source of truth.
-//
-// Clicking a language sets the `beechoo_lang` cookie so the root-language middleware
-// (middleware.ts) treats it as an EXPLICIT choice and stops auto-redirecting on "/".
-// Without this, a Thai-browser visitor who clicks "EN" lands on "/" and the middleware
-// bounces them straight back to /th/home/ — i.e. the toggle appears broken (Thai
-// only). Explicit choice always wins over Accept-Language.
+// In-flow header/menu language links use the same translation registry as SEO.
 import { getPair } from "../i18n/pairs";
 import { UI } from "../i18n/ui";
 
@@ -40,20 +18,15 @@ const enHref = pair?.en ?? "/";
 const thHref = pair?.th ?? "/th/home/";
 
 const base =
-  "flex min-h-11 items-center px-4 text-sm font-bold transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-green";
-const active = "bg-brand-green text-white";
-const idle = "text-brand-green hover:bg-brand-green/10";
+  "flex min-h-11 items-center px-3 text-sm font-bold transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2";
+const active = "bg-action text-on-action focus-visible:outline-on-action";
+const idle = "text-action hover:bg-action/10 focus-visible:outline-focus";
 ---
 
-<!-- z-scale: header/switcher both sit at z-30 (no stacking conflicts by placement).
-     Mobile positioning is owned by .lang-dock in global.css — a zero-height sticky dock
-     placed just above the footer in BaseLayout, so the pill floats bottom-right exactly
-     as before but parks at the footer's top edge instead of covering the footer's own
-     social icons. md+ keeps the fixed top-right pill, which never collided. -->
-<div class="z-30 md:fixed md:top-20 md:right-3">
+<div class="language-switcher">
   <nav
     aria-label={ui.misc.languageSwitcher}
-    class="flex overflow-hidden rounded-full border border-brand-green/40 bg-white shadow-soft-lg"
+    class="flex overflow-hidden rounded-full border border-brand-green/40 bg-surface"
   >
     <a
       href={enHref}
@@ -72,7 +45,7 @@ const idle = "text-brand-green hover:bg-brand-green/10";
   </nav>
 </div>
 
-<script is:inline>
+<script>
   (function () {
     // Switching language navigates to a different URL (its own translated slug), so
     // the browser has no notion that it's "the same page" and starts at the top.

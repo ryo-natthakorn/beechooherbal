@@ -44,19 +44,19 @@ const indexHref = EVENTS_INDEX[lang];
 
 <main id="main">
   <!-- Hero -->
-  <section class="relative overflow-hidden bg-brand-green py-14 text-center text-white md:py-16">
-    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+  <section class="relative overflow-hidden bg-action py-14 text-center text-on-action md:py-16">
+    <HerbalStrokes class="pointer-events-none absolute inset-0 h-full w-full text-on-action/10" />
     <div class="relative mx-auto max-w-3xl px-4 md:px-8">
-      <a href={indexHref} class="text-xs font-bold text-white/80 underline-offset-4 hover:text-white hover:underline">
+      <a href={indexHref} class="text-xs font-bold text-on-action/80 underline-offset-4 hover:text-on-action hover:underline">
         &lsaquo; {ui.events.backToEvents}
       </a>
       <h1 class={`mt-4 mb-3 ${serif} text-2xl font-bold${balance} md:text-4xl`}>{entry.data.title}</h1>
-      <time datetime={entry.data.pubDate.toISOString()} class="text-sm text-white/80">{dateLabel}</time>
+      <time datetime={entry.data.pubDate.toISOString()} class="text-sm text-on-action/80">{dateLabel}</time>
     </div>
   </section>
 
   <!-- Featured photo + body -->
-  <article class="bg-white py-12 md:py-16">
+  <article class="bg-surface py-12 md:py-16">
     <div class="mx-auto max-w-3xl px-4 md:px-8">
       {
         entry.data.hero && (
@@ -73,7 +73,7 @@ const indexHref = EVENTS_INDEX[lang];
       {/* Legacy body copy, verbatim. `prose-*` is not available in this project, so
           paragraph rhythm is set here on the wrapper. */}
       <div
-        class="flex flex-col gap-4 text-sm leading-relaxed text-brand-origin md:text-base [&_a]:text-brand-green [&_a]:underline [&_strong]:text-brand-ink"
+        class="flex flex-col gap-4 text-sm leading-relaxed text-text-muted md:text-base [&_a]:text-action [&_a]:underline [&_strong]:text-text"
       >
         <Content />
       </div>
@@ -90,15 +90,15 @@ const indexHref = EVENTS_INDEX[lang];
 
       {
         outlet && (
-          <aside class="mt-10 rounded-2xl border border-brand-earth bg-brand-earth/25 p-5">
-            <h2 class={`${serif} mb-3 text-lg font-bold text-brand-green`}>
+          <aside class="mt-10 rounded-2xl border border-line bg-surface-muted p-5">
+            <h2 class={`${serif} mb-3 text-lg font-bold text-action`}>
               {lang === "th" ? outlet.nameTh : outlet.name}
             </h2>
-            <dl class="flex flex-col gap-2 text-sm text-brand-origin">
+            <dl class="flex flex-col gap-2 text-sm text-text-muted">
               <div class="flex gap-2">
                 <dt class="font-bold">{ui.outlet.call}</dt>
                 <dd>
-                  <a href={`tel:${outlet.phoneHref}`} class="text-brand-green hover:underline">
+                  <a href={`tel:${outlet.phoneHref}`} class="text-action hover:underline">
                     {outlet.phoneDisplay}
                   </a>
                 </dd>
@@ -114,7 +114,7 @@ const indexHref = EVENTS_INDEX[lang];
             </dl>
             <a
               href={locationsHref}
-              class="btn-tactile mt-4 inline-flex min-h-11 items-center rounded-full bg-brand-green px-5 text-sm font-bold text-white hover:bg-brand-green-deep"
+              class="btn-tactile mt-4 inline-flex min-h-11 items-center rounded-full bg-action px-5 text-sm font-bold text-on-action hover:bg-action-hover"
             >
               {ui.events.visitBranch}
             </a>
@@ -127,15 +127,15 @@ const indexHref = EVENTS_INDEX[lang];
   <!-- Photo grid -->
   {
     entry.data.gallery.length > 0 && (
-      <section class="bg-brand-earth/25 py-14 md:py-20">
+      <section class="bg-surface-muted py-14 md:py-20">
         <div class="mx-auto max-w-5xl px-4 md:px-8">
           <LeafDivider />
-          <h2 class={`mb-8 text-center ${serif} text-2xl font-bold text-brand-green md:text-3xl`} data-mask-reveal>
+          <h2 class={`mb-8 text-center ${serif} text-2xl font-bold text-action md:text-3xl`} data-mask-reveal>
             {ui.events.photos}
           </h2>
           <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
             {entry.data.gallery.map((photo) => (
-              <figure class="reveal overflow-hidden rounded-2xl border border-brand-earth bg-white shadow-soft">
+              <figure class="reveal overflow-hidden rounded-2xl border border-line bg-surface shadow-soft">
                 <Image
                   src={photo.src}
                   alt={photo.alt}
@@ -144,7 +144,7 @@ const indexHref = EVENTS_INDEX[lang];
                   class="aspect-[3/2] w-full object-cover"
                 />
                 {photo.caption && (
-                  <figcaption class="px-3 py-2 text-xs leading-relaxed text-brand-origin">{photo.caption}</figcaption>
+                  <figcaption class="px-3 py-2 text-xs leading-relaxed text-text-muted">{photo.caption}</figcaption>
                 )}
               </figure>
             ))}
@@ -157,24 +157,24 @@ const indexHref = EVENTS_INDEX[lang];
   <!-- Prev / next within this language's feed -->
   {
     (prev || next) && (
-      <nav class="bg-white py-10" aria-label={ui.events.backToEvents}>
+      <nav class="bg-surface py-10" aria-label={ui.events.backToEvents}>
         <div class="mx-auto flex max-w-3xl flex-col gap-3 px-4 sm:flex-row sm:justify-between md:px-8">
           {prev ? (
             <a href={prev.href} class="group max-w-xs text-sm">
-              <span class="block text-2xs font-bold tracking-wide text-brand-origin uppercase">
+              <span class="block text-2xs font-bold tracking-wide text-text-muted uppercase">
                 &lsaquo; {ui.events.previousPost}
               </span>
-              <span class="font-bold text-brand-green group-hover:text-brand-green-deep">{prev.title}</span>
+              <span class="font-bold text-action group-hover:text-action-hover">{prev.title}</span>
             </a>
           ) : (
             <span />
           )}
           {next && (
             <a href={next.href} class="group max-w-xs text-sm sm:text-right">
-              <span class="block text-2xs font-bold tracking-wide text-brand-origin uppercase">
+              <span class="block text-2xs font-bold tracking-wide text-text-muted uppercase">
                 {ui.events.nextPost} &rsaquo;
               </span>
-              <span class="font-bold text-brand-green group-hover:text-brand-green-deep">{next.title}</span>
+              <span class="font-bold text-action group-hover:text-action-hover">{next.title}</span>
             </a>
           )}
         </div>

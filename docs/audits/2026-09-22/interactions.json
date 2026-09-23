@@ -1,0 +1,60 @@
+[
+  {
+    "test": "FAQ facade before activation",
+    "iframes": 0
+  },
+  {
+    "test": "FAQ video keyboard activation",
+    "iframes": 1,
+    "src": "https://www.youtube-nocookie.com/embed/C1NNwuqcroc?autoplay=1"
+  },
+  {
+    "test": "FAQ keyboard expansion",
+    "open": 1
+  },
+  {
+    "test": "Map keyboard enable",
+    "state": {
+      "checked": true,
+      "iframePointerEvents": "auto",
+      "labels": [
+        {
+          "display": "none",
+          "outline": "2px"
+        },
+        {
+          "display": "flex",
+          "outline": "2px"
+        }
+      ]
+    }
+  },
+  {
+    "test": "Map keyboard relock",
+    "pointer": "none"
+  },
+  {
+    "test": "Thai video keyboard activation",
+    "src": "https://www.youtube-nocookie.com/embed/C1NNwuqcroc?autoplay=1"
+  },
+  {
+    "test": "About video preserves start offset",
+    "src": "https://www.youtube-nocookie.com/embed/37MCsANIJ-k?autoplay=1&start=51"
+  },
+  {
+    "test": "Native launch video after Space",
+    "state": {
+      "controls": true,
+      "muted": true,
+      "paused": true
+    }
+  },
+  {
+    "test": "Desktop dropdown keyboard reaches treatment",
+    "focus": {
+      "href": null,
+      "outline": "2px",
+      "text": "Contact Us"
+    }
+  }
+]

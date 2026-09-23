@@ -7,7 +7,6 @@
 // its fixed positioning makes DOM placement free.
 import "../styles/global.css";
 import SEOHead from "../components/SEOHead.astro";
-import LanguageSwitcher from "../components/LanguageSwitcher.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import MetaPixel from "../components/MetaPixel.astro";
@@ -53,22 +52,13 @@ const fontClass = lang === "th" ? "font-thai" : "font-sans";
   <body class={fontClass}>
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:border-2 focus:border-white/70 focus:bg-brand-green focus:px-5 focus:py-3 focus:font-bold focus:text-white"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:border-2 focus:border-on-action/70 focus:bg-action focus:px-5 focus:py-3 focus:font-bold focus:text-on-action"
     >
       {ui.misc.skipToContent}
     </a>
     <Header {lang} overlay={headerOverlay} />
-    {/* The language pill is docked at the END of this wrapper, which stops where the page
-        content stops. Its sticky dock therefore parks at the footer's top edge instead of
-        floating over the footer's own bottom-right corner, where it covered the TikTok
-        link — see .lang-dock in global.css. It still comes after the page content in DOM
-        order, so it is never an early tab stop.
-        This wrapper MUST stay a bare <div>: any position, transform, filter, opacity < 1,
-        contain or overflow on it would create a stacking context or scrollport and break
-        both the treatment pages' fixed .page-tint (z-index: -1) and the sticky dock. */}
     <div>
       <slot />
-      <div class="lang-dock"><LanguageSwitcher {lang} /></div>
     </div>
     <Footer {lang} />
     <MetaPixel part="body" />

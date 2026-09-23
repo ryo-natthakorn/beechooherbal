@@ -1,12 +1,6 @@
 ---
 // src/components/home/ReviewsWall.astro
-// Reveal-and-disappear testimonial fader (redesign revision): the 4 reviews crossfade
-// one at a time in a shared square frame — a slow reveal in, a hold, then a fade out
-// before the next one starts — instead of the old two-column marquee (whose fixed-height
-// grey box left too much empty space around only 2 short columns). Zero-JS: a single
-// CSS keyframe animation, staggered per item via a negative animation-delay so exactly
-// one is visible at any time. Reduced motion collapses to a plain static stack of all 4
-// (see .reviews-fade-item rules in global.css) — nothing content-bearing ships hidden.
+// Original review images in a static reading grid; no automatic crossfade or crop.
 import { Image } from "astro:assets";
 import LeafDivider from "../LeafDivider.astro";
 import YouTubeEmbed from "../YouTubeEmbed.astro";
@@ -34,30 +28,30 @@ const t = HOME.reviews;
 const sectionHeading = heading ?? t.heading[lang];
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
 const balance = lang === "en" ? " text-balance" : "";
-const bgClass = background === "white" ? "bg-white" : "bg-brand-earth/25";
+const bgClass = background === "white" ? "bg-surface" : "bg-surface-muted";
 ---
 
 <section class={`${bgClass} py-16 text-center md:py-24`}>
   <div class="mx-auto max-w-6xl px-4 md:px-8">
     <LeafDivider />
-    <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-brand-green md:text-3xl`}>
+    <h2 data-mask-reveal class={`mb-8 ${serif} text-2xl font-bold${balance} text-action md:text-3xl`}>
       {sectionHeading}
     </h2>
-    <div class="reviews-fader relative mx-auto max-w-md">
-      {t.items.map((review, i) => (
-        <div class="reviews-fade-item overflow-hidden rounded-xl shadow-soft" style={`--i:${i}`}>
-          <Image src={review.img} alt={review.alt[lang]} width={500} height={500} class="h-full w-full object-cover" />
+    <div class="reviews-gallery mx-auto grid max-w-4xl gap-4 md:grid-cols-2">
+      {t.items.map((review) => (
+        <div class="overflow-hidden">
+          <Image src={review.img} alt={review.alt[lang]} width={500} height={500} class="h-auto w-full object-contain" />
         </div>
       ))}
     </div>
-    <a href={t.readMoreHref[lang]} class="btn-tactile mt-6 inline-flex min-h-11 items-center px-3 text-brand-green underline hover:text-brand-green/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">
+    <a href={t.readMoreHref[lang]} class="btn-tactile mt-6 inline-flex min-h-11 items-center px-3 text-action underline hover:text-action focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus">
       {t.readMoreLabel[lang]} &rarr;
     </a>
 
     {
       clientVideo && (
         <div class="mx-auto mt-12 max-w-3xl">
-          <h3 class:list={[serif, "mb-6 text-xl font-bold text-brand-green md:text-2xl"]}>{clientVideo.heading}</h3>
+          <h3 class:list={[serif, "mb-6 text-xl font-bold text-action md:text-2xl"]}>{clientVideo.heading}</h3>
           <YouTubeEmbed id={clientVideo.id} title={clientVideo.heading} />
         </div>
       )

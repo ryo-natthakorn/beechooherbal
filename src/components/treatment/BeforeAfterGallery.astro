@@ -11,6 +11,9 @@
 // YouTube case videos on bacterial-infection. It is a list precisely because of those
 // pairs — a single-embed prop could only ever have rendered half of that evidence.
 import { Image } from "astro:assets";
+import YouTubeEmbed from "../YouTubeEmbed.astro";
+import EmbedPreview from "../EmbedPreview.astro";
+import type { ImageMetadata } from "astro";
 import LeafDivider from "../LeafDivider.astro";
 import type { BeforeAfterContent, BeforeAfterImage } from "../../data/treatment-pages";
 
@@ -26,14 +29,18 @@ interface Props {
 
 const { lang, heading, body, images, embeds = [], background } = Astro.props;
 const serif = lang === "th" ? "font-serif-thai" : "font-serif";
-const bgClass = background === "earth" ? "bg-brand-earth/25" : "bg-white";
+const bgClass = background === "earth" ? "bg-surface-muted" : "bg-surface";
 
 // GIPHY clips are square on the legacy site; YouTube case videos are 16:9. Mixing the
 // two ratios in one row would letterbox one of them, and no legacy page mixes kinds, so
 // the row takes its ratio from the first embed.
 const embedSquare = embeds[0]?.kind === "giphy";
-const embedSrc = (e: NonNullable<Props["embeds"]>[number]) =>
-  e.kind === "giphy" ? `https://giphy.com/embed/${e.id}` : `https://www.youtube-nocookie.com/embed/${e.id}`;
+const thumbnails = import.meta.glob<{ default: ImageMetadata }>("../../assets/images/video-thumbs/*.jpg", { eager: true });
+const posterFor = (id: string) => {
+  const poster = thumbnails[`../../assets/images/video-thumbs/${id}.jpg`]?.default;
+  if (!poster) throw new Error(`Missing GIPHY preview: ${id}`);
+  return poster;
+};
 
 // The before/after source photos have different aspect ratios (0.897 vs 0.983), so at
 // their intrinsic heights the pair renders visibly mismatched. A shared aspect-ratio
@@ -44,13 +51,13 @@ const embedSrc = (e: NonNullable<Props["embeds"]>[number]) =>
 <section class={`${bgClass} py-16 md:py-24`}>
   <div class="mx-auto max-w-3xl px-4 md:px-8">
     <LeafDivider />
-    <h2 data-mask-reveal class={`mb-6 text-center ${serif} text-2xl font-bold text-brand-green md:text-3xl`}>
+    <h2 data-mask-reveal class={`mb-6 text-center ${serif} text-2xl font-bold text-action md:text-3xl`}>
       {heading}
     </h2>
 
     {
       body.length > 0 && (
-        <div class="mx-auto flex max-w-prose flex-col gap-4 text-center text-brand-origin">
+        <div class="mx-auto flex max-w-prose flex-col gap-4 text-center text-text-muted">
           {body.map((p) => (
             <p class="leading-relaxed">{p}</p>
           ))}
@@ -62,11 +69,11 @@ const embedSrc = (e: NonNullable<Props["embeds"]>[number]) =>
       images.length > 0 && (
         <div class="mt-8 flex flex-wrap items-start justify-center gap-6">
           {images.map(({ src, alt, caption }) => (
-            <figure class="w-full max-w-[280px] overflow-hidden rounded-xl bg-white shadow-soft">
+            <figure class="w-full max-w-[280px] overflow-hidden rounded-xl bg-surface shadow-soft">
               <div class="aspect-[9/10] w-full overflow-hidden">
                 <Image src={src} alt={alt} widths={[300, 600]} sizes="280px" class="h-full w-full object-cover" />
               </div>
-              <figcaption class="px-3 py-2 text-center text-sm leading-snug text-brand-origin">{caption ?? alt}</figcaption>
+              <figcaption class="px-3 py-2 text-center text-sm leading-snug text-text-muted">{caption ?? alt}</figcaption>
             </figure>
           ))}
         </div>
@@ -86,14 +93,11 @@ const embedSrc = (e: NonNullable<Props["embeds"]>[number]) =>
         >
           {embeds.map((embed) => (
             <div class:list={["relative overflow-hidden rounded-xl shadow-soft", embedSquare ? "aspect-square" : "aspect-video"]}>
-              <iframe
-                class="absolute inset-0 h-full w-full border-0"
-                src={embedSrc(embed)}
-                title={embed.title ?? heading}
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-              />
+              {embed.kind === "youtube" ? (
+                <YouTubeEmbed id={embed.id} title={embed.title ?? heading} />
+              ) : (
+                <EmbedPreview src={`https://giphy.com/embed/${embed.id}`} href={`https://giphy.com/gifs/${embed.id}`} title={embed.title ?? heading} poster={posterFor(embed.id)} />
+              )}
             </div>
           ))}
         </div>
