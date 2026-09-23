@@ -60,3 +60,7 @@ The Hero/Dead Sea redesign, brand recolour and representative design audit are o
 This is the Bee Choo Herbal Thailand bilingual Astro rebuild. The active branch contains the Hero/Dead Sea redesign, approved brand alignment and the video-preview fix. The latest handoff is `docs/project-handoff-2026-09-23.md`; its Future improvements B are pending. Work is intended for Astra with Priority. Existing URLs, SEO and content remain protected; a future Thai editorial pass is separately requested. Quotas are account-wide, and the user's stop-and-push rule applies before either window is exhausted. No merge or production release is authorized.
 
 Treat the above as context to verify, not facts to assume. Ask me before restarting work if anything's unclear.
+
+## Final delivery checkpoint
+
+Video implementation commit `0c3322f` was pushed to the branch above. PR: https://github.com/ryo-natthakorn/beechooherbal/pull/7 (open, not merged). Final quota reading: **5-hour 14% remaining / weekly 42%**; work stops here under the user's rule. Vercel status for implementation SHA was **pending** at this checkpoint; a post-deploy video smoke test remains unclaimed. The local regression/build/browser checks above passed before push. This documentation-only follow-up records the delivery and quota stop for Astra Priority.
