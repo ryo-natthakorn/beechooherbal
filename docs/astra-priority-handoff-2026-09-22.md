@@ -1,3 +1,5 @@
+> Superseded for outstanding audit status by [final acceptance, 23 September](design-acceptance-2026-09-23.md). Historical checks and limitations below are retained as evidence.
+
 # Astra — Priority: brand alignment and whole-site audit checkpoint
 
 ## Latest resumed checkpoint — supersedes previous stop below
