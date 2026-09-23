@@ -1,5 +1,7 @@
 ---
 // src/components/treatment/TreatmentBenefits.astro
+import EmbedPreview from "../EmbedPreview.astro";
+import facebookPoster from "../../assets/images/video-thumbs/facebook-1096213878455331.jpg";
 import LeafDivider from "../LeafDivider.astro";
 import type { BenefitsBlock } from "../../data/treatment-pages";
 
@@ -39,15 +41,7 @@ const bgClass = accent ? "bg-surface-botanical" : background === "white" ? "bg-s
     {
       video && (
         <div class="relative mx-auto mb-8 aspect-video w-full max-w-3xl overflow-hidden rounded-xl shadow-soft">
-          <iframe
-            class="absolute inset-0 h-full w-full border-0"
-            src={video.src}
-            title={video.title}
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            allowfullscreen
-          />
+          <EmbedPreview src={video.src} href={new URL(video.src).searchParams.get("href") ?? video.src} title={video.title} poster={facebookPoster} />
         </div>
       )
     }

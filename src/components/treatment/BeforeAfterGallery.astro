@@ -11,6 +11,9 @@
 // YouTube case videos on bacterial-infection. It is a list precisely because of those
 // pairs — a single-embed prop could only ever have rendered half of that evidence.
 import { Image } from "astro:assets";
+import YouTubeEmbed from "../YouTubeEmbed.astro";
+import EmbedPreview from "../EmbedPreview.astro";
+import type { ImageMetadata } from "astro";
 import LeafDivider from "../LeafDivider.astro";
 import type { BeforeAfterContent, BeforeAfterImage } from "../../data/treatment-pages";
 
@@ -32,8 +35,12 @@ const bgClass = background === "earth" ? "bg-surface-muted" : "bg-surface";
 // two ratios in one row would letterbox one of them, and no legacy page mixes kinds, so
 // the row takes its ratio from the first embed.
 const embedSquare = embeds[0]?.kind === "giphy";
-const embedSrc = (e: NonNullable<Props["embeds"]>[number]) =>
-  e.kind === "giphy" ? `https://giphy.com/embed/${e.id}` : `https://www.youtube-nocookie.com/embed/${e.id}`;
+const thumbnails = import.meta.glob<{ default: ImageMetadata }>("../../assets/images/video-thumbs/*.jpg", { eager: true });
+const posterFor = (id: string) => {
+  const poster = thumbnails[`../../assets/images/video-thumbs/${id}.jpg`]?.default;
+  if (!poster) throw new Error(`Missing GIPHY preview: ${id}`);
+  return poster;
+};
 
 // The before/after source photos have different aspect ratios (0.897 vs 0.983), so at
 // their intrinsic heights the pair renders visibly mismatched. A shared aspect-ratio
@@ -86,14 +93,11 @@ const embedSrc = (e: NonNullable<Props["embeds"]>[number]) =>
         >
           {embeds.map((embed) => (
             <div class:list={["relative overflow-hidden rounded-xl shadow-soft", embedSquare ? "aspect-square" : "aspect-video"]}>
-              <iframe
-                class="absolute inset-0 h-full w-full border-0"
-                src={embedSrc(embed)}
-                title={embed.title ?? heading}
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-              />
+              {embed.kind === "youtube" ? (
+                <YouTubeEmbed id={embed.id} title={embed.title ?? heading} />
+              ) : (
+                <EmbedPreview src={`https://giphy.com/embed/${embed.id}`} href={`https://giphy.com/gifs/${embed.id}`} title={embed.title ?? heading} poster={posterFor(embed.id)} />
+              )}
             </div>
           ))}
         </div>

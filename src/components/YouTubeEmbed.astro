@@ -5,13 +5,9 @@
 // keeps LCP clean even when the video sits above the fold (where loading="lazy" is a
 // no-op) and spares keyboard users the iframe tab gauntlet. Matches CLAUDE.md's
 // "near-zero JS" rule — the activation script is a few lines, no library.
-// Videos without a local thumbnail use a titled brand-colour facade, never an empty iframe.
+// Every video requires a local preview; missing assets fail the build instead of shipping an empty player.
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
-import introThumb from "../assets/images/video-thumbs/c8x_e1zPvMY.jpg";
-import howItWorksThumb from "../assets/images/video-thumbs/QOgcSx7_C7w.jpg";
-import processThumb from "../assets/images/video-thumbs/Uwty-ZDdPYc.jpg";
-import aboutCustomerThumb from "../assets/images/video-thumbs/37MCsANIJ-k.jpg";
 
 interface Props {
   id: string;
@@ -23,13 +19,9 @@ interface Props {
 }
 const { id, title, start } = Astro.props;
 
-const THUMBS: Record<string, ImageMetadata> = {
-  c8x_e1zPvMY: introThumb,
-  QOgcSx7_C7w: howItWorksThumb,
-  "Uwty-ZDdPYc": processThumb,
-  "37MCsANIJ-k": aboutCustomerThumb,
-};
-const thumb = THUMBS[id];
+const thumbnails = import.meta.glob<{ default: ImageMetadata }>("../assets/images/video-thumbs/*.jpg", { eager: true });
+const thumb = thumbnails[`../assets/images/video-thumbs/${id}.jpg`]?.default;
+if (!thumb) throw new Error(`Missing video preview for YouTube ${id}`);
 ---
 
 <div
@@ -38,15 +30,14 @@ const thumb = THUMBS[id];
       data-yt-title={title}
       data-yt-start={start ?? undefined}
     >
-      {thumb && <Image
+      <Image
         src={thumb}
         alt=""
-        width={768}
-        height={432}
-        class="absolute inset-0 h-full w-full object-cover"
-      />}
+        width={Math.min(768, thumb.width)}
+        class="absolute inset-0 h-full w-full object-contain"
+      />
       <button type="button" data-yt-play class="group absolute inset-0 flex cursor-pointer flex-col gap-3 items-center justify-center px-5 focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-on-action">
-        <span class:list={[thumb ? "sr-only" : "max-w-md text-center text-sm font-bold leading-relaxed text-on-action md:text-base"]}>{title}</span>
+        <span class="sr-only">{title}</span>
         <span
           aria-hidden="true"
           class="flex h-16 w-16 items-center justify-center rounded-full bg-action/95 text-on-action shadow-soft-lg transition-transform duration-200 motion-safe:group-hover:scale-110"

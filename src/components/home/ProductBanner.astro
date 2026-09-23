@@ -21,7 +21,7 @@ const titleClass = lang === "th" ? "font-serif-thai" : "font-serif";
         </a>
       </div>
       <div class="product-launch-media">
-        <video data-dead-sea-video class="product-launch-video" width="1281" height="726" poster="/media/dead-sea-mud/cover.jpg" preload="metadata" muted loop playsinline controls aria-label={product.title[lang]}>
+        <video data-dead-sea-video class="product-launch-video" width="1281" height="726" poster="/media/dead-sea-mud/cover.jpg" preload="none" muted loop playsinline controls aria-label={product.title[lang]}>
           <source src="/media/dead-sea-mud/dead-sea-launch.mp4" type="video/mp4" />
         </video>
       </div>
@@ -76,9 +76,7 @@ const titleClass = lang === "th" ? "font-serif-thai" : "font-serif";
         video.pause();
         return;
       }
-      video.play().catch(() => {
-        // Native controls remain available if autoplay is declined.
-      });
+      // Keep the poster visible until the visitor uses the native play control.
     });
   };
   syncVideoMotion();
