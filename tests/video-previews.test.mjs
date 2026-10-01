@@ -64,4 +64,8 @@ test("native hero autoplays with sound, falls back to muted, and honors reduced 
   assert.match(source, /if \(reducedMotion\.matches\) pauseForScript\(\)/);
   assert.match(source, /reducedMotion\.addEventListener\("change", syncVideoMotion\)/);
   assert.match(source, /new IntersectionObserver/);
+  // Only activation-granting events can unmute; pointerdown/touchstart cannot on phones.
+  assert.match(source, /const gestures = \["click", "keydown", "touchend"\]/);
+  assert.match(source, /<button type="button" data-dead-sea-unmute[^>]*hidden>/);
+  assert.match(source, /if \(unmuteButton\) unmuteButton\.hidden = false;/);
 });
