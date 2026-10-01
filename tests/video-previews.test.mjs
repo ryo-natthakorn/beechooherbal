@@ -54,9 +54,14 @@ test("every built video has a local preview before activation, in both languages
   console.log(`${files.length} pages, ${facades} previews, ${youtubeIds.size} YouTube IDs, ${nativeVideos} native posters`);
 });
 
-test("native hero remains paused before play and honors reduced motion changes", async () => {
+test("native hero autoplays with sound, falls back to muted, and honors reduced motion", async () => {
   const source = await readFile(path.join(root, "src/components/home/ProductBanner.astro"), "utf8");
-  assert.doesNotMatch(source, /video\.play\(/);
-  assert.match(source, /video\.pause\(/);
+  const tag = source.match(/<video\b[^>]*data-dead-sea-video[^>]*>/)?.[0];
+  assert.ok(tag);
+  assert.doesNotMatch(tag, /\bmuted\b/);
+  assert.match(source, /video\.muted = false;\s*try \{\s*await video\.play\(\)/);
+  assert.match(source, /video\.muted = true;\s*await video\.play\(\)/);
+  assert.match(source, /if \(reducedMotion\.matches\) pauseForScript\(\)/);
   assert.match(source, /reducedMotion\.addEventListener\("change", syncVideoMotion\)/);
+  assert.match(source, /new IntersectionObserver/);
 });
