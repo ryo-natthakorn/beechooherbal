@@ -21,7 +21,7 @@ const titleClass = lang === "th" ? "font-serif-thai" : "font-serif";
         </a>
       </div>
       <div class="product-launch-media">
-        <video data-dead-sea-video class="product-launch-video" width="1281" height="726" poster="/media/dead-sea-mud/cover.jpg" preload="none" muted loop playsinline controls aria-label={product.title[lang]}>
+        <video data-dead-sea-video class="product-launch-video" width="1281" height="726" poster="/media/dead-sea-mud/cover.jpg" preload="none" loop playsinline controls aria-label={product.title[lang]}>
           <source src="/media/dead-sea-mud/dead-sea-launch.mp4" type="video/mp4" />
         </video>
       </div>
@@ -70,17 +70,60 @@ const titleClass = lang === "th" ? "font-serif-thai" : "font-serif";
 <script>
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const videos = document.querySelectorAll<HTMLVideoElement>("[data-dead-sea-video]");
-  const syncVideoMotion = () => {
-    videos.forEach((video) => {
-      if (reducedMotion.matches) {
-        video.pause();
-        return;
+  const gestures = ["pointerdown", "keydown", "touchstart"] as const;
+
+  videos.forEach((video) => {
+    let inView = false;
+    let pausedByVisitor = false;
+    let pausingForScript = false;
+
+    // Browsers refuse autoplay with sound until the visitor has interacted with the
+    // page, so start muted when refused and unmute on the first gesture anywhere.
+    // Gestures on the video itself are left to its native controls, otherwise a
+    // click on the mute button would unmute here and then mute again natively.
+    const unmuteOnGesture = (event: Event) => {
+      if (event.target === video) return;
+      video.muted = false;
+      gestures.forEach((type) => document.removeEventListener(type, unmuteOnGesture, true));
+    };
+
+    const autoplay = async () => {
+      if (reducedMotion.matches || pausedByVisitor || !inView || !video.paused) return;
+      video.muted = false;
+      try {
+        await video.play();
+      } catch {
+        video.muted = true;
+        await video.play().catch(() => {});
+        gestures.forEach((type) => document.addEventListener(type, unmuteOnGesture, { capture: true, passive: true }));
       }
-      // Keep the poster visible until the visitor uses the native play control.
+    };
+
+    const pauseForScript = () => {
+      if (video.paused) return;
+      pausingForScript = true;
+      video.pause();
+    };
+
+    video.addEventListener("pause", () => {
+      if (!pausingForScript) pausedByVisitor = true;
+      pausingForScript = false;
     });
-  };
-  syncVideoMotion();
-  reducedMotion.addEventListener("change", syncVideoMotion);
+    video.addEventListener("play", () => { pausedByVisitor = false; });
+
+    // Sound should stop when the visitor scrolls away and resume when they return.
+    new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      if (inView) autoplay();
+      else pauseForScript();
+    }, { threshold: 0.5 }).observe(video);
+
+    const syncVideoMotion = () => {
+      if (reducedMotion.matches) pauseForScript();
+      else autoplay();
+    };
+    reducedMotion.addEventListener("change", syncVideoMotion);
+  });
 </script>
 
 <style>
